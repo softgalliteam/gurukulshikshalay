@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <Button
+        android:id="@+id/submit_button"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/margin_50"
+        android:layout_margin="@dimen/margin_20"
+        android:background="@drawable/roundedcorner_button"
+        android:textColor="@color/colorTextWhite"
+        android:textSize="@dimen/text_16.7"
+        android:gravity="center"
+        android:text="Send"/>
+
+
+</RelativeLayout>

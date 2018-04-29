@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/common_toolbar" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="60dp"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="60dp"
+            android:orientation="vertical">
+
+            <!--For absent present count -->
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                card_view:cardCornerRadius="10dp"
+                card_view:cardElevation="10dp">
+
+                <LinearLayout
+                    android:id="@+id/enquiry_form_layout"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#FFF"
+                    android:orientation="vertical"
+                    android:padding="@dimen/padding_15dp">
+
+                    <EditText
+                        android:id="@+id/sname"
+                        android:layout_width="match_parent"
+                        android:layout_height="45dp"
+                        android:paddingLeft="10dp"
+                        android:textColor="@color/textColor"
+                        android:textSize="@dimen/text_size"
+                        android:background="@drawable/ss_hollow_rect_green"
+                        android:hint="Name *"
+                        android:inputType="textNoSuggestions" />
+
+                    <EditText
+                        android:id="@+id/phoneNo"
+                        android:layout_width="match_parent"
+                        android:layout_height="45dp"
+                        android:layout_marginTop="10dp"
+                        android:background="@drawable/ss_hollow_rect_green"
+                        android:hint="Phone No. *"
+                        android:inputType="phone"
+                        android:paddingLeft="10dp"
+                        android:textColor="@color/textColor"
+                        android:textSize="@dimen/text_size" />
+
+                    <EditText
+                        android:id="@+id/emailId"
+                        android:layout_width="match_parent"
+                        android:layout_height="45dp"
+                        android:layout_marginTop="10dp"
+                        android:background="@drawable/ss_hollow_rect_green"
+                        android:hint="Email Id *"
+                        android:inputType="textEmailAddress"
+                        android:paddingLeft="10dp"
+                        android:textColor="@color/textColor"
+                        android:textSize="@dimen/text_size" />
+
+                    <EditText
+                        android:id="@+id/className"
+                        android:layout_width="match_parent"
+                        android:layout_height="45dp"
+                        android:layout_marginTop="10dp"
+                        android:background="@drawable/ss_hollow_rect_green"
+                        android:hint="Class *"
+                        android:inputType="text"
+                        android:paddingLeft="10dp"
+                        android:textColor="@color/textColor"
+                        android:textSize="@dimen/text_size" />
+
+                    <EditText
+                        android:id="@+id/comment"
+                        android:layout_width="match_parent"
+                        android:layout_height="100dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_weight=".25"
+                        android:background="@drawable/ss_hollow_rect_green"
+                        android:gravity="start"
+                        android:hint="Enter Your Query"
+                        android:inputType="text"
+                        android:paddingLeft="10dp"
+                        android:textColor="@color/textColor"
+                        android:textSize="@dimen/text_size" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="15dp"
+                        android:layout_marginTop="15dp"
+                        android:gravity="right|bottom"
+                        android:orientation="vertical">
+
+                        <Button
+                            android:id="@+id/submitbutton1111"
+                            android:layout_width="150dp"
+                            android:layout_height="@dimen/button_height"
+                            android:layout_gravity="right"
+                            android:background="@drawable/button_background"
+                            android:text="SUBMIT"
+                            android:textColor="#FFF"
+                            android:textSize="@dimen/heading_size" />
+                    </LinearLayout>
+                </LinearLayout>
+
+            </android.support.v7.widget.CardView>
+        </LinearLayout>
+
+    </ScrollView>
+</RelativeLayout>

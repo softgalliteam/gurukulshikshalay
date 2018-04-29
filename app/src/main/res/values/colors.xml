@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3140b4</color>
+    <color name="colorPrimaryDark">#d42c8a</color>
+    <color name="colorAccent">#dc5da4</color>
+    <!--use below color only-->
+    <color name="textColor">#080808</color>
+    <color name="colorTextPrimary">#5d5d5d</color>
+    <color name="subTextColor">#484747</color>
+    <color name="colorTextSecondary">#484747</color>
+    <color name="colorTextWhite">#FFFFFF</color>
+    <color name="blue_dark">#1323a1</color>
+    <color name="hintTextColor">#595757</color>
+    <color name="yellow">#e4d020</color>
+    <color name="green">#20e42a</color>
+    <color name="md_deep_purple_500">#673ab7</color>
+    <color name="md_green_500">#4caf50</color>
+    <color name="pinkcolor">#fdcfe9</color>
+    <color name="forum_back">#26e1cc</color>
+    <color name="academics_back">#fab474</color>
+    <color name="teacher_back">#54a0f4</color>
+    <color name="color_de00000">#de000000</color>
+    <color name="color_8a00000">#8a000000</color>
+    <color name="light_black">#2e2e2e</color>
+
+    <array name="array_dot_active">
+        <item>@color/dot_light_screen1</item>
+        <item>@color/dot_light_screen1</item>
+        <item>@color/dot_light_screen1</item>
+        <item>@color/dot_light_screen1</item>
+    </array>
+
+    <array name="array_dot_inactive">
+        <item>@color/dot_dark_screen1</item>
+        <item>@color/dot_dark_screen1</item>
+        <item>@color/dot_dark_screen1</item>
+        <item>@color/dot_dark_screen1</item>
+    </array>
+
+    <color name="gen_black">#000000</color>
+    <color name="gen_white">#FFFFFF</color>
+    <color name="green_light">#43A047</color>
+    <color name="grey_light">#E0E0E0</color>
+
+    <!-- Screens background color-->
+    <color name="bg_screen1">#f94f39</color>
+
+    <!-- dots inactive colors -->
+    <color name="dot_dark_screen1">#e72007</color>
+
+    <!-- dots active colors -->
+    <color name="dot_light_screen1">#f98da5</color>
+
+    <!-- Placeholder colors-->
+    <color name="stay_color">#999999</color>
+</resources>
