@@ -13,6 +13,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+import softgalli.gurukulshikshalay.model.GalleryModel;
 import softgalli.gurukulshikshalay.model.NotificationModel;
 import softgalli.gurukulshikshalay.model.StuTeaModel;
 
@@ -141,6 +142,39 @@ public class RetrofitDataProvider extends AppCompatActivity implements ServiceMe
 
                     @Override
                     public void onFailure(@NonNull Call<StuTeaModel> call, @NonNull Throwable t) {
+                        Log.d("Result", "t" + t.getMessage());
+                        callback.onFailure(t.getMessage());
+
+                    }
+                }
+        );
+    }
+
+    @Override
+    public void galleryList(final DownlodableCallback<GalleryModel> callback) {
+        createRetrofitService().listGallery().enqueue(
+                new Callback<GalleryModel>() {
+                    @Override
+                    public void onResponse(@NonNull Call<GalleryModel> call, @NonNull final Response<GalleryModel> response) {
+                        if (response.isSuccessful()) {
+
+                            GalleryModel mobileRegisterPojo = response.body();
+                            callback.onSuccess(mobileRegisterPojo);
+
+                        } else
+
+                        {
+                            if (response.code() == 401)
+                            {
+                                callback.onUnauthorized(response.code());
+                            }
+                            else {
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(@NonNull Call<GalleryModel> call, @NonNull Throwable t) {
                         Log.d("Result", "t" + t.getMessage());
                         callback.onFailure(t.getMessage());
 

@@ -4,7 +4,9 @@ package softgalli.gurukulshikshalay.retrofit;
 import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
+import retrofit2.http.GET;
 import retrofit2.http.POST;
+import softgalli.gurukulshikshalay.model.GalleryModel;
 import softgalli.gurukulshikshalay.model.NotificationModel;
 import softgalli.gurukulshikshalay.model.StuTeaModel;
 
@@ -28,5 +30,8 @@ public interface ApiRetrofitService {
     Call<StuTeaModel> addStudent(@Field("regestration_id") String regestration_id, @Field("name") String name, @Field("email") String email
             , @Field("mobile") String mobile_number, @Field("class") String clas, @Field("sec") String classteacher_for,
              @Field("admission_date") String admission_date, @Field("residential_address") String residential_address);
+
+    @GET(ApiUrl.GALLERYLIST)
+    Call<GalleryModel> listGallery();
 
 }

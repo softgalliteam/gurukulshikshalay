@@ -167,7 +167,7 @@ public class HomeScreenActivity extends AppCompatActivity
             startActivity(new Intent(HomeScreenActivity.this, NotificationActivity.class));
         }
         if (linearLayout.getId() == R.id.events_layout) {
-            startActivity(new Intent(HomeScreenActivity.this, TimeTableActivity.class));
+            startActivity(new Intent(HomeScreenActivity.this, GalleryList.class));
         }
 
 

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="nointernet">No internet connection</string>
+    <string name="alumnilist">Alumni List</string>
+    <string name="gallery">Gallery List</string>
+</resources>

@@ -1,12 +1,14 @@
 package softgalli.gurukulshikshalay;
 
 import android.app.Application;
+import android.content.Context;
 
 import org.joda.time.LocalDateTime;
 
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 
 public class AppController extends Application {
@@ -38,6 +40,11 @@ public class AppController extends Application {
                 .deleteRealmIfMigrationNeeded()
                 .build();
         Realm.setDefaultConfiguration(cfg);
+    }
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
     }
 
     /*getting the current week*/

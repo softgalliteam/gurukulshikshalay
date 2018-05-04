@@ -1,6 +1,7 @@
 package softgalli.gurukulshikshalay.retrofit;
 
 
+import softgalli.gurukulshikshalay.model.GalleryModel;
 import softgalli.gurukulshikshalay.model.NotificationModel;
 import softgalli.gurukulshikshalay.model.StuTeaModel;
 
@@ -14,4 +15,9 @@ public interface ServiceMethods {
                     String classteacher_for, String joining_date, String address, DownlodableCallback<StuTeaModel> callback);
     void addstudent(String regestration_id, String name, String email, String mobile, String clas, String sec,
                     String admission_date, String residential_address, DownlodableCallback<StuTeaModel> callback);
+
+    void galleryList(DownlodableCallback<GalleryModel> callback);
+
+
+
 }
