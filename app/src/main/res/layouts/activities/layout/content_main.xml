@@ -46,7 +46,6 @@
                         android:orientation="horizontal">
 
                         <LinearLayout
-                            android:id="@+id/news_layout"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight=".25"
@@ -54,6 +53,7 @@
                             android:orientation="vertical">
 
                             <RelativeLayout
+                                android:id="@+id/newsRl"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:orientation="vertical">
@@ -100,7 +100,6 @@
                         </LinearLayout>
 
                         <LinearLayout
-                            android:id="@+id/events_layout"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight=".25"
@@ -108,6 +107,7 @@
                             android:orientation="vertical">
 
                             <RelativeLayout
+                                android:id="@+id/galleryRl"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent">
 
@@ -117,7 +117,7 @@
                                     android:layout_height="45dp"
                                     android:layout_centerHorizontal="true"
                                     android:layout_marginTop="@dimen/margin_10dp"
-                                    android:background="@drawable/syllabus"
+                                    android:background="@drawable/gallery"
                                     android:scaleType="centerCrop" />
 
                                 <TextView
@@ -127,7 +127,7 @@
                                     android:layout_below="@+id/syllabusIv"
                                     android:layout_centerHorizontal="true"
                                     android:layout_marginTop="@dimen/margin_10"
-                                    android:text="@string/syllabus"
+                                    android:text="@string/gallery"
                                     android:textColor="@color/colorTextPrimary"
                                     tools:ignore="MissingPrefix" />
 
@@ -144,6 +144,7 @@
                             android:orientation="vertical">
 
                             <RelativeLayout
+                                android:id="@+id/timetableRl"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content">
 
@@ -180,6 +181,7 @@
                             android:orientation="vertical">
 
                             <RelativeLayout
+                                android:id="@+id/eventsRl"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:orientation="vertical">

@@ -1,67 +1,78 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorTextWhite">
-    <RelativeLayout
+    android:background="@color/colorTextWhite"
+    android:orientation="vertical">
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
 
         <LinearLayout
-        android:id="@+id/ll_notification"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/circular_view"
-        android:gravity="center"
-        android:layout_marginLeft="@dimen/margin_10"
-        android:layout_marginTop="@dimen/margin_15">
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:background="@mipmap/notification_activie"/>
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/ll_notification"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/margin_10"
+                android:layout_marginTop="@dimen/margin_15"
+                android:background="@drawable/circular_view"
+                android:gravity="center">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:background="@mipmap/notification_activie" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/textView2"
+                fontPath="@string/roboto_bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/ll_notification"
+                android:layout_marginLeft="@dimen/margin_5"
+                android:layout_marginTop="@dimen/margin_5"
+                android:text="10 Sat"
+                android:textColor="@color/colorTextPrimary"
+                android:textSize="@dimen/text_15"
+                tools:ignore="MissingPrefix" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/margin_10dp"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                fontPath="@string/roboto_medium"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Scool Plat Realsalkdk "
+                android:textColor="@color/colorTextPrimary"
+                tools:ignore="MissingPrefix" />
+
+            <TextView
+                android:id="@+id/tv_time"
+                fontPath="@string/roboto_regular"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="10:00am - 04:20pm"
+                android:textSize="@dimen/text_11.8"
+                tools:ignore="MissingPrefix" />
+
+        </LinearLayout>
     </LinearLayout>
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="10 Sat"
-        android:layout_below="@+id/ll_notification"
-        android:layout_marginLeft="@dimen/margin_5"
-        android:layout_marginTop="@dimen/margin_5"
-        android:textSize="@dimen/text_15"
-        fontPath="@string/roboto_bold"
-        tools:ignore="MissingPrefix"
-        android:textColor="@color/colorTextPrimary"
-        android:id="@+id/textView2" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/text_15"
-        android:layout_marginStart="@dimen/text_15"
-        android:layout_toEndOf="@+id/ll_notification"
-        android:layout_toRightOf="@+id/ll_notification"
-        android:layout_centerVertical="true"
-        android:text="10:00am - 04:20pm"
-        android:textSize="@dimen/text_11.8"
-        fontPath="@string/roboto_regular"
-        tools:ignore="MissingPrefix"
-        android:id="@+id/tv_time" />
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_centerVertical="true"
-        android:layout_toRightOf="@+id/tv_time"
-        android:layout_marginLeft="@dimen/margin_10"
-        android:textColor="@color/colorTextPrimary"
-        fontPath="@string/roboto_medium"
-        tools:ignore="MissingPrefix"
-        android:text="Scool Plat Realsalkdk " />
 
     <View
         android:layout_width="match_parent"
@@ -70,7 +81,5 @@
         android:layout_marginLeft="@dimen/margin_20"
         android:layout_marginRight="@dimen/margin_20"
         android:layout_marginTop="@dimen/margin_10"
-        android:background="@color/colorTextPrimary"/>
-
-</RelativeLayout>
+        android:background="@color/colorTextPrimary" />
 </LinearLayout>

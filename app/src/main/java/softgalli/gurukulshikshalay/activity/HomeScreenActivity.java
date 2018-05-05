@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.NavigationView;
@@ -18,7 +19,7 @@ import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -40,10 +41,16 @@ import softgalli.gurukulshikshalay.preference.MyPreference;
 
 public class HomeScreenActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-    @BindView(R.id.news_layout)
-    LinearLayout news_layout;
     @BindView(R.id.rv_common)
     RecyclerView recyclerview;
+    @BindView(R.id.newsRl)
+    RelativeLayout newsRl;
+    @BindView(R.id.galleryRl)
+    RelativeLayout galleryRl;
+    @BindView(R.id.timetableRl)
+    RelativeLayout timetableRl;
+    @BindView(R.id.eventsRl)
+    RelativeLayout eventsRl;
     private boolean isBackPressed;
     private Activity mActivity;
     private DrawerLayout drawer;
@@ -168,18 +175,6 @@ public class HomeScreenActivity extends AppCompatActivity
         return icon;
     }
 
-    @OnClick({R.id.news_layout, R.id.events_layout})
-    void onLayoutClick(LinearLayout linearLayout) {
-        if (linearLayout.getId() == R.id.news_layout) {
-            startActivity(new Intent(HomeScreenActivity.this, NotificationActivity.class));
-        }
-        if (linearLayout.getId() == R.id.events_layout) {
-            startActivity(new Intent(HomeScreenActivity.this, GalleryList.class));
-        }
-
-
-    }
-
     @Override
     public void onBackPressed() {
         if (drawer.isDrawerOpen(GravityCompat.START)) {
@@ -215,7 +210,7 @@ public class HomeScreenActivity extends AppCompatActivity
         View navHeaderView = getLayoutInflater().inflate(R.layout.nav_header_main, navigationView, false);
         imageViewProfilePic = navHeaderView.findViewById(R.id.imageViewProfilePic1);
 
-        int a = android.os.Build.VERSION.SDK_INT;
+        int a = Build.VERSION.SDK_INT;
         if (a > 20) {
             (navHeaderView.findViewById(R.id.spaceHeader)).setVisibility(View.VISIBLE);
         } else {
@@ -249,6 +244,24 @@ public class HomeScreenActivity extends AppCompatActivity
             aq.id(imageViewProfilePic).image(Apis.MAIN_URL + userProfileUrl, true, true, 0, R.drawable.user, null, Constants.FADE_IN);
         } else {
             imageViewProfilePic.setImageResource(R.drawable.user);
+        }
+    }
+
+    @OnClick({R.id.galleryRl, R.id.timetableRl, R.id.eventsRl, R.id.newsRl})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.galleryRl:
+                startActivity(new Intent(HomeScreenActivity.this, GalleryList.class));
+                break;
+            case R.id.timetableRl:
+                Utilz.showLoginFirstDialog(mActivity);
+                break;
+            case R.id.eventsRl:
+                Utilz.showLoginFirstDialog(mActivity);
+                break;
+            case R.id.newsRl:
+                startActivity(new Intent(HomeScreenActivity.this, NotificationActivity.class));
+                break;
         }
     }
 }

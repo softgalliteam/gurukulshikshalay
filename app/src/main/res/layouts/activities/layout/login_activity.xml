@@ -27,7 +27,7 @@
                 android:id="@+id/img1"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:src="@drawable/contact_us" />
+                android:src="@drawable/gurukul_gate" />
 
             <com.flaviofaria.kenburnsview.KenBurnsView
                 android:id="@+id/img2"
