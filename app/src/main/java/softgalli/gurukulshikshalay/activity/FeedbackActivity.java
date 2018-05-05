@@ -1,35 +1,48 @@
 package softgalli.gurukulshikshalay.activity;
 
+import android.accounts.Account;
+import android.accounts.AccountManager;
+import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import softgalli.gurukulshikshalay.R;
+import softgalli.gurukulshikshalay.common.Utilz;
+import softgalli.gurukulshikshalay.common.Validation;
+import softgalli.gurukulshikshalay.preference.MyPreference;
 
 
 /**
  * Created by Naveen on 1/18/2016.
  */
 public class FeedbackActivity extends AppCompatActivity implements RatingBar.OnRatingBarChangeListener {
+    private static final String TAG = FeedbackActivity.class.getSimpleName();
     float selectedRating = 5.0f;
     String selectedIssue = "", errorMessage;
     EditText feedbackText;
+    private Activity mActivity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.feedback_activity);
+
+        mActivity = this;
         // Check if no view has focus:
         View view = this.getCurrentFocus();
         if (view != null) {
-            InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
             imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
         }
 
@@ -42,10 +55,9 @@ public class FeedbackActivity extends AppCompatActivity implements RatingBar.OnR
         final EditText feedbackMobile = (EditText) findViewById(R.id.mobile_no_Txt);
         ((RatingBar) findViewById(R.id.ratingBar1)).setOnRatingBarChangeListener(this);
 
-        //TODO Shankar Open this comment when you use this activity
-        /*if (Preferences.isLogined()) {
-            feedbackEmail.setText(Preferences.getEmailId());
-            feedbackMobile.setText(Preferences.getUserMobileNo());
+        if (MyPreference.isLogined()) {
+            feedbackEmail.setText(MyPreference.getEmailId());
+            feedbackMobile.setText(MyPreference.getUserMobileNo());
         } else {
             Account[] accounts = AccountManager.get(this).getAccountsByType("com.google");
             try {
@@ -53,7 +65,7 @@ public class FeedbackActivity extends AppCompatActivity implements RatingBar.OnR
             } catch (Exception e) {
                 e.printStackTrace();
             }
-        }*/
+        }
 
         submitFeedbackBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -64,11 +76,11 @@ public class FeedbackActivity extends AppCompatActivity implements RatingBar.OnR
                 if (msg.isEmpty()) {
                     msg = selectedIssue;
                 }
-                //TODO Shankar Open this comment when you use this activity
-                //Log.i("final fields", mFeel + "**" + typetxt + "**" + msg + "**" + email + "**" + mobile + "**" + selectedIssue + "**");
-                /*if (Preferences.isLogined()) {
+
+                Log.i(TAG, "**" + msg + "**" + email + "**" + mobile + "**" + selectedIssue + "**");
+                if (MyPreference.isLogined()) {
                     //Toast.makeText(FeedbackActivity.this,  typetxt+"\n" + selectedIssue + "\n" + msg, Toast.LENGTH_LONG).show();
-                    if (MyUtils.isNetworkAvailable(FeedbackActivity.this)) {
+                    if (Utilz.isOnline(mActivity)) {
                         if (msg.isEmpty()) {
                             if (errorMessage.equalsIgnoreCase(getString(R.string.error_msg))) {
                                 feedbackText.setError(getString(R.string.write_your_feedback_txt));
@@ -78,7 +90,7 @@ public class FeedbackActivity extends AppCompatActivity implements RatingBar.OnR
                             //Toast.makeText(FeedbackActivity.this, R.string.write_your_feedback_txt, Toast.LENGTH_LONG).show();
                         } else {
                             if (Validation.isPhoneNumber(feedbackMobile, true)) {
-                                sendFeedback(selectedRating, msg, email, mobile);
+                                //sendFeedback(selectedRating, msg, email, mobile);
                             }
                         }
 
@@ -86,9 +98,8 @@ public class FeedbackActivity extends AppCompatActivity implements RatingBar.OnR
                         Toast.makeText(FeedbackActivity.this, R.string.no_internet_connection, Toast.LENGTH_LONG).show();
                     }
                 } else {
-                    Toast.makeText(FeedbackActivity.this, R.string.login_need_for_it, Toast.LENGTH_LONG).show();
-                    startActivity(new Intent(FeedbackActivity.this, LoginRegisterActivity.class));
-                }*/
+                    Utilz.showLoginFirstDialog(mActivity);
+                }
             }
         });
 
@@ -110,9 +121,9 @@ public class FeedbackActivity extends AppCompatActivity implements RatingBar.OnR
         });
     }
 
-    //TODO Shankar use your oen method for set api
-    /*private void sendFeedback(float selectedRating, String msg, String email, String mobile) {
-        final ProgressDialog dialog = ProgressDialog.show(FeedbackActivity.this, "", getString(R.string.sending), true);
+/*
+    private void sendFeedback(float selectedRating, String msg, String email, String mobile) {
+        final ProgressDialog dialog = ProgressDialog.show(FeedbackActivity.this, "", getString(R.string.pleasewait), true);
         dialog.setCancelable(false);
         final RequestParams params = new RequestParams();
         params.add("feelings", feel);
@@ -142,12 +153,12 @@ public class FeedbackActivity extends AppCompatActivity implements RatingBar.OnR
         if (!mobile.isEmpty()) {
             params.add("email", email);
         } else {
-            params.add("email", Preferences.getEmailId());
+            params.add("email", MyPreference.getEmailId());
         }
         if (!mobile.isEmpty()) {
             params.add("mobile_no", mobile);
         } else {
-            params.add("mobile_no", Preferences.getUserMobileNo());
+            params.add("mobile_no", MyPreference.getUserMobileNo());
         }
         Log.i("Feedback : ", "  selectedRating:" + selectedRating + "  msg:" + msg);
         AsyncHttpClient client = new AsyncHttpClient(true, 80, 443);
@@ -181,17 +192,19 @@ public class FeedbackActivity extends AppCompatActivity implements RatingBar.OnR
                 finish();
             }
         });
-    }*/
+    }
+*/
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()){
+        switch (item.getItemId()) {
             case android.R.id.home:
                 onBackPressed();
                 return true;
         }
         return super.onOptionsItemSelected(item);
     }
+
     /**
      * NotificationActivity that the rating has changed.
      **/

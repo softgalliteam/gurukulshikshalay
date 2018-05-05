@@ -14,4 +14,12 @@
         android:layout_marginLeft="@dimen/margin_5"
         android:layout_marginRight="@dimen/margin_5"
         android:layout_marginTop="@dimen/margin_5"/>
+
+
+    <ProgressBar
+        android:id="@+id/progress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:visibility="visible" />
 </softgalli.gurukulshikshalay.common.SquareLayout>

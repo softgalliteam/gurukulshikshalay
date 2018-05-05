@@ -49,7 +49,7 @@ public class Gallery extends AppCompatActivity {
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowTitleEnabled(true);
-            getSupportActionBar().setTitle(getResources().getString(R.string.gallery));
+            getSupportActionBar().setTitle(getResources().getString(R.string.gallery_list));
 
         recyclerView.setLayoutManager(new GridLayoutManager(getApplicationContext(), 2));
         recyclerView.setItemAnimator(new DefaultItemAnimator());

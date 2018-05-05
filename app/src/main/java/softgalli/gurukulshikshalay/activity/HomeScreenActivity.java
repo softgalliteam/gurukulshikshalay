@@ -34,6 +34,7 @@ import softgalli.gurukulshikshalay.adapter.HomeCategoryAdapter;
 import softgalli.gurukulshikshalay.common.Apis;
 import softgalli.gurukulshikshalay.common.ClsGeneral;
 import softgalli.gurukulshikshalay.common.Constant;
+import softgalli.gurukulshikshalay.common.Utilz;
 import softgalli.gurukulshikshalay.intrface.OnClickListener;
 import softgalli.gurukulshikshalay.preference.MyPreference;
 
@@ -142,12 +143,14 @@ public class HomeScreenActivity extends AppCompatActivity
     }
 
     private int[] getStudentTeacherColor() {
-        int color[] = {R.drawable.roundedcornerforum_layout, R.drawable.roundedcorner_academics, R.drawable.roundedcorner_teacher, R.drawable.roundedcornerforum_layout, R.drawable.roundedcorner_academics, R.drawable.roundedcorner_teacher};
+        int color[] = {R.drawable.roundedcornerforum_layout, R.drawable.roundedcorner_academics, R.drawable.roundedcorner_teacher,
+                R.drawable.roundedcornerforum_layout, R.drawable.roundedcorner_academics, R.drawable.roundedcorner_teacher};
         return color;
     }
 
     private int[] getSkipColor() {
-        int color[] = {R.drawable.roundedcornerforum_layout, R.drawable.roundedcorner_academics, R.drawable.roundedcorner_teacher, R.drawable.roundedcornerforum_layout, R.drawable.roundedcorner_academics, R.drawable.roundedcorner_teacher};
+        int color[] = {R.drawable.roundedcornerforum_layout, R.drawable.roundedcorner_academics, R.drawable.roundedcorner_teacher,
+                R.drawable.roundedcornerforum_layout, R.drawable.roundedcorner_academics, R.drawable.roundedcorner_teacher};
         return color;
     }
 
@@ -217,12 +220,10 @@ public class HomeScreenActivity extends AppCompatActivity
         navHeaderView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               /* Intent intent = new Intent(mActivity, SignupActivity.class);
-                intent.putExtra("TITLE", getResources().getString(R.string.update_profile));
-                startActivity(intent);
+                Utilz.showLoginFirstDialog(mActivity);
                 if (drawer != null) {
                     drawer.closeDrawer(GravityCompat.START);
-                }*/
+                }
             }
         });
 

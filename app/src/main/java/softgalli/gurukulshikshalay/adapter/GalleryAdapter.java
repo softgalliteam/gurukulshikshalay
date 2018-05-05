@@ -8,12 +8,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.DataSource;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.Target;
 
 import java.util.List;
@@ -30,21 +31,23 @@ import softgalli.gurukulshikshalay.retrofit.ApiUrl;
 public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.MyViewHolder> {
 
     private List<GalleryImages> images;
-    private Context mContext;
+    private Context mActivity;
     private OnClickListener onClickListener;
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
         public ImageView thumbnail;
+        private ProgressBar progressBar;
 
         public MyViewHolder(View view) {
             super(view);
             thumbnail = (ImageView) view.findViewById(R.id.thumbnail);
+            progressBar = (ProgressBar) view.findViewById(R.id.progress);
         }
     }
 
 
-    public GalleryAdapter(Context context, List<GalleryImages> images, OnClickListener onClickListener ) {
-        mContext = context;
+    public GalleryAdapter(Context context, List<GalleryImages> images, OnClickListener onClickListener) {
+        mActivity = context;
         this.images = images;
         this.onClickListener = onClickListener;
     }
@@ -58,29 +61,31 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.MyViewHo
     }
 
     @Override
-    public void onBindViewHolder(MyViewHolder holder, final int position) {
+    public void onBindViewHolder(final MyViewHolder holder, final int position) {
         GalleryImages image = images.get(position);
 
-
-
-        Glide.with(mContext)
-                .load(ApiUrl.IMAGE_BASE_URL+image.getImage())
+        RequestOptions requestOptions = new RequestOptions();
+        requestOptions.placeholder(R.drawable.logo);
+        requestOptions.error(R.drawable.logo);
+        requestOptions.fitCenter();
+        Glide.with(mActivity)
+                .load(ApiUrl.IMAGE_BASE_URL + image.getImage())
+                .apply(requestOptions)
                 .listener(new RequestListener<Drawable>() {
                     @Override
                     public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
-                      //  progressBar.setVisibility(View.GONE);
+                        holder.progressBar.setVisibility(View.GONE);
                         return false;
                     }
 
                     @Override
                     public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
-                       // progressBar.setVisibility(View.GONE);
+                        holder.progressBar.setVisibility(View.GONE);
                         return false;
                     }
                 })
                 .thumbnail(0.5f)
                 .into(holder.thumbnail);
-
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override

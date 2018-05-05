@@ -2,11 +2,14 @@ package softgalli.gurukulshikshalay.common;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
@@ -14,6 +17,7 @@ import android.support.v4.app.ActivityCompat;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
+import android.view.Window;
 import android.widget.TextView;
 
 import java.text.ParseException;
@@ -22,6 +26,9 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+
+import softgalli.gurukulshikshalay.R;
+import softgalli.gurukulshikshalay.activity.LoginScreenActivity;
 
 
 public class Utilz {
@@ -249,9 +256,9 @@ public class Utilz {
         return urrentDate;
     }
 
-    public void openDialer(final Activity mActivity, final String mobileNo) {
+    public static void openDialer(final Activity mActivity, final String mobileNo) {
         Intent intent = new Intent(Intent.ACTION_DIAL);
-        intent.setData(Uri.parse("tel:"+mobileNo));
+        intent.setData(Uri.parse("tel:" + mobileNo));
         mActivity.startActivity(intent);
         if (ActivityCompat.checkSelfPermission(mActivity, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
             mActivity.startActivity(intent);
@@ -260,9 +267,9 @@ public class Utilz {
     }
 
 
-    public void whatsappShare(final Activity mActivity, final String mobileNo) {
+    public static void whatsappShare(final Activity mActivity, final String mobileNo) {
         Intent intent = new Intent(Intent.ACTION_DIAL);
-        intent.setData(Uri.parse("tel:"+mobileNo));
+        intent.setData(Uri.parse("tel:" + mobileNo));
         mActivity.startActivity(intent);
         if (ActivityCompat.checkSelfPermission(mActivity, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
             mActivity.startActivity(intent);
@@ -270,21 +277,46 @@ public class Utilz {
         }
     }
 
-    public void openBrowser(final Activity mActivity, final String url) {
+    public static void openBrowser(final Activity mActivity, final String url) {
         Intent i = new Intent(Intent.ACTION_VIEW);
         i.setData(Uri.parse(url));
         mActivity.startActivity(i);
     }
 
-    public void openMail(final Activity mActivity) {
+    public static void openMail(final Activity mActivity) {
         Intent intent = new Intent(Intent.ACTION_SEND);
         intent.setType("message/rfc822");
-        intent.putExtra(Intent.EXTRA_EMAIL, new String[]{"ppradeepkumarr1993@gmail.com"});
+        intent.putExtra(Intent.EXTRA_EMAIL, new String[]{mActivity.getResources().getString(R.string.principal_email)});
         intent.putExtra(Intent.EXTRA_SUBJECT, "");
         intent.putExtra(Intent.EXTRA_TEXT, "");
         Intent mailer = Intent.createChooser(intent, null);
         mActivity.startActivity(mailer);
 
     }
+
+
+    public static void showLoginFirstDialog(final Activity mActivity) {
+        try {
+            final Dialog dialog = new Dialog(mActivity);
+            dialog.requestWindowFeature(Window.FEATURE_NO_TITLE); //before
+            dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            dialog.setContentView(R.layout.login_first_dialog);
+            dialog.setTitle(null);
+            dialog.setCanceledOnTouchOutside(false);
+
+            TextView textViewWelcome = dialog.findViewById(R.id.textViewWelcome);
+            textViewWelcome.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    mActivity.startActivity(new Intent(mActivity, LoginScreenActivity.class));
+                    dialog.dismiss();
+                }
+            });
+            dialog.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 }
 

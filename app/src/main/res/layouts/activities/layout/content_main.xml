@@ -42,37 +42,30 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="@dimen/margin_7"
+                        android:layout_margin="@dimen/margin_10dp"
                         android:orientation="horizontal">
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/margin_7"
-                            android:layout_weight=".29"
-                            android:gravity="center"
-                            android:orientation="vertical"></LinearLayout>
 
                         <LinearLayout
                             android:id="@+id/news_layout"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/margin_10"
                             android:layout_weight=".25"
                             android:gravity="center"
                             android:orientation="vertical">
 
                             <RelativeLayout
-                                android:layout_width="wrap_content"
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:orientation="vertical">
 
                                 <ImageView
                                     android:id="@+id/iv_news"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginTop="@dimen/margin_10"
-                                    android:background="@mipmap/news" />
+                                    android:layout_width="45dp"
+                                    android:layout_height="45dp"
+                                    android:layout_centerHorizontal="true"
+                                    android:layout_marginTop="@dimen/margin_10dp"
+                                    android:background="@mipmap/news"
+                                    android:scaleType="centerCrop" />
 
                                 <TextView
                                     fontPath="@string/roboto_regular"
@@ -87,16 +80,19 @@
                                     tools:ignore="MissingPrefix" />
 
                                 <LinearLayout
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginLeft="@dimen/margin_15"
+                                    android:layout_width="@dimen/margin_20"
+                                    android:layout_height="@dimen/margin_20"
+                                    android:layout_alignParentLeft="true"
+                                    android:layout_marginLeft="@dimen/margin_20"
+                                    android:layout_marginTop="5dp"
                                     android:background="@drawable/circular_view"
-                                    android:gravity="center">
+                                    android:gravity="center"
+                                    android:visibility="gone">
 
                                     <ImageView
                                         android:id="@+id/notification_news"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
+                                        android:layout_width="15dp"
+                                        android:layout_height="15dp"
                                         android:background="@mipmap/notification_activie" />
                                 </LinearLayout>
 
@@ -107,28 +103,102 @@
                             android:id="@+id/events_layout"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/margin_10"
                             android:layout_weight=".25"
                             android:gravity="center"
                             android:orientation="vertical">
 
                             <RelativeLayout
-                                android:layout_width="wrap_content"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent">
+
+                                <ImageView
+                                    android:id="@+id/syllabusIv"
+                                    android:layout_width="45dp"
+                                    android:layout_height="45dp"
+                                    android:layout_centerHorizontal="true"
+                                    android:layout_marginTop="@dimen/margin_10dp"
+                                    android:background="@drawable/syllabus"
+                                    android:scaleType="centerCrop" />
+
+                                <TextView
+                                    fontPath="@string/roboto_regular"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_below="@+id/syllabusIv"
+                                    android:layout_centerHorizontal="true"
+                                    android:layout_marginTop="@dimen/margin_10"
+                                    android:text="@string/syllabus"
+                                    android:textColor="@color/colorTextPrimary"
+                                    tools:ignore="MissingPrefix" />
+
+
+                            </RelativeLayout>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight=".25"
+                            android:gravity="center"
+                            android:orientation="vertical">
+
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content">
+
+                                <ImageView
+                                    android:id="@+id/timetableIv"
+                                    android:layout_width="45dp"
+                                    android:layout_height="45dp"
+                                    android:layout_centerHorizontal="true"
+                                    android:layout_marginTop="@dimen/margin_10dp"
+                                    android:background="@drawable/timetable"
+                                    android:scaleType="centerCrop" />
+
+                                <TextView
+                                    fontPath="@string/roboto_regular"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_below="@+id/timetableIv"
+                                    android:layout_centerHorizontal="true"
+                                    android:layout_marginTop="@dimen/margin_13"
+                                    android:text="@string/text_timetable"
+                                    android:textColor="@color/colorTextPrimary"
+                                    android:textSize="@dimen/text_13.3"
+                                    tools:ignore="MissingPrefix" />
+
+
+                            </RelativeLayout>
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight=".25"
+                            android:gravity="center"
+                            android:orientation="vertical">
+
+                            <RelativeLayout
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:orientation="vertical">
 
                                 <ImageView
                                     android:id="@+id/iv_events"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginTop="@dimen/margin_10"
-                                    android:background="@mipmap/events" />
+                                    android:layout_width="45dp"
+                                    android:layout_height="45dp"
+                                    android:layout_centerHorizontal="true"
+                                    android:layout_marginTop="@dimen/margin_10dp"
+                                    android:background="@mipmap/events"
+                                    android:scaleType="centerCrop" />
 
                                 <TextView
                                     fontPath="@string/roboto_regular"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_below="@+id/iv_events"
+                                    android:layout_centerHorizontal="true"
                                     android:layout_marginTop="@dimen/margin_10"
                                     android:text="@string/text_events"
                                     android:textColor="@color/colorTextPrimary"
@@ -136,162 +206,94 @@
                                     tools:ignore="MissingPrefix" />
 
                                 <LinearLayout
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginLeft="@dimen/margin_15"
+                                    android:layout_width="@dimen/margin_20"
+                                    android:layout_height="@dimen/margin_20"
+                                    android:layout_alignParentRight="true"
+                                    android:layout_marginRight="@dimen/margin_20"
+                                    android:layout_marginTop="5dp"
                                     android:background="@drawable/circular_view"
-                                    android:gravity="center">
+                                    android:gravity="center"
+                                    android:visibility="gone">
 
                                     <ImageView
                                         android:id="@+id/notification_events"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
+                                        android:layout_width="15dp"
+                                        android:layout_height="15dp"
                                         android:background="@mipmap/notification_activie" />
                                 </LinearLayout>
 
                             </RelativeLayout>
+
                         </LinearLayout>
 
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/margin_10"
-                            android:layout_weight=".25"
-                            android:gravity="center"
-                            android:orientation="vertical">
-
-                            <RelativeLayout
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:orientation="vertical">
-
-                                <ImageView
-                                    android:id="@+id/iv_study"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginTop="@dimen/margin_15"
-                                    android:background="@mipmap/study" />
-
-                                <TextView
-                                    fontPath="@string/roboto_regular"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_below="@+id/iv_study"
-                                    android:layout_marginTop="@dimen/margin_13"
-                                    android:text="@string/text_study"
-                                    android:textColor="@color/colorTextPrimary"
-                                    android:textSize="@dimen/text_13.3"
-                                    tools:ignore="MissingPrefix" />
-
-
-                            </RelativeLayout>
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/margin_10"
-                            android:layout_weight=".25"
-                            android:gravity="center"
-                            android:orientation="vertical">
-
-                            <RelativeLayout
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content">
-
-                                <ImageView
-                                    android:id="@+id/iv_profile"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_alignParentTop="true"
-                                    android:layout_centerHorizontal="true"
-                                    android:layout_marginTop="13dp"
-                                    android:background="@mipmap/profile" />
-
-                                <TextView
-                                    fontPath="@string/roboto_regular"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_below="@+id/iv_profile"
-                                    android:layout_marginTop="@dimen/margin_10"
-                                    android:text="@string/text_profile"
-                                    android:textColor="@color/colorTextPrimary"
-                                    tools:ignore="MissingPrefix" />
-
-
-                            </RelativeLayout>
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/margin_7"
-                            android:layout_weight=".29"
-                            android:gravity="center"
-                            android:orientation="vertical"></LinearLayout>
                     </LinearLayout>
                 </android.support.v7.widget.CardView>
 
-                <ImageView
-                    android:id="@+id/userImage"
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/margin_20"
-                    android:layout_marginTop="80dp"
-                    android:background="@mipmap/default_female_icon" />
+                    android:orientation="vertical">
 
-                <TextView
-                    fontPath="@string/roboto_regular"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_above="@+id/tv_reid"
-                    android:layout_marginLeft="7dp"
-                    android:layout_marginStart="7dp"
-                    android:layout_toRightOf="@+id/userImage"
-                    android:textColor="@color/colorTextWhite"
-                    android:textSize="@dimen/text_16.7"
-                    tools:ignore="MissingPrefix"
-                    tools:text="app_name" />
+                    <ImageView
+                        android:id="@+id/userImage"
+                        android:layout_width="@dimen/margin_40"
+                        android:layout_height="@dimen/margin_40"
+                        android:layout_marginLeft="@dimen/margin_20"
+                        android:layout_marginTop="80dp"
+                        android:background="@drawable/logo" />
 
-                <TextView
-                    android:id="@+id/tv_reid"
-                    fontPath="@string/roboto_regular"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/userImage"
-                    android:layout_marginLeft="@dimen/margin_20"
-                    android:layout_marginTop="@dimen/margin_10"
-                    android:text="@string/app_registrationno"
-                    android:textColor="@color/pinkcolor"
-                    android:textSize="@dimen/text_11.8"
-                    tools:ignore="MissingPrefix" />
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
 
-                <TextView
-                    android:id="@+id/textView"
-                    fontPath="@string/roboto_medium"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignTop="@+id/tv_reid"
-                    android:layout_toRightOf="@+id/tv_reid"
-                    android:text="  101061101056"
-                    android:textColor="@color/colorTextWhite"
-                    android:textSize="@dimen/text_11.8"
-                    tools:ignore="MissingPrefix" />
+                        <TextView
+                            android:id="@+id/tv_reid"
+                            fontPath="@string/roboto_regular"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/margin_20"
+                            android:text="@string/app_registrationno"
+                            android:textColor="@color/pinkcolor"
+                            android:textSize="@dimen/text_11.8"
+                            tools:ignore="MissingPrefix" />
 
-                <TextView
-                    android:id="@+id/tv_schoolName"
-                    fontPath="@string/roboto_bold"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/tv_reid"
-                    android:layout_marginLeft="@dimen/margin_20"
-                    android:layout_marginTop="@dimen/margin_5"
-                    android:maxLines="2"
-                    android:text="Bharti High school \nNawadih -1"
-                    android:textColor="@color/colorTextWhite"
-                    android:textSize="@dimen/text_20"
-                    tools:ignore="MissingPrefix" />
+                        <TextView
+                            android:id="@+id/textView"
+                            fontPath="@string/roboto_medium"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/school_registration_no"
+                            android:textColor="@color/colorTextWhite"
+                            android:textSize="@dimen/text_11.8"
+                            tools:ignore="MissingPrefix" />
+                    </LinearLayout>
 
+                    <TextView
+                        android:id="@+id/tv_schoolName"
+                        fontPath="@string/roboto_bold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/tv_reid"
+                        android:layout_marginLeft="@dimen/margin_20"
+                        android:layout_marginTop="@dimen/margin_5"
+                        android:maxLines="2"
+                        android:text="@string/school_name"
+                        android:textColor="@color/colorTextWhite"
+                        android:textSize="@dimen/text_20"
+                        tools:ignore="MissingPrefix" />
+
+                    <TextView
+                        fontPath="@string/roboto_regular"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/margin_20"
+                        android:text="@string/short_address"
+                        android:textColor="@color/colorTextWhite"
+                        android:textSize="@dimen/text_11.8"
+                        tools:ignore="MissingPrefix" />
+                </LinearLayout>
             </RelativeLayout>
 
             <LinearLayout

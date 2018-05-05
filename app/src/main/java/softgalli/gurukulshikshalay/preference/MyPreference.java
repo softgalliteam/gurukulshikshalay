@@ -31,7 +31,7 @@ public class MyPreference {
 
     public static boolean isFirstTimeLaunch() {
         SharedPreferences pref = AppController.getInstance().getSharedPreferences("FirstTimeLaunch1", 0);
-        return pref.getBoolean("FirstTimeLaunch", false);
+        return pref.getBoolean("FirstTimeLaunch", true);
     }
 
     public static void setPreLoad(boolean isLogin) {
@@ -82,4 +82,27 @@ public class MyPreference {
         return pref.getString("User_Image", "");
     }
 
+    public static void setEmailId(String email) {
+        SharedPreferences pref = AppController.getInstance().getSharedPreferences("EmailId", 0);
+        SharedPreferences.Editor editor = pref.edit();
+        editor.putString("email_id", email);
+        editor.commit();
+    }
+
+    public static String getEmailId() {
+        SharedPreferences pref = AppController.getInstance().getSharedPreferences("EmailId", 0);
+        return pref.getString("email_id", "");
+    }
+
+    public static void setUserMobileNo(String mobileNo) {
+        SharedPreferences pref = AppController.getInstance().getSharedPreferences("UserMobileNo1", 0);
+        SharedPreferences.Editor editor = pref.edit();
+        editor.putString("UserMobileNo", mobileNo);
+        editor.commit();
+    }
+
+    public static String getUserMobileNo() {
+        SharedPreferences pref = AppController.getInstance().getSharedPreferences("UserMobileNo1", 0);
+        return pref.getString("UserMobileNo", "");
+    }
 }

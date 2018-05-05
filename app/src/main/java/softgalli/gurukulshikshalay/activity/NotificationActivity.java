@@ -1,24 +1,24 @@
 package softgalli.gurukulshikshalay.activity;
 
+import android.app.Activity;
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
-
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import softgalli.gurukulshikshalay.R;
 import softgalli.gurukulshikshalay.adapter.NotificationAdapter;
 import softgalli.gurukulshikshalay.common.PreferenceName;
+import softgalli.gurukulshikshalay.common.Utilz;
 import softgalli.gurukulshikshalay.intrface.OnClickListener;
 import softgalli.gurukulshikshalay.model.NotificationDateList;
 import softgalli.gurukulshikshalay.model.NotificationModel;
@@ -34,8 +34,8 @@ public class NotificationActivity extends AppCompatActivity {
     RecyclerView recyclerView;
     @BindView(R.id.toolbar)
     Toolbar toolbar;
-
-    private static final String TAG = "";
+    private Activity mActivity;
+    private static final String TAG = NotificationActivity.class.getSimpleName();
     private ArrayList<NotificationDateList> notification_list;
     private RetrofitDataProvider retrofitDataProvider;
 
@@ -43,50 +43,44 @@ public class NotificationActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.notification);
+        mActivity = this;
         ButterKnife.bind(this);
         retrofitDataProvider = new RetrofitDataProvider(this);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         notification_list = new ArrayList<>();
 
-        gwtCurrentDate();
         initWidgit();
-        getNotificationList();
-    }
-
-    private void gwtCurrentDate() {
-        Calendar c = Calendar.getInstance();
-        System.out.println("Current time => " + c.getTime());
-
-        SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy");
-        String formattedDate = df.format(c.getTime());
-        Log.e("Current date => ", formattedDate);
+        if (Utilz.isOnline(mActivity)) {
+            getNotificationList();
+        } else {
+            Toast.makeText(mActivity, R.string.no_internet_connection, Toast.LENGTH_LONG).show();
+        }
     }
 
     private void getNotificationList() {
+        final ProgressDialog dialog = ProgressDialog.show(mActivity, "", getString(R.string.pleasewait), true);
+        dialog.setCancelable(false);
         retrofitDataProvider.notification("apexschool_1001", new DownlodableCallback<NotificationModel>() {
             @Override
             public void onSuccess(final NotificationModel result) {
-                //  closeDialog();
-
-
+                dialog.dismiss();
                 if (result.getStatus().contains(PreferenceName.TRUE)) {
-
                     notification_list = result.getData();
                     setAdapter();
-
                 }
-
             }
 
             @Override
             public void onFailure(String error) {
-                // closeDialog();
+                dialog.dismiss();
+                Toast.makeText(mActivity, mActivity.getResources().getString(R.string.something_went_wrong_error_message), Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onUnauthorized(int errorNumber) {
-
+                dialog.dismiss();
+                Toast.makeText(mActivity, mActivity.getResources().getString(R.string.something_went_wrong_error_message), Toast.LENGTH_SHORT).show();
             }
         });
     }

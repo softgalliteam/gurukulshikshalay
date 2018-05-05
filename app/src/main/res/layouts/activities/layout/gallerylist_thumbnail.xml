@@ -8,26 +8,39 @@
         android:id="@+id/thumbnail"
         android:layout_width="match_parent"
         android:layout_height="150dp"
-        android:adjustViewBounds="true"
-        android:scaleType="fitXY"
         android:layout_marginLeft="@dimen/margin_5"
         android:layout_marginRight="@dimen/margin_5"
-        android:layout_marginTop="@dimen/margin_5"/>
-    <TextView
-        android:id="@+id/folder_name"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/thumbnail"
         android:layout_marginTop="@dimen/margin_5"
-        android:textColor="@color/colorPrimary"
-        android:gravity="center"
-        android:textSize="14sp"/>
+        android:adjustViewBounds="true"
+        android:scaleType="fitXY"
+        android:src="@drawable/g24" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:layout_marginLeft="@dimen/margin_5"
+        android:layout_marginRight="@dimen/margin_5"
+        android:layout_marginTop="@dimen/margin_5"
+        android:background="@drawable/bottom_tint"
+        android:gravity="bottom"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/folder_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/thumbnail"
+            android:layout_marginBottom="@dimen/margin_10dp"
+            android:gravity="center"
+            android:textColor="@color/colorTextWhite"
+            android:textSize="@dimen/text_size" />
+    </LinearLayout>
+
 
     <ProgressBar
         android:id="@+id/progress"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:visibility="visible" />
+        android:layout_centerInParent="true" />
 
 </RelativeLayout>

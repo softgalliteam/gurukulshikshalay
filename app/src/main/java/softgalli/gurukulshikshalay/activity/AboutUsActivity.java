@@ -4,13 +4,19 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.MenuItem;
 import android.view.View;
+import android.widget.LinearLayout;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 import softgalli.gurukulshikshalay.R;
+import softgalli.gurukulshikshalay.common.Utilz;
 
 
 public class AboutUsActivity extends AppCompatActivity {
+    @BindView(R.id.callUsLL)
+    LinearLayout callUsLL;
     private String TAG = AboutUsActivity.class.getSimpleName();
     private Activity mActivity;
 
@@ -18,6 +24,7 @@ public class AboutUsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.aboutus_activity);
+        ButterKnife.bind(this);
         mActivity = this;
 
         initToolbar();
@@ -37,4 +44,8 @@ public class AboutUsActivity extends AppCompatActivity {
         });
     }
 
+    @OnClick(R.id.callUsLL)
+    public void onViewClicked() {
+        Utilz.openDialer(mActivity, mActivity.getResources().getString(R.string.helpline_no1));
+    }
 }

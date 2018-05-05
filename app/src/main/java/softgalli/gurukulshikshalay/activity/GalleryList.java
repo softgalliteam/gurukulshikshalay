@@ -57,7 +57,7 @@ public class GalleryList extends AppCompatActivity {
             getSupportActionBar().setTitle(getResources().getString(R.string.alumnilist));
         }
         else {*/
-            getSupportActionBar().setTitle(getResources().getString(R.string.gallery));
+            getSupportActionBar().setTitle(getResources().getString(R.string.gallery_album));
         //}
 
 

@@ -35,7 +35,7 @@
                 android:layout_height="80dp"
                 android:scaleType="centerCrop"
                 android:src="@drawable/user"
-                app:civ_border_color="#3140b4"
+                app:civ_border_color="#dc5da4"
                 app:civ_border_overlay="true"
                 app:civ_border_width="2dp" />
         </RelativeLayout>

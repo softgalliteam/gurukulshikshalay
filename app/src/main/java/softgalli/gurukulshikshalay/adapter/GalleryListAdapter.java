@@ -16,6 +16,7 @@ import com.bumptech.glide.load.DataSource;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.Target;
 
 import java.util.List;
@@ -68,9 +69,13 @@ public class GalleryListAdapter extends RecyclerView.Adapter<GalleryListAdapter.
         GalleryDataModel image = images.get(position);
 
         if (image.getStatus().equalsIgnoreCase("1")) {
-
+            RequestOptions requestOptions = new RequestOptions();
+            requestOptions.placeholder(R.drawable.logo);
+            requestOptions.error(R.drawable.logo);
+            requestOptions.fitCenter();
             Glide.with(mContext)
                     .load(ApiUrl.IMAGE_BASE_URL+image.getImages().get(0).getImage())
+                    .apply(requestOptions)
                     .listener(new RequestListener<Drawable>() {
                         @Override
                         public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {

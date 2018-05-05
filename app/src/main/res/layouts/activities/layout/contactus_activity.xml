@@ -109,7 +109,7 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="+91 9835845701"
+                                android:text="@string/principal_phone"
                                 android:textColor="@color/textColor"
                                 android:textSize="@dimen/text_size"
                                 android:textStyle="bold" />
@@ -160,7 +160,7 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="+91 9934342061"
+                                android:text="@string/helpline_no1"
                                 android:textColor="@color/textColor"
                                 android:textSize="@dimen/text_size"
                                 android:textStyle="bold" />
@@ -216,7 +216,7 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="info@gurukulsikshalay.com"
+                                android:text="@string/principal_email"
                                 android:textColor="@color/textColor"
                                 android:textSize="@dimen/text_size"
                                 android:textStyle="bold" />
