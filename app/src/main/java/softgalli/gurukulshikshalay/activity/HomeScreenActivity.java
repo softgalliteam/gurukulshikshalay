@@ -111,6 +111,10 @@ public class HomeScreenActivity extends AppCompatActivity
             } catch (ActivityNotFoundException e) {
                 e.printStackTrace();
             }
+        } else if (id == R.id.nav_website) {
+            Utilz.openBrowser(mActivity, Apis.MAIN_URL);
+        } else if (id == R.id.nav_map) {
+            Utilz.openBrowser(mActivity, mActivity.getResources().getString(R.string.school_on_map_url));
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -217,7 +221,8 @@ public class HomeScreenActivity extends AppCompatActivity
         } else {
             (navHeaderView.findViewById(R.id.spaceHeader)).setVisibility(View.GONE);
         }
-        navHeaderView.setOnClickListener(new View.OnClickListener() {
+        View headerview = navigationView.getHeaderView(0);
+        headerview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Utilz.showLoginFirstDialog(mActivity);

@@ -6,11 +6,11 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/about_us"
-            android:icon="@drawable/feedback_icon"
+            android:icon="@drawable/about_us"
             android:title="About Us" />
         <item
             android:id="@+id/contact_us"
-            android:icon="@drawable/feedback_icon"
+            android:icon="@drawable/contactus"
             android:title="Contact Us" />
         <item
             android:id="@+id/feedback"
@@ -18,7 +18,7 @@
             android:title="Feedback" />
         <item
             android:id="@+id/admission"
-            android:icon="@drawable/feedback_icon"
+            android:icon="@drawable/admission_icon"
             android:title="Admission" />
         <item
             android:id="@+id/share"
@@ -34,17 +34,17 @@
             android:title="Rate Our App" />
     </group>
 
-    <!-- <item android:title="Communicate">
+     <item android:title="Visit Us">
          <menu>
              <item
-                 android:id="@+id/nav_share"
+                 android:id="@+id/nav_website"
                  android:icon="@drawable/logo"
-                 android:title="Share" />
+                 android:title="Our Website" />
              <item
-                 android:id="@+id/nav_send"
-                 android:icon="@drawable/logo"
-                 android:title="Send" />
+                 android:id="@+id/nav_map"
+                 android:icon="@drawable/map"
+                 android:title="Google Map" />
          </menu>
-     </item>-->
+     </item>
 
 </menu>

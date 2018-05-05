@@ -54,7 +54,7 @@ public class ContactUsActivity extends AppCompatActivity {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.callButton:
-                Utilz.openDialer(mActivity, mActivity.getResources().getString(R.string.principal_name));
+                Utilz.openDialer(mActivity, mActivity.getResources().getString(R.string.principal_phone));
                 break;
             case R.id.callSchoolButton:
                 Utilz.openDialer(mActivity, mActivity.getResources().getString(R.string.helpline_no1));

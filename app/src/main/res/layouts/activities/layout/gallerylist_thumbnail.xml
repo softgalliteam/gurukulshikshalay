@@ -8,9 +8,7 @@
         android:id="@+id/thumbnail"
         android:layout_width="match_parent"
         android:layout_height="150dp"
-        android:layout_marginLeft="@dimen/margin_5"
-        android:layout_marginRight="@dimen/margin_5"
-        android:layout_marginTop="@dimen/margin_5"
+        android:layout_margin="@dimen/margin_5"
         android:adjustViewBounds="true"
         android:scaleType="fitXY"
         android:src="@drawable/g24" />
@@ -18,9 +16,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="150dp"
-        android:layout_marginLeft="@dimen/margin_5"
-        android:layout_marginRight="@dimen/margin_5"
-        android:layout_marginTop="@dimen/margin_5"
+        android:layout_margin="@dimen/margin_5"
         android:background="@drawable/bottom_tint"
         android:gravity="bottom"
         android:orientation="vertical">
