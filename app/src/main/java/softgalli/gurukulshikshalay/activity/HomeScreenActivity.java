@@ -19,12 +19,15 @@ import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.androidquery.AQuery;
 import com.androidquery.util.Constants;
+
+import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -37,6 +40,7 @@ import softgalli.gurukulshikshalay.common.ClsGeneral;
 import softgalli.gurukulshikshalay.common.Constant;
 import softgalli.gurukulshikshalay.common.Utilz;
 import softgalli.gurukulshikshalay.intrface.OnClickListener;
+import softgalli.gurukulshikshalay.model.UpcomingActivityModel;
 import softgalli.gurukulshikshalay.preference.MyPreference;
 
 public class HomeScreenActivity extends AppCompatActivity
@@ -51,6 +55,8 @@ public class HomeScreenActivity extends AppCompatActivity
     RelativeLayout timetableRl;
     @BindView(R.id.eventsRl)
     RelativeLayout eventsRl;
+    @BindView(R.id.upcomingActContainerLl)
+    LinearLayout upcomingActContainerLl;
     private boolean isBackPressed;
     private Activity mActivity;
     private DrawerLayout drawer;
@@ -79,6 +85,25 @@ public class HomeScreenActivity extends AppCompatActivity
 
         //Setting Profile
         manageNavHeaderView();
+
+        //Upcoming Activity Handling
+        upcomingActivityHandling();
+    }
+
+    private void upcomingActivityHandling() {
+        ArrayList<UpcomingActivityModel> upcomingActivityModelArrayList = new ArrayList<>();
+        upcomingActivityModelArrayList.add(new UpcomingActivityModel("UpcomingActivity1", "20 May 2018"));
+        upcomingActivityModelArrayList.add(new UpcomingActivityModel("UpcomingActivity2", "25 May 2018"));
+        upcomingActivityModelArrayList.add(new UpcomingActivityModel("UpcomingActivity3", "30 May 2018"));
+
+        for (UpcomingActivityModel eachUpcmgActvty : upcomingActivityModelArrayList) {
+            View child = getLayoutInflater().inflate(R.layout.upcoming_activity_row, null);
+            upcomingActContainerLl.addView(child);
+            TextView titleTv = child.findViewById(R.id.upcomingActTitleTv);
+            titleTv.setText(eachUpcmgActvty.getUpcomingActivityTitle());
+            TextView dateTimeTv = child.findViewById(R.id.upcomingActDateTv);
+            dateTimeTv.setText(eachUpcmgActvty.getUpcomingActivityDate());
+        }
     }
 
     @SuppressWarnings("StatementWithEmptyBody")
@@ -86,7 +111,6 @@ public class HomeScreenActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
-
         if (id == R.id.about_us) {
             startActivity(new Intent(mActivity, AboutUsActivity.class));
         } else if (id == R.id.contact_us) {

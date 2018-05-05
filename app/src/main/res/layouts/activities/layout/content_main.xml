@@ -326,9 +326,12 @@
                 android:layout_marginRight="@dimen/margin_10"
                 android:layout_marginTop="@dimen/margin_10" />
 
-            <include layout="@layout/upcoming_activity_row" />
-
-            <include layout="@layout/upcoming_activity_row" />
+            <LinearLayout
+                android:id="@+id/upcomingActContainerLl"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+            </LinearLayout>
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>
 </android.support.constraint.ConstraintLayout>
