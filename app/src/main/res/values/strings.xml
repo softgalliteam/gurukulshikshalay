@@ -77,6 +77,7 @@
     <string name="login_first_message">Please login first to access all the features of this school, Please contact to you principal for your id and password.</string>
     <string name="please_login">Please Login</string>
     <string name="login">Login</string>
+    <string name="sent_successfully">Sent Successfully</string>
     <string name="school_on_map_url"><![CDATA[https://www.google.com/maps?ll=24.445404,85.881632&z=15&t=m&hl=en-US&gl=IN&mapclient=embed&cid=6936239094202783588]]></string>
 
     <string-array name="studenthomecategory">

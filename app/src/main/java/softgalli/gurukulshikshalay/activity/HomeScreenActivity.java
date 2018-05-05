@@ -91,6 +91,7 @@ public class HomeScreenActivity extends AppCompatActivity
     }
 
     private void upcomingActivityHandling() {
+        //TODO call api and get upcoming activities details from server and remove this hardcoded list.
         ArrayList<UpcomingActivityModel> upcomingActivityModelArrayList = new ArrayList<>();
         upcomingActivityModelArrayList.add(new UpcomingActivityModel("UpcomingActivity1", "20 May 2018"));
         upcomingActivityModelArrayList.add(new UpcomingActivityModel("UpcomingActivity2", "25 May 2018"));
