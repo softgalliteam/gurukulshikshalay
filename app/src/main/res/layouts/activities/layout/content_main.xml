@@ -64,7 +64,7 @@
                                     android:layout_height="45dp"
                                     android:layout_centerHorizontal="true"
                                     android:layout_marginTop="@dimen/margin_10dp"
-                                    android:background="@mipmap/news"
+                                    android:background="@drawable/news"
                                     android:scaleType="centerCrop" />
 
                                 <TextView
@@ -93,7 +93,7 @@
                                         android:id="@+id/notification_news"
                                         android:layout_width="15dp"
                                         android:layout_height="15dp"
-                                        android:background="@mipmap/notification_activie" />
+                                        android:background="@drawable/notification_activie" />
                                 </LinearLayout>
 
                             </RelativeLayout>
@@ -192,7 +192,7 @@
                                     android:layout_height="45dp"
                                     android:layout_centerHorizontal="true"
                                     android:layout_marginTop="@dimen/margin_10dp"
-                                    android:background="@mipmap/events"
+                                    android:background="@drawable/events"
                                     android:scaleType="centerCrop" />
 
                                 <TextView
@@ -221,7 +221,7 @@
                                         android:id="@+id/notification_events"
                                         android:layout_width="15dp"
                                         android:layout_height="15dp"
-                                        android:background="@mipmap/notification_activie" />
+                                        android:background="@drawable/notification_activie" />
                                 </LinearLayout>
 
                             </RelativeLayout>
@@ -247,6 +247,7 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/margin_5"
                         android:gravity="center_vertical"
                         android:orientation="horizontal">
 
@@ -279,7 +280,6 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/tv_reid"
                         android:layout_marginLeft="@dimen/margin_20"
-                        android:layout_marginTop="@dimen/margin_5"
                         android:maxLines="2"
                         android:text="@string/school_name"
                         android:textColor="@color/colorTextWhite"
@@ -330,8 +330,7 @@
                 android:id="@+id/upcomingActContainerLl"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
-            </LinearLayout>
+                android:orientation="vertical"></LinearLayout>
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>
 </android.support.constraint.ConstraintLayout>
