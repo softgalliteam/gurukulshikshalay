@@ -40,6 +40,7 @@ import softgalli.gurukulshikshalay.common.ClsGeneral;
 import softgalli.gurukulshikshalay.common.Constant;
 import softgalli.gurukulshikshalay.common.Utilz;
 import softgalli.gurukulshikshalay.intrface.OnClickListener;
+import softgalli.gurukulshikshalay.model.TeacherListModel;
 import softgalli.gurukulshikshalay.model.UpcomingActivityModel;
 import softgalli.gurukulshikshalay.preference.MyPreference;
 
@@ -279,10 +280,12 @@ public class HomeScreenActivity extends AppCompatActivity
                 startActivity(new Intent(HomeScreenActivity.this, GalleryList.class));
                 break;
             case R.id.timetableRl:
-                Utilz.showLoginFirstDialog(mActivity);
+               // Utilz.showLoginFirstDialog(mActivity);
+                startActivity(new Intent(HomeScreenActivity.this, TopperListActivity.class));
                 break;
             case R.id.eventsRl:
-                Utilz.showLoginFirstDialog(mActivity);
+                startActivity(new Intent(HomeScreenActivity.this, TeacherListActivity.class));
+               // Utilz.showLoginFirstDialog(mActivity);
                 break;
             case R.id.newsRl:
                 startActivity(new Intent(HomeScreenActivity.this, NotificationActivity.class));

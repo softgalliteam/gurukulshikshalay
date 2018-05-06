@@ -1,9 +1,13 @@
 package softgalli.gurukulshikshalay.retrofit;
 
 
+import softgalli.gurukulshikshalay.model.AlumniModel;
+import softgalli.gurukulshikshalay.model.FeedBackModel;
 import softgalli.gurukulshikshalay.model.GalleryModel;
 import softgalli.gurukulshikshalay.model.NotificationModel;
 import softgalli.gurukulshikshalay.model.StuTeaModel;
+import softgalli.gurukulshikshalay.model.TeacherListModel;
+import softgalli.gurukulshikshalay.model.TopperLisrModel;
 
 /**
  * Created by Shankar on 1/27/2018.
@@ -17,6 +21,10 @@ public interface ServiceMethods {
                     String admission_date, String residential_address, DownlodableCallback<StuTeaModel> callback);
 
     void galleryList(DownlodableCallback<GalleryModel> callback);
+    void topperlist(DownlodableCallback<TopperLisrModel> callback);
+    void alumniList(DownlodableCallback<AlumniModel> callback);
+    void teacherList(DownlodableCallback<TeacherListModel> callback);
+    void feedback(String name, String mobile, String message, String rating,String date, DownlodableCallback<FeedBackModel> callback);
 
 
 

@@ -6,9 +6,13 @@ import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import softgalli.gurukulshikshalay.model.AlumniModel;
+import softgalli.gurukulshikshalay.model.FeedBackModel;
 import softgalli.gurukulshikshalay.model.GalleryModel;
 import softgalli.gurukulshikshalay.model.NotificationModel;
 import softgalli.gurukulshikshalay.model.StuTeaModel;
+import softgalli.gurukulshikshalay.model.TeacherListModel;
+import softgalli.gurukulshikshalay.model.TopperLisrModel;
 
 /**
  * Created by Shankar on 1/27/2018.
@@ -33,5 +37,18 @@ public interface ApiRetrofitService {
 
     @GET(ApiUrl.GALLERYLIST)
     Call<GalleryModel> listGallery();
+
+    @GET(ApiUrl.TOPPERLIST)
+    Call<TopperLisrModel> topperList();
+
+    @GET(ApiUrl.ALUMNI)
+    Call<AlumniModel> alumni();
+
+    @GET(ApiUrl.TEACHERLIST)
+    Call<TeacherListModel> teacherList();
+
+    @POST(ApiUrl.FEEDBACK)
+    @FormUrlEncoded
+    Call<FeedBackModel> sendFeedback(@Field("name") String name, @Field("mobile") String mobile, @Field("message") String message, @Field("rating") String rating, @Field("date") String date);
 
 }

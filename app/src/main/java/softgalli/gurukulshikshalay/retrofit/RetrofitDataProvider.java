@@ -13,9 +13,13 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+import softgalli.gurukulshikshalay.model.AlumniModel;
+import softgalli.gurukulshikshalay.model.FeedBackModel;
 import softgalli.gurukulshikshalay.model.GalleryModel;
 import softgalli.gurukulshikshalay.model.NotificationModel;
 import softgalli.gurukulshikshalay.model.StuTeaModel;
+import softgalli.gurukulshikshalay.model.TeacherListModel;
+import softgalli.gurukulshikshalay.model.TopperLisrModel;
 
 /**
  * Created by Shankar on 1/27/2018.
@@ -175,6 +179,138 @@ public class RetrofitDataProvider extends AppCompatActivity implements ServiceMe
 
                     @Override
                     public void onFailure(@NonNull Call<GalleryModel> call, @NonNull Throwable t) {
+                        Log.d("Result", "t" + t.getMessage());
+                        callback.onFailure(t.getMessage());
+
+                    }
+                }
+        );
+    }
+
+    @Override
+    public void topperlist(final DownlodableCallback<TopperLisrModel> callback) {
+        createRetrofitService().topperList().enqueue(
+                new Callback<TopperLisrModel>() {
+                    @Override
+                    public void onResponse(@NonNull Call<TopperLisrModel> call, @NonNull final Response<TopperLisrModel> response) {
+                        if (response.isSuccessful()) {
+
+                            TopperLisrModel mobileRegisterPojo = response.body();
+                            callback.onSuccess(mobileRegisterPojo);
+
+                        } else
+
+                        {
+                            if (response.code() == 401)
+                            {
+                                callback.onUnauthorized(response.code());
+                            }
+                            else {
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(@NonNull Call<TopperLisrModel> call, @NonNull Throwable t) {
+                        Log.d("Result", "t" + t.getMessage());
+                        callback.onFailure(t.getMessage());
+
+                    }
+                }
+        );
+    }
+
+    @Override
+    public void alumniList(final DownlodableCallback<AlumniModel> callback) {
+        createRetrofitService().alumni().enqueue(
+                new Callback<AlumniModel>() {
+                    @Override
+                    public void onResponse(@NonNull Call<AlumniModel> call, @NonNull final Response<AlumniModel> response) {
+                        if (response.isSuccessful()) {
+
+                            AlumniModel mobileRegisterPojo = response.body();
+                            callback.onSuccess(mobileRegisterPojo);
+
+                        } else
+
+                        {
+                            if (response.code() == 401)
+                            {
+                                callback.onUnauthorized(response.code());
+                            }
+                            else {
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(@NonNull Call<AlumniModel> call, @NonNull Throwable t) {
+                        Log.d("Result", "t" + t.getMessage());
+                        callback.onFailure(t.getMessage());
+
+                    }
+                }
+        );
+    }
+
+    @Override
+    public void teacherList(final DownlodableCallback<TeacherListModel> callback) {
+        createRetrofitService().teacherList().enqueue(
+                new Callback<TeacherListModel>() {
+                    @Override
+                    public void onResponse(@NonNull Call<TeacherListModel> call, @NonNull final Response<TeacherListModel> response) {
+                        if (response.isSuccessful()) {
+
+                            TeacherListModel mobileRegisterPojo = response.body();
+                            callback.onSuccess(mobileRegisterPojo);
+
+                        } else
+
+                        {
+                            if (response.code() == 401)
+                            {
+                                callback.onUnauthorized(response.code());
+                            }
+                            else {
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(@NonNull Call<TeacherListModel> call, @NonNull Throwable t) {
+                        Log.d("Result", "t" + t.getMessage());
+                        callback.onFailure(t.getMessage());
+
+                    }
+                }
+        );
+    }
+
+    @Override
+    public void feedback(String name, String mobile, String message, String rating, String date, final DownlodableCallback<FeedBackModel> callback) {
+        createRetrofitService().sendFeedback(name, mobile, message, rating, date).enqueue(
+                new Callback<FeedBackModel>() {
+                    @Override
+                    public void onResponse(@NonNull Call<FeedBackModel> call, @NonNull final Response<FeedBackModel> response) {
+                        if (response.isSuccessful()) {
+
+                            FeedBackModel mobileRegisterPojo = response.body();
+                            callback.onSuccess(mobileRegisterPojo);
+
+                        } else
+
+                        {
+                            if (response.code() == 401)
+                            {
+                                callback.onUnauthorized(response.code());
+                            }
+                            else {
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(@NonNull Call<FeedBackModel> call, @NonNull Throwable t) {
                         Log.d("Result", "t" + t.getMessage());
                         callback.onFailure(t.getMessage());
 

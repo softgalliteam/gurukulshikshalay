@@ -4,6 +4,7 @@ public class ApiUrl {
 
     public static final String BASE_URL = "http://apextechies.com/apexschool/index.php/";
     public static final String IMAGE_BASE_URL = "http://www.gurukulshikshalay.com/";
+    public static final String IMAGE_BASE_URL_SPS = "http://spsnawalshahi.com/";
     public static final String NOTIFICATION = "get_notification";
     public static final String TIMETABLE = "get_TimeTable";
     public static final String EXAMSCHEDULE = "get_ExanSchedule";
@@ -16,4 +17,5 @@ public class ApiUrl {
     public static final String GALLERYLIST = "get_gallery";
     public static final String ALUMNI = "get_alumni";
     public static final String TOPPERLIST = "get_topperList";
+    public static final String FEEDBACK = "add_Feedback";
 }

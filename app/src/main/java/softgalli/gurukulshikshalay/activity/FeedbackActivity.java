@@ -5,6 +5,7 @@ import android.accounts.AccountManager;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -18,9 +19,16 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import softgalli.gurukulshikshalay.R;
+import softgalli.gurukulshikshalay.adapter.GalleryListAdapter;
+import softgalli.gurukulshikshalay.common.PreferenceName;
 import softgalli.gurukulshikshalay.common.Utilz;
 import softgalli.gurukulshikshalay.common.Validation;
+import softgalli.gurukulshikshalay.intrface.OnClickListener;
+import softgalli.gurukulshikshalay.model.FeedBackModel;
+import softgalli.gurukulshikshalay.model.GalleryModel;
 import softgalli.gurukulshikshalay.preference.MyPreference;
+import softgalli.gurukulshikshalay.retrofit.DownlodableCallback;
+import softgalli.gurukulshikshalay.retrofit.RetrofitDataProvider;
 
 
 /**
@@ -32,12 +40,13 @@ public class FeedbackActivity extends AppCompatActivity implements RatingBar.OnR
     String selectedIssue = "", errorMessage;
     EditText feedbackText;
     private Activity mActivity;
+    private RetrofitDataProvider retrofitDataProvider;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.feedback_activity);
-
+        retrofitDataProvider = new RetrofitDataProvider(this);
         mActivity = this;
         // Check if no view has focus:
         View view = this.getCurrentFocus();
@@ -78,7 +87,6 @@ public class FeedbackActivity extends AppCompatActivity implements RatingBar.OnR
                 }
 
                 Log.i(TAG, "**" + msg + "**" + email + "**" + mobile + "**" + selectedIssue + "**");
-                if (MyPreference.isLogined()) {
                     //Toast.makeText(FeedbackActivity.this,  typetxt+"\n" + selectedIssue + "\n" + msg, Toast.LENGTH_LONG).show();
                     if (Utilz.isOnline(mActivity)) {
                         if (msg.isEmpty()) {
@@ -87,24 +95,46 @@ public class FeedbackActivity extends AppCompatActivity implements RatingBar.OnR
                             } else {
                                 feedbackText.setError(errorMessage);
                             }
-                            //Toast.makeText(FeedbackActivity.this, R.string.write_your_feedback_txt, Toast.LENGTH_LONG).show();
+                            Toast.makeText(FeedbackActivity.this, R.string.write_your_feedback_txt, Toast.LENGTH_LONG).show();
                         } else {
                             if (Validation.isPhoneNumber(feedbackMobile, true)) {
-                                //sendFeedback(selectedRating, msg, email, mobile);
+                                sendFeedback(email, mobile, msg, selectedRating);
                             }
                         }
 
                     } else {
                         Toast.makeText(FeedbackActivity.this, R.string.no_internet_connection, Toast.LENGTH_LONG).show();
                     }
-                } else {
-                    Utilz.showLoginFirstDialog(mActivity);
-                }
+
             }
         });
 
 
         initToolbar();
+    }
+
+    private void sendFeedback(String email, String mobile, String msg, float selectedRating) {
+        Utilz.showDailog(FeedbackActivity.this, getResources().getString(R.string.pleasewait));
+        retrofitDataProvider.feedback(email, mobile, msg, ""+selectedRating, Utilz.getCurrentDate(), new DownlodableCallback<FeedBackModel>() {
+            @Override
+            public void onSuccess(final FeedBackModel result) {
+                Utilz.closeDialog();
+                if (result.getStatus().contains(PreferenceName.TRUE)) {
+
+                  finish();
+                }
+            }
+
+            @Override
+            public void onFailure(String error) {
+                Utilz.closeDialog();
+            }
+
+            @Override
+            public void onUnauthorized(int errorNumber) {
+                Utilz.closeDialog();
+            }
+        });
     }
 
     private void initToolbar() {
@@ -121,79 +151,7 @@ public class FeedbackActivity extends AppCompatActivity implements RatingBar.OnR
         });
     }
 
-/*
-    private void sendFeedback(float selectedRating, String msg, String email, String mobile) {
-        final ProgressDialog dialog = ProgressDialog.show(FeedbackActivity.this, "", getString(R.string.pleasewait), true);
-        dialog.setCancelable(false);
-        final RequestParams params = new RequestParams();
-        params.add("feelings", feel);
-        if (selectedRating > 0.0) {
-            msg = msg + " \nRating Star : " + selectedRating;
-        }
-        try {
-            String manufacturer = Build.MANUFACTURER;
 
-            msg = msg + " \nPhone Manufacturer : " + manufacturer;
-
-            String model = Build.MODEL;
-            msg = msg + " \nPhone Model : " + model;
-
-            String androidOS = Build.VERSION.RELEASE;
-            msg = msg + " \nOS Version : " + androidOS;
-
-            String versionName = getPackageManager()
-                    .getPackageInfo(getPackageName(), 0).versionName;
-            msg = msg + " \nSSNow Apis Version : " + versionName;
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        params.add("feedback", msg);
-        if (!mobile.isEmpty()) {
-            params.add("email", email);
-        } else {
-            params.add("email", MyPreference.getEmailId());
-        }
-        if (!mobile.isEmpty()) {
-            params.add("mobile_no", mobile);
-        } else {
-            params.add("mobile_no", MyPreference.getUserMobileNo());
-        }
-        Log.i("Feedback : ", "  selectedRating:" + selectedRating + "  msg:" + msg);
-        AsyncHttpClient client = new AsyncHttpClient(true, 80, 443);
-
-        client.get(getApplicationContext(), Apis.SEND_FEEDBACK, params, new TextHttpResponseHandler() {
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, String responseString) {
-                dialog.dismiss();
-                Log.i("TAG", statusCode + "Response : " + responseString);
-                try {
-                    if (statusCode == 200) {
-                        Toast.makeText(FeedbackActivity.this, R.string.feedback_sent_successfully, Toast.LENGTH_LONG).show();
-                        finish();
-                    } else {
-                        Toast.makeText(FeedbackActivity.this, R.string.failed_to_send_feedback, Toast.LENGTH_LONG).show();
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-                try {
-                    dialog.dismiss();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-
-            @Override
-            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
-                dialog.dismiss();
-                Toast.makeText(FeedbackActivity.this, R.string.feedback_sent_successfully, Toast.LENGTH_LONG).show();
-                finish();
-            }
-        });
-    }
-*/
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

@@ -131,6 +131,7 @@
     <string name="name_hint">Enter Name*</string>
     <string name="email_hint">Enter Your Email*</string>
     <string name="email_hint_optional">Enter Email(Optional)</string>
+    <string name="name_hint_optional">Enter Name</string>
     <string name="phone_hint">Enter Mobile No.*</string>
     <string name="error_msg">Write your</string>
     <string name="no_internet_connection">Please check your internet connection and try again.</string>
