@@ -191,12 +191,12 @@ public class HomeScreenActivity extends AppCompatActivity
     }
 
     private int[] getStudentTeacherIcon() {
-        int icon[] = {R.mipmap.academics, R.mipmap.academics, R.mipmap.academics, R.mipmap.academics, R.mipmap.academics, R.mipmap.academics};
+        int icon[] = {R.drawable.academics, R.drawable.academics, R.drawable.academics, R.drawable.academics, R.drawable.academics, R.drawable.academics};
         return icon;
     }
 
     private int[] getSkipIcon() {
-        int icon[] = {R.mipmap.academics, R.mipmap.academics, R.mipmap.academics, R.mipmap.academics, R.mipmap.academics, R.mipmap.academics};
+        int icon[] = {R.drawable.academics, R.drawable.academics, R.drawable.academics, R.drawable.academics, R.drawable.academics, R.drawable.academics};
         return icon;
     }
 
@@ -245,9 +245,13 @@ public class HomeScreenActivity extends AppCompatActivity
         headerview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Utilz.showLoginFirstDialog(mActivity);
                 if (drawer != null) {
                     drawer.closeDrawer(GravityCompat.START);
+                }
+                if (MyPreference.isLogined()) {
+                    startActivity(new Intent(mActivity, ViewProfileActivity.class));
+                } else {
+                    Utilz.showLoginFirstDialog(mActivity);
                 }
             }
         });
