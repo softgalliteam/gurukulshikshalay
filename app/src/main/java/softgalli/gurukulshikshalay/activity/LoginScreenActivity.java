@@ -119,6 +119,7 @@ public class LoginScreenActivity extends AppCompatActivity implements KenBurnsVi
         if (Utilz.isOnline(mActivity)) {
             if (checkValidation()) {
                 //loginFromServer();
+                Toast.makeText(mActivity, "User Id or Password is incorrect, Please contact to your principal.", Toast.LENGTH_SHORT).show();
             }
         } else {
             Toast.makeText(mActivity, getResources().getString(R.string.no_internet_connection), Toast.LENGTH_SHORT).show();

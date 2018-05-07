@@ -3,9 +3,7 @@ package softgalli.gurukulshikshalay.activity;
 import android.accounts.Account;
 import android.accounts.AccountManager;
 import android.app.Activity;
-import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -19,13 +17,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import softgalli.gurukulshikshalay.R;
-import softgalli.gurukulshikshalay.adapter.GalleryListAdapter;
 import softgalli.gurukulshikshalay.common.PreferenceName;
 import softgalli.gurukulshikshalay.common.Utilz;
 import softgalli.gurukulshikshalay.common.Validation;
-import softgalli.gurukulshikshalay.intrface.OnClickListener;
 import softgalli.gurukulshikshalay.model.FeedBackModel;
-import softgalli.gurukulshikshalay.model.GalleryModel;
 import softgalli.gurukulshikshalay.preference.MyPreference;
 import softgalli.gurukulshikshalay.retrofit.DownlodableCallback;
 import softgalli.gurukulshikshalay.retrofit.RetrofitDataProvider;
@@ -87,24 +82,24 @@ public class FeedbackActivity extends AppCompatActivity implements RatingBar.OnR
                 }
 
                 Log.i(TAG, "**" + msg + "**" + email + "**" + mobile + "**" + selectedIssue + "**");
-                    //Toast.makeText(FeedbackActivity.this,  typetxt+"\n" + selectedIssue + "\n" + msg, Toast.LENGTH_LONG).show();
-                    if (Utilz.isOnline(mActivity)) {
-                        if (msg.isEmpty()) {
-                            if (errorMessage.equalsIgnoreCase(getString(R.string.error_msg))) {
-                                feedbackText.setError(getString(R.string.write_your_feedback_txt));
-                            } else {
-                                feedbackText.setError(errorMessage);
-                            }
-                            Toast.makeText(FeedbackActivity.this, R.string.write_your_feedback_txt, Toast.LENGTH_LONG).show();
+                //Toast.makeText(FeedbackActivity.this,  typetxt+"\n" + selectedIssue + "\n" + msg, Toast.LENGTH_LONG).show();
+                if (Utilz.isOnline(mActivity)) {
+                    if (msg.isEmpty()) {
+                        if (errorMessage.equalsIgnoreCase(getString(R.string.error_msg))) {
+                            feedbackText.setError(getString(R.string.write_your_feedback_txt));
                         } else {
-                            if (Validation.isPhoneNumber(feedbackMobile, true)) {
-                                sendFeedback(email, mobile, msg, selectedRating);
-                            }
+                            feedbackText.setError(errorMessage);
                         }
-
+                        Toast.makeText(FeedbackActivity.this, R.string.write_your_feedback_txt, Toast.LENGTH_LONG).show();
                     } else {
-                        Toast.makeText(FeedbackActivity.this, R.string.no_internet_connection, Toast.LENGTH_LONG).show();
+                        if (Validation.isPhoneNumber(feedbackMobile, true)) {
+                            sendFeedback(email, mobile, msg, selectedRating);
+                        }
                     }
+
+                } else {
+                    Toast.makeText(FeedbackActivity.this, R.string.no_internet_connection, Toast.LENGTH_LONG).show();
+                }
 
             }
         });
@@ -115,24 +110,25 @@ public class FeedbackActivity extends AppCompatActivity implements RatingBar.OnR
 
     private void sendFeedback(String email, String mobile, String msg, float selectedRating) {
         Utilz.showDailog(FeedbackActivity.this, getResources().getString(R.string.pleasewait));
-        retrofitDataProvider.feedback(email, mobile, msg, ""+selectedRating, Utilz.getCurrentDate(), new DownlodableCallback<FeedBackModel>() {
+        retrofitDataProvider.feedback(email, mobile, msg, "" + selectedRating, Utilz.getCurrentDate(), new DownlodableCallback<FeedBackModel>() {
             @Override
             public void onSuccess(final FeedBackModel result) {
                 Utilz.closeDialog();
                 if (result.getStatus().contains(PreferenceName.TRUE)) {
-
-                  finish();
+                    Toast.makeText(mActivity, R.string.sent_successfully, Toast.LENGTH_LONG).show();
                 }
             }
 
             @Override
             public void onFailure(String error) {
                 Utilz.closeDialog();
+                Toast.makeText(mActivity, R.string.something_went_wrong_error_message, Toast.LENGTH_LONG).show();
             }
 
             @Override
             public void onUnauthorized(int errorNumber) {
                 Utilz.closeDialog();
+                Toast.makeText(mActivity, R.string.something_went_wrong_error_message, Toast.LENGTH_LONG).show();
             }
         });
     }
@@ -142,7 +138,7 @@ public class FeedbackActivity extends AppCompatActivity implements RatingBar.OnR
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setTitle("About Us");
+        getSupportActionBar().setTitle("Feedback");
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -150,7 +146,6 @@ public class FeedbackActivity extends AppCompatActivity implements RatingBar.OnR
             }
         });
     }
-
 
 
     @Override

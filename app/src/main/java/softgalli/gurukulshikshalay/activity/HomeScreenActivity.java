@@ -40,7 +40,6 @@ import softgalli.gurukulshikshalay.common.ClsGeneral;
 import softgalli.gurukulshikshalay.common.Constant;
 import softgalli.gurukulshikshalay.common.Utilz;
 import softgalli.gurukulshikshalay.intrface.OnClickListener;
-import softgalli.gurukulshikshalay.model.TeacherListModel;
 import softgalli.gurukulshikshalay.model.UpcomingActivityModel;
 import softgalli.gurukulshikshalay.preference.MyPreference;
 
@@ -48,16 +47,16 @@ public class HomeScreenActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     @BindView(R.id.rv_common)
     RecyclerView recyclerview;
-    @BindView(R.id.newsRl)
-    RelativeLayout newsRl;
-    @BindView(R.id.galleryRl)
-    RelativeLayout galleryRl;
-    @BindView(R.id.timetableRl)
-    RelativeLayout timetableRl;
-    @BindView(R.id.eventsRl)
-    RelativeLayout eventsRl;
     @BindView(R.id.upcomingActContainerLl)
     LinearLayout upcomingActContainerLl;
+    @BindView(R.id.admissionRl)
+    RelativeLayout admissionRl;
+    @BindView(R.id.galleryRl)
+    RelativeLayout galleryRl;
+    @BindView(R.id.aboutUsRl)
+    RelativeLayout aboutUsRl;
+    @BindView(R.id.contactUsRl)
+    RelativeLayout contactUsRl;
     private boolean isBackPressed;
     private Activity mActivity;
     private DrawerLayout drawer;
@@ -94,9 +93,9 @@ public class HomeScreenActivity extends AppCompatActivity
     private void upcomingActivityHandling() {
         //TODO call api and get upcoming activities details from server and remove this hardcoded list.
         ArrayList<UpcomingActivityModel> upcomingActivityModelArrayList = new ArrayList<>();
-        upcomingActivityModelArrayList.add(new UpcomingActivityModel("UpcomingActivity1", "20 May 2018"));
-        upcomingActivityModelArrayList.add(new UpcomingActivityModel("UpcomingActivity2", "25 May 2018"));
-        upcomingActivityModelArrayList.add(new UpcomingActivityModel("UpcomingActivity3", "30 May 2018"));
+        upcomingActivityModelArrayList.add(new UpcomingActivityModel("Swachh Bharat Swasth Bharat Abhiyan", "20 July 2018"));
+        upcomingActivityModelArrayList.add(new UpcomingActivityModel("Independence Day(15 August) Celebration", "15 August 2018"));
+        upcomingActivityModelArrayList.add(new UpcomingActivityModel("Rakshabandhan Celebration", "26 August 2018"));
 
         for (UpcomingActivityModel eachUpcmgActvty : upcomingActivityModelArrayList) {
             View child = getLayoutInflater().inflate(R.layout.upcoming_activity_row, null);
@@ -113,14 +112,15 @@ public class HomeScreenActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
-        if (id == R.id.about_us) {
+        /*if (id == R.id.about_us) {
             startActivity(new Intent(mActivity, AboutUsActivity.class));
         } else if (id == R.id.contact_us) {
             startActivity(new Intent(mActivity, ContactUsActivity.class));
-        } else if (id == R.id.feedback) {
-            startActivity(new Intent(mActivity, FeedbackActivity.class));
         } else if (id == R.id.admission) {
             startActivity(new Intent(mActivity, AdmissionActivity.class));
+        } else*/
+        if (id == R.id.feedback) {
+            startActivity(new Intent(mActivity, FeedbackActivity.class));
         } else if (id == R.id.share) {
             String msg = "Download & install " + mActivity.getResources().getString(R.string.app_name) + " app.\nClick here to install" + mActivity.getResources().getString(R.string.app_name) + " : " + Apis.PLAYSTORE_LINK;
             Intent shareIntent = new Intent(Intent.ACTION_SEND);
@@ -172,32 +172,44 @@ public class HomeScreenActivity extends AppCompatActivity
 
         recyclerview.setAdapter(new HomeCategoryAdapter(HomeScreenActivity.this, categoryList, iconList, backgroundColor, R.layout.homecategory_row, new OnClickListener() {
             @Override
-            public void onClick(int pos) {
-
+            public void onClick(int position) {
+                if (position == 0) {
+                    startActivity(new Intent(HomeScreenActivity.this, TeacherListActivity.class));
+                } else if (position == 1) {
+                    startActivity(new Intent(HomeScreenActivity.this, TopperListActivity.class));
+                } else if (position == 2) {
+                    startActivity(new Intent(HomeScreenActivity.this, NotificationActivity.class));
+                } else {
+                    Utilz.showLoginFirstDialog(mActivity);
+                }
             }
         }));
 
     }
 
-    private int[] getStudentTeacherColor() {
-        int color[] = {R.drawable.roundedcornerforum_layout, R.drawable.roundedcorner_academics, R.drawable.roundedcorner_teacher,
-                R.drawable.roundedcornerforum_layout, R.drawable.roundedcorner_academics, R.drawable.roundedcorner_teacher};
-        return color;
-    }
-
     private int[] getSkipColor() {
-        int color[] = {R.drawable.roundedcornerforum_layout, R.drawable.roundedcorner_academics, R.drawable.roundedcorner_teacher,
-                R.drawable.roundedcornerforum_layout, R.drawable.roundedcorner_academics, R.drawable.roundedcorner_teacher};
+        int color[] = {R.drawable.grid_bg2, R.drawable.grid_bg1, R.drawable.grid_bg3,
+                R.drawable.grid_bg2, R.drawable.grid_bg1, R.drawable.grid_bg3};
         return color;
-    }
-
-    private int[] getStudentTeacherIcon() {
-        int icon[] = {R.drawable.academics, R.drawable.academics, R.drawable.academics, R.drawable.academics, R.drawable.academics, R.drawable.academics};
-        return icon;
     }
 
     private int[] getSkipIcon() {
         int icon[] = {R.drawable.academics, R.drawable.academics, R.drawable.academics, R.drawable.academics, R.drawable.academics, R.drawable.academics};
+        return icon;
+    }
+
+
+    private int[] getStudentTeacherColor() {
+        int color[] = {R.drawable.grid_bg1, R.drawable.grid_bg2, R.drawable.grid_bg3,
+                R.drawable.grid_bg4, R.drawable.grid_bg5, R.drawable.grid_bg6,
+                R.drawable.grid_bg7, R.drawable.grid_bg8, R.drawable.grid_bg9};
+        return color;
+    }
+
+    private int[] getStudentTeacherIcon() {
+        int icon[] = {R.drawable.teacherlist, R.drawable.topperlist, R.drawable.news,
+                R.drawable.attendance, R.drawable.timetable, R.drawable.forum,
+                R.drawable.syllabus, R.drawable.quiz, R.drawable.online_test};
         return icon;
     }
 
@@ -277,22 +289,20 @@ public class HomeScreenActivity extends AppCompatActivity
         }
     }
 
-    @OnClick({R.id.galleryRl, R.id.timetableRl, R.id.eventsRl, R.id.newsRl})
+    @OnClick({R.id.admissionRl, R.id.galleryRl, R.id.aboutUsRl, R.id.contactUsRl})
     public void onViewClicked(View view) {
         switch (view.getId()) {
+            case R.id.admissionRl:
+                startActivity(new Intent(HomeScreenActivity.this, AdmissionActivity.class));
+                break;
             case R.id.galleryRl:
                 startActivity(new Intent(HomeScreenActivity.this, GalleryList.class));
                 break;
-            case R.id.timetableRl:
-               // Utilz.showLoginFirstDialog(mActivity);
-                startActivity(new Intent(HomeScreenActivity.this, TopperListActivity.class));
+            case R.id.aboutUsRl:
+                startActivity(new Intent(HomeScreenActivity.this, AboutUsActivity.class));
                 break;
-            case R.id.eventsRl:
-                startActivity(new Intent(HomeScreenActivity.this, TeacherListActivity.class));
-               // Utilz.showLoginFirstDialog(mActivity);
-                break;
-            case R.id.newsRl:
-                startActivity(new Intent(HomeScreenActivity.this, NotificationActivity.class));
+            case R.id.contactUsRl:
+                startActivity(new Intent(HomeScreenActivity.this, ContactUsActivity.class));
                 break;
         }
     }

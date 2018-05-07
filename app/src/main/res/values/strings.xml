@@ -59,6 +59,9 @@
     <string name="feedback">Feedback</string>
     <string name="user_id">User Id</string>
     <string name="password">Password</string>
+    <string name="admission">Admission</string>
+    <string name="about_us">About Us</string>
+    <string name="contact_us">Contact Us</string>
 
     <string name="short_address">Ghodthamba, Giridih, Jharkhand(825418).</string>
     <string name="full_address">Gurukul Shikshalay, Ghodthamba, P.S-Dhanwar, Dist.-Giridih, Jharkhand, India(825418).</string>
@@ -81,12 +84,15 @@
     <string name="school_on_map_url"><![CDATA[https://www.google.com/maps?ll=24.445404,85.881632&z=15&t=m&hl=en-US&gl=IN&mapclient=embed&cid=6936239094202783588]]></string>
 
     <string-array name="studenthomecategory">
-        <item>Forum</item>
+        <item>Teachers</item>
+        <item>Toppers</item>
+        <item>News</item>
         <item>Attendance</item>
-        <item>Homework</item>
         <item>TimeTable</item>
         <item>Forum</item>
-        <item>online Test</item>
+        <item>Syllabus</item>
+        <item>Quiz</item>
+        <item>Online Test</item>
     </string-array>
 
 

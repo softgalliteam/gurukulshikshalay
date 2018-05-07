@@ -4,10 +4,12 @@ import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -18,18 +20,18 @@ import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.Target;
 
+import java.util.ArrayList;
 import java.util.List;
 
-import de.hdodenhof.circleimageview.CircleImageView;
 import softgalli.gurukulshikshalay.R;
 import softgalli.gurukulshikshalay.intrface.OnClickListener;
 import softgalli.gurukulshikshalay.model.TeacherListDataModel;
-import softgalli.gurukulshikshalay.model.TopperListDataModel;
 import softgalli.gurukulshikshalay.retrofit.ApiUrl;
 
 public class TeacherListAdapter extends RecyclerView.Adapter<TeacherListAdapter.MyViewHolder> {
 
-    private List<TeacherListDataModel> images;
+    private List<TeacherListDataModel> images = new ArrayList<>();
+    ;
     private Context mContext;
     private OnClickListener onClickListener;
 
@@ -39,6 +41,7 @@ public class TeacherListAdapter extends RecyclerView.Adapter<TeacherListAdapter.
         public TextView subjectTv;
         public TextView teacherName;
         private ProgressBar progressBar;
+        private LinearLayout mainLl;
 
         public MyViewHolder(View view) {
             super(view);
@@ -46,15 +49,26 @@ public class TeacherListAdapter extends RecyclerView.Adapter<TeacherListAdapter.
             qualificationTv = (TextView) view.findViewById(R.id.qualificationTv);
             subjectTv = (TextView) view.findViewById(R.id.subjectTv);
             teacherName = (TextView) view.findViewById(R.id.teacherName);
-          //  progressBar = (ProgressBar)view.findViewById(R.id.progress);
+            progressBar = (ProgressBar) view.findViewById(R.id.progress);
+            mainLl = (LinearLayout) view.findViewById(R.id.mainLl);
         }
     }
 
 
-    public TeacherListAdapter(Context context, List<TeacherListDataModel> images, OnClickListener onClickListener ) {
+    public TeacherListAdapter(Context context, List<TeacherListDataModel> images, OnClickListener onClickListener) {
         mContext = context;
-        this.images = images;
+        removeStudentsHavingZeroStatus(images);
         this.onClickListener = onClickListener;
+    }
+
+    private void removeStudentsHavingZeroStatus(List<TeacherListDataModel> teacherListDataModelList) {
+        if (teacherListDataModelList != null) {
+            for (int i = 0; i < teacherListDataModelList.size(); i++) {
+                if (teacherListDataModelList.get(i).getStatus().equalsIgnoreCase("1")) {
+                    images.add(teacherListDataModelList.get(i));
+                }
+            }
+        }
     }
 
     @Override
@@ -67,30 +81,52 @@ public class TeacherListAdapter extends RecyclerView.Adapter<TeacherListAdapter.
 
     @Override
     public void onBindViewHolder(final MyViewHolder holder, final int position) {
-        TeacherListDataModel image = images.get(position);
+        TeacherListDataModel teacherListDataModel = images.get(position);
 
-        if (image.getStatus().equalsIgnoreCase("1")) {
+        if (teacherListDataModel != null && teacherListDataModel.getStatus().equalsIgnoreCase("1")) {
+            holder.itemView.setVisibility(View.VISIBLE);
+            RequestOptions requestOptions = new RequestOptions();
+            requestOptions.placeholder(R.drawable.logo);
+            requestOptions.error(R.drawable.logo);
+            requestOptions.fitCenter();
             Glide.with(mContext)
-                    .load(ApiUrl.IMAGE_BASE_URL+image.getImage())
+                    .load(ApiUrl.IMAGE_BASE_URL + teacherListDataModel.getImage())
+                    .apply(requestOptions)
                     .listener(new RequestListener<Drawable>() {
                         @Override
                         public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
-                           // holder.progressBar.setVisibility(View.GONE);
+                            holder.progressBar.setVisibility(View.GONE);
 
                             return false;
                         }
 
                         @Override
                         public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
-                           // holder.progressBar.setVisibility(View.GONE);
+                            holder.progressBar.setVisibility(View.GONE);
                             return false;
                         }
                     })
-                    .thumbnail(0.5f)
                     .into(holder.teacherProfilePicIv);
-            holder.qualificationTv.setText(image.getQualification());
-            holder.subjectTv.setText(image.getSubject());
-            holder.teacherName.setText(image.getName());
+            if (!TextUtils.isEmpty(teacherListDataModel.getQualification())) {
+                holder.qualificationTv.setVisibility(View.VISIBLE);
+                holder.qualificationTv.setText(teacherListDataModel.getQualification());
+            } else {
+                holder.qualificationTv.setVisibility(View.GONE);
+            }
+            if (!TextUtils.isEmpty(teacherListDataModel.getWhat_teach())) {
+                holder.subjectTv.setVisibility(View.VISIBLE);
+                holder.subjectTv.setText("Teaching-" + teacherListDataModel.getWhat_teach());
+            } else {
+                holder.subjectTv.setVisibility(View.GONE);
+            }
+            if (!TextUtils.isEmpty(teacherListDataModel.getName())) {
+                holder.teacherName.setVisibility(View.VISIBLE);
+                holder.teacherName.setText(teacherListDataModel.getName());
+            } else {
+                holder.teacherName.setVisibility(View.GONE);
+            }
+        } else {
+            holder.itemView.setVisibility(View.GONE);
         }
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -104,7 +140,6 @@ public class TeacherListAdapter extends RecyclerView.Adapter<TeacherListAdapter.
     public int getItemCount() {
         return images.size();
     }
-
 
 
 }

@@ -23,6 +23,19 @@
     <color name="color_8a00000">#8a000000</color>
     <color name="light_black">#2e2e2e</color>
 
+    <color name="grid_item1">#1ABC9C</color>
+    <color name="grid_item2">#3498DB</color>
+    <color name="grid_item3">#ae97fc</color>
+    <color name="grid_item4">#E67E22</color>
+    <color name="grid_item5">#fc7162</color>
+    <color name="grid_item6">#1ABC9C</color>
+    <color name="grid_item7">#F39C12</color>
+    <color name="grid_item8">#dc5da4</color>
+    <color name="grid_item9">#90da9a</color>
+
+
+    <color name="background_color">#25f98de7</color>
+
     <array name="array_dot_active">
         <item>@color/dot_light_screen1</item>
         <item>@color/dot_light_screen1</item>

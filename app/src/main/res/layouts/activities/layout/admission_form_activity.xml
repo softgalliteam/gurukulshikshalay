@@ -45,12 +45,19 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:paddingBottom="5dp"
-                        android:paddingLeft="5dp"
-                        android:paddingRight="5dp"
+                        android:gravity="center"
+                        android:padding="5dp"
                         android:text="@string/take_admission_by_filling_form_simply"
                         android:textColor="@color/textColor"
                         android:textSize="@dimen/heading_size" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginBottom="@dimen/margin_10dp"
+                        android:layout_marginLeft="@dimen/margin_50"
+                        android:layout_marginRight="@dimen/margin_50"
+                        android:background="@color/yellow" />
 
                     <EditText
                         android:id="@+id/sname"
@@ -71,8 +78,8 @@
                         android:background="@drawable/ss_hollow_rect_green"
                         android:hint="Phone No. *"
                         android:inputType="phone"
-                        android:paddingLeft="10dp"
                         android:maxLength="11"
+                        android:paddingLeft="10dp"
                         android:textColor="@color/textColor"
                         android:textSize="@dimen/text_size" />
 

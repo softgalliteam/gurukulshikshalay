@@ -31,6 +31,7 @@ public class HomeCategoryAdapter extends RecyclerView.Adapter<HomeCategoryAdapte
         this.backgroundColor = backgroundColor;
         this.clickPosition = clickPosition;
     }
+
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
@@ -69,7 +70,7 @@ public class HomeCategoryAdapter extends RecyclerView.Adapter<HomeCategoryAdapte
 
         public ViewHolder(View itemView) {
             super(itemView);
-            cat_name = (TextView)itemView.findViewById(R.id.cat_name);
+            cat_name = (TextView) itemView.findViewById(R.id.cat_name);
             cat_image = (ImageView) itemView.findViewById(R.id.cat_image);
             ll_background = (LinearLayout) itemView.findViewById(R.id.ll_background);
 

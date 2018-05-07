@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".activity.HomeScreenActivity"
+    android:background="@color/background_color"
     tools:showIn="@layout/app_bar_main">
 
     <android.support.v4.widget.NestedScrollView
@@ -53,7 +54,7 @@
                             android:orientation="vertical">
 
                             <RelativeLayout
-                                android:id="@+id/newsRl"
+                                android:id="@+id/admissionRl"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:orientation="vertical">
@@ -64,7 +65,7 @@
                                     android:layout_height="45dp"
                                     android:layout_centerHorizontal="true"
                                     android:layout_marginTop="@dimen/margin_10dp"
-                                    android:background="@drawable/news"
+                                    android:background="@drawable/admission"
                                     android:scaleType="centerCrop" />
 
                                 <TextView
@@ -74,7 +75,7 @@
                                     android:layout_below="@+id/iv_news"
                                     android:layout_centerHorizontal="true"
                                     android:layout_marginTop="12dp"
-                                    android:text="@string/text_news"
+                                    android:text="@string/admission"
                                     android:textColor="@color/colorTextPrimary"
                                     android:textSize="@dimen/text_13.3"
                                     tools:ignore="MissingPrefix" />
@@ -144,7 +145,7 @@
                             android:orientation="vertical">
 
                             <RelativeLayout
-                                android:id="@+id/timetableRl"
+                                android:id="@+id/aboutUsRl"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content">
 
@@ -154,7 +155,7 @@
                                     android:layout_height="45dp"
                                     android:layout_centerHorizontal="true"
                                     android:layout_marginTop="@dimen/margin_10dp"
-                                    android:background="@drawable/timetable"
+                                    android:background="@drawable/aboutus"
                                     android:scaleType="centerCrop" />
 
                                 <TextView
@@ -164,7 +165,7 @@
                                     android:layout_below="@+id/timetableIv"
                                     android:layout_centerHorizontal="true"
                                     android:layout_marginTop="@dimen/margin_13"
-                                    android:text="@string/text_timetable"
+                                    android:text="@string/about_us"
                                     android:textColor="@color/colorTextPrimary"
                                     android:textSize="@dimen/text_13.3"
                                     tools:ignore="MissingPrefix" />
@@ -181,7 +182,7 @@
                             android:orientation="vertical">
 
                             <RelativeLayout
-                                android:id="@+id/eventsRl"
+                                android:id="@+id/contactUsRl"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:orientation="vertical">
@@ -192,7 +193,7 @@
                                     android:layout_height="45dp"
                                     android:layout_centerHorizontal="true"
                                     android:layout_marginTop="@dimen/margin_10dp"
-                                    android:background="@drawable/events"
+                                    android:background="@drawable/contactus"
                                     android:scaleType="centerCrop" />
 
                                 <TextView
@@ -202,7 +203,7 @@
                                     android:layout_below="@+id/iv_events"
                                     android:layout_centerHorizontal="true"
                                     android:layout_marginTop="@dimen/margin_10"
-                                    android:text="@string/text_events"
+                                    android:text="@string/contact_us"
                                     android:textColor="@color/colorTextPrimary"
                                     android:textSize="@dimen/text_13.3"
                                     tools:ignore="MissingPrefix" />
@@ -300,9 +301,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/margin_20"
-                android:layout_marginRight="@dimen/margin_15">
+                android:layout_height="wrap_content">
 
                 <include layout="@layout/common_recyclerview" />
             </LinearLayout>

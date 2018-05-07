@@ -11,10 +11,14 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.RequestParams;
+import com.loopj.android.http.TextHttpResponseHandler;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cz.msebera.android.httpclient.Header;
 import softgalli.gurukulshikshalay.R;
 import softgalli.gurukulshikshalay.common.Apis;
 import softgalli.gurukulshikshalay.common.Utilz;
@@ -113,6 +117,42 @@ public class AdmissionActivity extends AppCompatActivity {
     private void takeAdmissionOnline(String userName, String userMobile, String userEmail, String classNameStr, String commentStr) {
         final ProgressDialog dialog = ProgressDialog.show(mActivity, "", getString(R.string.pleasewait), true);
         dialog.setCancelable(false);
+        final RequestParams params = new RequestParams();
+        params.add("name", userName);
+        params.add("phone", userMobile);
+        params.add("email", userEmail);
+        params.add("class", classNameStr);
+        params.add("address", commentStr);
+        String finalReqUrl = Apis.MAIN_URL + Apis.ADMISSION_API;
+        AsyncHttpClient client = new AsyncHttpClient();
 
+        client.get(mActivity, finalReqUrl, params, new TextHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, String responseString) {
+                dialog.dismiss();
+                Log.i("TAG", statusCode + "Response : " + responseString);
+                try {
+                    if (statusCode == 200) {
+                        Toast.makeText(mActivity, R.string.sent_successfully, Toast.LENGTH_LONG).show();
+                    } else {
+                        Toast.makeText(mActivity, R.string.something_went_wrong_error_message, Toast.LENGTH_LONG).show();
+                    }
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                try {
+                    dialog.dismiss();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                dialog.dismiss();
+                Toast.makeText(mActivity, getString(R.string.something_went_wrong_error_message), Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }

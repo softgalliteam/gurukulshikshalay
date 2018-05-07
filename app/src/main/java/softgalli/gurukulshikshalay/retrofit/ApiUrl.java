@@ -2,7 +2,7 @@ package softgalli.gurukulshikshalay.retrofit;
 
 public class ApiUrl {
 
-    public static final String BASE_URL = "http://apextechies.com/apexschool/index.php/";
+    public static final String BASE_URL = "http://apextechies.com/gurukul/index.php/";
     public static final String IMAGE_BASE_URL = "http://www.gurukulshikshalay.com/";
     public static final String IMAGE_BASE_URL_SPS = "http://spsnawalshahi.com/";
     public static final String NOTIFICATION = "get_notification";
