@@ -31,7 +31,6 @@ import softgalli.gurukulshikshalay.retrofit.ApiUrl;
 public class TeacherListAdapter extends RecyclerView.Adapter<TeacherListAdapter.MyViewHolder> {
 
     private List<TeacherListDataModel> images = new ArrayList<>();
-    ;
     private Context mContext;
     private OnClickListener onClickListener;
 

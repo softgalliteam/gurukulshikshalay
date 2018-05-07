@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.DataSource;
@@ -80,7 +81,7 @@ public class TopperListAdapter extends RecyclerView.Adapter<TopperListAdapter.My
 
     @Override
     public void onBindViewHolder(final MyViewHolder holder, final int position) {
-        TopperListDataModel topperListDataModel = images.get(position);
+        final TopperListDataModel topperListDataModel = images.get(position);
         if (topperListDataModel != null && topperListDataModel.getStatus().equalsIgnoreCase("1")) {
             holder.itemView.setVisibility(View.VISIBLE);
             RequestOptions requestOptions = new RequestOptions();
@@ -126,7 +127,12 @@ public class TopperListAdapter extends RecyclerView.Adapter<TopperListAdapter.My
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onClickListener.onClick(position);
+                //onClickListener.onClick(position);
+                if (topperListDataModel != null) {
+                    Toast.makeText(mContext, topperListDataModel.getName() + " is topper of " +
+                            topperListDataModel.getClas() + " class and got " +
+                            topperListDataModel.getPassing_number() + " marks.", Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }

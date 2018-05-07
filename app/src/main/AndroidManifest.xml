@@ -81,6 +81,12 @@
         <activity
             android:name=".activity.TeacherListActivity"
             android:label="@string/app_name" />
+        <activity
+            android:name=".activity.ViewTeacherProfileActivity"
+            android:label="@string/app_name" />
+        <activity
+            android:name=".activity.ViewStudentsProfileActivity"
+            android:label="@string/app_name" />
 
 
     </application>

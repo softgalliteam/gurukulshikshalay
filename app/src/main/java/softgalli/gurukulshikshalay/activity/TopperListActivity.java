@@ -10,6 +10,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import softgalli.gurukulshikshalay.R;
@@ -18,6 +20,7 @@ import softgalli.gurukulshikshalay.common.PreferenceName;
 import softgalli.gurukulshikshalay.common.Utilz;
 import softgalli.gurukulshikshalay.intrface.OnClickListener;
 import softgalli.gurukulshikshalay.model.TopperLisrModel;
+import softgalli.gurukulshikshalay.model.TopperListDataModel;
 import softgalli.gurukulshikshalay.retrofit.DownlodableCallback;
 import softgalli.gurukulshikshalay.retrofit.RetrofitDataProvider;
 
@@ -28,7 +31,7 @@ public class TopperListActivity extends AppCompatActivity {
     RecyclerView recyclerView;
     @BindView(R.id.toolbar)
     Toolbar toolbar;
-
+    private ArrayList<TopperListDataModel> mStudentsArrayList = new ArrayList();
     private RetrofitDataProvider retrofitDataProvider;
 
     @Override
@@ -54,10 +57,12 @@ public class TopperListActivity extends AppCompatActivity {
             @Override
             public void onSuccess(final TopperLisrModel result) {
                 Utilz.closeDialog();
-                if (result.getStatus().contains(PreferenceName.TRUE)) {
-                    recyclerView.setAdapter(new TopperListAdapter(TopperListActivity.this, result.getData(), new OnClickListener() {
+                if (result != null && result.getStatus().contains(PreferenceName.TRUE)) {
+                    if (result.getData() != null && result.getData().size() > 0)
+                        mStudentsArrayList.addAll(result.getData());
+                    recyclerView.setAdapter(new TopperListAdapter(TopperListActivity.this, mStudentsArrayList, new OnClickListener() {
                         @Override
-                        public void onClick(int pos) {
+                        public void onClick(int position) {
 
                         }
                     }));

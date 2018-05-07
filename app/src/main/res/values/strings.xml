@@ -32,6 +32,21 @@
     <string name="pleasewait">Please wait...</string>
     <string name="welcome_user">Welcome</string>
     <string name="tag_line">Excellence In Education</string>
+    <string name="name">Name</string>
+    <string name="email">Email</string>
+    <string name="phone">Phone</string>
+    <string name="address">Address</string>
+    <string name="qualification">Qualification</string>
+    <string name="teaching">Teaching</string>
+    <string name="designation">Designation</string>
+    <string name="roll_no">Roll No.</string>
+    <string name="class_name">Class</string>
+    <string name="father_name">Father Name</string>
+    <string name="na">N/A</string>
+    <string name="colon">:</string>
+
+    <string name="phone_no_not_provide_yet">Phone number is not provided yet</string>
+    <string name="take_admission_by_filling_form_simply">Take admission by filling form simply.</string>
 
     <!--Intro slider texts -->
     <string name="title_activity_welcome">Home Screen</string>
@@ -88,8 +103,8 @@
         <item>Toppers</item>
         <item>News</item>
         <item>Attendance</item>
+        <item>Leave</item>
         <item>TimeTable</item>
-        <item>Forum</item>
         <item>Syllabus</item>
         <item>Quiz</item>
         <item>Online Test</item>

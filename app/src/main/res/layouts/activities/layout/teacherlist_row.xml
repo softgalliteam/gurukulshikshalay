@@ -12,7 +12,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/margin_10"
-        android:layout_marginRight="@dimen/margin_10"
         android:layout_marginTop="@dimen/margin_10"
         android:orientation="horizontal">
 
@@ -60,6 +59,8 @@
                 android:id="@+id/subjectTv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:singleLine="true"
                 android:textColor="@color/textColor"
                 android:textSize="@dimen/text_size"
                 android:textStyle="bold" />
