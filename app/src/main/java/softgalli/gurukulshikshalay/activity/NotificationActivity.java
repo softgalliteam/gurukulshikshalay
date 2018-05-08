@@ -98,7 +98,7 @@ public class NotificationActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setTitle(getResources().getString(R.string.text_news));
+        getSupportActionBar().setTitle(mActivity.getResources().getString(R.string.text_news));
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

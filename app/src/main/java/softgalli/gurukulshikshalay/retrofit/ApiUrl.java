@@ -18,4 +18,5 @@ public class ApiUrl {
     public static final String ALUMNI = "get_alumni";
     public static final String TOPPERLIST = "get_topperList";
     public static final String FEEDBACK = "add_Feedback";
+    public static final String LOGIN = "login";
 }

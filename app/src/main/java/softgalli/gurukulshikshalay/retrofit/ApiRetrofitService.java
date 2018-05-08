@@ -11,6 +11,8 @@ import softgalli.gurukulshikshalay.model.FeedBackModel;
 import softgalli.gurukulshikshalay.model.GalleryModel;
 import softgalli.gurukulshikshalay.model.NotificationModel;
 import softgalli.gurukulshikshalay.model.StuTeaModel;
+import softgalli.gurukulshikshalay.model.StudentDetailsDataModel;
+import softgalli.gurukulshikshalay.model.TeacherListDataModel;
 import softgalli.gurukulshikshalay.model.TeacherListModel;
 import softgalli.gurukulshikshalay.model.TopperLisrModel;
 
@@ -33,7 +35,7 @@ public interface ApiRetrofitService {
     @FormUrlEncoded
     Call<StuTeaModel> addStudent(@Field("regestration_id") String regestration_id, @Field("name") String name, @Field("email") String email
             , @Field("mobile") String mobile_number, @Field("class") String clas, @Field("sec") String classteacher_for,
-             @Field("admission_date") String admission_date, @Field("residential_address") String residential_address);
+                                 @Field("admission_date") String admission_date, @Field("residential_address") String residential_address);
 
     @GET(ApiUrl.GALLERYLIST)
     Call<GalleryModel> listGallery();
@@ -50,5 +52,13 @@ public interface ApiRetrofitService {
     @POST(ApiUrl.FEEDBACK)
     @FormUrlEncoded
     Call<FeedBackModel> sendFeedback(@Field("name") String name, @Field("mobile") String mobile, @Field("message") String message, @Field("rating") String rating, @Field("date") String date);
+
+    @POST(ApiUrl.LOGIN)
+    @FormUrlEncoded
+    Call<TeacherListDataModel> teacherLogin(@Field("login_as") String name, @Field("user_id") String mobile, @Field("password") String message, @Field("date") String date);
+
+    @POST(ApiUrl.LOGIN)
+    @FormUrlEncoded
+    Call<StudentDetailsDataModel> studentLogin(@Field("login_as") String name, @Field("user_id") String mobile, @Field("password") String message, @Field("date") String date);
 
 }

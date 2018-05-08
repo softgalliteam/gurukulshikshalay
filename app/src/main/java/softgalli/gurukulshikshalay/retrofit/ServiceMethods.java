@@ -6,6 +6,8 @@ import softgalli.gurukulshikshalay.model.FeedBackModel;
 import softgalli.gurukulshikshalay.model.GalleryModel;
 import softgalli.gurukulshikshalay.model.NotificationModel;
 import softgalli.gurukulshikshalay.model.StuTeaModel;
+import softgalli.gurukulshikshalay.model.StudentDetailsDataModel;
+import softgalli.gurukulshikshalay.model.TeacherListDataModel;
 import softgalli.gurukulshikshalay.model.TeacherListModel;
 import softgalli.gurukulshikshalay.model.TopperLisrModel;
 
@@ -26,6 +28,7 @@ public interface ServiceMethods {
     void teacherList(DownlodableCallback<TeacherListModel> callback);
     void feedback(String name, String mobile, String message, String rating,String date, DownlodableCallback<FeedBackModel> callback);
 
+    void teacherLogin(String loginAs, String mobile, String message, String date, DownlodableCallback<TeacherListDataModel> callback);
 
-
+    void studentLogin(String loginAs, String mobile, String message, String date, DownlodableCallback<StudentDetailsDataModel> callback);
 }

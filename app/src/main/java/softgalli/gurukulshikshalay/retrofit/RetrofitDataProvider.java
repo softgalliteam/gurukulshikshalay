@@ -4,6 +4,7 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.OkHttpClient;
@@ -18,6 +19,8 @@ import softgalli.gurukulshikshalay.model.FeedBackModel;
 import softgalli.gurukulshikshalay.model.GalleryModel;
 import softgalli.gurukulshikshalay.model.NotificationModel;
 import softgalli.gurukulshikshalay.model.StuTeaModel;
+import softgalli.gurukulshikshalay.model.StudentDetailsDataModel;
+import softgalli.gurukulshikshalay.model.TeacherListDataModel;
 import softgalli.gurukulshikshalay.model.TeacherListModel;
 import softgalli.gurukulshikshalay.model.TopperLisrModel;
 
@@ -26,8 +29,7 @@ import softgalli.gurukulshikshalay.model.TopperLisrModel;
  */
 
 public class RetrofitDataProvider extends AppCompatActivity implements ServiceMethods {
-    private Context context;
-
+    Context context;
     private ApiRetrofitService createRetrofitService() {
 
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
@@ -49,8 +51,7 @@ public class RetrofitDataProvider extends AppCompatActivity implements ServiceMe
         return retrofit.create(ApiRetrofitService.class);
     }
 
-    public  RetrofitDataProvider(Context context)
-    {
+    public RetrofitDataProvider(Context context) {
         this.context = context;
     }
 
@@ -62,18 +63,13 @@ public class RetrofitDataProvider extends AppCompatActivity implements ServiceMe
                     @Override
                     public void onResponse(@NonNull Call<NotificationModel> call, @NonNull final Response<NotificationModel> response) {
                         if (response.isSuccessful()) {
-
                             NotificationModel mobileRegisterPojo = response.body();
                             callback.onSuccess(mobileRegisterPojo);
 
-                        } else
-
-                        {
-                            if (response.code() == 401)
-                            {
+                        } else {
+                            if (response.code() == 401) {
                                 callback.onUnauthorized(response.code());
-                            }
-                            else {
+                            } else {
                             }
                         }
                     }
@@ -82,7 +78,6 @@ public class RetrofitDataProvider extends AppCompatActivity implements ServiceMe
                     public void onFailure(@NonNull Call<NotificationModel> call, @NonNull Throwable t) {
                         Log.d("Result", "t" + t.getMessage());
                         callback.onFailure(t.getMessage());
-
                     }
                 }
         );
@@ -95,18 +90,12 @@ public class RetrofitDataProvider extends AppCompatActivity implements ServiceMe
                     @Override
                     public void onResponse(@NonNull Call<StuTeaModel> call, @NonNull final Response<StuTeaModel> response) {
                         if (response.isSuccessful()) {
-
                             StuTeaModel mobileRegisterPojo = response.body();
                             callback.onSuccess(mobileRegisterPojo);
-
-                        } else
-
-                        {
-                            if (response.code() == 401)
-                            {
+                        } else {
+                            if (response.code() == 401) {
                                 callback.onUnauthorized(response.code());
-                            }
-                            else {
+                            } else {
                             }
                         }
                     }
@@ -128,18 +117,12 @@ public class RetrofitDataProvider extends AppCompatActivity implements ServiceMe
                     @Override
                     public void onResponse(@NonNull Call<StuTeaModel> call, @NonNull final Response<StuTeaModel> response) {
                         if (response.isSuccessful()) {
-
                             StuTeaModel mobileRegisterPojo = response.body();
                             callback.onSuccess(mobileRegisterPojo);
-
-                        } else
-
-                        {
-                            if (response.code() == 401)
-                            {
+                        } else {
+                            if (response.code() == 401) {
                                 callback.onUnauthorized(response.code());
-                            }
-                            else {
+                            } else {
                             }
                         }
                     }
@@ -161,18 +144,13 @@ public class RetrofitDataProvider extends AppCompatActivity implements ServiceMe
                     @Override
                     public void onResponse(@NonNull Call<GalleryModel> call, @NonNull final Response<GalleryModel> response) {
                         if (response.isSuccessful()) {
-
                             GalleryModel mobileRegisterPojo = response.body();
                             callback.onSuccess(mobileRegisterPojo);
 
-                        } else
-
-                        {
-                            if (response.code() == 401)
-                            {
+                        } else {
+                            if (response.code() == 401) {
                                 callback.onUnauthorized(response.code());
-                            }
-                            else {
+                            } else {
                             }
                         }
                     }
@@ -194,18 +172,13 @@ public class RetrofitDataProvider extends AppCompatActivity implements ServiceMe
                     @Override
                     public void onResponse(@NonNull Call<TopperLisrModel> call, @NonNull final Response<TopperLisrModel> response) {
                         if (response.isSuccessful()) {
-
                             TopperLisrModel mobileRegisterPojo = response.body();
                             callback.onSuccess(mobileRegisterPojo);
 
-                        } else
-
-                        {
-                            if (response.code() == 401)
-                            {
+                        } else {
+                            if (response.code() == 401) {
                                 callback.onUnauthorized(response.code());
-                            }
-                            else {
+                            } else {
                             }
                         }
                     }
@@ -227,18 +200,13 @@ public class RetrofitDataProvider extends AppCompatActivity implements ServiceMe
                     @Override
                     public void onResponse(@NonNull Call<AlumniModel> call, @NonNull final Response<AlumniModel> response) {
                         if (response.isSuccessful()) {
-
                             AlumniModel mobileRegisterPojo = response.body();
                             callback.onSuccess(mobileRegisterPojo);
 
-                        } else
-
-                        {
-                            if (response.code() == 401)
-                            {
+                        } else {
+                            if (response.code() == 401) {
                                 callback.onUnauthorized(response.code());
-                            }
-                            else {
+                            } else {
                             }
                         }
                     }
@@ -264,14 +232,10 @@ public class RetrofitDataProvider extends AppCompatActivity implements ServiceMe
                             TeacherListModel mobileRegisterPojo = response.body();
                             callback.onSuccess(mobileRegisterPojo);
 
-                        } else
-
-                        {
-                            if (response.code() == 401)
-                            {
+                        } else {
+                            if (response.code() == 401) {
                                 callback.onUnauthorized(response.code());
-                            }
-                            else {
+                            } else {
                             }
                         }
                     }
@@ -293,18 +257,12 @@ public class RetrofitDataProvider extends AppCompatActivity implements ServiceMe
                     @Override
                     public void onResponse(@NonNull Call<FeedBackModel> call, @NonNull final Response<FeedBackModel> response) {
                         if (response.isSuccessful()) {
-
                             FeedBackModel mobileRegisterPojo = response.body();
                             callback.onSuccess(mobileRegisterPojo);
-
-                        } else
-
-                        {
-                            if (response.code() == 401)
-                            {
+                        } else {
+                            if (response.code() == 401) {
                                 callback.onUnauthorized(response.code());
-                            }
-                            else {
+                            } else {
                             }
                         }
                     }
@@ -313,7 +271,59 @@ public class RetrofitDataProvider extends AppCompatActivity implements ServiceMe
                     public void onFailure(@NonNull Call<FeedBackModel> call, @NonNull Throwable t) {
                         Log.d("Result", "t" + t.getMessage());
                         callback.onFailure(t.getMessage());
+                    }
+                }
+        );
+    }
 
+    @Override
+    public void teacherLogin(String loginAs, String mobile, String message, String date, final DownlodableCallback<TeacherListDataModel> callback) {
+        createRetrofitService().teacherLogin(loginAs, mobile, message, date).enqueue(
+                new Callback<TeacherListDataModel>() {
+                    @Override
+                    public void onResponse(@NonNull Call<TeacherListDataModel> call, @NonNull final Response<TeacherListDataModel> response) {
+                        if (response.isSuccessful()) {
+                            TeacherListDataModel teacherListDataModelPojo = response.body();
+                            callback.onSuccess(teacherListDataModelPojo);
+                        } else {
+                            if (response.code() == 401) {
+                                callback.onUnauthorized(response.code());
+                            } else {
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(@NonNull Call<TeacherListDataModel> call, @NonNull Throwable t) {
+                        Log.d("Result", "t" + t.getMessage());
+                        callback.onFailure(t.getMessage());
+                    }
+                }
+        );
+    }
+
+
+    @Override
+    public void studentLogin(String loginAs, String mobile, String message, String date, final DownlodableCallback<StudentDetailsDataModel> callback) {
+        createRetrofitService().studentLogin(loginAs, mobile, message, date).enqueue(
+                new Callback<StudentDetailsDataModel>() {
+                    @Override
+                    public void onResponse(@NonNull Call<StudentDetailsDataModel> call, @NonNull final Response<StudentDetailsDataModel> response) {
+                        if (response.isSuccessful()) {
+                            StudentDetailsDataModel studentDetailsDataModelPojo = response.body();
+                            callback.onSuccess(studentDetailsDataModelPojo);
+                        } else {
+                            if (response.code() == 401) {
+                                callback.onUnauthorized(response.code());
+                            } else {
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(@NonNull Call<StudentDetailsDataModel> call, @NonNull Throwable t) {
+                        Log.d("Result", "t" + t.getMessage());
+                        callback.onFailure(t.getMessage());
                     }
                 }
         );

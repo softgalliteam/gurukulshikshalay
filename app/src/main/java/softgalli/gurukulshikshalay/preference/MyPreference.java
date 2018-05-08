@@ -58,6 +58,18 @@ public class MyPreference {
         return pref.getBoolean("Login", false);
     }
 
+    public static void setLoginedAs(String name) {
+        SharedPreferences pref = AppController.getInstance().getSharedPreferences("LoginedAs1", 0);
+        SharedPreferences.Editor editor = pref.edit();
+        editor.putString("LoginedAs", name);
+        editor.commit();
+    }
+
+    public static String getLoginedAs() {
+        SharedPreferences pref = AppController.getInstance().getSharedPreferences("LoginedAs1", 0);
+        return pref.getString("LoginedAs", "");
+    }
+
     public static void setUserName(String name) {
         SharedPreferences pref = AppController.getInstance().getSharedPreferences("user_name1", 0);
         SharedPreferences.Editor editor = pref.edit();
@@ -104,5 +116,17 @@ public class MyPreference {
     public static String getUserMobileNo() {
         SharedPreferences pref = AppController.getInstance().getSharedPreferences("UserMobileNo1", 0);
         return pref.getString("UserMobileNo", "");
+    }
+
+    public static void setUserId(int userId) {
+        SharedPreferences pref = AppController.getInstance().getSharedPreferences("UserId1", 0);
+        SharedPreferences.Editor editor = pref.edit();
+        editor.putInt("UserId", userId);
+        editor.commit();
+    }
+
+    public static int getUserId() {
+        SharedPreferences pref = AppController.getInstance().getSharedPreferences("UserId1", 0);
+        return pref.getInt("UserId", 0);
     }
 }

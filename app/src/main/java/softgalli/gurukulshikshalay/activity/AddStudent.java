@@ -1,5 +1,6 @@
 package softgalli.gurukulshikshalay.activity;
 
+import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -46,7 +47,7 @@ public class AddStudent extends AppCompatActivity {
     TextView submit;
     @BindView(R.id.toolbar)
     Toolbar toolbar;
-
+    private Activity mActivity;
     private RetrofitDataProvider retrofitDataProvider;
     Calendar myCalendar = Calendar.getInstance();
 
@@ -54,6 +55,7 @@ public class AddStudent extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.add_student);
+        mActivity = this;
         ButterKnife.bind(this);
         retrofitDataProvider = new RetrofitDataProvider(this);
 
@@ -142,7 +144,7 @@ public class AddStudent extends AppCompatActivity {
     }
 
     private void submitData() {
-        Utilz.showDailog(AddStudent.this, getResources().getString(R.string.pleasewait));
+        Utilz.showDailog(AddStudent.this, mActivity.getResources().getString(R.string.pleasewait));
         String rollNumber = input_rollnumber.getText().toString().trim();
         String name = input_name.getText().toString().trim();
         String email = input_email.getText().toString().trim();

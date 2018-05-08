@@ -31,6 +31,7 @@
     <string name="add_teacer">Add Teacher</string>
     <string name="pleasewait">Please wait...</string>
     <string name="welcome_user">Welcome</string>
+    <string name="login_success">Login Success!!</string>
     <string name="tag_line">Excellence In Education</string>
     <string name="name">Name</string>
     <string name="email">Email</string>
