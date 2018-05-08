@@ -312,7 +312,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/text_20"
-                android:layout_marginTop="@dimen/margin_20"
                 android:text="@string/text_upcominactivity"
                 android:textColor="@color/colorTextPrimary"
                 android:textSize="@dimen/text_15"
