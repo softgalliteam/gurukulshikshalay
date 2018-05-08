@@ -66,21 +66,21 @@ public class WeekFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.weekcell, container, false);
 
-        mSundayTv = (TextView) view.findViewById(R.id.sun_txt);
-        mMondayTv = (TextView) view.findViewById(R.id.mon_txt);
-        mTuesdayTv = (TextView) view.findViewById(R.id.tue_txt);
-        mWednesdayTv = (TextView) view.findViewById(R.id.wen_txt);
-        mThursdayTv = (TextView) view.findViewById(R.id.thu_txt);
-        mFridayTv = (TextView) view.findViewById(R.id.fri_txt);
-        mSaturdayTv = (TextView) view.findViewById(R.id.sat_txt);
+        mSundayTv = view.findViewById(R.id.sun_txt);
+        mMondayTv = view.findViewById(R.id.mon_txt);
+        mTuesdayTv = view.findViewById(R.id.tue_txt);
+        mWednesdayTv = view.findViewById(R.id.wen_txt);
+        mThursdayTv = view.findViewById(R.id.thu_txt);
+        mFridayTv = view.findViewById(R.id.fri_txt);
+        mSaturdayTv = view.findViewById(R.id.sat_txt);
 
-        ImageView sundayEvent = (ImageView) view.findViewById(R.id.img_sun_txt);
-        ImageView mondayEvent = (ImageView) view.findViewById(R.id.img_mon_txt);
-        ImageView tuesdayEvent = (ImageView) view.findViewById(R.id.img_tue_txt);
-        ImageView wednesdayEvent = (ImageView) view.findViewById(R.id.img_wen_txt);
-        ImageView thursdayEvent = (ImageView) view.findViewById(R.id.img_thu_txt);
-        ImageView fridayEvent = (ImageView) view.findViewById(R.id.img_fri_txt);
-        ImageView saturdayEvent = (ImageView) view.findViewById(R.id.img_sat_txt);
+        ImageView sundayEvent = view.findViewById(R.id.img_sun_txt);
+        ImageView mondayEvent = view.findViewById(R.id.img_mon_txt);
+        ImageView tuesdayEvent = view.findViewById(R.id.img_tue_txt);
+        ImageView wednesdayEvent = view.findViewById(R.id.img_wen_txt);
+        ImageView thursdayEvent = view.findViewById(R.id.img_thu_txt);
+        ImageView fridayEvent = view.findViewById(R.id.img_fri_txt);
+        ImageView saturdayEvent = view.findViewById(R.id.img_sat_txt);
 
         /*Adding WeekViews to array for background changing purpose*/
         mTextViewArray = new TextView[]{mSundayTv, mMondayTv, mTuesdayTv, mWednesdayTv

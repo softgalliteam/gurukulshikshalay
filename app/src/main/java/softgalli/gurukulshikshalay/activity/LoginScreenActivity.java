@@ -20,12 +20,15 @@ import android.widget.ViewSwitcher;
 import com.flaviofaria.kenburnsview.KenBurnsView;
 import com.flaviofaria.kenburnsview.Transition;
 
+import java.util.ArrayList;
+
 import softgalli.gurukulshikshalay.R;
 import softgalli.gurukulshikshalay.common.AppConstants;
+import softgalli.gurukulshikshalay.common.ClsGeneral;
 import softgalli.gurukulshikshalay.common.PreferenceName;
 import softgalli.gurukulshikshalay.common.Utilz;
-import softgalli.gurukulshikshalay.model.StudentDetailsDataModel;
-import softgalli.gurukulshikshalay.model.TeacherListDataModel;
+import softgalli.gurukulshikshalay.model.UserDetailsDataModel;
+import softgalli.gurukulshikshalay.model.UserDetailsModel;
 import softgalli.gurukulshikshalay.preference.MyPreference;
 import softgalli.gurukulshikshalay.retrofit.DownlodableCallback;
 import softgalli.gurukulshikshalay.retrofit.RetrofitDataProvider;
@@ -52,13 +55,17 @@ public class LoginScreenActivity extends AppCompatActivity implements KenBurnsVi
 
         setContentView(R.layout.login_activity);
         mActivity = this;
+<<<<<<< Updated upstream
         retrofitDataProvider = new RetrofitDataProvider(this);
         mViewSwitcher = (ViewSwitcher) findViewById(R.id.viewSwitcher);
+=======
+        mViewSwitcher = findViewById(R.id.viewSwitcher);
+>>>>>>> Stashed changes
 
-        KenBurnsView img1 = (KenBurnsView) findViewById(R.id.img1);
+        KenBurnsView img1 = findViewById(R.id.img1);
         img1.setTransitionListener(this);
 
-        KenBurnsView img2 = (KenBurnsView) findViewById(R.id.img2);
+        KenBurnsView img2 = findViewById(R.id.img2);
         img2.setTransitionListener(this);
 
     }
@@ -92,8 +99,8 @@ public class LoginScreenActivity extends AppCompatActivity implements KenBurnsVi
             dialog.setCanceledOnTouchOutside(true);
 
 
-            userId = (EditText) dialog.findViewById(R.id.userId);
-            password = (EditText) dialog.findViewById(R.id.password);
+            userId = dialog.findViewById(R.id.userId);
+            password = dialog.findViewById(R.id.password);
 
 
             (dialog.findViewById(R.id.loginButton)).setOnClickListener(new View.OnClickListener() {
@@ -102,12 +109,15 @@ public class LoginScreenActivity extends AppCompatActivity implements KenBurnsVi
                     if (Utilz.isOnline(mActivity)) {
                         if (checkValidation()) {
                             dialog.dismiss();
-                            if (loginAs.equalsIgnoreCase(AppConstants.PRINCIPAL))
+                            userLogin(loginAs, userId.getText().toString().trim(), password.getText().toString().trim());
+
+                           /* if (loginAs.equalsIgnoreCase(AppConstants.PRINCIPAL))
                                 principalLogin(AppConstants.PRINCIPAL, userId.getText().toString().trim(), password.getText().toString().trim());
                             else if (loginAs.equalsIgnoreCase(AppConstants.TEACHER))
                                 teacherLogin(AppConstants.TEACHER, userId.getText().toString().trim(), password.getText().toString().trim());
                             else
                                 studentLogin(AppConstants.STUDENT, userId.getText().toString().trim(), password.getText().toString().trim());
+                        */
                         }
                     } else {
                         Toast.makeText(mActivity, getResources().getString(R.string.no_internet_connection), Toast.LENGTH_SHORT).show();
@@ -128,16 +138,15 @@ public class LoginScreenActivity extends AppCompatActivity implements KenBurnsVi
     }
 
 
-    public void principalLogin(final String loginAs, final String userIdStr, final String passwordStr) {
+    public void userLogin(final String loginAs, final String userIdStr, final String passwordStr) {
         Utilz.showDailog(mActivity, mActivity.getResources().getString(R.string.pleasewait));
-        retrofitDataProvider.teacherLogin(loginAs, userIdStr, passwordStr, Utilz.getCurrentDate(), new DownlodableCallback<TeacherListDataModel>() {
+        retrofitDataProvider.userLogin(loginAs, userIdStr, passwordStr, new DownlodableCallback<UserDetailsModel>() {
             @Override
-            public void onSuccess(final TeacherListDataModel result) {
+            public void onSuccess(final UserDetailsModel result) {
                 Utilz.closeDialog();
                 if (result.getStatus().contains(PreferenceName.TRUE)) {
                     MyPreference.setLoginedAs(loginAs);
-                    Toast.makeText(mActivity, R.string.login_success, Toast.LENGTH_LONG).show();
-                    saveTeacherDetailsLocally(result);
+                    saveTeacherDetailsLocally(result.getData().get(0));
                 }
             }
 
@@ -155,67 +164,31 @@ public class LoginScreenActivity extends AppCompatActivity implements KenBurnsVi
         });
     }
 
-    private void saveTeacherDetailsLocally(TeacherListDataModel result) {
+    private void saveTeacherDetailsLocally(UserDetailsDataModel result) {
 
+        ClsGeneral.setPreferences(mActivity,AppConstants.ID, result.getId());
+        ClsGeneral.setPreferences(mActivity,AppConstants.USER_ID, result.getUser_id());
+        ClsGeneral.setPreferences(mActivity,AppConstants.NAME, result.getName());
+        ClsGeneral.setPreferences(mActivity,AppConstants.EMAIL, result.getEmail());
+        ClsGeneral.setPreferences(mActivity,AppConstants.CLAS, result.getClas());
+        ClsGeneral.setPreferences(mActivity,AppConstants.SEC, result.getSec());
+        ClsGeneral.setPreferences(mActivity,AppConstants.JOINING_DATE, result.getJoining_date());
+        ClsGeneral.setPreferences(mActivity,AppConstants.RESIDENTIAL_ADDRESS, result.getResidential_address());
+        ClsGeneral.setPreferences(mActivity,AppConstants.PERMANENT_ADDRESS, result.getPermanent_address());
+        ClsGeneral.setPreferences(mActivity,AppConstants.PROFILE_PIC, result.getProfile_pic());
+        ClsGeneral.setPreferences(mActivity,AppConstants.STATUS, result.getStatus());
+        ClsGeneral.setPreferences(mActivity,AppConstants.QUALIFICATION, result.getQualification());
+        ClsGeneral.setPreferences(mActivity,AppConstants.ALTERNTE_NUMBER, result.getAlternate_number());
+        ClsGeneral.setPreferences(mActivity,AppConstants.SUBJECT, result.getSubject());
+        ClsGeneral.setPreferences(mActivity,AppConstants.CLASS_TEACHER_FOR, result.getClassteacher_for());
+        ClsGeneral.setPreferences(mActivity,AppConstants.ADDRESS, result.getAddress());
+        ClsGeneral.setPreferences(mActivity,AppConstants.FACEBOOK_ID, result.getFacebook_id());
+        ClsGeneral.setPreferences(mActivity,AppConstants.DESIGNATION, result.getDesignation());
+
+        startActivity(new Intent(mActivity, HomeScreenActivity.class));
     }
 
-    public void teacherLogin(final String loginAs, final String userIdStr, final String passwordStr) {
-        Utilz.showDailog(mActivity, mActivity.getResources().getString(R.string.pleasewait));
-        retrofitDataProvider.teacherLogin(loginAs, userIdStr, passwordStr, Utilz.getCurrentDate(), new DownlodableCallback<TeacherListDataModel>() {
-            @Override
-            public void onSuccess(final TeacherListDataModel result) {
-                Utilz.closeDialog();
-                if (result.getStatus().contains(PreferenceName.TRUE)) {
-                    MyPreference.setLoginedAs(loginAs);
-                    Toast.makeText(mActivity, R.string.login_success, Toast.LENGTH_LONG).show();
-                    saveTeacherDetailsLocally(result);
-                }
-            }
 
-            @Override
-            public void onFailure(String error) {
-                Utilz.closeDialog();
-                Toast.makeText(mActivity, R.string.something_went_wrong_error_message, Toast.LENGTH_LONG).show();
-            }
-
-            @Override
-            public void onUnauthorized(int errorNumber) {
-                Utilz.closeDialog();
-                Toast.makeText(mActivity, R.string.something_went_wrong_error_message, Toast.LENGTH_LONG).show();
-            }
-        });
-    }
-
-    public void studentLogin(final String loginAs, final String userIdStr, final String passwordStr) {
-        Utilz.showDailog(mActivity, mActivity.getResources().getString(R.string.pleasewait));
-        retrofitDataProvider.studentLogin(loginAs, userIdStr, passwordStr, Utilz.getCurrentDate(), new DownlodableCallback<StudentDetailsDataModel>() {
-            @Override
-            public void onSuccess(final StudentDetailsDataModel result) {
-                Utilz.closeDialog();
-                if (result.getStatus().contains(PreferenceName.TRUE)) {
-                    MyPreference.setLoginedAs(loginAs);
-                    Toast.makeText(mActivity, R.string.login_success, Toast.LENGTH_LONG).show();
-                    saveStudentDetailsLocally(result);
-                }
-            }
-
-            @Override
-            public void onFailure(String error) {
-                Utilz.closeDialog();
-                Toast.makeText(mActivity, R.string.something_went_wrong_error_message, Toast.LENGTH_LONG).show();
-            }
-
-            @Override
-            public void onUnauthorized(int errorNumber) {
-                Utilz.closeDialog();
-                Toast.makeText(mActivity, R.string.something_went_wrong_error_message, Toast.LENGTH_LONG).show();
-            }
-        });
-    }
-
-    private void saveStudentDetailsLocally(StudentDetailsDataModel result) {
-
-    }
 
     public boolean checkValidation() {
         boolean ret = true;

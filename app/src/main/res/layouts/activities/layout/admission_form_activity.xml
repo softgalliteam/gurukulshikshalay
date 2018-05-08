@@ -28,7 +28,6 @@
                 card_view:cardElevation="10dp">
 
                 <LinearLayout
-                    android:id="@+id/enquiry_form_layout"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:background="#FFF"

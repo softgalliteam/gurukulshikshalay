@@ -2,10 +2,7 @@ package softgalli.gurukulshikshalay.model;
 
 import com.google.gson.annotations.SerializedName;
 
-import java.io.Serializable;
-
-public class TeacherListDataModel implements Serializable {
-
+public class TeacherListDataModel {
     public String getId() {
         return id;
     }

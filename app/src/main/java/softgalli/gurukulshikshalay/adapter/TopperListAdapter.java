@@ -45,12 +45,21 @@ public class TopperListAdapter extends RecyclerView.Adapter<TopperListAdapter.My
 
         public MyViewHolder(View view) {
             super(view);
+<<<<<<< Updated upstream
             imageViewProfilePic1 = (CircleImageView) view.findViewById(R.id.imageViewProfilePic1);
             studentNameTv = (TextView) view.findViewById(R.id.studentNameTv);
             marksObtainedTv = (TextView) view.findViewById(R.id.marksObtainedTv);
             classNameTv = (TextView) view.findViewById(R.id.classNameTv);
             progressBar = (ProgressBar) view.findViewById(R.id.progress);
             mainLl = (LinearLayout) view.findViewById(R.id.mainLl);
+=======
+            imageViewProfilePic1 = view.findViewById(R.id.imageViewProfilePic1);
+            studentNameTv = view.findViewById(R.id.studentNameTv);
+            marksObtainedTv = view.findViewById(R.id.marksObtainedTv);
+            classNameTv = view.findViewById(R.id.classNameTv);
+            subjectTv = view.findViewById(R.id.subjectTv);
+            progressBar = view.findViewById(R.id.progress);
+>>>>>>> Stashed changes
         }
     }
 

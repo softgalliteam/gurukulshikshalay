@@ -6,5 +6,5 @@ package softgalli.gurukulshikshalay.intrface;
 
 public interface OnClickListener {
 
-    public void onClick(int pos);
+    void onClick(int pos);
 }

@@ -19,10 +19,10 @@ import softgalli.gurukulshikshalay.model.FeedBackModel;
 import softgalli.gurukulshikshalay.model.GalleryModel;
 import softgalli.gurukulshikshalay.model.NotificationModel;
 import softgalli.gurukulshikshalay.model.StuTeaModel;
-import softgalli.gurukulshikshalay.model.StudentDetailsDataModel;
-import softgalli.gurukulshikshalay.model.TeacherListDataModel;
 import softgalli.gurukulshikshalay.model.TeacherListModel;
+import softgalli.gurukulshikshalay.model.UserDetailsDataModel;
 import softgalli.gurukulshikshalay.model.TopperLisrModel;
+import softgalli.gurukulshikshalay.model.UserDetailsModel;
 
 /**
  * Created by Shankar on 1/27/2018.
@@ -277,13 +277,13 @@ public class RetrofitDataProvider extends AppCompatActivity implements ServiceMe
     }
 
     @Override
-    public void teacherLogin(String loginAs, String mobile, String message, String date, final DownlodableCallback<TeacherListDataModel> callback) {
-        createRetrofitService().teacherLogin(loginAs, mobile, message, date).enqueue(
-                new Callback<TeacherListDataModel>() {
+    public void userLogin(String loginAs, String mobile, String message, final DownlodableCallback<UserDetailsModel> callback) {
+        createRetrofitService().userLogin(loginAs, mobile, message).enqueue(
+                new Callback<UserDetailsModel>() {
                     @Override
-                    public void onResponse(@NonNull Call<TeacherListDataModel> call, @NonNull final Response<TeacherListDataModel> response) {
+                    public void onResponse(@NonNull Call<UserDetailsModel> call, @NonNull final Response<UserDetailsModel> response) {
                         if (response.isSuccessful()) {
-                            TeacherListDataModel teacherListDataModelPojo = response.body();
+                            UserDetailsModel teacherListDataModelPojo = response.body();
                             callback.onSuccess(teacherListDataModelPojo);
                         } else {
                             if (response.code() == 401) {
@@ -294,7 +294,7 @@ public class RetrofitDataProvider extends AppCompatActivity implements ServiceMe
                     }
 
                     @Override
-                    public void onFailure(@NonNull Call<TeacherListDataModel> call, @NonNull Throwable t) {
+                    public void onFailure(@NonNull Call<UserDetailsModel> call, @NonNull Throwable t) {
                         Log.d("Result", "t" + t.getMessage());
                         callback.onFailure(t.getMessage());
                     }
@@ -303,31 +303,7 @@ public class RetrofitDataProvider extends AppCompatActivity implements ServiceMe
     }
 
 
-    @Override
-    public void studentLogin(String loginAs, String mobile, String message, String date, final DownlodableCallback<StudentDetailsDataModel> callback) {
-        createRetrofitService().studentLogin(loginAs, mobile, message, date).enqueue(
-                new Callback<StudentDetailsDataModel>() {
-                    @Override
-                    public void onResponse(@NonNull Call<StudentDetailsDataModel> call, @NonNull final Response<StudentDetailsDataModel> response) {
-                        if (response.isSuccessful()) {
-                            StudentDetailsDataModel studentDetailsDataModelPojo = response.body();
-                            callback.onSuccess(studentDetailsDataModelPojo);
-                        } else {
-                            if (response.code() == 401) {
-                                callback.onUnauthorized(response.code());
-                            } else {
-                            }
-                        }
-                    }
 
-                    @Override
-                    public void onFailure(@NonNull Call<StudentDetailsDataModel> call, @NonNull Throwable t) {
-                        Log.d("Result", "t" + t.getMessage());
-                        callback.onFailure(t.getMessage());
-                    }
-                }
-        );
-    }
 
 
 }

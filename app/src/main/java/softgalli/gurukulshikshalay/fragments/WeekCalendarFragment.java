@@ -88,18 +88,18 @@ public class WeekCalendarFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_week_calender, container, false);
 
-        mViewPager = (ViewPager) view.findViewById(R.id.view_pager);
-        mMonthView = (TextView) view.findViewById(R.id.month_tv);
-        mSundayTv = (TextView) view.findViewById(R.id.week_sunday);
-        mMondayTv = (TextView) view.findViewById(R.id.week_monday);
-        mTuesdayTv = (TextView) view.findViewById(R.id.week_tuesday);
-        mWednesdayTv = (TextView) view.findViewById(R.id.week_wednesday);
-        mThursdayTv = (TextView) view.findViewById(R.id.week_thursday);
-        mFridayTv = (TextView) view.findViewById(R.id.week_friday);
-        mSaturdayTv = (TextView) view.findViewById(R.id.week_saturday);
-        mBackground = (LinearLayout) view.findViewById(R.id.background);
-        mChangeDate = (LinearLayout) view.findViewById(R.id.changeDate);
-        mFrameDatePicker = (ViewGroup) view.findViewById(R.id.frame_date_picker);
+        mViewPager = view.findViewById(R.id.view_pager);
+        mMonthView = view.findViewById(R.id.month_tv);
+        mSundayTv = view.findViewById(R.id.week_sunday);
+        mMondayTv = view.findViewById(R.id.week_monday);
+        mTuesdayTv = view.findViewById(R.id.week_tuesday);
+        mWednesdayTv = view.findViewById(R.id.week_wednesday);
+        mThursdayTv = view.findViewById(R.id.week_thursday);
+        mFridayTv = view.findViewById(R.id.week_friday);
+        mSaturdayTv = view.findViewById(R.id.week_saturday);
+        mBackground = view.findViewById(R.id.background);
+        mChangeDate = view.findViewById(R.id.changeDate);
+        mFrameDatePicker = view.findViewById(R.id.frame_date_picker);
 
         mDayHeaders = new TextView[]{mSundayTv, mMondayTv, mTuesdayTv, mWednesdayTv, mThursdayTv
                 , mFridayTv, mSaturdayTv};

@@ -14,11 +14,7 @@
     <color name="yellow">#e4d020</color>
     <color name="green">#20e42a</color>
     <color name="md_deep_purple_500">#673ab7</color>
-    <color name="md_green_500">#4caf50</color>
     <color name="pinkcolor">#fdcfe9</color>
-    <color name="forum_back">#26e1cc</color>
-    <color name="academics_back">#fab474</color>
-    <color name="teacher_back">#54a0f4</color>
     <color name="color_de00000">#de000000</color>
     <color name="color_8a00000">#8a000000</color>
     <color name="light_black">#2e2e2e</color>
@@ -50,11 +46,11 @@
         <item>@color/dot_dark_screen1</item>
     </array>
 
-    <color name="gen_black">#000000</color>
+<<<<<<< Updated upstream
+=======
     <color name="gen_white">#FFFFFF</color>
-    <color name="green_light">#43A047</color>
-    <color name="grey_light">#E0E0E0</color>
 
+>>>>>>> Stashed changes
     <!-- Screens background color-->
     <color name="bg_screen1">#f94f39</color>
 
@@ -65,5 +61,4 @@
     <color name="dot_light_screen1">#f98da5</color>
 
     <!-- Placeholder colors-->
-    <color name="stay_color">#999999</color>
 </resources>

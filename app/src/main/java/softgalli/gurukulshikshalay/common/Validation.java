@@ -51,7 +51,6 @@ public class Validation {
             editText.setError(errMsg);
             return false;
         }
-        ;
         if (text.length() == 0) {
             editText.setError(REQUIRED_MSG);
             return false;
@@ -80,11 +79,7 @@ public class Validation {
             editText.setError(errMsg);
             return false;
         }
-        if (text.contains(" ")) {
-            //editText.setError(inValidMoMsg);
-            return false;
-        }
-        return true;
+        return !text.contains(" ");
     }
 
     // return true if the input field is valid, based on the parameter passed
@@ -102,7 +97,6 @@ public class Validation {
             //editText.setError(errMsg);
             return false;
         }
-        ;
 
         return true;
     }
@@ -119,12 +113,7 @@ public class Validation {
         editText.setError(null);
 
         // length 0 means there is no text
-        if (text.length() == 0) {
-            //editText.setError(REQUIRED_MSG);
-            return false;
-        }
-
-        return true;
+        return text.length() != 0;
     }
 
     public static boolean isAddress(EditText etAddress, boolean b) {
@@ -142,11 +131,7 @@ public class Validation {
         boolean isValid;
         try {
             int no = Integer.parseInt(String.valueOf(number.charAt(0)));
-            if (no < 7) {
-                isValid = false;
-            } else {
-                isValid = true;
-            }
+            isValid = no >= 7;
             return isValid;
         } catch (Exception e) {
             e.printStackTrace();

@@ -53,10 +53,10 @@ public class FeedbackActivity extends AppCompatActivity implements RatingBar.OnR
         errorMessage = getString(R.string.error_msg);
 
 
-        TextView submitFeedbackBtn = (TextView) findViewById(R.id.submit_feedback_btn);
-        feedbackText = (EditText) findViewById(R.id.feedback_Txt);
-        final EditText feedbackEmail = (EditText) findViewById(R.id.email_Txt);
-        final EditText feedbackMobile = (EditText) findViewById(R.id.mobile_no_Txt);
+        TextView submitFeedbackBtn = findViewById(R.id.submit_feedback_btn);
+        feedbackText = findViewById(R.id.feedback_Txt);
+        final EditText feedbackEmail = findViewById(R.id.email_Txt);
+        final EditText feedbackMobile = findViewById(R.id.mobile_no_Txt);
         ((RatingBar) findViewById(R.id.ratingBar1)).setOnRatingBarChangeListener(this);
 
         if (MyPreference.isLogined()) {

@@ -6,10 +6,10 @@ import softgalli.gurukulshikshalay.model.FeedBackModel;
 import softgalli.gurukulshikshalay.model.GalleryModel;
 import softgalli.gurukulshikshalay.model.NotificationModel;
 import softgalli.gurukulshikshalay.model.StuTeaModel;
-import softgalli.gurukulshikshalay.model.StudentDetailsDataModel;
-import softgalli.gurukulshikshalay.model.TeacherListDataModel;
 import softgalli.gurukulshikshalay.model.TeacherListModel;
+import softgalli.gurukulshikshalay.model.UserDetailsDataModel;
 import softgalli.gurukulshikshalay.model.TopperLisrModel;
+import softgalli.gurukulshikshalay.model.UserDetailsModel;
 
 /**
  * Created by Shankar on 1/27/2018.
@@ -21,14 +21,12 @@ public interface ServiceMethods {
                     String classteacher_for, String joining_date, String address, DownlodableCallback<StuTeaModel> callback);
     void addstudent(String regestration_id, String name, String email, String mobile, String clas, String sec,
                     String admission_date, String residential_address, DownlodableCallback<StuTeaModel> callback);
-
+    void teacherList(DownlodableCallback<TeacherListModel> callback);
     void galleryList(DownlodableCallback<GalleryModel> callback);
     void topperlist(DownlodableCallback<TopperLisrModel> callback);
     void alumniList(DownlodableCallback<AlumniModel> callback);
-    void teacherList(DownlodableCallback<TeacherListModel> callback);
     void feedback(String name, String mobile, String message, String rating,String date, DownlodableCallback<FeedBackModel> callback);
 
-    void teacherLogin(String loginAs, String mobile, String message, String date, DownlodableCallback<TeacherListDataModel> callback);
 
-    void studentLogin(String loginAs, String mobile, String message, String date, DownlodableCallback<StudentDetailsDataModel> callback);
+    void userLogin(String loginAs, String mobile, String message, DownlodableCallback<UserDetailsModel> callback);
 }

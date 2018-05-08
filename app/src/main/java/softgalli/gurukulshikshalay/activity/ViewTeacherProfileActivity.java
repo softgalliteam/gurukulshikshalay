@@ -29,7 +29,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 import softgalli.gurukulshikshalay.R;
 import softgalli.gurukulshikshalay.common.AppConstants;
 import softgalli.gurukulshikshalay.common.Utilz;
-import softgalli.gurukulshikshalay.model.TeacherListDataModel;
+import softgalli.gurukulshikshalay.model.UserDetailsDataModel;
 import softgalli.gurukulshikshalay.retrofit.ApiUrl;
 
 public class ViewTeacherProfileActivity extends AppCompatActivity {
@@ -56,7 +56,7 @@ public class ViewTeacherProfileActivity extends AppCompatActivity {
     private String TAG = ViewTeacherProfileActivity.class.getSimpleName();
     private Activity mActivity;
     private int mPosition;
-    private ArrayList<TeacherListDataModel> mTeachersArrayList = new ArrayList<>();
+    private ArrayList<UserDetailsDataModel> mTeachersArrayList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,20 +88,20 @@ public class ViewTeacherProfileActivity extends AppCompatActivity {
             if (mBundle.containsKey(AppConstants.POSITION))
                 mPosition = mBundle.getInt(AppConstants.POSITION);
             if (mBundle.containsKey(AppConstants.TEACHER_DETAILS))
-                mTeachersArrayList = (ArrayList<TeacherListDataModel>) mBundle.getSerializable(AppConstants.TEACHER_DETAILS);
+                mTeachersArrayList = (ArrayList<UserDetailsDataModel>) mBundle.getSerializable(AppConstants.TEACHER_DETAILS);
         }
         if (mTeachersArrayList != null && mTeachersArrayList.size() > 0) {
             updateOnUI(mTeachersArrayList.get(mPosition));
         }
     }
 
-    private void updateOnUI(TeacherListDataModel mTeacherListDataModel) {
+    private void updateOnUI(UserDetailsDataModel mTeacherListDataModel) {
         RequestOptions requestOptions = new RequestOptions();
         requestOptions.placeholder(R.drawable.logo);
         requestOptions.error(R.drawable.logo);
         requestOptions.fitCenter();
         Glide.with(mActivity)
-                .load(ApiUrl.IMAGE_BASE_URL + mTeacherListDataModel.getImage())
+                .load(ApiUrl.IMAGE_BASE_URL + mTeacherListDataModel.getProfile_pic())
                 .apply(requestOptions)
                 .listener(new RequestListener<Drawable>() {
                     @Override
@@ -127,13 +127,13 @@ public class ViewTeacherProfileActivity extends AppCompatActivity {
         } else {
             userDesignationTv.setText(mActivity.getResources().getString(R.string.na));
         }
-        if (!TextUtils.isEmpty(mTeacherListDataModel.getMobile_number())) {
-            userPhoneTv.setText(mTeacherListDataModel.getMobile_number());
+        if (!TextUtils.isEmpty(mTeacherListDataModel.getMobile())) {
+            userPhoneTv.setText(mTeacherListDataModel.getMobile());
         } else {
             userPhoneTv.setText(mActivity.getResources().getString(R.string.na));
         }
-        if (!TextUtils.isEmpty(mTeacherListDataModel.getEmail_id())) {
-            userEmailIdTv.setText(mTeacherListDataModel.getEmail_id());
+        if (!TextUtils.isEmpty(mTeacherListDataModel.getEmail())) {
+            userEmailIdTv.setText(mTeacherListDataModel.getEmail());
         } else {
             userEmailIdTv.setText(mActivity.getResources().getString(R.string.na));
         }
@@ -156,8 +156,8 @@ public class ViewTeacherProfileActivity extends AppCompatActivity {
 
     @OnClick(R.id.callButton)
     public void onViewClicked() {
-        if (mTeachersArrayList != null && mTeachersArrayList.size() > 0 && !TextUtils.isEmpty(mTeachersArrayList.get(mPosition).getMobile_number())) {
-            Utilz.openDialer(mActivity, mTeachersArrayList.get(mPosition).getMobile_number());
+        if (mTeachersArrayList != null && mTeachersArrayList.size() > 0 && !TextUtils.isEmpty(mTeachersArrayList.get(mPosition).getMobile())) {
+            Utilz.openDialer(mActivity, mTeachersArrayList.get(mPosition).getMobile());
         } else {
             Toast.makeText(mActivity, R.string.phone_no_not_provide_yet, Toast.LENGTH_SHORT).show();
         }

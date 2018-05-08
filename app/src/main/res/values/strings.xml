@@ -1,39 +1,27 @@
 <resources>
     <string name="app_name">Gurukul Shikshalay</string>
     <string name="school_registration_no">IN8102335</string>
-    <string name="action_settings">Settings</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="text_notification">Notification</string>
     <string name="roboto_medium">fonts/Roboto-Medium.ttf</string>
     <string name="roboto_regular">fonts/Roboto-Regular.ttf</string>
     <string name="roboto_bold">fonts/Roboto-Bold.ttf</string>
     <string name="app_registrationno">Rrgistration No:</string>
-    <string name="text_call">Call</string>
-    <string name="text_callender">Callender</string>
-    <string name="text_asknans">Ask N Ans</string>
-    <string name="text_academics">Acadmics</string>
-    <string name="text_teacher">Teachers</string>
     <string name="text_upcominactivity">Upcoming Activities</string>
-    <string name="text_timetable">Time Table</string>
-    <string name="text_profile">Profile</string>
-    <string name="text_study">Study</string>
-    <string name="syllabus">Syllabus</string>
-    <string name="text_events">Events</string>
+<<<<<<< Updated upstream
     <string name="toast_back_press">Press back again to exit from app</string>
+=======
+    <string name="text_timetable">Time Table</string>
+    <string name="text_events">Events</string>
+    <string name="toast_back_press">Press back again to exist the app</string>
+>>>>>>> Stashed changes
     <string name="text_news">News</string>
-    <string name="admission_form">Admission Form</string>
     <string name="fromdate">From Date</string>
     <string name="todate">To Date</string>
     <string name="selectteacer">Select Teacher</string>
-    <string name="text_leaveapplication">Leave Application</string>
-    <string name="add_student">Add Student</string>
-    <string name="add_teacer">Add Teacher</string>
     <string name="pleasewait">Please wait...</string>
     <string name="welcome_user">Welcome</string>
-    <string name="login_success">Login Success!!</string>
     <string name="tag_line">Excellence In Education</string>
-    <string name="name">Name</string>
     <string name="email">Email</string>
     <string name="phone">Phone</string>
     <string name="address">Address</string>
@@ -50,7 +38,6 @@
     <string name="take_admission_by_filling_form_simply">Take admission by filling form simply.</string>
 
     <!--Intro slider texts -->
-    <string name="title_activity_welcome">Home Screen</string>
     <string name="next">NEXT</string>
     <string name="skip">SKIP</string>
     <string name="start">GOT IT</string>
@@ -67,12 +54,6 @@
     <string name="slide_4_title">EXPERIENCE</string>
     <string name="slide_4_desc">We provide very experienced and laborious teachers.</string>
 
-    <string name="play_again_desc">To see the welcome slider again, goto Settings -> apps -> welcome slider -> clear data
-    </string>
-    <string name="play_again">Play Again</string>
-    <string name="Rs">\u20B9</string>
-    <string name="share_app">Share App</string>
-    <string name="feedback">Feedback</string>
     <string name="user_id">User Id</string>
     <string name="password">Password</string>
     <string name="admission">Admission</string>
@@ -80,23 +61,17 @@
     <string name="contact_us">Contact Us</string>
 
     <string name="short_address">Ghodthamba, Giridih, Jharkhand(825418).</string>
-    <string name="full_address">Gurukul Shikshalay, Ghodthamba, P.S-Dhanwar, Dist.-Giridih, Jharkhand, India(825418).</string>
-    <string name="telephone">+91 9934342061, 9905521499</string>
     <string name="helpline_no1">+91 9934342061</string>
-    <string name="helpline_no2">+91 9905521499</string>
     <string name="principal_phone">+91 9835845701</string>
-    <string name="school_email">info@gurukulsikshalay.com, chandrikabarnwal@gmail.com</string>
     <string name="principal_email">chandrikabarnwal@gmail.com</string>
 
     <string name="nointernet">No internet connection</string>
-    <string name="alumnilist">Alumni List</string>
     <string name="gallery_list">Gallery List</string>
     <string name="gallery_album">Gallery Album</string>
     <string name="gallery">Gallery</string>
     <string name="login_first_message">Please login first to access all the features of this school, Please contact to you principal for your id and password.</string>
     <string name="please_login">Please Login</string>
     <string name="login">Login</string>
-    <string name="sent_successfully">Sent Successfully</string>
     <string name="school_on_map_url"><![CDATA[https://www.google.com/maps?ll=24.445404,85.881632&z=15&t=m&hl=en-US&gl=IN&mapclient=embed&cid=6936239094202783588]]></string>
 
     <string-array name="studenthomecategory">
@@ -140,53 +115,17 @@
     <string name="saturday_three">Sat</string>
     <string name="submit">Sumbit</string>
     <string name="feedback_text">How do you feel about our school?</string>
-    <string name="happy">Happy</string>
-    <string name="disappointed">Disappointed</string>
-    <string name="confused">Confused</string>
-    <string name="feedback_suggestion">Feedback/Suggestion</string>
-    <string name="query">Query</string>
-    <string name="query_hint">Enter your query</string>
-    <string name="complaint">Complaint</string>
 
     <string name="feedback_text_heading">Your feedback may help us to make this app more efficient</string>
     <string name="write_your_feedback_txt">write your feedback</string>
-    <string name="name_hint">Enter Name*</string>
-    <string name="email_hint">Enter Your Email*</string>
-    <string name="email_hint_optional">Enter Email(Optional)</string>
     <string name="name_hint_optional">Enter Name</string>
     <string name="phone_hint">Enter Mobile No.*</string>
     <string name="error_msg">Write your</string>
     <string name="no_internet_connection">Please check your internet connection and try again.</string>
     <string name="something_went_wrong_error_message">Something went wrong wrong, Please try again.</string>
-    <string name="login_need_for_it">You need to login or signup first for it.</string>
     <string name="principal_name">Chandrika Barnwal</string>
     <string name="school_name">Gurukul Shikshalay</string>
     <string name="state">Jharkhand</string>
-
-    <string-array name="custom_weekdays">
-        <item>Su</item>
-        <item>M</item>
-        <item>Tu</item>
-        <item>W</item>
-        <item>Th</item>
-        <item>F</item>
-        <item>Sa</item>
-    </string-array>
-
-    <string-array name="custom_months">
-        <item>JAN</item>
-        <item>Feb</item>
-        <item>MARCH</item>
-        <item>April</item>
-        <item>MAY</item>
-        <item>June</item>
-        <item>JULY</item>
-        <item>Aug</item>
-        <item>SEPT</item>
-        <item>Oct</item>
-        <item>Nov</item>
-        <item>DEC</item>
-    </string-array>
 
     <string name="aboutus_desc">Gurukul Shikshalay serves nearly 1500 students, 1 to 10th class students at Ghodthamba, near Petrol Pump, Giridih, Jharkhand. In addition, Gurukul Shikshalay provides highly educated teachers and with the help of digital technology we are connecting parents teachers and students to understand each other and help our students for his all kind of growth. We provide best study environment for the growth and development of all students. Every learner can succeed in Gurukul Shikshalay with academic acceleration and enrichment available for the gifted and talented students. Computer and English as a preferred knowledge programs are also offered to make students capable to go for technology and higher education field. We want to remove the trend of schools for earning money only. We want to really make students capable to be a great person who can serve nation with their knowledge and also can be a great human being. We also emphasize on new digital technology which is most important for future.</string>
 </resources>

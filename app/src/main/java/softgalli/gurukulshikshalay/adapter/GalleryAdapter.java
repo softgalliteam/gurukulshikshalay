@@ -40,8 +40,8 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.MyViewHo
 
         public MyViewHolder(View view) {
             super(view);
-            thumbnail = (ImageView) view.findViewById(R.id.thumbnail);
-            progressBar = (ProgressBar) view.findViewById(R.id.progress);
+            thumbnail = view.findViewById(R.id.thumbnail);
+            progressBar = view.findViewById(R.id.progress);
         }
     }
 

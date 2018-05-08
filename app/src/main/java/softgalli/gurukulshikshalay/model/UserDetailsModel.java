@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
 
-public class TeacherListModel {
+public class UserDetailsModel {
     public String getStatus() {
         return status;
     }
@@ -13,7 +13,7 @@ public class TeacherListModel {
         return msg;
     }
 
-    public ArrayList<TeacherListDataModel> getData() {
+    public ArrayList<UserDetailsDataModel> getData() {
         return data;
     }
 
@@ -22,5 +22,5 @@ public class TeacherListModel {
     @SerializedName("msg")
     String msg;
     @SerializedName("data")
-    ArrayList<TeacherListDataModel> data;
+    ArrayList<UserDetailsDataModel> data;
 }

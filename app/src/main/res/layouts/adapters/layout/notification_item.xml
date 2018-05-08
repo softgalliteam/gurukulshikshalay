@@ -2,13 +2,9 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/cv"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    app:contentPadding="1dp"
-    card_view:cardCornerRadius="5dp"
-    card_view:cardElevation="4dp"
-    card_view:cardUseCompatPadding="true">
+    app:contentPadding="1dp">
 
 
     <LinearLayout

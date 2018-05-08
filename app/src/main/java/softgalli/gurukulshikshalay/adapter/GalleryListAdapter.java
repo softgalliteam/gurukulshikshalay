@@ -43,9 +43,9 @@ public class GalleryListAdapter extends RecyclerView.Adapter<GalleryListAdapter.
 
         public MyViewHolder(View view) {
             super(view);
-            thumbnail = (ImageView) view.findViewById(R.id.thumbnail);
-            folder_name = (TextView) view.findViewById(R.id.folder_name);
-            progressBar = (ProgressBar)view.findViewById(R.id.progress);
+            thumbnail = view.findViewById(R.id.thumbnail);
+            folder_name = view.findViewById(R.id.folder_name);
+            progressBar = view.findViewById(R.id.progress);
         }
     }
 

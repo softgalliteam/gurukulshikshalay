@@ -3,6 +3,7 @@ package softgalli.gurukulshikshalay.model;
 import com.google.gson.annotations.SerializedName;
 
 public class StuTeaModel {
+
     public String getStatus() {
         return status;
     }

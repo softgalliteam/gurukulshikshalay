@@ -39,7 +39,6 @@
             android:layout_height="wrap_content">
 
             <EditText
-                android:id="@+id/tvFirstName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="First Name"
@@ -55,7 +54,6 @@
                 android:layout_height="wrap_content">
 
                 <EditText
-                    android:id="@+id/tvLastName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Last Name"
@@ -71,7 +69,6 @@
                 android:layout_height="wrap_content">
 
                 <EditText
-                    android:id="@+id/tvreason"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Mention reason for leave"
@@ -91,7 +88,6 @@
                     android:layout_weight=".5">
 
                     <EditText
-                        android:id="@+id/tvFromDate"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/fromdate"
@@ -109,7 +105,6 @@
                     android:layout_weight=".5">
 
                     <EditText
-                        android:id="@+id/tvToDate"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/todate"
@@ -133,7 +128,6 @@
                 tools:ignore="MissingPrefix"
                 android:textColor="@color/color_8a00000"/>
             <Spinner
-                android:id="@+id/spinner"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"></Spinner>
             <View

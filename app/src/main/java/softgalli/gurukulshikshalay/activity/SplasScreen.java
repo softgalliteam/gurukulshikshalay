@@ -40,7 +40,7 @@ public class SplasScreen extends Activity implements Animation.AnimationListener
         // set animation listener
         animFadeIn.setAnimationListener(this);
         // animation for image
-        linearLayout = (LinearLayout) findViewById(R.id.layout_linear);
+        linearLayout = findViewById(R.id.layout_linear);
         // start the animation
         linearLayout.setVisibility(View.VISIBLE);
         linearLayout.startAnimation(animFadeIn);

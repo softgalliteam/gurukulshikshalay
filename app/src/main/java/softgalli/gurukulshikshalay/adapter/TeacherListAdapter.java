@@ -44,12 +44,20 @@ public class TeacherListAdapter extends RecyclerView.Adapter<TeacherListAdapter.
 
         public MyViewHolder(View view) {
             super(view);
+<<<<<<< Updated upstream
             teacherProfilePicIv = (ImageView) view.findViewById(R.id.teacherProfilePicIv);
             qualificationTv = (TextView) view.findViewById(R.id.qualificationTv);
             subjectTv = (TextView) view.findViewById(R.id.subjectTv);
             teacherName = (TextView) view.findViewById(R.id.teacherName);
             progressBar = (ProgressBar) view.findViewById(R.id.progress);
             mainLl = (LinearLayout) view.findViewById(R.id.mainLl);
+=======
+            teacherProfilePicIv = view.findViewById(R.id.teacherProfilePicIv);
+            qualificationTv = view.findViewById(R.id.qualificationTv);
+            subjectTv = view.findViewById(R.id.subjectTv);
+            teacherName = view.findViewById(R.id.teacherName);
+          //  progressBar = (ProgressBar)view.findViewById(R.id.progress);
+>>>>>>> Stashed changes
         }
     }
 
