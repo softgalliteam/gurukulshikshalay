@@ -15,7 +15,9 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import softgalli.gurukulshikshalay.R;
+import softgalli.gurukulshikshalay.common.AppConstants;
 import softgalli.gurukulshikshalay.common.Utilz;
+import softgalli.gurukulshikshalay.preference.MyPreference;
 
 /**
  * Created by Welcome on 2/12/2018.
@@ -45,7 +47,7 @@ public class SeeAttendenceActivity extends AppCompatActivity {
             className = getIntent().getStringExtra("ClassName");
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle("See Attendence" + className);
+        getSupportActionBar().setTitle("See Attendence " + className);
 
         manageCalenderView();
 
@@ -83,10 +85,15 @@ public class SeeAttendenceActivity extends AppCompatActivity {
     }
 
     private void getStudentsAttendance(int date) {
-        //get attendence of date
+        //get attendence of that particular date
         if (Utilz.isOnline(mActivity)) {
-            //Show here present studets count and absent students count for example
-            manageAbsentPresentCount(15, 2);
+
+            if (MyPreference.getLoginedAs().equalsIgnoreCase(AppConstants.STUDENT)) {
+
+            } else {
+                //Show here present students count and absent students count for example
+                manageAbsentPresentCount(15, 2);
+            }
         } else {
             Utilz.showNoInternetConnectionDialog(mActivity);
         }

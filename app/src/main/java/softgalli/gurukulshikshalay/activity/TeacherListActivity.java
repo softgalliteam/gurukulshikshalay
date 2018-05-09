@@ -23,6 +23,7 @@ import softgalli.gurukulshikshalay.common.Utilz;
 import softgalli.gurukulshikshalay.intrface.OnClickListener;
 import softgalli.gurukulshikshalay.model.TeacherListDataModel;
 import softgalli.gurukulshikshalay.model.TeacherListModel;
+import softgalli.gurukulshikshalay.model.UserDetailsDataModel;
 import softgalli.gurukulshikshalay.retrofit.DownlodableCallback;
 import softgalli.gurukulshikshalay.retrofit.RetrofitDataProvider;
 
@@ -63,10 +64,23 @@ public class TeacherListActivity extends AppCompatActivity {
                     recyclerView.setAdapter(new TeacherListAdapter(TeacherListActivity.this, teachersArrayList, new OnClickListener() {
                         @Override
                         public void onClick(int position) {
-                            Intent teacherIntent = new Intent(mActivity, ViewTeacherProfileActivity.class);
-                            teacherIntent.putExtra(AppConstants.TEACHER_DETAILS, teachersArrayList);
-                            teacherIntent.putExtra(AppConstants.POSITION, position);
-                            startActivity(teacherIntent);
+                            if (teachersArrayList != null && teachersArrayList.size() > 0) {
+                                //Coppying data from Teacher model to User model
+                                ArrayList<UserDetailsDataModel> mTeachersArrayList = new ArrayList<>();
+                                for (int i = 0; i < teachersArrayList.size(); i++) {
+                                    TeacherListDataModel model = teachersArrayList.get(position);
+                                    if (model != null) {
+                                        mTeachersArrayList.add(new UserDetailsDataModel(
+                                                model.getId(), model.getName(), model.getEmail_id(), model.getMobile_number(), model.getJoining_date(), model.getImage(), model.getStatus(),
+                                                model.getQualification(), model.getAlternate_number(), model.getClassteacher_for(), model.getAddress(), model.getFacebook_id(), model.getWhat_teach(), model.getDesignation()
+                                        ));
+                                    }
+                                }
+                                Intent teacherIntent = new Intent(mActivity, ViewTeacherProfileActivity.class);
+                                teacherIntent.putExtra(AppConstants.TEACHER_DETAILS, mTeachersArrayList);
+                                teacherIntent.putExtra(AppConstants.POSITION, position);
+                                startActivity(teacherIntent);
+                            }
                         }
                     }));
                 }

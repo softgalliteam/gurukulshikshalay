@@ -6,7 +6,7 @@ import java.io.Serializable;
 
 import io.realm.RealmObject;
 
-public class UserDetailsDataModel {
+public class UserDetailsDataModel implements Serializable{
     public String getId() {
         return id;
     }
@@ -21,6 +21,23 @@ public class UserDetailsDataModel {
 
     public String getEmail() {
         return email;
+    }
+
+    public UserDetailsDataModel(String user_id, String name, String email, String mobile, String joining_date, String profile_pic, String status, String qualification, String alternate_number, String classteacher_for, String address, String facebook_id, String what_teach, String designation) {
+        this.user_id = user_id;
+        this.name = name;
+        this.email = email;
+        this.mobile = mobile;
+        this.joining_date = joining_date;
+        this.profile_pic = profile_pic;
+        this.status = status;
+        this.qualification = qualification;
+        this.alternate_number = alternate_number;
+        this.classteacher_for = classteacher_for;
+        this.address = address;
+        this.facebook_id = facebook_id;
+        this.what_teach = what_teach;
+        this.designation = designation;
     }
 
     public String getClas() {

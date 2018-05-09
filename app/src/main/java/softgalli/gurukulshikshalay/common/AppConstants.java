@@ -32,4 +32,6 @@ public class AppConstants {
     public static final String ADDRESS = "address";
     public static final String FACEBOOK_ID = "facebook_id";
     public static final String DESIGNATION = "designation";
+    public static final String IS_LOGINED = "is_logined";
+    public static final String LOGIN_AS = "login_as";
 }

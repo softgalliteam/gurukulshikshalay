@@ -228,10 +228,8 @@ public class RetrofitDataProvider extends AppCompatActivity implements ServiceMe
                     @Override
                     public void onResponse(@NonNull Call<TeacherListModel> call, @NonNull final Response<TeacherListModel> response) {
                         if (response.isSuccessful()) {
-
                             TeacherListModel mobileRegisterPojo = response.body();
                             callback.onSuccess(mobileRegisterPojo);
-
                         } else {
                             if (response.code() == 401) {
                                 callback.onUnauthorized(response.code());

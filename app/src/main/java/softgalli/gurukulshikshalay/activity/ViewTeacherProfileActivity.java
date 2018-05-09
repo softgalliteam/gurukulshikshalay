@@ -129,6 +129,8 @@ public class ViewTeacherProfileActivity extends AppCompatActivity {
         }
         if (!TextUtils.isEmpty(mTeacherListDataModel.getMobile())) {
             userPhoneTv.setText(mTeacherListDataModel.getMobile());
+        } else if (!TextUtils.isEmpty(mTeacherListDataModel.getAlternate_number())) {
+            userPhoneTv.setText(mTeacherListDataModel.getAlternate_number());
         } else {
             userPhoneTv.setText(mActivity.getResources().getString(R.string.na));
         }
@@ -156,8 +158,11 @@ public class ViewTeacherProfileActivity extends AppCompatActivity {
 
     @OnClick(R.id.callButton)
     public void onViewClicked() {
-        if (mTeachersArrayList != null && mTeachersArrayList.size() > 0 && !TextUtils.isEmpty(mTeachersArrayList.get(mPosition).getMobile())) {
-            Utilz.openDialer(mActivity, mTeachersArrayList.get(mPosition).getMobile());
+        if (mTeachersArrayList != null && mTeachersArrayList.size() > 0) {
+            if (!TextUtils.isEmpty(mTeachersArrayList.get(mPosition).getMobile()))
+                Utilz.openDialer(mActivity, mTeachersArrayList.get(mPosition).getMobile());
+            else if (!TextUtils.isEmpty(mTeachersArrayList.get(mPosition).getAlternate_number()))
+                Utilz.openDialer(mActivity, mTeachersArrayList.get(mPosition).getAlternate_number());
         } else {
             Toast.makeText(mActivity, R.string.phone_no_not_provide_yet, Toast.LENGTH_SHORT).show();
         }

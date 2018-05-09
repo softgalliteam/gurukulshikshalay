@@ -70,15 +70,12 @@ public class HomeCategoryAdapter extends RecyclerView.Adapter<HomeCategoryAdapte
 
         public ViewHolder(View itemView) {
             super(itemView);
-<<<<<<< Updated upstream
             cat_name = (TextView) itemView.findViewById(R.id.cat_name);
             cat_image = (ImageView) itemView.findViewById(R.id.cat_image);
             ll_background = (LinearLayout) itemView.findViewById(R.id.ll_background);
-=======
             cat_name = itemView.findViewById(R.id.cat_name);
             cat_image = itemView.findViewById(R.id.cat_image);
             ll_background = itemView.findViewById(R.id.ll_background);
->>>>>>> Stashed changes
 
         }
     }

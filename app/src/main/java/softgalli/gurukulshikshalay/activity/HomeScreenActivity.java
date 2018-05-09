@@ -36,8 +36,6 @@ import de.hdodenhof.circleimageview.CircleImageView;
 import softgalli.gurukulshikshalay.R;
 import softgalli.gurukulshikshalay.adapter.HomeCategoryAdapter;
 import softgalli.gurukulshikshalay.common.Apis;
-import softgalli.gurukulshikshalay.common.AppConstants;
-import softgalli.gurukulshikshalay.common.ClsGeneral;
 import softgalli.gurukulshikshalay.common.Utilz;
 import softgalli.gurukulshikshalay.intrface.OnClickListener;
 import softgalli.gurukulshikshalay.model.UpcomingActivityModel;
@@ -159,7 +157,7 @@ public class HomeScreenActivity extends AppCompatActivity
         String categoryList[];
         int iconList[], backgroundColor[];
         recyclerview.setLayoutManager(new GridLayoutManager(HomeScreenActivity.this, 3));
-        if (ClsGeneral.getPreferences(HomeScreenActivity.this, AppConstants.LOGINTYPE).equalsIgnoreCase("skip")) {
+        if (!MyPreference.isSignupSkipped()) {
             categoryList = getResources().getStringArray(R.array.skiphomecategory);
             iconList = getSkipIcon();
             backgroundColor = getSkipColor();
@@ -209,7 +207,7 @@ public class HomeScreenActivity extends AppCompatActivity
     private int[] getStudentTeacherIcon() {
         int icon[] = {R.drawable.teacherlist, R.drawable.topperlist, R.drawable.news,
                 R.drawable.attendance, R.drawable.leave, R.drawable.timetable,
-                R.drawable.syllabus, R.drawable.quiz, R.drawable.online_test};
+                R.drawable.result, R.drawable.syllabus, R.drawable.quiz};
         return icon;
     }
 
