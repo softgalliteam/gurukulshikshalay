@@ -51,6 +51,13 @@ public class TeacherListAdapter extends RecyclerView.Adapter<TeacherListAdapter.
             progressBar = (ProgressBar) view.findViewById(R.id.progress);
             mainLl = (LinearLayout) view.findViewById(R.id.mainLl);
             teacherProfilePicIv = view.findViewById(R.id.teacherProfilePicIv);
+<<<<<<< Updated upstream
+=======
+            qualificationTv = view.findViewById(R.id.qualificationTv);
+            subjectTv = view.findViewById(R.id.subjectTv);
+            teacherName = view.findViewById(R.id.teacherName);
+          //  progressBar = (ProgressBar)view.findViewById(R.id.progress);
+>>>>>>> Stashed changes
         }
     }
 

@@ -56,7 +56,14 @@ public class LoginScreenActivity extends AppCompatActivity implements KenBurnsVi
         mActivity = this;
         retrofitDataProvider = new RetrofitDataProvider(this);
         mViewSwitcher = (ViewSwitcher) findViewById(R.id.viewSwitcher);
+<<<<<<< Updated upstream
         mViewSwitcher = findViewById(R.id.viewSwitcher);
+=======
+
+        mViewSwitcher = findViewById(R.id.viewSwitcher);
+
+
+>>>>>>> Stashed changes
         KenBurnsView img1 = findViewById(R.id.img1);
         img1.setTransitionListener(this);
 
