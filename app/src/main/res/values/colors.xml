@@ -46,11 +46,8 @@
         <item>@color/dot_dark_screen1</item>
     </array>
 
-<<<<<<< Updated upstream
-=======
     <color name="gen_white">#FFFFFF</color>
 
->>>>>>> Stashed changes
     <!-- Screens background color-->
     <color name="bg_screen1">#f94f39</color>
 

@@ -8,13 +8,9 @@
     <string name="roboto_bold">fonts/Roboto-Bold.ttf</string>
     <string name="app_registrationno">Rrgistration No:</string>
     <string name="text_upcominactivity">Upcoming Activities</string>
-<<<<<<< Updated upstream
     <string name="toast_back_press">Press back again to exit from app</string>
-=======
     <string name="text_timetable">Time Table</string>
     <string name="text_events">Events</string>
-    <string name="toast_back_press">Press back again to exist the app</string>
->>>>>>> Stashed changes
     <string name="text_news">News</string>
     <string name="fromdate">From Date</string>
     <string name="todate">To Date</string>
