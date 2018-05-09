@@ -4,9 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/background_color"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".activity.HomeScreenActivity"
-    android:background="@color/background_color"
     tools:showIn="@layout/app_bar_main">
 
     <android.support.v4.widget.NestedScrollView
@@ -22,7 +22,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <include layout="@layout/toolbar" />
+                <include
+                    android:id="@+id/toptoolbar"
+                    layout="@layout/toolbar" />
 
                 <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
                     android:layout_width="match_parent"
@@ -89,6 +91,7 @@
                                     android:visibility="gone">
 
                                     <ImageView
+                                        android:id="@+id/notification_news"
                                         android:layout_width="15dp"
                                         android:layout_height="15dp"
                                         android:background="@drawable/notification_activie" />
@@ -216,6 +219,7 @@
                                     android:visibility="gone">
 
                                     <ImageView
+                                        android:id="@+id/notification_events"
                                         android:layout_width="15dp"
                                         android:layout_height="15dp"
                                         android:background="@drawable/notification_activie" />
@@ -234,6 +238,7 @@
                     android:orientation="vertical">
 
                     <ImageView
+                        android:id="@+id/userImage"
                         android:layout_width="@dimen/margin_40"
                         android:layout_height="@dimen/margin_40"
                         android:layout_marginLeft="@dimen/margin_20"
@@ -259,6 +264,7 @@
                             tools:ignore="MissingPrefix" />
 
                         <TextView
+                            android:id="@+id/textView"
                             fontPath="@string/roboto_medium"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -269,6 +275,7 @@
                     </LinearLayout>
 
                     <TextView
+                        android:id="@+id/tv_schoolName"
                         fontPath="@string/roboto_bold"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"

@@ -106,8 +106,7 @@
                             android:layout_height="wrap_content"
                             android:text="@string/designation"
                             android:textColor="@color/textColor"
-                            android:textSize="@dimen/text_size"
-                            android:textStyle="bold" />
+                            android:textSize="@dimen/text_size" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -116,8 +115,7 @@
                             android:layout_marginRight="@dimen/margin_5dp"
                             android:text="@string/colon"
                             android:textColor="@color/textColor"
-                            android:textSize="@dimen/text_size"
-                            android:textStyle="bold" />
+                            android:textSize="@dimen/text_size" />
 
                         <TextView
                             android:id="@+id/userDesignationTv"
@@ -126,8 +124,7 @@
                             android:layout_weight="1"
                             android:text="@string/na"
                             android:textColor="@color/textColor"
-                            android:textSize="@dimen/text_size"
-                            android:textStyle="bold" />
+                            android:textSize="@dimen/text_size" />
 
                     </LinearLayout>
 
@@ -157,8 +154,7 @@
                                 android:layout_height="wrap_content"
                                 android:text="@string/phone"
                                 android:textColor="@color/textColor"
-                                android:textSize="@dimen/text_size"
-                                android:textStyle="bold" />
+                                android:textSize="@dimen/text_size" />
 
                             <TextView
                                 android:layout_width="wrap_content"
@@ -167,8 +163,7 @@
                                 android:layout_marginRight="@dimen/margin_5dp"
                                 android:text="@string/colon"
                                 android:textColor="@color/textColor"
-                                android:textSize="@dimen/text_size"
-                                android:textStyle="bold" />
+                                android:textSize="@dimen/text_size" />
 
                             <TextView
                                 android:id="@+id/userPhoneTv"
@@ -177,8 +172,7 @@
                                 android:layout_weight="1"
                                 android:text="@string/na"
                                 android:textColor="@color/textColor"
-                                android:textSize="@dimen/text_size"
-                                android:textStyle="bold" />
+                                android:textSize="@dimen/text_size" />
 
                         </LinearLayout>
 
@@ -218,8 +212,7 @@
                             android:layout_height="wrap_content"
                             android:text="@string/email"
                             android:textColor="@color/textColor"
-                            android:textSize="@dimen/text_size"
-                            android:textStyle="bold" />
+                            android:textSize="@dimen/text_size" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -228,8 +221,7 @@
                             android:layout_marginRight="@dimen/margin_5dp"
                             android:text="@string/colon"
                             android:textColor="@color/textColor"
-                            android:textSize="@dimen/text_size"
-                            android:textStyle="bold" />
+                            android:textSize="@dimen/text_size" />
 
                         <TextView
                             android:id="@+id/userEmailIdTv"
@@ -238,8 +230,7 @@
                             android:layout_weight="1"
                             android:text="@string/na"
                             android:textColor="@color/textColor"
-                            android:textSize="@dimen/text_size"
-                            android:textStyle="bold" />
+                            android:textSize="@dimen/text_size" />
                     </LinearLayout>
 
                     <View
@@ -261,8 +252,7 @@
                             android:layout_height="wrap_content"
                             android:text="@string/qualification"
                             android:textColor="@color/textColor"
-                            android:textSize="@dimen/text_size"
-                            android:textStyle="bold" />
+                            android:textSize="@dimen/text_size" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -271,8 +261,7 @@
                             android:layout_marginRight="@dimen/margin_5dp"
                             android:text="@string/colon"
                             android:textColor="@color/textColor"
-                            android:textSize="@dimen/text_size"
-                            android:textStyle="bold" />
+                            android:textSize="@dimen/text_size" />
 
                         <TextView
                             android:id="@+id/userQualificationTv"
@@ -303,8 +292,7 @@
                             android:layout_height="wrap_content"
                             android:text="@string/teaching"
                             android:textColor="@color/textColor"
-                            android:textSize="@dimen/text_size"
-                            android:textStyle="bold" />
+                            android:textSize="@dimen/text_size" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -313,8 +301,7 @@
                             android:layout_marginRight="@dimen/margin_5dp"
                             android:text="@string/colon"
                             android:textColor="@color/textColor"
-                            android:textSize="@dimen/text_size"
-                            android:textStyle="bold" />
+                            android:textSize="@dimen/text_size" />
 
                         <TextView
                             android:id="@+id/userTeachingTv"
@@ -345,8 +332,7 @@
                             android:layout_height="wrap_content"
                             android:text="@string/address"
                             android:textColor="@color/textColor"
-                            android:textSize="@dimen/text_size"
-                            android:textStyle="bold" />
+                            android:textSize="@dimen/text_size" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -355,8 +341,7 @@
                             android:layout_marginRight="@dimen/margin_5dp"
                             android:text="@string/colon"
                             android:textColor="@color/textColor"
-                            android:textSize="@dimen/text_size"
-                            android:textStyle="bold" />
+                            android:textSize="@dimen/text_size" />
 
                         <TextView
                             android:id="@+id/userAddressTv"
