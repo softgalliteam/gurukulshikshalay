@@ -8,6 +8,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -174,6 +175,8 @@ public class LoginScreenActivity extends AppCompatActivity implements KenBurnsVi
         ClsGeneral.setPreferences(AppConstants.ADDRESS, result.getAddress());
         ClsGeneral.setPreferences(AppConstants.FACEBOOK_ID, result.getFacebook_id());
         ClsGeneral.setPreferences(AppConstants.DESIGNATION, result.getDesignation());
+        if (TextUtils.isEmpty(result.getProfile_pic()))
+        ClsGeneral.setPreferences(AppConstants.PROFILE_PIC, result.getImage());
         ClsGeneral.setPreferences(AppConstants.IS_LOGINED, true);
         ClsGeneral.setPreferences(AppConstants.LOGIN_AS, loginAs);
 

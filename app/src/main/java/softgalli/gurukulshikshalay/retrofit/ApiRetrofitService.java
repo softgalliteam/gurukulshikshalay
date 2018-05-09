@@ -7,6 +7,7 @@ import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import softgalli.gurukulshikshalay.model.AlumniModel;
+import softgalli.gurukulshikshalay.model.CommonResponse;
 import softgalli.gurukulshikshalay.model.FeedBackModel;
 import softgalli.gurukulshikshalay.model.GalleryModel;
 import softgalli.gurukulshikshalay.model.NotificationModel;
@@ -57,5 +58,14 @@ public interface ApiRetrofitService {
     @POST(ApiUrl.LOGIN)
     @FormUrlEncoded
     Call<UserDetailsModel> userLogin(@Field("login_as") String name, @Field("user_id") String mobile, @Field("password") String message);
+
+    @POST(ApiUrl.UPDATETEACHER)
+    @FormUrlEncoded
+    Call<CommonResponse> updateTeacher(@Field("teacher_id") String teacher_id, @Field("name") String name, @Field("mobile_number") String mobile_number, @Field("alternate_number") String alternate_number
+            , @Field("email_id") String email_id, @Field("address") String address, @Field("qualification") String qualification);
+
+    @POST(ApiUrl.UPDATESTUDENT)
+    @FormUrlEncoded
+    Call<CommonResponse> updateStudent(@Field("user_id") String user_id, @Field("name") String name, @Field("email") String email, @Field("mobile") String mobile, @Field("residential_address") String residential_address);
 
 }

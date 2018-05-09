@@ -2,6 +2,7 @@ package softgalli.gurukulshikshalay.retrofit;
 
 
 import softgalli.gurukulshikshalay.model.AlumniModel;
+import softgalli.gurukulshikshalay.model.CommonResponse;
 import softgalli.gurukulshikshalay.model.FeedBackModel;
 import softgalli.gurukulshikshalay.model.GalleryModel;
 import softgalli.gurukulshikshalay.model.NotificationModel;
@@ -29,4 +30,6 @@ public interface ServiceMethods {
 
 
     void userLogin(String loginAs, String mobile, String message, DownlodableCallback<UserDetailsModel> callback);
+    void updateTeacher(String teacher_id, String name, String mobile_number, String alternate_number, String email_id, String address, String qualification, DownlodableCallback<CommonResponse> callback);
+    void updateStudent(String user_id, String name, String email, String mobile, String residential_address, DownlodableCallback<CommonResponse> callback);
 }

@@ -145,5 +145,13 @@ public class UserDetailsDataModel implements Serializable{
     @SerializedName("designation")
     private String designation;
 
+    public String getImage() {
+        return image;
+    }
+
+    @SerializedName("image")
+    private String image;
+
+
 
 }
