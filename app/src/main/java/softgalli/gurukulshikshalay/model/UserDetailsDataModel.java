@@ -110,7 +110,7 @@ public class UserDetailsDataModel implements Serializable{
     private String user_id;
     @SerializedName("name")
     private String name;
-    @SerializedName("email")
+    @SerializedName("email_id")
     private String email;
     @SerializedName("mobile")
     private String mobile;
@@ -124,7 +124,7 @@ public class UserDetailsDataModel implements Serializable{
     private String residential_address;
     @SerializedName("permanent_address")
     private String permanent_address;
-    @SerializedName("profile_pic")
+    @SerializedName("image")
     private String profile_pic;
     @SerializedName("status")
     private String status;
@@ -144,14 +144,6 @@ public class UserDetailsDataModel implements Serializable{
     private String what_teach;
     @SerializedName("designation")
     private String designation;
-
-    public String getImage() {
-        return image;
-    }
-
-    @SerializedName("image")
-    private String image;
-
 
 
 }
