@@ -82,42 +82,6 @@ public class MyPreference {
         return pref.getString("user_name", "");
     }
 
-    public static void setProfilPicUrl(String name) {
-        SharedPreferences pref = AppController.getInstance().getSharedPreferences("User_Image", 0);
-        SharedPreferences.Editor editor = pref.edit();
-        editor.putString("User_Image1", name);
-        editor.commit();
-    }
-
-    public static String getProfilPicUrl() {
-        SharedPreferences pref = AppController.getInstance().getSharedPreferences("User_Image", 0);
-        return pref.getString("User_Image", "");
-    }
-
-    public static void setEmailId(String email) {
-        SharedPreferences pref = AppController.getInstance().getSharedPreferences("EmailId", 0);
-        SharedPreferences.Editor editor = pref.edit();
-        editor.putString("email_id", email);
-        editor.commit();
-    }
-
-    public static String getEmailId() {
-        SharedPreferences pref = AppController.getInstance().getSharedPreferences("EmailId", 0);
-        return pref.getString("email_id", "");
-    }
-
-    public static void setUserMobileNo(String mobileNo) {
-        SharedPreferences pref = AppController.getInstance().getSharedPreferences("UserMobileNo1", 0);
-        SharedPreferences.Editor editor = pref.edit();
-        editor.putString("UserMobileNo", mobileNo);
-        editor.commit();
-    }
-
-    public static String getUserMobileNo() {
-        SharedPreferences pref = AppController.getInstance().getSharedPreferences("UserMobileNo1", 0);
-        return pref.getString("UserMobileNo", "");
-    }
-
     public static void setUserId(int userId) {
         SharedPreferences pref = AppController.getInstance().getSharedPreferences("UserId1", 0);
         SharedPreferences.Editor editor = pref.edit();
