@@ -7,6 +7,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -17,6 +18,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import softgalli.gurukulshikshalay.R;
+import softgalli.gurukulshikshalay.common.AppConstants;
+import softgalli.gurukulshikshalay.common.ClsGeneral;
 import softgalli.gurukulshikshalay.common.PreferenceName;
 import softgalli.gurukulshikshalay.common.Utilz;
 import softgalli.gurukulshikshalay.common.Validation;
@@ -60,8 +63,11 @@ public class FeedbackActivity extends AppCompatActivity implements RatingBar.OnR
         ((RatingBar) findViewById(R.id.ratingBar1)).setOnRatingBarChangeListener(this);
 
         if (MyPreference.isLogined()) {
-            feedbackEmail.setText(MyPreference.getEmailId());
-            feedbackMobile.setText(MyPreference.getUserMobileNo());
+            feedbackEmail.setText(ClsGeneral.getStrPreferences(AppConstants.EMAIL));
+            if (!TextUtils.isEmpty(ClsGeneral.getStrPreferences(AppConstants.PHONE_NO)))
+                feedbackMobile.setText(ClsGeneral.getStrPreferences(AppConstants.PHONE_NO));
+            else if (!TextUtils.isEmpty(ClsGeneral.getStrPreferences(AppConstants.ALTERNTE_NUMBER)))
+                feedbackMobile.setText(ClsGeneral.getStrPreferences(AppConstants.ALTERNTE_NUMBER));
         } else {
             Account[] accounts = AccountManager.get(this).getAccountsByType("com.google");
             try {
