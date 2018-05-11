@@ -88,6 +88,7 @@
                     android:background="@drawable/background1"
                     android:onClick="principalLoginClick"
                     android:padding="@dimen/padding_10dp"
+                    android:stateListAnimator="@null"
                     android:text="Principal Login"
                     android:textAllCaps="false"
                     android:textColor="@color/colorTextWhite"
@@ -103,6 +104,7 @@
                     android:background="@drawable/background1"
                     android:onClick="teacherLoginClick"
                     android:padding="@dimen/padding_10dp"
+                    android:stateListAnimator="@null"
                     android:text="Teacher Login"
                     android:textAllCaps="false"
                     android:textColor="@color/colorTextWhite"
@@ -118,6 +120,7 @@
                     android:background="@drawable/background1"
                     android:onClick="studentLoginClick"
                     android:padding="@dimen/padding_10dp"
+                    android:stateListAnimator="@null"
                     android:text="Student/Parent Login"
                     android:textAllCaps="false"
                     android:textColor="@color/colorTextWhite"
@@ -143,6 +146,19 @@
             android:text="SKIP"
             android:textColor="@color/blue_dark"
             android:textSize="16sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="15dp"
+            android:onClick="poweredByClick"
+            android:padding="@dimen/padding_10dp"
+            android:text="Powered By : SoftGalli"
+            android:textColor="@color/blue_dark"
+            android:textSize="12sp"
+            android:textStyle="bold" />
     </RelativeLayout>
 
 </RelativeLayout>
