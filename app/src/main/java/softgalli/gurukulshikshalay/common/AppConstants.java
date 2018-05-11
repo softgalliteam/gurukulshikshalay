@@ -27,6 +27,8 @@ public class AppConstants {
     public static final String STATUS = "status";
     public static final String QUALIFICATION = "qualification";
     public static final String ALTERNTE_NUMBER = "alternate_number";
+    public static final String PHONE_NO = "phone_no";
+    public static final String WHAT_TEACH = "what_teach";
     public static final String SUBJECT = "subject";
     public static final String CLASS_TEACHER_FOR = "classteacher_for";
     public static final String ADDRESS = "address";

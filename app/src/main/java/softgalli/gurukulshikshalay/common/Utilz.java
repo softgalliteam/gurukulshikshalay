@@ -1,6 +1,7 @@
 package softgalli.gurukulshikshalay.common;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Dialog;
 import android.app.ProgressDialog;
@@ -29,6 +30,7 @@ import java.util.List;
 
 import softgalli.gurukulshikshalay.R;
 import softgalli.gurukulshikshalay.activity.LoginScreenActivity;
+import softgalli.gurukulshikshalay.preference.MyPreference;
 
 
 public class Utilz {
@@ -275,6 +277,38 @@ public class Utilz {
             mActivity.startActivity(intent);
             return;
         }
+    }
+
+    @SuppressLint("NewApi")
+    public static void logout(final Activity mActivity) {
+        MyPreference.setLogin(false);
+        MyPreference.setSignupSkipped(false);
+        MyPreference.setLoginedAs("");
+        MyPreference.setUserName("");
+        ClsGeneral.setPreferences(AppConstants.ID, "");
+        ClsGeneral.setPreferences(AppConstants.USER_ID, "");
+        ClsGeneral.setPreferences(AppConstants.NAME, "");
+        ClsGeneral.setPreferences(AppConstants.EMAIL, "");
+        ClsGeneral.setPreferences(AppConstants.CLAS, "");
+        ClsGeneral.setPreferences(AppConstants.SEC, "");
+        ClsGeneral.setPreferences(AppConstants.JOINING_DATE, "");
+        ClsGeneral.setPreferences(AppConstants.RESIDENTIAL_ADDRESS, "");
+        ClsGeneral.setPreferences(AppConstants.PERMANENT_ADDRESS, "");
+        ClsGeneral.setPreferences(AppConstants.PROFILE_PIC, "");
+        ClsGeneral.setPreferences(AppConstants.STATUS, "");
+        ClsGeneral.setPreferences(AppConstants.QUALIFICATION, "");
+        ClsGeneral.setPreferences(AppConstants.ALTERNTE_NUMBER, "");
+        ClsGeneral.setPreferences(AppConstants.PHONE_NO, "");
+        ClsGeneral.setPreferences(AppConstants.WHAT_TEACH, "");
+        ClsGeneral.setPreferences(AppConstants.SUBJECT, "");
+        ClsGeneral.setPreferences(AppConstants.CLASS_TEACHER_FOR, "");
+        ClsGeneral.setPreferences(AppConstants.ADDRESS, "");
+        ClsGeneral.setPreferences(AppConstants.FACEBOOK_ID, "");
+        ClsGeneral.setPreferences(AppConstants.DESIGNATION, "");
+        ClsGeneral.setPreferences(AppConstants.IS_LOGINED, false);
+        ClsGeneral.setPreferences(AppConstants.LOGIN_AS, "");
+        mActivity.startActivity(new Intent(mActivity, LoginScreenActivity.class));
+        mActivity.finishAffinity();
     }
 
     public static void openBrowser(final Activity mActivity, final String url) {

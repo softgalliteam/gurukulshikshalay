@@ -21,6 +21,13 @@ public class ClsGeneral {
         editor.commit();
     }
 
+    public static void setPreferences(String key, int value) {
+        SharedPreferences.Editor editor = AppController.getInstance().getSharedPreferences(
+                "WED_APP", Context.MODE_PRIVATE).edit();
+        editor.putInt(key, value);
+        editor.commit();
+    }
+
     public static boolean getBoolPreferences(String key) {
         SharedPreferences prefs = AppController.getInstance().getSharedPreferences("WED_APP",
                 Context.MODE_PRIVATE);
