@@ -11,6 +11,7 @@ import softgalli.gurukulshikshalay.model.CommonResponse;
 import softgalli.gurukulshikshalay.model.FeedBackModel;
 import softgalli.gurukulshikshalay.model.GalleryModel;
 import softgalli.gurukulshikshalay.model.NotificationModel;
+import softgalli.gurukulshikshalay.model.RequestedLeaveModel;
 import softgalli.gurukulshikshalay.model.StuTeaModel;
 import softgalli.gurukulshikshalay.model.TeacherListModel;
 import softgalli.gurukulshikshalay.model.UserDetailsDataModel;
@@ -67,5 +68,17 @@ public interface ApiRetrofitService {
     @POST(ApiUrl.UPDATESTUDENT)
     @FormUrlEncoded
     Call<CommonResponse> updateStudent(@Field("user_id") String user_id, @Field("name") String name, @Field("email") String email, @Field("mobile") String mobile, @Field("residential_address") String residential_address);
+
+    @POST(ApiUrl.APPLYLEAVE)
+    @FormUrlEncoded
+    Call<CommonResponse> requestLeave(@Field("user_id") String user_id, @Field("from_date") String from_date, @Field("to_date") String to_date, @Field("teacher_id") String teacher_id, @Field("description") String description);
+
+    @POST(ApiUrl.LEAVEREQUESTLIST)
+    @FormUrlEncoded
+    Call<RequestedLeaveModel> requestedLeaveList(@Field("teacher_id") String teacher_id);
+
+    @POST(ApiUrl.UPDATELEAVE)
+    @FormUrlEncoded
+    Call<CommonResponse> updateLeave(@Field("status") String status, @Field("user_id") String user_id);
 
 }

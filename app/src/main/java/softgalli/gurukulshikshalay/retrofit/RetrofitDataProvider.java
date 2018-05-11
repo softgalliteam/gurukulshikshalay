@@ -19,6 +19,7 @@ import softgalli.gurukulshikshalay.model.CommonResponse;
 import softgalli.gurukulshikshalay.model.FeedBackModel;
 import softgalli.gurukulshikshalay.model.GalleryModel;
 import softgalli.gurukulshikshalay.model.NotificationModel;
+import softgalli.gurukulshikshalay.model.RequestedLeaveModel;
 import softgalli.gurukulshikshalay.model.StuTeaModel;
 import softgalli.gurukulshikshalay.model.TeacherListModel;
 import softgalli.gurukulshikshalay.model.UserDetailsDataModel;
@@ -330,6 +331,84 @@ public class RetrofitDataProvider extends AppCompatActivity implements ServiceMe
     @Override
     public void updateStudent(String user_id, String name, String email, String mobile, String residential_address, final DownlodableCallback<CommonResponse> callback) {
         createRetrofitService().updateStudent(user_id, name, email, mobile, residential_address).enqueue(
+                new Callback<CommonResponse>() {
+                    @Override
+                    public void onResponse(@NonNull Call<CommonResponse> call, @NonNull final Response<CommonResponse> response) {
+                        if (response.isSuccessful()) {
+                            CommonResponse teacherListDataModelPojo = response.body();
+                            callback.onSuccess(teacherListDataModelPojo);
+                        } else {
+                            if (response.code() == 401) {
+                                callback.onUnauthorized(response.code());
+                            } else {
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(@NonNull Call<CommonResponse> call, @NonNull Throwable t) {
+                        Log.d("Result", "t" + t.getMessage());
+                        callback.onFailure(t.getMessage());
+                    }
+                }
+        );
+    }
+
+    @Override
+    public void requestLeave(String user_id, String from_date, String to_date, String teacher_id, String description, final DownlodableCallback<CommonResponse> callback) {
+        createRetrofitService().updateStudent(user_id, from_date, to_date, teacher_id, description).enqueue(
+                new Callback<CommonResponse>() {
+                    @Override
+                    public void onResponse(@NonNull Call<CommonResponse> call, @NonNull final Response<CommonResponse> response) {
+                        if (response.isSuccessful()) {
+                            CommonResponse teacherListDataModelPojo = response.body();
+                            callback.onSuccess(teacherListDataModelPojo);
+                        } else {
+                            if (response.code() == 401) {
+                                callback.onUnauthorized(response.code());
+                            } else {
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(@NonNull Call<CommonResponse> call, @NonNull Throwable t) {
+                        Log.d("Result", "t" + t.getMessage());
+                        callback.onFailure(t.getMessage());
+                    }
+                }
+        );
+    }
+
+    @Override
+    public void requestedLeaveList(String teacher_id, final DownlodableCallback<RequestedLeaveModel> callback) {
+        createRetrofitService().requestedLeaveList(teacher_id).enqueue(
+                new Callback<RequestedLeaveModel>() {
+                    @Override
+                    public void onResponse(@NonNull Call<RequestedLeaveModel> call, @NonNull final Response<RequestedLeaveModel> response) {
+                        if (response.isSuccessful()) {
+                            RequestedLeaveModel teacherListDataModelPojo = response.body();
+                            callback.onSuccess(teacherListDataModelPojo);
+                        } else {
+                            if (response.code() == 401) {
+                                callback.onUnauthorized(response.code());
+                            } else {
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(@NonNull Call<RequestedLeaveModel> call, @NonNull Throwable t) {
+                        Log.d("Result", "t" + t.getMessage());
+                        callback.onFailure(t.getMessage());
+                    }
+                }
+        );
+    }
+
+    @Override
+    public void updateRequestedLeave(String status, String user_id, final DownlodableCallback<CommonResponse> callback) {
+        createRetrofitService().updateLeave(status, user_id).enqueue(
                 new Callback<CommonResponse>() {
                     @Override
                     public void onResponse(@NonNull Call<CommonResponse> call, @NonNull final Response<CommonResponse> response) {

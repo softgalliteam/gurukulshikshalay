@@ -51,15 +51,12 @@ public class TopperListAdapter extends RecyclerView.Adapter<TopperListAdapter.My
             classNameTv = (TextView) view.findViewById(R.id.classNameTv);
             progressBar = (ProgressBar) view.findViewById(R.id.progress);
             mainLl = (LinearLayout) view.findViewById(R.id.mainLl);
-<<<<<<< Updated upstream
-=======
             imageViewProfilePic1 = view.findViewById(R.id.imageViewProfilePic1);
             studentNameTv = view.findViewById(R.id.studentNameTv);
             marksObtainedTv = view.findViewById(R.id.marksObtainedTv);
             classNameTv = view.findViewById(R.id.classNameTv);
             subjectTv = view.findViewById(R.id.subjectTv);
             progressBar = view.findViewById(R.id.progress);
->>>>>>> Stashed changes
         }
     }
 
