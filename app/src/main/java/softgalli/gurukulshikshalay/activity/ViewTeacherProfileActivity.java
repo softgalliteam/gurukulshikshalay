@@ -1,12 +1,16 @@
 package softgalli.gurukulshikshalay.activity;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
@@ -28,6 +32,7 @@ import butterknife.OnClick;
 import de.hdodenhof.circleimageview.CircleImageView;
 import softgalli.gurukulshikshalay.R;
 import softgalli.gurukulshikshalay.common.AppConstants;
+import softgalli.gurukulshikshalay.common.ClsGeneral;
 import softgalli.gurukulshikshalay.common.Utilz;
 import softgalli.gurukulshikshalay.model.UserDetailsDataModel;
 import softgalli.gurukulshikshalay.retrofit.ApiUrl;
@@ -57,6 +62,7 @@ public class ViewTeacherProfileActivity extends AppCompatActivity {
     private Activity mActivity;
     private int mPosition;
     private ArrayList<UserDetailsDataModel> mTeachersArrayList = new ArrayList<>();
+    boolean isToShowEditProfileIcon = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,6 +98,10 @@ public class ViewTeacherProfileActivity extends AppCompatActivity {
         }
         if (mTeachersArrayList != null && mTeachersArrayList.size() > 0) {
             updateOnUI(mTeachersArrayList.get(mPosition));
+            isToShowEditProfileIcon = false;
+        } else {
+            updateOnUICachedDetails();
+            isToShowEditProfileIcon = true;
         }
     }
 
@@ -156,6 +166,71 @@ public class ViewTeacherProfileActivity extends AppCompatActivity {
         }
     }
 
+
+    private void updateOnUICachedDetails() {
+        RequestOptions requestOptions = new RequestOptions();
+        requestOptions.placeholder(R.drawable.logo);
+        requestOptions.error(R.drawable.logo);
+        requestOptions.fitCenter();
+        String imageUrl = ApiUrl.IMAGE_BASE_URL + ClsGeneral.getStrPreferences(AppConstants.PROFILE_PIC);
+        Glide.with(mActivity)
+                .load(imageUrl)
+                .apply(requestOptions)
+                .listener(new RequestListener<Drawable>() {
+                    @Override
+                    public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
+                        progress.setVisibility(View.GONE);
+                        return false;
+                    }
+
+                    @Override
+                    public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
+                        progress.setVisibility(View.GONE);
+                        return false;
+                    }
+                })
+                .into(userProfilePicIv);
+        if (!TextUtils.isEmpty(ClsGeneral.getStrPreferences(AppConstants.NAME))) {
+            userNameTv.setText(ClsGeneral.getStrPreferences(AppConstants.NAME));
+        } else {
+            userNameTv.setText(mActivity.getResources().getString(R.string.na));
+        }
+        if (!TextUtils.isEmpty(ClsGeneral.getStrPreferences(AppConstants.NAME))) {
+            userDesignationTv.setText(ClsGeneral.getStrPreferences(AppConstants.DESIGNATION));
+        } else {
+            userDesignationTv.setText(mActivity.getResources().getString(R.string.na));
+        }
+        if (!TextUtils.isEmpty(ClsGeneral.getStrPreferences(AppConstants.PHONE_NO))) {
+            userPhoneTv.setText(ClsGeneral.getStrPreferences(AppConstants.PHONE_NO));
+        } else if (!TextUtils.isEmpty(ClsGeneral.getStrPreferences(AppConstants.ALTERNTE_NUMBER))) {
+            userPhoneTv.setText(ClsGeneral.getStrPreferences(AppConstants.ALTERNTE_NUMBER));
+        } else {
+            userPhoneTv.setText(mActivity.getResources().getString(R.string.na));
+        }
+        if (!TextUtils.isEmpty(ClsGeneral.getStrPreferences(AppConstants.EMAIL))) {
+            userEmailIdTv.setText(ClsGeneral.getStrPreferences(AppConstants.EMAIL));
+        } else {
+            userEmailIdTv.setText(mActivity.getResources().getString(R.string.na));
+        }
+        if (!TextUtils.isEmpty(ClsGeneral.getStrPreferences(AppConstants.QUALIFICATION))) {
+            userQualificationTv.setText(ClsGeneral.getStrPreferences(AppConstants.QUALIFICATION));
+        } else {
+            userQualificationTv.setText(mActivity.getResources().getString(R.string.na));
+        }
+        if (!TextUtils.isEmpty(ClsGeneral.getStrPreferences(AppConstants.WHAT_TEACH))) {
+            userTeachingTv.setText(ClsGeneral.getStrPreferences(AppConstants.WHAT_TEACH));
+        } else {
+            userTeachingTv.setText(mActivity.getResources().getString(R.string.na));
+        }
+        if (!TextUtils.isEmpty(ClsGeneral.getStrPreferences(AppConstants.ADDRESS))) {
+            userAddressTv.setText(ClsGeneral.getStrPreferences(AppConstants.ADDRESS));
+        } else if (!TextUtils.isEmpty(ClsGeneral.getStrPreferences(AppConstants.PERMANENT_ADDRESS))) {
+            userAddressTv.setText(ClsGeneral.getStrPreferences(AppConstants.PERMANENT_ADDRESS));
+        } else {
+            userAddressTv.setText(mActivity.getResources().getString(R.string.na));
+        }
+    }
+
     @OnClick(R.id.callButton)
     public void onViewClicked() {
         if (mTeachersArrayList != null && mTeachersArrayList.size() > 0) {
@@ -166,5 +241,28 @@ public class ViewTeacherProfileActivity extends AppCompatActivity {
         } else {
             Toast.makeText(mActivity, R.string.phone_no_not_provide_yet, Toast.LENGTH_SHORT).show();
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.main, menu);
+        if (mTeachersArrayList != null && mTeachersArrayList.size() > 0) {
+            menu.findItem(R.id.editProfile).setVisible(false);
+        } else {
+            menu.findItem(R.id.editProfile).setVisible(true);
+        }
+        // return true so that the menu pop up is opened
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.editProfile:
+                startActivity(new Intent(mActivity, AddTeacher.class));
+                break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }
