@@ -13,6 +13,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -35,6 +36,7 @@ import softgalli.gurukulshikshalay.common.AppConstants;
 import softgalli.gurukulshikshalay.common.ClsGeneral;
 import softgalli.gurukulshikshalay.common.Utilz;
 import softgalli.gurukulshikshalay.model.UserDetailsDataModel;
+import softgalli.gurukulshikshalay.preference.MyPreference;
 import softgalli.gurukulshikshalay.retrofit.ApiUrl;
 
 public class ViewTeacherProfileActivity extends AppCompatActivity {
@@ -58,6 +60,16 @@ public class ViewTeacherProfileActivity extends AppCompatActivity {
     TextView userTeachingTv;
     @BindView(R.id.userAddressTv)
     TextView userAddressTv;
+    @BindView(R.id.teacherDetailsLl)
+    LinearLayout teacherDetailsLl;
+    @BindView(R.id.classNameTv)
+    TextView classNameTv;
+    @BindView(R.id.sectionTv)
+    TextView sectionTv;
+    @BindView(R.id.fatherNameTv)
+    TextView fatherNameTv;
+    @BindView(R.id.studentDetailsLl)
+    LinearLayout studentDetailsLl;
     private String TAG = ViewTeacherProfileActivity.class.getSimpleName();
     private Activity mActivity;
     private int mPosition;
@@ -96,12 +108,20 @@ public class ViewTeacherProfileActivity extends AppCompatActivity {
             if (mBundle.containsKey(AppConstants.TEACHER_DETAILS))
                 mTeachersArrayList = (ArrayList<UserDetailsDataModel>) mBundle.getSerializable(AppConstants.TEACHER_DETAILS);
         }
-        if (mTeachersArrayList != null && mTeachersArrayList.size() > 0) {
-            updateOnUI(mTeachersArrayList.get(mPosition));
-            isToShowEditProfileIcon = false;
-        } else {
+        if (MyPreference.getLoginedAs().equalsIgnoreCase(AppConstants.STUDENT)) {
             updateOnUICachedDetails();
-            isToShowEditProfileIcon = true;
+            studentDetailsLl.setVisibility(View.VISIBLE);
+            teacherDetailsLl.setVisibility(View.GONE);
+        } else {
+            studentDetailsLl.setVisibility(View.GONE);
+            teacherDetailsLl.setVisibility(View.VISIBLE);
+            if (mTeachersArrayList != null && mTeachersArrayList.size() > 0) {
+                updateOnUI(mTeachersArrayList.get(mPosition));
+                isToShowEditProfileIcon = false;
+            } else {
+                updateOnUICachedDetails();
+                isToShowEditProfileIcon = true;
+            }
         }
     }
 
@@ -228,6 +248,24 @@ public class ViewTeacherProfileActivity extends AppCompatActivity {
             userAddressTv.setText(ClsGeneral.getStrPreferences(AppConstants.PERMANENT_ADDRESS));
         } else {
             userAddressTv.setText(mActivity.getResources().getString(R.string.na));
+        }
+
+        //Students Details
+
+        if (!TextUtils.isEmpty(ClsGeneral.getStrPreferences(AppConstants.CLAS))) {
+            classNameTv.setText(ClsGeneral.getStrPreferences(AppConstants.CLAS));
+        } else {
+            classNameTv.setText(mActivity.getResources().getString(R.string.na));
+        }
+        if (!TextUtils.isEmpty(ClsGeneral.getStrPreferences(AppConstants.SEC))) {
+            sectionTv.setText(ClsGeneral.getStrPreferences(AppConstants.SEC));
+        } else {
+            sectionTv.setText(mActivity.getResources().getString(R.string.na));
+        }
+        if (!TextUtils.isEmpty(ClsGeneral.getStrPreferences(AppConstants.FATHER_NAME))) {
+            fatherNameTv.setText(ClsGeneral.getStrPreferences(AppConstants.FATHER_NAME));
+        } else {
+            fatherNameTv.setText(mActivity.getResources().getString(R.string.na));
         }
     }
 

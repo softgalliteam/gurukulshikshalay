@@ -36,4 +36,5 @@ public class AppConstants {
     public static final String DESIGNATION = "designation";
     public static final String IS_LOGINED = "is_logined";
     public static final String LOGIN_AS = "login_as";
+    public static final String FATHER_NAME = "father_name";
 }

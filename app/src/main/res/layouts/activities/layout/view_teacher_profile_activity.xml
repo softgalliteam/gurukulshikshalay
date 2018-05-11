@@ -62,7 +62,7 @@
                                     android:layout_width="125dp"
                                     android:layout_height="125dp"
                                     android:scaleType="centerCrop"
-                                    android:src="@drawable/logo"
+                                    android:src="@drawable/user"
                                     app:civ_border_color="#dc5da4"
                                     app:civ_border_overlay="true"
                                     app:civ_border_width="2dp" />
@@ -93,47 +93,6 @@
 
                         </LinearLayout>
                     </RelativeLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_vertical"
-                        android:minHeight="60dp"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/designation"
-                            android:textColor="@color/textColor"
-                            android:textSize="@dimen/text_size" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/margin_5dp"
-                            android:layout_marginRight="@dimen/margin_5dp"
-                            android:text="@string/colon"
-                            android:textColor="@color/textColor"
-                            android:textSize="@dimen/text_size" />
-
-                        <TextView
-                            android:id="@+id/userDesignationTv"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="@string/na"
-                            android:textColor="@color/textColor"
-                            android:textSize="@dimen/text_size" />
-
-                    </LinearLayout>
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:layout_marginBottom="@dimen/margin_10dp"
-                        android:layout_marginTop="@dimen/margin_10dp"
-                        android:background="@color/yellow" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -239,78 +198,249 @@
                         android:layout_marginBottom="@dimen/margin_10dp"
                         android:layout_marginTop="@dimen/margin_10dp"
                         android:background="@color/yellow" />
-
+                    <!--Teacher Details-->
                     <LinearLayout
+                        android:id="@+id/teacherDetailsLl"
                         android:layout_width="match_parent"
+                        android:visibility="gone"
                         android:layout_height="wrap_content"
-                        android:gravity="center_vertical"
-                        android:minHeight="60dp"
-                        android:orientation="horizontal">
+                        android:orientation="vertical">
 
-                        <TextView
-                            android:layout_width="wrap_content"
+                        <LinearLayout
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="@string/qualification"
-                            android:textColor="@color/textColor"
-                            android:textSize="@dimen/text_size" />
+                            android:gravity="center_vertical"
+                            android:minHeight="60dp"
+                            android:orientation="horizontal">
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/margin_5dp"
-                            android:layout_marginRight="@dimen/margin_5dp"
-                            android:text="@string/colon"
-                            android:textColor="@color/textColor"
-                            android:textSize="@dimen/text_size" />
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/designation"
+                                android:textColor="@color/textColor"
+                                android:textSize="@dimen/text_size" />
 
-                        <TextView
-                            android:id="@+id/userQualificationTv"
-                            android:layout_width="wrap_content"
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="@dimen/margin_5dp"
+                                android:layout_marginRight="@dimen/margin_5dp"
+                                android:text="@string/colon"
+                                android:textColor="@color/textColor"
+                                android:textSize="@dimen/text_size" />
+
+                            <TextView
+                                android:id="@+id/userDesignationTv"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="@string/na"
+                                android:textColor="@color/textColor"
+                                android:textSize="@dimen/text_size" />
+
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_marginBottom="@dimen/margin_10dp"
+                            android:layout_marginTop="@dimen/margin_10dp"
+                            android:background="@color/yellow" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="@string/na"
-                            android:textColor="@color/textColor"
-                            android:textSize="@dimen/text_size" />
+                            android:gravity="center_vertical"
+                            android:minHeight="60dp"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/qualification"
+                                android:textColor="@color/textColor"
+                                android:textSize="@dimen/text_size" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="@dimen/margin_5dp"
+                                android:layout_marginRight="@dimen/margin_5dp"
+                                android:text="@string/colon"
+                                android:textColor="@color/textColor"
+                                android:textSize="@dimen/text_size" />
+
+                            <TextView
+                                android:id="@+id/userQualificationTv"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="@string/na"
+                                android:textColor="@color/textColor"
+                                android:textSize="@dimen/text_size" />
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_marginBottom="@dimen/margin_10dp"
+                            android:layout_marginTop="@dimen/margin_10dp"
+                            android:background="@color/yellow" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:minHeight="60dp"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/teaching"
+                                android:textColor="@color/textColor"
+                                android:textSize="@dimen/text_size" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="@dimen/margin_5dp"
+                                android:layout_marginRight="@dimen/margin_5dp"
+                                android:text="@string/colon"
+                                android:textColor="@color/textColor"
+                                android:textSize="@dimen/text_size" />
+
+                            <TextView
+                                android:id="@+id/userTeachingTv"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="@string/na"
+                                android:textColor="@color/textColor"
+                                android:textSize="@dimen/text_size" />
+                        </LinearLayout>
                     </LinearLayout>
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:layout_marginBottom="@dimen/margin_10dp"
-                        android:layout_marginTop="@dimen/margin_10dp"
-                        android:background="@color/yellow" />
-
+                    <!--Students Details-->
                     <LinearLayout
+                        android:id="@+id/studentDetailsLl"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:gravity="center_vertical"
-                        android:minHeight="60dp"
-                        android:orientation="horizontal">
+                        android:orientation="vertical">
 
-                        <TextView
-                            android:layout_width="wrap_content"
+                        <LinearLayout
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="@string/teaching"
-                            android:textColor="@color/textColor"
-                            android:textSize="@dimen/text_size" />
+                            android:gravity="center_vertical"
+                            android:minHeight="60dp"
+                            android:orientation="horizontal">
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/margin_5dp"
-                            android:layout_marginRight="@dimen/margin_5dp"
-                            android:text="@string/colon"
-                            android:textColor="@color/textColor"
-                            android:textSize="@dimen/text_size" />
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/class_name"
+                                android:textColor="@color/textColor"
+                                android:textSize="@dimen/text_size" />
 
-                        <TextView
-                            android:id="@+id/userTeachingTv"
-                            android:layout_width="wrap_content"
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="@dimen/margin_5dp"
+                                android:layout_marginRight="@dimen/margin_5dp"
+                                android:text="@string/colon"
+                                android:textColor="@color/textColor"
+                                android:textSize="@dimen/text_size" />
+
+                            <TextView
+                                android:id="@+id/classNameTv"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="@string/na"
+                                android:textColor="@color/textColor"
+                                android:textSize="@dimen/text_size" />
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_marginBottom="@dimen/margin_10dp"
+                            android:layout_marginTop="@dimen/margin_10dp"
+                            android:background="@color/yellow" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="@string/na"
-                            android:textColor="@color/textColor"
-                            android:textSize="@dimen/text_size" />
+                            android:gravity="center_vertical"
+                            android:minHeight="60dp"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/section"
+                                android:textColor="@color/textColor"
+                                android:textSize="@dimen/text_size" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="@dimen/margin_5dp"
+                                android:layout_marginRight="@dimen/margin_5dp"
+                                android:text="@string/colon"
+                                android:textColor="@color/textColor"
+                                android:textSize="@dimen/text_size" />
+
+                            <TextView
+                                android:id="@+id/sectionTv"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="@string/na"
+                                android:textColor="@color/textColor"
+                                android:textSize="@dimen/text_size" />
+                        </LinearLayout>
+
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_marginBottom="@dimen/margin_10dp"
+                            android:layout_marginTop="@dimen/margin_10dp"
+                            android:background="@color/yellow" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:minHeight="60dp"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/father_name"
+                                android:textColor="@color/textColor"
+                                android:textSize="@dimen/text_size" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="@dimen/margin_5dp"
+                                android:layout_marginRight="@dimen/margin_5dp"
+                                android:text="@string/colon"
+                                android:textColor="@color/textColor"
+                                android:textSize="@dimen/text_size" />
+
+                            <TextView
+                                android:id="@+id/fatherNameTv"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="@string/na"
+                                android:textColor="@color/textColor"
+                                android:textSize="@dimen/text_size" />
+
+                        </LinearLayout>
                     </LinearLayout>
 
                     <View

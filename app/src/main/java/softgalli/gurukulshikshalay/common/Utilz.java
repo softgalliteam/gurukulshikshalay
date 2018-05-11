@@ -306,6 +306,7 @@ public class Utilz {
         ClsGeneral.setPreferences(AppConstants.FACEBOOK_ID, "");
         ClsGeneral.setPreferences(AppConstants.DESIGNATION, "");
         ClsGeneral.setPreferences(AppConstants.IS_LOGINED, false);
+        ClsGeneral.setPreferences(AppConstants.FATHER_NAME, "");
         ClsGeneral.setPreferences(AppConstants.LOGIN_AS, "");
         mActivity.startActivity(new Intent(mActivity, LoginScreenActivity.class));
         mActivity.finishAffinity();
