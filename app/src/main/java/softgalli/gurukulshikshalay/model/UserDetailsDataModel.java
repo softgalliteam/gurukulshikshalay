@@ -145,5 +145,12 @@ public class UserDetailsDataModel implements Serializable{
     @SerializedName("designation")
     private String designation;
 
+    public String getFatherName() {
+        return fatherName;
+    }
+
+    @SerializedName("father_name")
+    private String fatherName;
+
 
 }

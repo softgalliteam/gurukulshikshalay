@@ -186,6 +186,7 @@ public class LoginScreenActivity extends AppCompatActivity implements KenBurnsVi
         ClsGeneral.setPreferences(AppConstants.ADDRESS, result.getAddress());
         ClsGeneral.setPreferences(AppConstants.FACEBOOK_ID, result.getFacebook_id());
         ClsGeneral.setPreferences(AppConstants.DESIGNATION, result.getDesignation());
+        ClsGeneral.setPreferences(AppConstants.FATHER_NAME, result.getFatherName());
         ClsGeneral.setPreferences(AppConstants.IS_LOGINED, true);
         ClsGeneral.setPreferences(AppConstants.LOGIN_AS, loginAs);
 
