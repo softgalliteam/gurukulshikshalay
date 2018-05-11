@@ -29,6 +29,7 @@
     <string name="father_name">Father Name</string>
     <string name="na">N/A</string>
     <string name="colon">:</string>
+    <string name="sent_successfully">Sent Successfully</string>
 
     <string name="phone_no_not_provide_yet">Phone number is not provided yet</string>
     <string name="take_admission_by_filling_form_simply">Take admission by filling form simply.</string>
@@ -77,9 +78,9 @@
         <item>Attendance</item>
         <item>Leave</item>
         <item>TimeTable</item>
+        <item>Result</item>
         <item>Syllabus</item>
         <item>Quiz</item>
-        <item>Online Test</item>
     </string-array>
 
 
@@ -122,6 +123,8 @@
     <string name="principal_name">Chandrika Barnwal</string>
     <string name="school_name">Gurukul Shikshalay</string>
     <string name="state">Jharkhand</string>
+
+    <string name="softgalli_website_link">http://www.softgalli.com</string>
 
     <string name="aboutus_desc">Gurukul Shikshalay serves nearly 1500 students, 1 to 10th class students at Ghodthamba, near Petrol Pump, Giridih, Jharkhand. In addition, Gurukul Shikshalay provides highly educated teachers and with the help of digital technology we are connecting parents teachers and students to understand each other and help our students for his all kind of growth. We provide best study environment for the growth and development of all students. Every learner can succeed in Gurukul Shikshalay with academic acceleration and enrichment available for the gifted and talented students. Computer and English as a preferred knowledge programs are also offered to make students capable to go for technology and higher education field. We want to remove the trend of schools for earning money only. We want to really make students capable to be a great person who can serve nation with their knowledge and also can be a great human being. We also emphasize on new digital technology which is most important for future.</string>
 </resources>
