@@ -56,14 +56,7 @@ public class LoginScreenActivity extends AppCompatActivity implements KenBurnsVi
         mActivity = this;
         retrofitDataProvider = new RetrofitDataProvider(this);
         mViewSwitcher = (ViewSwitcher) findViewById(R.id.viewSwitcher);
-<<<<<<< Updated upstream
         mViewSwitcher = findViewById(R.id.viewSwitcher);
-=======
-
-        mViewSwitcher = findViewById(R.id.viewSwitcher);
-
-
->>>>>>> Stashed changes
         KenBurnsView img1 = findViewById(R.id.img1);
         img1.setTransitionListener(this);
 
@@ -88,6 +81,10 @@ public class LoginScreenActivity extends AppCompatActivity implements KenBurnsVi
 
     public void studentLoginClick(View view) {
         loginDialog(AppConstants.STUDENT);
+    }
+
+    public void poweredByClick(View view) {
+        Utilz.openBrowser(mActivity, mActivity.getResources().getString(R.string.softgalli_website_link));
     }
 
     public void loginDialog(final String loginAs) {
@@ -164,6 +161,11 @@ public class LoginScreenActivity extends AppCompatActivity implements KenBurnsVi
 
     private void saveTeacherDetailsLocally(UserDetailsDataModel result, final String loginAs) {
 
+        if (!TextUtils.isEmpty(result.getId()))
+            MyPreference.setUserId(Integer.parseInt(result.getId()));
+        if (!TextUtils.isEmpty(result.getName()))
+            MyPreference.setUserName(result.getName());
+
         ClsGeneral.setPreferences(AppConstants.ID, result.getId());
         ClsGeneral.setPreferences(AppConstants.USER_ID, result.getUser_id());
         ClsGeneral.setPreferences(AppConstants.NAME, result.getName());
@@ -177,13 +179,13 @@ public class LoginScreenActivity extends AppCompatActivity implements KenBurnsVi
         ClsGeneral.setPreferences(AppConstants.STATUS, result.getStatus());
         ClsGeneral.setPreferences(AppConstants.QUALIFICATION, result.getQualification());
         ClsGeneral.setPreferences(AppConstants.ALTERNTE_NUMBER, result.getAlternate_number());
+        ClsGeneral.setPreferences(AppConstants.PHONE_NO, result.getAlternate_number());
+        ClsGeneral.setPreferences(AppConstants.WHAT_TEACH, result.getWhat_teach());
         ClsGeneral.setPreferences(AppConstants.SUBJECT, result.getSubject());
         ClsGeneral.setPreferences(AppConstants.CLASS_TEACHER_FOR, result.getClassteacher_for());
         ClsGeneral.setPreferences(AppConstants.ADDRESS, result.getAddress());
         ClsGeneral.setPreferences(AppConstants.FACEBOOK_ID, result.getFacebook_id());
         ClsGeneral.setPreferences(AppConstants.DESIGNATION, result.getDesignation());
-        if (TextUtils.isEmpty(result.getProfile_pic()))
-        ClsGeneral.setPreferences(AppConstants.PROFILE_PIC, result.getImage());
         ClsGeneral.setPreferences(AppConstants.IS_LOGINED, true);
         ClsGeneral.setPreferences(AppConstants.LOGIN_AS, loginAs);
 
