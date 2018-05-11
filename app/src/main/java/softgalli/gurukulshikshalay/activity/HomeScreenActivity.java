@@ -4,10 +4,12 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -17,6 +19,7 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -26,6 +29,12 @@ import android.widget.Toast;
 
 import com.androidquery.AQuery;
 import com.androidquery.util.Constants;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.DataSource;
+import com.bumptech.glide.load.engine.GlideException;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.RequestOptions;
+import com.bumptech.glide.request.target.Target;
 
 import java.util.ArrayList;
 
@@ -36,10 +45,13 @@ import de.hdodenhof.circleimageview.CircleImageView;
 import softgalli.gurukulshikshalay.R;
 import softgalli.gurukulshikshalay.adapter.HomeCategoryAdapter;
 import softgalli.gurukulshikshalay.common.Apis;
+import softgalli.gurukulshikshalay.common.AppConstants;
+import softgalli.gurukulshikshalay.common.ClsGeneral;
 import softgalli.gurukulshikshalay.common.Utilz;
 import softgalli.gurukulshikshalay.intrface.OnClickListener;
 import softgalli.gurukulshikshalay.model.UpcomingActivityModel;
 import softgalli.gurukulshikshalay.preference.MyPreference;
+import softgalli.gurukulshikshalay.retrofit.ApiUrl;
 
 public class HomeScreenActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -142,10 +154,16 @@ public class HomeScreenActivity extends AppCompatActivity
             } catch (ActivityNotFoundException e) {
                 e.printStackTrace();
             }
+        } else if (id == R.id.logout) {
+            Utilz.logout(mActivity);
         } else if (id == R.id.nav_website) {
             Utilz.openBrowser(mActivity, Apis.MAIN_URL);
         } else if (id == R.id.nav_map) {
             Utilz.openBrowser(mActivity, mActivity.getResources().getString(R.string.school_on_map_url));
+        } else if (id == R.id.softgalli) {
+            Intent i = new Intent(Intent.ACTION_VIEW);
+            i.setData(Uri.parse(mActivity.getResources().getString(R.string.softgalli_website_link)));
+            mActivity.startActivity(i);
         }
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
@@ -157,16 +175,9 @@ public class HomeScreenActivity extends AppCompatActivity
         String categoryList[];
         int iconList[], backgroundColor[];
         recyclerview.setLayoutManager(new GridLayoutManager(HomeScreenActivity.this, 3));
-        if (!MyPreference.isSignupSkipped()) {
-            categoryList = getResources().getStringArray(R.array.skiphomecategory);
-            iconList = getSkipIcon();
-            backgroundColor = getSkipColor();
-
-        } else {
             categoryList = getResources().getStringArray(R.array.studenthomecategory);
             iconList = getStudentTeacherIcon();
             backgroundColor = getStudentTeacherColor();
-        }
 
         recyclerview.setAdapter(new HomeCategoryAdapter(HomeScreenActivity.this, categoryList, iconList, backgroundColor, R.layout.homecategory_row, new OnClickListener() {
             @Override
@@ -184,18 +195,6 @@ public class HomeScreenActivity extends AppCompatActivity
         }));
 
     }
-
-    private int[] getSkipColor() {
-        int color[] = {R.drawable.grid_bg2, R.drawable.grid_bg1, R.drawable.grid_bg3,
-                R.drawable.grid_bg2, R.drawable.grid_bg1, R.drawable.grid_bg3};
-        return color;
-    }
-
-    private int[] getSkipIcon() {
-        int icon[] = {R.drawable.academics, R.drawable.academics, R.drawable.academics, R.drawable.academics, R.drawable.academics, R.drawable.academics};
-        return icon;
-    }
-
 
     private int[] getStudentTeacherColor() {
         int color[] = {R.drawable.grid_bg1, R.drawable.grid_bg2, R.drawable.grid_bg3,
@@ -244,7 +243,6 @@ public class HomeScreenActivity extends AppCompatActivity
         }
 
         View navHeaderView = getLayoutInflater().inflate(R.layout.nav_header_main, navigationView, false);
-        imageViewProfilePic = navHeaderView.findViewById(R.id.imageViewProfilePic1);
 
         int a = Build.VERSION.SDK_INT;
         if (a > 20) {
@@ -253,6 +251,8 @@ public class HomeScreenActivity extends AppCompatActivity
             (navHeaderView.findViewById(R.id.spaceHeader)).setVisibility(View.GONE);
         }
         View headerview = navigationView.getHeaderView(0);
+        imageViewProfilePic = headerview.findViewById(R.id.imageViewProfilePic1);
+        userName = headerview.findViewById(R.id.userName);
         headerview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -268,23 +268,49 @@ public class HomeScreenActivity extends AppCompatActivity
         });
 
         setNameAndPic();
+
+
+
+        Menu menu = navigationView.getMenu();
+
+        MenuItem logoutMenuItem = menu.findItem(R.id.logout);
+
+        if (MyPreference.isLogined())
+            logoutMenuItem.setVisible(true);
+        else
+            logoutMenuItem.setVisible(false);
     }
 
     private void setNameAndPic() {
-        String userNameStr = (MyPreference.getUserName());
-        if (toolbar != null && userNameStr != null && !TextUtils.isEmpty(userNameStr)) {
-            toolbar.setTitle(userNameStr);
+        String userNameStr = "User";
+        if (!TextUtils.isEmpty(MyPreference.getUserName())) {
+            userNameStr = MyPreference.getUserName();
+        } else if (!TextUtils.isEmpty(ClsGeneral.getStrPreferences(AppConstants.NAME))) {
+            userNameStr = ClsGeneral.getStrPreferences(AppConstants.NAME);
         }
-        if (userNameStr != null && !userNameStr.isEmpty()) {
-            userName.setText(userNameStr);
-        }
+        userName.setText(userNameStr);
 
-        String userProfileUrl = MyPreference.getProfilPicUrl();
-        if (userProfileUrl != null && !userProfileUrl.isEmpty()) {
-            aq.id(imageViewProfilePic).image(Apis.MAIN_URL + userProfileUrl, true, true, 0, R.drawable.user, null, Constants.FADE_IN);
-        } else {
-            imageViewProfilePic.setImageResource(R.drawable.user);
-        }
+
+        RequestOptions requestOptions = new RequestOptions();
+        requestOptions.placeholder(R.drawable.logo);
+        requestOptions.error(R.drawable.logo);
+        requestOptions.fitCenter();
+        String imageUrl = ApiUrl.IMAGE_BASE_URL + ClsGeneral.getStrPreferences(AppConstants.PROFILE_PIC);
+        Glide.with(mActivity)
+                .load(imageUrl)
+                .apply(requestOptions)
+                .listener(new RequestListener<Drawable>() {
+                    @Override
+                    public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
+                        return false;
+                    }
+
+                    @Override
+                    public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
+                        return false;
+                    }
+                })
+                .into(imageViewProfilePic);
     }
 
     @OnClick({R.id.admissionRl, R.id.galleryRl, R.id.aboutUsRl, R.id.contactUsRl})
