@@ -64,7 +64,7 @@ public class AddStudent extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (input_rollnumber.getText().toString().trim().equals("")) {
-                    Toast.makeText(AddStudent.this, "Enter Rollnumber Please", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AddStudent.this, "Enter Roll Number Please", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 if (input_name.getText().toString().trim().equals("")) {
