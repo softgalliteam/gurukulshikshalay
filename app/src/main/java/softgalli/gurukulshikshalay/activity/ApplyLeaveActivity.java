@@ -2,14 +2,12 @@ package softgalli.gurukulshikshalay.activity;
 
 import android.app.Activity;
 import android.app.DatePickerDialog;
-import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.AdapterView;
@@ -20,26 +18,23 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.loopj.android.http.AsyncHttpClient;
-import com.loopj.android.http.RequestParams;
-import com.loopj.android.http.TextHttpResponseHandler;
-
 import java.util.ArrayList;
 import java.util.Calendar;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import cz.msebera.android.httpclient.Header;
 import softgalli.gurukulshikshalay.R;
 import softgalli.gurukulshikshalay.adapter.ClassTeacherAdapter;
-import softgalli.gurukulshikshalay.common.Apis;
+import softgalli.gurukulshikshalay.common.AppConstants;
+import softgalli.gurukulshikshalay.common.ClsGeneral;
 import softgalli.gurukulshikshalay.common.PreferenceName;
 import softgalli.gurukulshikshalay.common.Utilz;
 import softgalli.gurukulshikshalay.common.Validation;
-import softgalli.gurukulshikshalay.model.FeedBackModel;
+import softgalli.gurukulshikshalay.model.CommonResponse;
 import softgalli.gurukulshikshalay.model.TeacherListDataModel;
 import softgalli.gurukulshikshalay.model.TeacherListModel;
+import softgalli.gurukulshikshalay.preference.MyPreference;
 import softgalli.gurukulshikshalay.retrofit.DownlodableCallback;
 import softgalli.gurukulshikshalay.retrofit.RetrofitDataProvider;
 
@@ -78,6 +73,7 @@ public class ApplyLeaveActivity extends AppCompatActivity implements AdapterView
         mActivity = this;
         // Spinner click listener
         classTeacherNameSpinner.setOnItemSelectedListener(this);
+        studentName.setText(ClsGeneral.getStrPreferences(AppConstants.NAME));
         initToolbar();
         //get teacher list
         if (Utilz.isOnline(mActivity)) {
@@ -143,25 +139,6 @@ public class ApplyLeaveActivity extends AppCompatActivity implements AdapterView
         });
     }
 
-
-    @OnClick(R.id.submitButtonLl)
-    public void onViewClicked() {
-        String commentStr = comment.getText().toString();
-        String userEmail = fromDateTv.getText().toString();
-        String toDateTvStr = toDateTv.getText().toString();
-        String userName = studentName.getText().toString();
-        String classTeacherNameStr = "";
-
-        //Toast.makeText(mActivity,  typetxt+"\n" + selectedIssue + "\n" + msg, Toast.LENGTH_LONG).show();
-        if (Utilz.isOnline(mActivity)) {
-            if (isValidAllFields()) {
-                //applyLeave(userName, toDateTvStr, userEmail, classTeacherNameStr, commentStr);
-            }
-        } else {
-            Toast.makeText(mActivity, R.string.no_internet_connection, Toast.LENGTH_LONG).show();
-        }
-    }
-
     private boolean isValidAllFields() {
         clearAllErrors();
         int itemPos = classTeacherNameSpinner.getSelectedItemPosition();
@@ -176,7 +153,7 @@ public class ApplyLeaveActivity extends AppCompatActivity implements AdapterView
             toDateTv.setError("Please select end date");
             isValidAllFields = false;
         } else if (itemPos <= 0) {
-            Toast.makeText(retrofitDataProvider, "Please select your class teacher", Toast.LENGTH_SHORT).show();
+            Toast.makeText(mActivity, "Please select your class teacher", Toast.LENGTH_SHORT).show();
             isValidAllFields = false;
         } else if (!Validation.hasText(comment)) {
             comment.setError("Please enter reason for leave");
@@ -193,17 +170,18 @@ public class ApplyLeaveActivity extends AppCompatActivity implements AdapterView
         fromDateTv.setError(null);
         classTeacherNameSpinner.setSelection(0);
     }
-/*
 
-    private void applyLeave(String userName, String toDateTv, String userEmail, String classNameStr, String commentStr) {
+    private void applyLeave(String fromDateTvStr, String toDateTvStr, String commentStr) {
         Utilz.showDailog(mActivity, mActivity.getResources().getString(R.string.pleasewait));
-        retrofitDataProvider.lea(userName, mobile, msg, "" + selectedRating, Utilz.getCurrentDate(), new DownlodableCallback<FeedBackModel>() {
+        String studentId = MyPreference.getUserId();
+        if (!TextUtils.isEmpty(studentId)) {
+            studentId = ClsGeneral.getStrPreferences(AppConstants.USER_ID);
+        }
+        retrofitDataProvider.requestLeave(studentId, fromDateTvStr, toDateTvStr, mStrClassTeacherId, commentStr, new DownlodableCallback<CommonResponse>() {
             @Override
-            public void onSuccess(final FeedBackModel result) {
+            public void onSuccess(final CommonResponse result) {
                 Utilz.closeDialog();
-                if (result.getStatus().contains(PreferenceName.TRUE)) {
-                    Toast.makeText(mActivity, R.string.sent_successfully, Toast.LENGTH_LONG).show();
-                }
+                Toast.makeText(mActivity, R.string.sent_successfully, Toast.LENGTH_LONG).show();
             }
 
             @Override
@@ -218,14 +196,14 @@ public class ApplyLeaveActivity extends AppCompatActivity implements AdapterView
                 Toast.makeText(mActivity, R.string.something_went_wrong_error_message, Toast.LENGTH_LONG).show();
             }
         });
-    }*/
+    }
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         // On selecting a spinner item
         if (teachersArrayList != null && teachersArrayList.size() > 0 && teachersArrayList.size() > position && position > 0)
             mStrClassTeacherId = teachersArrayList.get(position).getTeacher_id();
-        ((TextView) parent.getChildAt(0).findViewById(R.id.teacherName)).setTextColor(ContextCompat.getColor(mActivity, R.color.hintTextColor));
+        ((TextView) parent.getChildAt(0).findViewById(R.id.teacherName)).setTextColor(ContextCompat.getColor(mActivity, R.color.color_de00000));
     }
 
     @Override
@@ -233,7 +211,7 @@ public class ApplyLeaveActivity extends AppCompatActivity implements AdapterView
 
     }
 
-    @OnClick({R.id.fromDateTv, R.id.toDateTv})
+    @OnClick({R.id.fromDateTv, R.id.toDateTv, R.id.submitButtonLl})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.fromDateTv:
@@ -241,6 +219,18 @@ public class ApplyLeaveActivity extends AppCompatActivity implements AdapterView
                 break;
             case R.id.toDateTv:
                 openDatePicker(false);
+                break;
+            case R.id.submitButtonLl:
+                String commentStr = comment.getText().toString();
+                String fromDateTvStr = fromDateTv.getText().toString();
+                String toDateTvStr = toDateTv.getText().toString();
+                if (Utilz.isOnline(mActivity)) {
+                    if (isValidAllFields()) {
+                        applyLeave(fromDateTvStr, toDateTvStr, commentStr);
+                    }
+                } else {
+                    Toast.makeText(mActivity, R.string.no_internet_connection, Toast.LENGTH_LONG).show();
+                }
                 break;
         }
     }

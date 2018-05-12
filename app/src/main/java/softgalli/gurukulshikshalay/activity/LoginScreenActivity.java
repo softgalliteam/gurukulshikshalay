@@ -163,9 +163,11 @@ public class LoginScreenActivity extends AppCompatActivity implements KenBurnsVi
     private void saveTeacherDetailsLocally(UserDetailsDataModel result, final String loginAs) {
 
         if (!TextUtils.isEmpty(result.getId()))
-            MyPreference.setUserId(Integer.parseInt(result.getId()));
+            MyPreference.setId(Integer.parseInt(result.getId()));
         if (!TextUtils.isEmpty(result.getName()))
             MyPreference.setUserName(result.getName());
+        if (!TextUtils.isEmpty(result.getUser_id()))
+            MyPreference.setUserId(result.getUser_id());
 
         ClsGeneral.setPreferences(AppConstants.ID, result.getId());
         ClsGeneral.setPreferences(AppConstants.USER_ID, result.getUser_id());

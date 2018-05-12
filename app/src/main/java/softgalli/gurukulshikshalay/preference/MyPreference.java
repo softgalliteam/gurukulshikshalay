@@ -82,15 +82,27 @@ public class MyPreference {
         return pref.getString("user_name", "");
     }
 
-    public static void setUserId(int userId) {
-        SharedPreferences pref = AppController.getInstance().getSharedPreferences("UserId1", 0);
+    public static void setId(int userId) {
+        SharedPreferences pref = AppController.getInstance().getSharedPreferences("UserId11", 0);
         SharedPreferences.Editor editor = pref.edit();
-        editor.putInt("UserId", userId);
+        editor.putInt("Id", userId);
         editor.commit();
     }
 
-    public static int getUserId() {
+    public static int getId() {
+        SharedPreferences pref = AppController.getInstance().getSharedPreferences("UserId11", 0);
+        return pref.getInt("Id", 0);
+    }
+
+    public static void setUserId(String userId) {
         SharedPreferences pref = AppController.getInstance().getSharedPreferences("UserId1", 0);
-        return pref.getInt("UserId", 0);
+        SharedPreferences.Editor editor = pref.edit();
+        editor.putString("UserId", userId);
+        editor.commit();
+    }
+
+    public static String getUserId() {
+        SharedPreferences pref = AppController.getInstance().getSharedPreferences("UserId1", 0);
+        return pref.getString("UserId", "");
     }
 }
