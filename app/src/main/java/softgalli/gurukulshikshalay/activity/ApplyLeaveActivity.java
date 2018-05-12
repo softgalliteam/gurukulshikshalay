@@ -18,8 +18,11 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -146,10 +149,10 @@ public class ApplyLeaveActivity extends AppCompatActivity implements AdapterView
         if (!Validation.hasText(studentName)) {
             studentName.setError("Please enter student's full name");
             isValidAllFields = false;
-        } else if (!TextUtils.isEmpty(fromDateTv.getText().toString().trim())) {
+        } else if (TextUtils.isEmpty(fromDateTv.getText().toString().trim())) {
             fromDateTv.setError("Please select start date");
             isValidAllFields = false;
-        } else if (!TextUtils.isEmpty(fromDateTv.getText().toString().trim())) {
+        } else if (TextUtils.isEmpty(fromDateTv.getText().toString().trim())) {
             toDateTv.setError("Please select end date");
             isValidAllFields = false;
         } else if (itemPos <= 0) {
@@ -168,7 +171,6 @@ public class ApplyLeaveActivity extends AppCompatActivity implements AdapterView
         studentName.setError(null);
         toDateTv.setError(null);
         fromDateTv.setError(null);
-        classTeacherNameSpinner.setSelection(0);
     }
 
     private void applyLeave(String fromDateTvStr, String toDateTvStr, String commentStr) {
@@ -252,6 +254,22 @@ public class ApplyLeaveActivity extends AppCompatActivity implements AdapterView
                         }
                     }
                 }, mYear, mMonth, mDay);
+        if (isFromDate) {
+            datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis() - 1000);
+        } else {
+            String givenDateString = fromDateTv.getText().toString().trim();
+            if (!TextUtils.isEmpty(givenDateString)) {
+                SimpleDateFormat sdf = new SimpleDateFormat("dd-mm-yyyy");
+                try {
+                    Date mDate = sdf.parse(givenDateString);
+                    long timeInMilliseconds = mDate.getTime();
+                    datePickerDialog.getDatePicker().setMinDate(timeInMilliseconds);
+                } catch (ParseException e) {
+                    datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis() - 1000);
+                }
+            } else
+                datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis() - 1000);
+        }
         datePickerDialog.show();
     }
 }
