@@ -2,19 +2,19 @@ package softgalli.gurukulshikshalay.activity;
 
 import android.app.Activity;
 import android.app.Dialog;
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Html;
 import android.text.TextUtils;
+import android.text.method.LinkMovementMethod;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.Button;
 import android.widget.EditText;
-import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ViewSwitcher;
 
@@ -33,13 +33,7 @@ import softgalli.gurukulshikshalay.retrofit.DownlodableCallback;
 import softgalli.gurukulshikshalay.retrofit.RetrofitDataProvider;
 
 public class LoginScreenActivity extends AppCompatActivity implements KenBurnsView.TransitionListener {
-    ProgressDialog dialog;
     EditText userId, password;
-    EditText newPassword;
-    EditText emailIDFP;
-    Button senndOTP;
-    RelativeLayout otpRL;
-    boolean isNotification = false, isWelcomeNotification = false;
     Activity mActivity;
     private static final int TRANSITIONS_TO_SWITCH = 3;
     private ViewSwitcher mViewSwitcher;
@@ -55,7 +49,8 @@ public class LoginScreenActivity extends AppCompatActivity implements KenBurnsVi
         setContentView(R.layout.login_activity);
         mActivity = this;
         retrofitDataProvider = new RetrofitDataProvider(this);
-        mViewSwitcher = (ViewSwitcher) findViewById(R.id.viewSwitcher);
+        mViewSwitcher = findViewById(R.id.viewSwitcher);
+        TextView poweredByClick = findViewById(R.id.poweredByClick);
         mViewSwitcher = findViewById(R.id.viewSwitcher);
         KenBurnsView img1 = findViewById(R.id.img1);
         img1.setTransitionListener(this);
@@ -63,6 +58,16 @@ public class LoginScreenActivity extends AppCompatActivity implements KenBurnsVi
         KenBurnsView img2 = findViewById(R.id.img2);
         img2.setTransitionListener(this);
 
+        String powered_by_softgalli = mActivity.getResources().getString(R.string.powered_by_softgalli);
+        poweredByClick.setClickable(true);
+        poweredByClick.setMovementMethod(LinkMovementMethod.getInstance());
+        poweredByClick.setText(Html.fromHtml(powered_by_softgalli));
+        poweredByClick.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Utilz.openBrowser(mActivity, mActivity.getResources().getString(R.string.softgalli_website_link));
+            }
+        });
     }
 
     public void skipLoginSignup(View view) {
@@ -81,10 +86,6 @@ public class LoginScreenActivity extends AppCompatActivity implements KenBurnsVi
 
     public void studentLoginClick(View view) {
         loginDialog(AppConstants.STUDENT);
-    }
-
-    public void poweredByClick(View view) {
-        Utilz.openBrowser(mActivity, mActivity.getResources().getString(R.string.softgalli_website_link));
     }
 
     public void loginDialog(final String loginAs) {
