@@ -97,7 +97,13 @@ public class TeacherListDataModel implements Serializable {
     String status;
     @SerializedName("facebook_id")
     String facebook_id;
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
     @SerializedName("what_teach")
+
     String what_teach;
     @SerializedName("designation")
     String designation;

@@ -7,8 +7,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
+import android.view.WindowManager;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.loopj.android.http.AsyncHttpClient;
@@ -40,12 +41,13 @@ public class AdmissionActivity extends AppCompatActivity {
     EditText className;
     @BindView(R.id.comment)
     EditText comment;
-    @BindView(R.id.submitbutton1111)
-    Button submitbutton;
+    @BindView(R.id.submitButtonLl)
+    LinearLayout submitButtonLl;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         setContentView(R.layout.admission_form_activity);
         ButterKnife.bind(this);
         mActivity = this;
@@ -67,7 +69,7 @@ public class AdmissionActivity extends AppCompatActivity {
         });
     }
 
-    @OnClick(R.id.submitbutton1111)
+    @OnClick(R.id.submitButtonLl)
     public void onViewClicked() {
         String commentStr = comment.getText().toString();
         String userEmail = emailId.getText().toString();

@@ -28,7 +28,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.androidquery.AQuery;
-import com.androidquery.util.Constants;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.DataSource;
 import com.bumptech.glide.load.engine.GlideException;
@@ -175,9 +174,9 @@ public class HomeScreenActivity extends AppCompatActivity
         String categoryList[];
         int iconList[], backgroundColor[];
         recyclerview.setLayoutManager(new GridLayoutManager(HomeScreenActivity.this, 3));
-            categoryList = getResources().getStringArray(R.array.studenthomecategory);
-            iconList = getStudentTeacherIcon();
-            backgroundColor = getStudentTeacherColor();
+        categoryList = getResources().getStringArray(R.array.studenthomecategory);
+        iconList = getStudentTeacherIcon();
+        backgroundColor = getStudentTeacherColor();
 
         recyclerview.setAdapter(new HomeCategoryAdapter(HomeScreenActivity.this, categoryList, iconList, backgroundColor, R.layout.homecategory_row, new OnClickListener() {
             @Override
@@ -188,6 +187,24 @@ public class HomeScreenActivity extends AppCompatActivity
                     startActivity(new Intent(HomeScreenActivity.this, TopperListActivity.class));
                 } else if (position == 2) {
                     startActivity(new Intent(HomeScreenActivity.this, NotificationActivity.class));
+                } else if (position == 3) {
+                    if (MyPreference.isLogined()) {
+                        startActivity(new Intent(HomeScreenActivity.this, TakeAttendenceActivity.class));
+                    } else {
+                        Utilz.showLoginFirstDialog(mActivity);
+                    }
+                } else if (position == 4) {
+                    if (MyPreference.isLogined()) {
+                        startActivity(new Intent(HomeScreenActivity.this, ApplyLeaveActivity.class));
+                    } else {
+                        Utilz.showLoginFirstDialog(mActivity);
+                    }
+                } else if (position == 5) {
+                    if (MyPreference.isLogined()) {
+                        startActivity(new Intent(HomeScreenActivity.this, TakeAttendenceActivity.class));
+                    } else {
+                        Utilz.showLoginFirstDialog(mActivity);
+                    }
                 } else {
                     Utilz.showLoginFirstDialog(mActivity);
                 }
@@ -268,7 +285,6 @@ public class HomeScreenActivity extends AppCompatActivity
         });
 
         setNameAndPic();
-
 
 
         Menu menu = navigationView.getMenu();
