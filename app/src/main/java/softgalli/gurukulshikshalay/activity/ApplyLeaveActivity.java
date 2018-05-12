@@ -204,7 +204,7 @@ public class ApplyLeaveActivity extends AppCompatActivity implements AdapterView
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         // On selecting a spinner item
         if (teachersArrayList != null && teachersArrayList.size() > 0 && teachersArrayList.size() > position && position > 0)
-            mStrClassTeacherId = teachersArrayList.get(position).getTeacher_id();
+            mStrClassTeacherId = teachersArrayList.get(position).getUserId();
         ((TextView) parent.getChildAt(0).findViewById(R.id.teacherName)).setTextColor(ContextCompat.getColor(mActivity, R.color.color_de00000));
     }
 
@@ -263,7 +263,7 @@ public class ApplyLeaveActivity extends AppCompatActivity implements AdapterView
                 try {
                     Date mDate = sdf.parse(givenDateString);
                     long timeInMilliseconds = mDate.getTime();
-                    datePickerDialog.getDatePicker().setMinDate(timeInMilliseconds);
+                    datePickerDialog.getDatePicker().setMinDate(timeInMilliseconds-1000);
                 } catch (ParseException e) {
                     datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis() - 1000);
                 }

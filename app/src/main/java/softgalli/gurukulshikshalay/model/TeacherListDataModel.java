@@ -9,8 +9,8 @@ public class TeacherListDataModel implements Serializable {
         return id;
     }
 
-    public String getTeacher_id() {
-        return teacher_id;
+    public String getUserId() {
+        return userId;
     }
 
     public String getName() {
@@ -71,8 +71,8 @@ public class TeacherListDataModel implements Serializable {
 
     @SerializedName("id")
     String id;
-    @SerializedName("teacher_id")
-    String teacher_id;
+    @SerializedName("user_id")
+    String userId;
     @SerializedName("name")
     String name;
     @SerializedName("qualification")
