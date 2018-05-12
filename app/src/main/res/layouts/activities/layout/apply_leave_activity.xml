@@ -1,149 +1,166 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
     <include layout="@layout/common_toolbar" />
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/ll_bottom">
+        android:layout_marginTop="60dp"
+        android:fillViewport="true">
+
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-    <android.support.v7.widget.CardView
-        xmlns:card_view="http://schemas.android.com/apk/res-auto"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        card_view:cardElevation="4dp"
-        card_view:cardCornerRadius="5dp"
-        card_view:cardUseCompatPadding="true"
-        android:layout_marginTop="65dp"
-        android:layout_marginRight="@dimen/margin_5"
-        android:layout_marginLeft="@dimen/margin_5">
-        <LinearLayout
-            android:id="@+id/rv_common"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:gravity="center"
-            android:layout_margin="@dimen/margin_10"
-            android:orientation="vertical"
-            android:paddingBottom="@dimen/margin_50"
-            android:paddingTop="@dimen/margin_10">
+            android:layout_marginTop="60dp"
+            android:orientation="vertical">
 
-        <android.support.design.widget.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <EditText
+            <!--For absent present count -->
+            <android.support.v7.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="First Name"
-                fontPath="@string/roboto_regular"
-                tools:ignore="MissingPrefix"
-                android:textSize="@dimen/text_15"
-                android:textColor="@color/color_de00000"/>
-        </android.support.design.widget.TextInputLayout>
+                android:layout_margin="10dp"
+                card_view:cardCornerRadius="10dp"
+                card_view:cardElevation="10dp">
 
-            <android.support.design.widget.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_marginTop="@dimen/margin_10"
-                android:layout_height="wrap_content">
-
-                <EditText
-                    android:layout_width="match_parent"
+                <LinearLayout
+                    android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Last Name"
-                    fontPath="@string/roboto_regular"
-                    tools:ignore="MissingPrefix"
-                    android:textSize="@dimen/text_15"
-                    android:textColor="@color/color_de00000"/>
-            </android.support.design.widget.TextInputLayout>
+                    android:background="#FFF"
+                    android:orientation="vertical"
+                    android:padding="@dimen/padding_15dp">
 
-            <android.support.design.widget.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_marginTop="@dimen/margin_10"
-                android:layout_height="wrap_content">
+                    <ImageView
+                        android:layout_width="75dp"
+                        android:layout_height="75dp"
+                        android:layout_gravity="center"
+                        android:src="@drawable/logo" />
 
-                <EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Mention reason for leave"
-                    fontPath="@string/roboto_regular"
-                    tools:ignore="MissingPrefix"
-                    android:textSize="@dimen/text_15"
-                    android:textColor="@color/color_de00000"/>
-            </android.support.design.widget.TextInputLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-                <android.support.design.widget.TextInputLayout
-                    android:layout_width="match_parent"
-                    android:layout_marginTop="@dimen/margin_10"
-                    android:layout_height="wrap_content"
-                    android:layout_weight=".5">
+                    <TextView
+                        fontPath="@string/roboto_regular"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:padding="5dp"
+                        android:text="@string/send_leave_request_to_your_class_teacher"
+                        android:textColor="@color/textColor"
+                        android:textSize="@dimen/heading_size"
+                        tools:ignore="MissingPrefix" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginBottom="@dimen/margin_10dp"
+                        android:layout_marginLeft="@dimen/margin_50"
+                        android:layout_marginRight="@dimen/margin_50"
+                        android:background="@color/yellow" />
 
                     <EditText
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="@string/fromdate"
+                        android:id="@+id/sname"
                         fontPath="@string/roboto_regular"
-                        tools:ignore="MissingPrefix"
-                        android:textSize="@dimen/text_15"
-                        android:focusable="false"
-                        android:editable="false"
-                        android:textColor="@color/color_de00000"/>
-                </android.support.design.widget.TextInputLayout>
-                <android.support.design.widget.TextInputLayout
-                    android:layout_width="match_parent"
-                    android:layout_marginTop="@dimen/margin_10"
-                    android:layout_height="wrap_content"
-                    android:layout_weight=".5">
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/button_height"
+                        android:background="@drawable/ss_hollow_rect_green"
+                        android:hint="Name"
+                        android:inputType="textNoSuggestions"
+                        android:paddingLeft="10dp"
+                        android:textColor="@color/textColor"
+                        android:textSize="@dimen/text_size"
+                        tools:ignore="MissingPrefix" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/button_height"
+                        android:layout_marginTop="@dimen/margin_10dp"
+                        android:background="@drawable/ss_hollow_rect_green"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:paddingLeft="10dp">
+
+                        <TextView
+                            android:id="@+id/fromDateTv"
+                            fontPath="@string/roboto_regular"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight=".5"
+                            android:drawableRight="@drawable/date"
+                            android:gravity="center_vertical"
+                            android:hint="@string/fromdate"
+                            android:textColor="@color/color_de00000"
+                            android:textSize="@dimen/text_15"
+                            tools:ignore="MissingPrefix" />
+
+                        <View
+                            android:layout_width="1dp"
+                            android:layout_height="match_parent"
+                            android:layout_marginLeft="@dimen/padding_10dp"
+                            android:layout_marginRight="@dimen/padding_10dp"
+                            android:background="@color/colorAccent" />
+
+                        <TextView
+                            android:id="@+id/toDateTv"
+                            fontPath="@string/roboto_regular"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight=".5"
+                            android:drawableRight="@drawable/date"
+                            android:gravity="center_vertical"
+                            android:hint="@string/todate"
+                            android:textColor="@color/color_de00000"
+                            android:textSize="@dimen/text_15"
+                            tools:ignore="MissingPrefix" />
+
+
+                    </LinearLayout>
+
+                    <Spinner
+                        android:id="@+id/classTeacherNameSpinner"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/button_height"
+                        android:layout_marginTop="@dimen/margin_10dp"
+                        android:background="@drawable/ss_hollow_rect_green" />
 
                     <EditText
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="@string/todate"
-                        android:focusable="false"
-                        android:editable="false"
+                        android:id="@+id/comment"
                         fontPath="@string/roboto_regular"
-                        tools:ignore="MissingPrefix"
-                        android:textSize="@dimen/text_15"
-                        android:textColor="@color/color_de00000"/>
-                </android.support.design.widget.TextInputLayout>
-
-
-            </LinearLayout>
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margin_15"
-                android:textSize="@dimen/text_12.8"
-                android:text="@string/selectteacer"
-                fontPath="@string/roboto_regular"
-                tools:ignore="MissingPrefix"
-                android:textColor="@color/color_8a00000"/>
-            <Spinner
-                android:layout_width="match_parent"
-                android:layout_height="50dp"></Spinner>
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/divider_height"
-                android:background="@color/color_8a00000"/>
-        </LinearLayout>
-    </android.support.v7.widget.CardView>
+                        android:layout_width="match_parent"
+                        android:layout_height="100dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_weight=".25"
+                        android:background="@drawable/ss_hollow_rect_green"
+                        android:gravity="start"
+                        android:hint="Enter reason of leave"
+                        android:inputType="textLongMessage"
+                        android:paddingLeft="10dp"
+                        android:textColor="@color/textColor"
+                        android:textSize="@dimen/text_size"
+                        tools:ignore="MissingPrefix" />
+                </LinearLayout>
+            </android.support.v7.widget.CardView>
 
         </LinearLayout>
     </ScrollView>
+
     <LinearLayout
-        android:id="@+id/ll_bottom"
+        android:id="@+id/submitButtonLl"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true">
-<include layout="@layout/common_button"/>
+        <!--For absent present count -->
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_10dp"
+            card_view:cardCornerRadius="10dp"
+            card_view:cardElevation="10dp">
+
+            <include layout="@layout/common_button" />
+        </android.support.v7.widget.CardView>
     </LinearLayout>
 </RelativeLayout>
