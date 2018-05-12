@@ -34,6 +34,7 @@
 
     <string name="phone_no_not_provide_yet">Phone number is not provided yet</string>
     <string name="take_admission_by_filling_form_simply">Take admission by filling form simply.</string>
+    <string name="send_leave_request_to_your_class_teacher">Send leave request to your class teacher.</string>
 
     <!--Intro slider texts -->
     <string name="next">NEXT</string>
