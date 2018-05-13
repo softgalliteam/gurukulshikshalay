@@ -28,6 +28,9 @@
     <string name="class_name">Class</string>
     <string name="father_name">Father\'s Name</string>
     <string name="na">N/A</string>
+    <string name="approved">Approved</string>
+    <string name="disapproved">Disapproved</string>
+    <string name="pending">Pending</string>
     <string name="section">Section</string>
     <string name="colon">:</string>
     <string name="sent_successfully">Sent Successfully</string>

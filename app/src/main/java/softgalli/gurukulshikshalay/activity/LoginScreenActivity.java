@@ -192,6 +192,7 @@ public class LoginScreenActivity extends AppCompatActivity implements KenBurnsVi
         ClsGeneral.setPreferences(AppConstants.FATHER_NAME, result.getFatherName());
         ClsGeneral.setPreferences(AppConstants.IS_LOGINED, true);
         ClsGeneral.setPreferences(AppConstants.LOGIN_AS, loginAs);
+        ClsGeneral.setPreferences(AppConstants.LOGINTYPE, loginAs);
 
         startActivity(new Intent(mActivity, HomeScreenActivity.class));
     }

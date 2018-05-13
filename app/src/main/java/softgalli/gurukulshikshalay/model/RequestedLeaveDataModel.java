@@ -2,13 +2,18 @@ package softgalli.gurukulshikshalay.model;
 
 import com.google.gson.annotations.SerializedName;
 
-public class RequestedLeaveDataModel {
+import java.io.Serializable;
+
+public class RequestedLeaveDataModel implements Serializable{
     public String getLeave_application_id() {
         return leave_application_id;
     }
 
-    public String getUser_id() {
+    public String getUserId() {
         return user_id;
+    }
+    public String getUserName() {
+        return name;
     }
 
     public String getFrom_date() {
@@ -23,8 +28,15 @@ public class RequestedLeaveDataModel {
         return teacher_id;
     }
 
+    public String getTeacherCommeent() {
+        return teacher_comment;
+    }
+
     public String getDescription() {
         return description;
+    }
+    public String getImage() {
+        return image;
     }
 
     public String getStatus() {
@@ -45,4 +57,10 @@ public class RequestedLeaveDataModel {
     String description;
     @SerializedName("status")
     String status;
+    @SerializedName("teacher_comment")
+    String teacher_comment;
+    @SerializedName("image")
+    String image;
+    @SerializedName("name")
+    String name;
 }

@@ -381,8 +381,8 @@ public class RetrofitDataProvider extends AppCompatActivity implements ServiceMe
     }
 
     @Override
-    public void requestedLeaveList(String teacher_id, final DownlodableCallback<RequestedLeaveModel> callback) {
-        createRetrofitService().requestedLeaveList(teacher_id).enqueue(
+    public void requestedLeaveList(String loginedAs,String userId, final DownlodableCallback<RequestedLeaveModel> callback) {
+        createRetrofitService().requestedLeaveList(loginedAs,userId).enqueue(
                 new Callback<RequestedLeaveModel>() {
                     @Override
                     public void onResponse(@NonNull Call<RequestedLeaveModel> call, @NonNull final Response<RequestedLeaveModel> response) {
@@ -407,8 +407,8 @@ public class RetrofitDataProvider extends AppCompatActivity implements ServiceMe
     }
 
     @Override
-    public void updateRequestedLeave(String status, String user_id, final DownlodableCallback<CommonResponse> callback) {
-        createRetrofitService().updateLeave(status, user_id).enqueue(
+    public void updateRequestedLeave(String status, String user_id, String teacherComment, final DownlodableCallback<CommonResponse> callback) {
+        createRetrofitService().updateLeave(status, user_id, teacherComment).enqueue(
                 new Callback<CommonResponse>() {
                     @Override
                     public void onResponse(@NonNull Call<CommonResponse> call, @NonNull final Response<CommonResponse> response) {

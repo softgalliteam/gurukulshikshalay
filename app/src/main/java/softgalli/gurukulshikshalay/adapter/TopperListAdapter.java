@@ -91,8 +91,8 @@ public class TopperListAdapter extends RecyclerView.Adapter<TopperListAdapter.My
         if (topperListDataModel != null && topperListDataModel.getStatus().equalsIgnoreCase("1")) {
             holder.itemView.setVisibility(View.VISIBLE);
             RequestOptions requestOptions = new RequestOptions();
-            requestOptions.placeholder(R.drawable.logo);
-            requestOptions.error(R.drawable.logo);
+            requestOptions.placeholder(R.drawable.user);
+            requestOptions.error(R.drawable.user);
             requestOptions.fitCenter();
             Glide.with(mContext)
                     .load(ApiUrl.IMAGE_BASE_URL + topperListDataModel.getUser_image())

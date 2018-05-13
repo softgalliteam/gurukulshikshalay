@@ -19,7 +19,9 @@ import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.Window;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -29,7 +31,10 @@ import java.util.Date;
 import java.util.List;
 
 import softgalli.gurukulshikshalay.R;
+import softgalli.gurukulshikshalay.activity.ApplyLeaveActivity;
 import softgalli.gurukulshikshalay.activity.LoginScreenActivity;
+import softgalli.gurukulshikshalay.activity.SeeLeaveListActivity;
+import softgalli.gurukulshikshalay.activity.TakeAttendenceActivity;
 import softgalli.gurukulshikshalay.preference.MyPreference;
 
 
@@ -344,6 +349,69 @@ public class Utilz {
                 @Override
                 public void onClick(View view) {
                     mActivity.startActivity(new Intent(mActivity, LoginScreenActivity.class));
+                    dialog.dismiss();
+                }
+            });
+            dialog.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void showLeaveMgmtDialog(final Activity mActivity) {
+        try {
+            final Dialog dialog = new Dialog(mActivity);
+            dialog.requestWindowFeature(Window.FEATURE_NO_TITLE); //before
+            dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            dialog.setContentView(R.layout.leave_mgmt_dialog);
+            dialog.setTitle(null);
+            dialog.setCanceledOnTouchOutside(false);
+
+            RelativeLayout takeLeavesRl = dialog.findViewById(R.id.takeLeavesRl);
+            RelativeLayout seeLeavesRl = dialog.findViewById(R.id.seeLeavesRl);
+            takeLeavesRl.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    mActivity.startActivity(new Intent(mActivity, ApplyLeaveActivity.class));
+                    dialog.dismiss();
+                }
+            });
+            seeLeavesRl.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    mActivity.startActivity(new Intent(mActivity, SeeLeaveListActivity.class));
+                    dialog.dismiss();
+                }
+            });
+            dialog.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void showAttendanceMgmtDialog(final Activity mActivity) {
+        try {
+            final Dialog dialog = new Dialog(mActivity);
+            dialog.requestWindowFeature(Window.FEATURE_NO_TITLE); //before
+            dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            dialog.setContentView(R.layout.attendance_mgmt_dialog);
+            dialog.setTitle(null);
+            dialog.setCanceledOnTouchOutside(false);
+
+            RelativeLayout takeLeavesRl = dialog.findViewById(R.id.takeLeavesRl);
+            RelativeLayout seeLeavesRl = dialog.findViewById(R.id.seeLeavesRl);
+            takeLeavesRl.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    mActivity.startActivity(new Intent(mActivity, TakeAttendenceActivity.class));
+                    dialog.dismiss();
+                }
+            });
+            seeLeavesRl.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Toast.makeText(mActivity, "Coming Soon!!", Toast.LENGTH_SHORT).show();
+                    //mActivity.startActivity(new Intent(mActivity, SeeAttendenceActivity.class));
                     dialog.dismiss();
                 }
             });

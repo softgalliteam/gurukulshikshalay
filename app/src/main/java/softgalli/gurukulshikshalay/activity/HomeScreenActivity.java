@@ -189,13 +189,13 @@ public class HomeScreenActivity extends AppCompatActivity
                     startActivity(new Intent(HomeScreenActivity.this, NotificationActivity.class));
                 } else if (position == 3) {
                     if (MyPreference.isLogined()) {
-                        startActivity(new Intent(HomeScreenActivity.this, TakeAttendenceActivity.class));
+                        Utilz.showAttendanceMgmtDialog(mActivity);
                     } else {
                         Utilz.showLoginFirstDialog(mActivity);
                     }
                 } else if (position == 4) {
                     if (MyPreference.isLogined()) {
-                        startActivity(new Intent(HomeScreenActivity.this, ApplyLeaveActivity.class));
+                        Utilz.showLeaveMgmtDialog(mActivity);
                     } else {
                         Utilz.showLoginFirstDialog(mActivity);
                     }
@@ -308,8 +308,8 @@ public class HomeScreenActivity extends AppCompatActivity
 
 
         RequestOptions requestOptions = new RequestOptions();
-        requestOptions.placeholder(R.drawable.logo);
-        requestOptions.error(R.drawable.logo);
+        requestOptions.placeholder(R.drawable.user);
+        requestOptions.error(R.drawable.user);
         requestOptions.fitCenter();
         String imageUrl = ApiUrl.IMAGE_BASE_URL + ClsGeneral.getStrPreferences(AppConstants.PROFILE_PIC);
         Glide.with(mActivity)

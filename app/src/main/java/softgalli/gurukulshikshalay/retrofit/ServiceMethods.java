@@ -34,6 +34,6 @@ public interface ServiceMethods {
     void updateTeacher(String teacher_id, String name, String mobile_number, String alternate_number, String email_id, String address, String qualification, DownlodableCallback<CommonResponse> callback);
     void updateStudent(String user_id, String name, String email, String mobile, String residential_address, DownlodableCallback<CommonResponse> callback);
     void requestLeave(String user_id, String from_date, String to_date, String teacher_id, String description, DownlodableCallback<CommonResponse> callback);
-    void requestedLeaveList(String teacher_id, DownlodableCallback<RequestedLeaveModel> callback);
-    void updateRequestedLeave(String status, String user_id, DownlodableCallback<CommonResponse> callback);
+    void requestedLeaveList(String login_as,String user_id, DownlodableCallback<RequestedLeaveModel> callback);
+    void updateRequestedLeave(String status, String user_id, String teacherComment, DownlodableCallback<CommonResponse> callback);
 }

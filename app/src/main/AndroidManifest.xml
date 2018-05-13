@@ -51,6 +51,12 @@
             android:name=".activity.ApplyLeaveActivity"
             android:label="@string/app_name" />
         <activity
+            android:name=".activity.SeeLeaveListActivity"
+            android:label="@string/app_name" />
+        <activity
+            android:name=".activity.LeaveAppDisappActivity"
+            android:label="@string/app_name" />
+        <activity
             android:name=".activity.NotificationActivity"
             android:label="@string/app_name" />
         <activity

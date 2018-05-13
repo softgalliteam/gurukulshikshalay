@@ -4,6 +4,7 @@ import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -16,6 +17,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.MenuItem;
@@ -24,6 +26,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.datetimepicker.date.DatePickerDialog;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.DataSource;
+import com.bumptech.glide.load.engine.GlideException;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.RequestOptions;
+import com.bumptech.glide.request.target.Target;
 
 import org.joda.time.LocalDateTime;
 
@@ -37,25 +45,27 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import de.hdodenhof.circleimageview.CircleImageView;
 import io.realm.Realm;
 import softgalli.gurukulshikshalay.R;
 import softgalli.gurukulshikshalay.adapter.AttendenceAdapter;
 import softgalli.gurukulshikshalay.calender.CsvFileWriter;
 import softgalli.gurukulshikshalay.calender.RealMController;
+import softgalli.gurukulshikshalay.common.AppConstants;
+import softgalli.gurukulshikshalay.common.ClsGeneral;
 import softgalli.gurukulshikshalay.common.Utilz;
 import softgalli.gurukulshikshalay.common.WeekCalendarOptions;
 import softgalli.gurukulshikshalay.fragments.WeekCalendarFragment;
 import softgalli.gurukulshikshalay.intrface.CalenderListener;
 import softgalli.gurukulshikshalay.model.Student;
 import softgalli.gurukulshikshalay.preference.MyPreference;
+import softgalli.gurukulshikshalay.retrofit.ApiUrl;
 import softgalli.gurukulshikshalay.retrofit.RetrofitDataProvider;
 
 public class TakeAttendenceActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
     public static final int REQ_CODE_READ_EXTERNAL_STORAGE_PERMISSION = 301;
     private static final String TAG = TakeAttendenceActivity.class.getSimpleName();
     public static String[] mStrArrExternalStorageReadWritePermissions = {Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE};
-    @BindView(R.id.mRecyclerView)
-    RecyclerView mRecyclerView;
     @BindView(R.id.totalStudentCount)
     TextView totalStudentCount;
     @BindView(R.id.presentStudentCount)
@@ -70,6 +80,14 @@ public class TakeAttendenceActivity extends AppCompatActivity implements DatePic
     TextView seeAttendenceBtn;
     @BindView(R.id.mDateSelectedTv)
     TextView mDateSelectedTv;
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
+    @BindView(R.id.rv_common)
+    RecyclerView mRecyclerView;
+    @BindView(R.id.userProfilePicIv)
+    CircleImageView userProfilePicIv;
+    @BindView(R.id.classTeacherNameTv)
+    TextView classTeacherNameTv;
     private WeekCalendarFragment mWeekCalendarFragment;
     private String fileName = "";
     private Activity mActivity;
@@ -87,6 +105,8 @@ public class TakeAttendenceActivity extends AppCompatActivity implements DatePic
         mActivity = this;
         mWeekCalendarFragment = (WeekCalendarFragment) getSupportFragmentManager()
                 .findFragmentByTag(WeekCalendarFragment.class.getSimpleName());
+        initToolbar();
+
         initView();
 
         manageWeekCalenderView();
@@ -103,6 +123,18 @@ public class TakeAttendenceActivity extends AppCompatActivity implements DatePic
 
     }
 
+    private void initToolbar() {
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setTitle("Take Attendance");
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+    }
 
     private void initReam() {
         //get realm instance
@@ -123,6 +155,28 @@ public class TakeAttendenceActivity extends AppCompatActivity implements DatePic
         getSupportActionBar().setTitle("Take Attendence Class " + className);
 
         mRecyclerView.setNestedScrollingEnabled(false);
+
+        classTeacherNameTv.setText(ClsGeneral.getStrPreferences(AppConstants.NAME));
+        RequestOptions requestOptions = new RequestOptions();
+        requestOptions.placeholder(R.drawable.user);
+        requestOptions.error(R.drawable.user);
+        requestOptions.fitCenter();
+        String imageUrl = ApiUrl.IMAGE_BASE_URL + ClsGeneral.getStrPreferences(AppConstants.PROFILE_PIC);
+        Glide.with(mActivity)
+                .load(imageUrl)
+                .apply(requestOptions)
+                .listener(new RequestListener<Drawable>() {
+                    @Override
+                    public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
+                        return false;
+                    }
+
+                    @Override
+                    public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
+                        return false;
+                    }
+                })
+                .into(userProfilePicIv);
     }
 
     private void manageCreateAndUploadAttendence() {

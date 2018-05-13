@@ -75,10 +75,10 @@ public interface ApiRetrofitService {
 
     @POST(ApiUrl.LEAVEREQUESTLIST)
     @FormUrlEncoded
-    Call<RequestedLeaveModel> requestedLeaveList(@Field("teacher_id") String teacher_id);
+    Call<RequestedLeaveModel> requestedLeaveList(@Field("login_as") String loginedAs, @Field("user_id") String userId);
 
     @POST(ApiUrl.UPDATELEAVE)
     @FormUrlEncoded
-    Call<CommonResponse> updateLeave(@Field("status") String status, @Field("user_id") String user_id);
+    Call<CommonResponse> updateLeave(@Field("status") String status, @Field("user_id") String user_id, @Field("teacher_comment") String teacherComment);
 
 }
