@@ -103,16 +103,14 @@
                                 android:layout_height="wrap_content"
                                 android:text="@string/principal_name"
                                 android:textColor="@color/textColor"
-                                android:textSize="@dimen/heading_text_size"
-                                android:textStyle="bold" />
+                                android:textSize="@dimen/heading_text_size" />
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="@string/principal_phone"
                                 android:textColor="@color/textColor"
-                                android:textSize="@dimen/text_size"
-                                android:textStyle="bold" />
+                                android:textSize="@dimen/text_size" />
                         </LinearLayout>
 
                         <Button
@@ -154,16 +152,14 @@
                                 android:layout_height="wrap_content"
                                 android:text="School"
                                 android:textColor="@color/textColor"
-                                android:textSize="@dimen/heading_text_size"
-                                android:textStyle="bold" />
+                                android:textSize="@dimen/heading_text_size" />
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="@string/helpline_no1"
                                 android:textColor="@color/textColor"
-                                android:textSize="@dimen/text_size"
-                                android:textStyle="bold" />
+                                android:textSize="@dimen/text_size" />
                         </LinearLayout>
 
                         <Button
@@ -210,16 +206,14 @@
                                 android:layout_height="wrap_content"
                                 android:text="School"
                                 android:textColor="@color/textColor"
-                                android:textSize="@dimen/heading_text_size"
-                                android:textStyle="bold" />
+                                android:textSize="@dimen/heading_text_size" />
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="@string/principal_email"
                                 android:textColor="@color/textColor"
-                                android:textSize="@dimen/text_size"
-                                android:textStyle="bold" />
+                                android:textSize="@dimen/text_size" />
                         </LinearLayout>
 
                         <Button
@@ -266,13 +260,12 @@
                                 android:layout_height="wrap_content"
                                 android:text="School"
                                 android:textColor="@color/textColor"
-                                android:textSize="@dimen/heading_text_size"
-                                android:textStyle="bold" />
+                                android:textSize="@dimen/heading_text_size" />
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Ghodthamba, P.S-Dhanwar, Dist.-Giridih, Jharkhand, India(825418)."
+                                android:text="@string/full_address"
                                 android:textColor="@color/textColor"
                                 android:textSize="@dimen/text_size" />
                         </LinearLayout>

@@ -1,5 +1,4 @@
 <resources>
-    <string name="app_name">Gurukul Shikshalay</string>
     <string name="school_registration_no">IN8102335</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -45,7 +44,6 @@
     <string name="start">GOT IT</string>
 
     <string name="slide_1_title">WHO WE ARE?</string>
-    <string name="slide_1_desc">We are best education provider in Ghodthamba, Giridih, Jharjhand.</string>
 
     <string name="slide_2_title">WHAT WE DO?</string>
     <string name="slide_2_desc">We create brilliant and capable students every year.</string>
@@ -62,11 +60,6 @@
     <string name="about_us">About Us</string>
     <string name="contact_us">Contact Us</string>
 
-    <string name="short_address">Ghodthamba, Giridih, Jharkhand(825418).</string>
-    <string name="helpline_no1">+91 9934342061</string>
-    <string name="principal_phone">+91 9835845701</string>
-    <string name="principal_email">chandrikabarnwal@gmail.com</string>
-
     <string name="nointernet">No internet connection</string>
     <string name="gallery_list">Gallery List</string>
     <string name="gallery_album">Gallery Album</string>
@@ -74,7 +67,6 @@
     <string name="login_first_message">Please login first to access all the features of this school, Please contact to you principal for your id and password.</string>
     <string name="please_login">Please Login</string>
     <string name="login">Login</string>
-    <string name="school_on_map_url"><![CDATA[https://www.google.com/maps?ll=24.445404,85.881632&z=15&t=m&hl=en-US&gl=IN&mapclient=embed&cid=6936239094202783588]]></string>
 
     <string-array name="studenthomecategory">
         <item>Teachers</item>
@@ -125,13 +117,54 @@
     <string name="error_msg">Write your</string>
     <string name="no_internet_connection">Please check your internet connection and try again.</string>
     <string name="something_went_wrong_error_message">Something went wrong wrong, Please try again.</string>
-    <string name="principal_name">Chandrika Barnwal</string>
-    <string name="school_name">Gurukul Shikshalay</string>
-    <string name="state">Jharkhand</string>
-
     <string name="softgalli">SoftGalli</string>
     <string name="softgalli_website_link">http://www.softgalli.com</string>
     <string name="powered_by_softgalli"><![CDATA[Powered By : <a href=\"http://www.softgalli.com\">SoftGalli</a>]]></string>
 
-    <string name="aboutus_desc">Gurukul Shikshalay serves nearly 1500 students, 1 to 10th class students at Ghodthamba, near Petrol Pump, Giridih, Jharkhand. In addition, Gurukul Shikshalay provides highly educated teachers and with the help of digital technology we are connecting parents teachers and students to understand each other and help our students for his all kind of growth. We provide best study environment for the growth and development of all students. Every learner can succeed in Gurukul Shikshalay with academic acceleration and enrichment available for the gifted and talented students. Computer and English as a preferred knowledge programs are also offered to make students capable to go for technology and higher education field. We want to remove the trend of schools for earning money only. We want to really make students capable to be a great person who can serve nation with their knowledge and also can be a great human being. We also emphasize on new digital technology which is most important for future.</string>
+
+    <!--
+    ###########################################################################################################################################################################
+    ####################################################################### GURUKUL DETAILS################################################################
+    ###########################################################################################################################################################################
+    -->
+
+    <!-- <string name="app_name">Gurukul Shikshalay</string>
+
+     <string name="principal_name">Chandrika Barnwal</string>
+     <string name="school_name">Gurukul Shikshalay</string>
+     <string name="state">Jharkhand</string>
+
+     <string name="short_address">Ghodthamba, Giridih, Jharkhand(815301).</string>
+     <string name="short_address">At-Ghodthamba, Dist.-Giridih, State-Jharkhand, India(815301)</string>
+     <string name="helpline_no1">+91 9934342061</string>
+     <string name="principal_phone">+91 9835845701</string>
+     <string name="principal_email">chandrikabarnwal@gmail.com</string>
+     <string name="slide_1_desc">We are best education provider in Ghodthamba, Giridih, Jharjhand.</string>
+
+     <string name="school_on_map_url"><![CDATA[https://www.google.com/maps?ll=24.445404,85.881632&z=15&t=m&hl=en-US&gl=IN&mapclient=embed&cid=6936239094202783588]]></string>
+
+     <string name="aboutus_desc">Gurukul Shikshalay serves nearly 1500 students, 1 to 10th class students at Ghodthamba, near Petrol Pump, Giridih, Jharkhand. In addition, Gurukul Shikshalay provides highly educated teachers and with the help of digital technology we are connecting parents teachers and students to understand each other and help our students for his all kind of growth. We provide best study environment for the growth and development of all students. Every learner can succeed in Gurukul Shikshalay with academic acceleration and enrichment available for the gifted and talented students. Computer and English as a preferred knowledge programs are also offered to make students capable to go for technology and higher education field. We want to remove the trend of schools for earning money only. We want to really make students capable to be a great person who can serve nation with their knowledge and also can be a great human being. We also emphasize on new digital technology which is most important for future.</string>
+ -->
+    <!--
+   ###########################################################################################################################################################################
+   ####################################################################### GURUKUL DETAILS################################################################
+   ###########################################################################################################################################################################
+   -->
+    <string name="app_name">SPS Nawalshahi</string>
+
+    <string name="principal_name">Saddam Hussain</string>
+    <string name="school_name">SPS Nawalshahi</string>
+    <string name="state">Jharkhand</string>
+    <string name="slide_1_desc">We are best education provider in Nawalshahi, Koderma, Jharkhand(825418).</string>
+
+    <string name="short_address">Nawalshahi, Koderma, Jharkhand(825418).</string>
+    <string name="full_address">At-Nawalshahi, PO+PS-Nawalshahi, Dist.-Koderma, State-Jharkhand, India(825418)</string>
+    <string name="helpline_no1">+91 09939119583</string>
+    <string name="principal_phone">+91 9631784042</string>
+    <string name="principal_email">hussainsaddam03@gmail.com</string>
+
+    <string name="school_on_map_url"><![CDATA[https://www.google.com/maps?ll=24.429955,85.762535&z=14&t=m&hl=en-US&gl=IN&mapclient=embed&q=Nawalsahi+Jharkhand+825418]]></string>
+
+    <string name="aboutus_desc">SANSKAR Public School serves nearly 400 students, 1 to 10th class students at Nawalshahi, near Kalimanda, Koderma, Jharkhand. In addition, SANSKAR Public School provides highly educated teachers and with the help of digital technology we are connecting parents teachers and studets to understand each other and help our students for his all kind of growth. We provide best study environment for the growth and development of all students. Every learner can succeed in SANSKAR Public School with academic acceleration and enrichment available for the gifted and talented students. Computer and English as a preferred knowledge programs are also offered to make students capable to go for technology and higher education field. We want to remove the trend of schools for earning money only. We want to really make students capable to be a great person who can serve nation with their knowledge and also can be a great human being. We also emphasis on new digital technology which is most important for future.</string>
+
 </resources>
