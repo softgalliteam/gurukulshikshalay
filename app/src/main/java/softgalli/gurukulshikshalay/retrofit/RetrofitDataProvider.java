@@ -4,6 +4,7 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.widget.Toast;
 
 import java.util.concurrent.TimeUnit;
 
@@ -14,6 +15,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+import softgalli.gurukulshikshalay.R;
 import softgalli.gurukulshikshalay.model.AlumniModel;
 import softgalli.gurukulshikshalay.model.CommonResponse;
 import softgalli.gurukulshikshalay.model.FeedBackModel;
@@ -22,7 +24,6 @@ import softgalli.gurukulshikshalay.model.NotificationModel;
 import softgalli.gurukulshikshalay.model.RequestedLeaveModel;
 import softgalli.gurukulshikshalay.model.StuTeaModel;
 import softgalli.gurukulshikshalay.model.TeacherListModel;
-import softgalli.gurukulshikshalay.model.UserDetailsDataModel;
 import softgalli.gurukulshikshalay.model.TopperLisrModel;
 import softgalli.gurukulshikshalay.model.UserDetailsModel;
 
@@ -32,6 +33,7 @@ import softgalli.gurukulshikshalay.model.UserDetailsModel;
 
 public class RetrofitDataProvider extends AppCompatActivity implements ServiceMethods {
     Context context;
+
     private ApiRetrofitService createRetrofitService() {
 
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
@@ -72,6 +74,7 @@ public class RetrofitDataProvider extends AppCompatActivity implements ServiceMe
                             if (response.code() == 401) {
                                 callback.onUnauthorized(response.code());
                             } else {
+                                Toast.makeText(context, context.getResources().getString(R.string.something_went_wrong_error_message), Toast.LENGTH_SHORT).show();
                             }
                         }
                     }
@@ -98,6 +101,7 @@ public class RetrofitDataProvider extends AppCompatActivity implements ServiceMe
                             if (response.code() == 401) {
                                 callback.onUnauthorized(response.code());
                             } else {
+                                Toast.makeText(context, context.getResources().getString(R.string.something_went_wrong_error_message), Toast.LENGTH_SHORT).show();
                             }
                         }
                     }
@@ -125,6 +129,7 @@ public class RetrofitDataProvider extends AppCompatActivity implements ServiceMe
                             if (response.code() == 401) {
                                 callback.onUnauthorized(response.code());
                             } else {
+                                Toast.makeText(context, context.getResources().getString(R.string.something_went_wrong_error_message), Toast.LENGTH_SHORT).show();
                             }
                         }
                     }
@@ -153,6 +158,7 @@ public class RetrofitDataProvider extends AppCompatActivity implements ServiceMe
                             if (response.code() == 401) {
                                 callback.onUnauthorized(response.code());
                             } else {
+                                Toast.makeText(context, context.getResources().getString(R.string.something_went_wrong_error_message), Toast.LENGTH_SHORT).show();
                             }
                         }
                     }
@@ -181,6 +187,7 @@ public class RetrofitDataProvider extends AppCompatActivity implements ServiceMe
                             if (response.code() == 401) {
                                 callback.onUnauthorized(response.code());
                             } else {
+                                Toast.makeText(context, context.getResources().getString(R.string.something_went_wrong_error_message), Toast.LENGTH_SHORT).show();
                             }
                         }
                     }
@@ -209,6 +216,7 @@ public class RetrofitDataProvider extends AppCompatActivity implements ServiceMe
                             if (response.code() == 401) {
                                 callback.onUnauthorized(response.code());
                             } else {
+                                Toast.makeText(context, context.getResources().getString(R.string.something_went_wrong_error_message), Toast.LENGTH_SHORT).show();
                             }
                         }
                     }
@@ -236,6 +244,7 @@ public class RetrofitDataProvider extends AppCompatActivity implements ServiceMe
                             if (response.code() == 401) {
                                 callback.onUnauthorized(response.code());
                             } else {
+                                Toast.makeText(context, context.getResources().getString(R.string.something_went_wrong_error_message), Toast.LENGTH_SHORT).show();
                             }
                         }
                     }
@@ -263,6 +272,7 @@ public class RetrofitDataProvider extends AppCompatActivity implements ServiceMe
                             if (response.code() == 401) {
                                 callback.onUnauthorized(response.code());
                             } else {
+                                Toast.makeText(context, context.getResources().getString(R.string.something_went_wrong_error_message), Toast.LENGTH_SHORT).show();
                             }
                         }
                     }
@@ -289,6 +299,7 @@ public class RetrofitDataProvider extends AppCompatActivity implements ServiceMe
                             if (response.code() == 401) {
                                 callback.onUnauthorized(response.code());
                             } else {
+                                Toast.makeText(context, context.getResources().getString(R.string.something_went_wrong_error_message), Toast.LENGTH_SHORT).show();
                             }
                         }
                     }
@@ -315,6 +326,7 @@ public class RetrofitDataProvider extends AppCompatActivity implements ServiceMe
                             if (response.code() == 401) {
                                 callback.onUnauthorized(response.code());
                             } else {
+                                Toast.makeText(context, context.getResources().getString(R.string.something_went_wrong_error_message), Toast.LENGTH_SHORT).show();
                             }
                         }
                     }
@@ -341,6 +353,7 @@ public class RetrofitDataProvider extends AppCompatActivity implements ServiceMe
                             if (response.code() == 401) {
                                 callback.onUnauthorized(response.code());
                             } else {
+                                Toast.makeText(context, context.getResources().getString(R.string.something_went_wrong_error_message), Toast.LENGTH_SHORT).show();
                             }
                         }
                     }
@@ -367,6 +380,7 @@ public class RetrofitDataProvider extends AppCompatActivity implements ServiceMe
                             if (response.code() == 401) {
                                 callback.onUnauthorized(response.code());
                             } else {
+                                Toast.makeText(context, context.getResources().getString(R.string.something_went_wrong_error_message), Toast.LENGTH_SHORT).show();
                             }
                         }
                     }
@@ -381,8 +395,8 @@ public class RetrofitDataProvider extends AppCompatActivity implements ServiceMe
     }
 
     @Override
-    public void requestedLeaveList(String loginedAs,String userId, final DownlodableCallback<RequestedLeaveModel> callback) {
-        createRetrofitService().requestedLeaveList(loginedAs,userId).enqueue(
+    public void requestedLeaveList(String loginedAs, String userId, final DownlodableCallback<RequestedLeaveModel> callback) {
+        createRetrofitService().requestedLeaveList(loginedAs, userId).enqueue(
                 new Callback<RequestedLeaveModel>() {
                     @Override
                     public void onResponse(@NonNull Call<RequestedLeaveModel> call, @NonNull final Response<RequestedLeaveModel> response) {
@@ -393,6 +407,7 @@ public class RetrofitDataProvider extends AppCompatActivity implements ServiceMe
                             if (response.code() == 401) {
                                 callback.onUnauthorized(response.code());
                             } else {
+                                Toast.makeText(context, context.getResources().getString(R.string.something_went_wrong_error_message), Toast.LENGTH_SHORT).show();
                             }
                         }
                     }
@@ -419,6 +434,7 @@ public class RetrofitDataProvider extends AppCompatActivity implements ServiceMe
                             if (response.code() == 401) {
                                 callback.onUnauthorized(response.code());
                             } else {
+                                Toast.makeText(context, context.getResources().getString(R.string.something_went_wrong_error_message), Toast.LENGTH_SHORT).show();
                             }
                         }
                     }

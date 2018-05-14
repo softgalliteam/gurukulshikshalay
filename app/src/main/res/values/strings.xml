@@ -112,7 +112,8 @@
 
     <string name="feedback_text_heading">Your feedback may help us to make this app more efficient</string>
     <string name="write_your_feedback_txt">write your feedback</string>
-    <string name="name_hint_optional">Enter Name</string>
+    <string name="name_hint_optional">Enter Your Name</string>
+    <string name="email_hint_optional">Enter Your Email</string>
     <string name="phone_hint">Enter Mobile No.*</string>
     <string name="error_msg">Write your</string>
     <string name="no_internet_connection">Please check your internet connection and try again.</string>

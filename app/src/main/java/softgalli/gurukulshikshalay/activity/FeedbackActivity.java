@@ -46,6 +46,9 @@ public class FeedbackActivity extends AppCompatActivity implements RatingBar.OnR
         setContentView(R.layout.feedback_activity);
         retrofitDataProvider = new RetrofitDataProvider(this);
         mActivity = this;
+
+        initToolbar();
+
         // Check if no view has focus:
         View view = this.getCurrentFocus();
         if (view != null) {
@@ -58,6 +61,7 @@ public class FeedbackActivity extends AppCompatActivity implements RatingBar.OnR
 
         TextView submitFeedbackBtn = findViewById(R.id.submit_feedback_btn);
         feedbackText = findViewById(R.id.feedback_Txt);
+        final EditText nameTv = findViewById(R.id.nameTv);
         final EditText feedbackEmail = findViewById(R.id.email_Txt);
         final EditText feedbackMobile = findViewById(R.id.mobile_no_Txt);
         ((RatingBar) findViewById(R.id.ratingBar1)).setOnRatingBarChangeListener(this);
@@ -68,6 +72,7 @@ public class FeedbackActivity extends AppCompatActivity implements RatingBar.OnR
                 feedbackMobile.setText(ClsGeneral.getStrPreferences(AppConstants.PHONE_NO));
             else if (!TextUtils.isEmpty(ClsGeneral.getStrPreferences(AppConstants.ALTERNTE_NUMBER)))
                 feedbackMobile.setText(ClsGeneral.getStrPreferences(AppConstants.ALTERNTE_NUMBER));
+            nameTv.setText(ClsGeneral.getStrPreferences(AppConstants.NAME));
         } else {
             Account[] accounts = AccountManager.get(this).getAccountsByType("com.google");
             try {
@@ -110,8 +115,6 @@ public class FeedbackActivity extends AppCompatActivity implements RatingBar.OnR
             }
         });
 
-
-        initToolbar();
     }
 
     private void sendFeedback(String email, String mobile, String msg, float selectedRating) {

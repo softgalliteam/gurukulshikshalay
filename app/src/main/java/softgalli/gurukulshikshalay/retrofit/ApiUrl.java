@@ -2,12 +2,18 @@ package softgalli.gurukulshikshalay.retrofit;
 
 public class ApiUrl {
 
+    /*#################################### FOR GURUKUL ######################################*/
+    /*public static final String BASE_URL = "http://apextechies.com/gurukul/index.php/";
+    public static final String IMAGE_BASE_URL = "http://www.gurukulshikshalay.com/";*/
+
+
+    /*#################################### FOR SPS NAWALSHAHI ##############################*/
     public static final String BASE_URL = "http://apextechies.com/sps/index.php/";
-    public static final String IMAGE_BASE_URL_GURUKUL = "http://www.gurukulshikshalay.com/";
     public static final String IMAGE_BASE_URL = "http://spsnawalshahi.com/";
+
+
+    /*#################################### COMMON LINKS ##############################*/
     public static final String NOTIFICATION = "get_notification";
-    public static final String TIMETABLE = "get_TimeTable";
-    public static final String EXAMSCHEDULE = "get_ExanSchedule";
     public static final String APPLYLEAVE = "applyLeave";
     public static final String LEAVEREQUESTLIST = "leave_RequestList";
     public static final String UPDATELEAVE = "updateLeave";
@@ -21,4 +27,12 @@ public class ApiUrl {
     public static final String LOGIN = "login";
     public static final String UPDATETEACHER = "update_Teacher";
     public static final String UPDATESTUDENT = "update_Student";
+
+    public static final String TIME_TABLE = "get_TimeTable";
+    public static final String EXAM_SCHEDULE = "get_ExanSchedule";
+    public static final String GET_ATTENDANCE = "getAttendance";
+    public static final String UPLOAD_ATTENDANCE = "uploadAttendance";
+    public static final String GET_CLASS_WISE_STUDENT_LIST = "getClassWiseStudentsList";
+    public static final String GET_RESULT = "getResult";
+    public static final String ADD_RESULT = "addResult";
 }
