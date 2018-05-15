@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="action_settings">Setting</string>
+    <string name="no_record_found">No record found</string>
+    <string name="no_leave_requested_till_now">No leave has been requested till now.</string>
 </resources>

@@ -9,6 +9,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -34,6 +35,8 @@ public class SeeLeaveListActivity extends AppCompatActivity {
     RecyclerView recyclerView;
     @BindView(R.id.toolbar)
     Toolbar toolbar;
+    @BindView(R.id.noRecordFoundTv)
+    TextView noRecordFoundTv;
     private ArrayList<RequestedLeaveDataModel> mLeavesArrayList = new ArrayList();
     private RetrofitDataProvider retrofitDataProvider;
 
@@ -43,18 +46,19 @@ public class SeeLeaveListActivity extends AppCompatActivity {
         setContentView(R.layout.leave_list_activity);
         mActivity = this;
         ButterKnife.bind(this);
+        noRecordFoundTv.setText(mActivity.getResources().getString(R.string.no_leave_requested_till_now));
         retrofitDataProvider = new RetrofitDataProvider(this);
         recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         initToolbar();
 
         if (Utilz.isOnline(mActivity)) {
-            getTopperList();
+            getRequestedLeaveList();
         } else {
             Toast.makeText(mActivity, R.string.no_internet_connection, Toast.LENGTH_LONG).show();
         }
     }
 
-    private void getTopperList() {
+    private void getRequestedLeaveList() {
         Utilz.showDailog(mActivity, getResources().getString(R.string.pleasewait));
         String loginedAs = ClsGeneral.getStrPreferences(AppConstants.LOGIN_AS);
         String userId = ClsGeneral.getStrPreferences(AppConstants.USER_ID);
@@ -65,15 +69,19 @@ public class SeeLeaveListActivity extends AppCompatActivity {
                 if (result != null && result.getStatus().contains(PreferenceName.TRUE)) {
                     if (result.getData() != null && result.getData().size() > 0)
                         mLeavesArrayList.addAll(result.getData());
-                    recyclerView.setAdapter(new SeeLeaveListAdapter(mActivity, mLeavesArrayList, new OnClickListener() {
-                        @Override
-                        public void onClick(int position) {
-                            Intent mIntent = new Intent(mActivity, LeaveAppDisappActivity.class);
-                            mIntent.putExtra(AppConstants.LEAVE_MODEL, mLeavesArrayList);
-                            mIntent.putExtra(AppConstants.POSITION, position);
-                            startActivity(mIntent);
-                        }
-                    }));
+                    if (mLeavesArrayList != null && mLeavesArrayList.size() > 0) {
+                        recyclerView.setAdapter(new SeeLeaveListAdapter(mActivity, mLeavesArrayList, new OnClickListener() {
+                            @Override
+                            public void onClick(int position) {
+                                Intent mIntent = new Intent(mActivity, LeaveAppDisappActivity.class);
+                                mIntent.putExtra(AppConstants.LEAVE_MODEL, mLeavesArrayList);
+                                mIntent.putExtra(AppConstants.POSITION, position);
+                                startActivity(mIntent);
+                            }
+                        }));
+                    } else {
+                        noRecordFoundTv.setVisibility(View.VISIBLE);
+                    }
                 }
             }
 

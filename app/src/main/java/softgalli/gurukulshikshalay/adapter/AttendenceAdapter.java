@@ -14,21 +14,21 @@ import java.util.List;
 
 import softgalli.gurukulshikshalay.R;
 import softgalli.gurukulshikshalay.activity.TakeAttendenceActivity;
-import softgalli.gurukulshikshalay.model.Student;
+import softgalli.gurukulshikshalay.model.StudentListDataModel;
 
 public class AttendenceAdapter extends
         RecyclerView.Adapter<AttendenceAdapter.ViewHolder> {
 
-    private List<Student> mStudentsList;
+    private List<StudentListDataModel> mStudentsList;
     private Activity mActivity;
     private int mIntTotalStudentCount;
     private int mIntAbsentStudentCount;
 
-    public AttendenceAdapter(List<Student> students, Activity mActivity) {
-        this.mStudentsList = students;
+    public AttendenceAdapter(List<StudentListDataModel> studentListDataModels, Activity mActivity) {
+        this.mStudentsList = studentListDataModels;
         this.mActivity = mActivity;
         mIntTotalStudentCount = 0;
-        if (students != null && students.size() > 0)
+        if (studentListDataModels != null && studentListDataModels.size() > 0)
             mIntAbsentStudentCount = mIntTotalStudentCount = mStudentsList.size();
         ((TakeAttendenceActivity) mActivity).manageAbsentPresentCount(mIntTotalStudentCount, mIntAbsentStudentCount);
     }
@@ -62,7 +62,7 @@ public class AttendenceAdapter extends
                 public void onClick(View v) {
                     managePresentAbsent(viewHolder.presentButton, viewHolder.absentButton, true);
                     Button cb = (Button) v;
-                    Student contact = (Student) cb.getTag();
+                    StudentListDataModel contact = (StudentListDataModel) cb.getTag();
                     contact.setSelected(true);
                     mStudentsList.get(pos).setSelected(true);
                     ((TakeAttendenceActivity) mActivity).isAttendenceTakenAndSaved = false;
@@ -75,7 +75,7 @@ public class AttendenceAdapter extends
                 public void onClick(View v) {
                     managePresentAbsent(viewHolder.presentButton, viewHolder.absentButton, false);
                     Button cb = (Button) v;
-                    Student contact = (Student) cb.getTag();
+                    StudentListDataModel contact = (StudentListDataModel) cb.getTag();
                     contact.setSelected(false);
                     mStudentsList.get(pos).setSelected(false);
                     ((TakeAttendenceActivity) mActivity).isAttendenceTakenAndSaved = false;
@@ -117,7 +117,7 @@ public class AttendenceAdapter extends
     }
 
     // method to access in activity after updating selection
-    public List<Student> getStudentist() {
+    public List<StudentListDataModel> getStudentist() {
         return mStudentsList;
     }
 

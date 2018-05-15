@@ -61,6 +61,14 @@ public class LeaveAppDisappActivity extends AppCompatActivity {
         mActivity = this;
         initToolbar();
         getIntentsData();
+        if (AppConstants.LOGIN_AS.equalsIgnoreCase(ClsGeneral.getStrPreferences(AppConstants.STUDENT))) {
+            teacherComment.setClickable(false);
+            teacherComment.setFocusable(false);
+        } else {
+            teacherComment.setClickable(true);
+            teacherComment.setFocusable(true);
+        }
+
     }
 
     private void initToolbar() {

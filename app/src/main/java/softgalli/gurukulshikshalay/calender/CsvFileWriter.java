@@ -8,7 +8,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
 
-import softgalli.gurukulshikshalay.model.Student;
+import softgalli.gurukulshikshalay.model.StudentListDataModel;
 
 /**
  * @author ashraf
@@ -20,10 +20,10 @@ public class CsvFileWriter {
     private static final String NEW_LINE_SEPARATOR = "\n";
 
     //CSV file header
-    private static final String FILE_HEADER = "Student Id,Student Name,Father's Name,Gender,Age,Attendance";
+    private static final String FILE_HEADER = "StudentListDataModel Id,StudentListDataModel Name,Father's Name,Gender,Age,Attendance";
     private static final String TAG = CsvFileWriter.class.getSimpleName();
 
-    public static void writeCsvFile(String fileName, List<Student> studentsList) {
+    public static void writeCsvFile(String fileName, List<StudentListDataModel> studentsList) {
 
         FileWriter fileWriter = null;
 
@@ -39,25 +39,25 @@ public class CsvFileWriter {
             //Write a new student object list to the CSV file
             for (int i = 0; i < studentsList.size(); i++) {
                 if (i < studentsList.size()) {
-                    Student student = studentsList.get(i);
-                    if (student != null) {
-                        if (!TextUtils.isEmpty(String.valueOf(student.getStudentId())))
-                            fileWriter.append(String.valueOf(student.getStudentId()));
+                    StudentListDataModel studentListDataModel = studentsList.get(i);
+                    if (studentListDataModel != null) {
+                        if (!TextUtils.isEmpty(String.valueOf(studentListDataModel.getStudentId())))
+                            fileWriter.append(String.valueOf(studentListDataModel.getStudentId()));
                         fileWriter.append(COMMA_DELIMITER);
-                        if (student.getStudentName() != null && !TextUtils.isEmpty(student.getStudentName()))
-                            fileWriter.append(student.getStudentName());
+                        if (studentListDataModel.getStudentName() != null && !TextUtils.isEmpty(studentListDataModel.getStudentName()))
+                            fileWriter.append(studentListDataModel.getStudentName());
                         fileWriter.append(COMMA_DELIMITER);
-                        if (student.getFatherName() != null && !TextUtils.isEmpty(student.getFatherName()))
-                            fileWriter.append(student.getFatherName());
+                        if (studentListDataModel.getFatherName() != null && !TextUtils.isEmpty(studentListDataModel.getFatherName()))
+                            fileWriter.append(studentListDataModel.getFatherName());
                         fileWriter.append(COMMA_DELIMITER);
-                        if (student.getGender() != null && !TextUtils.isEmpty(student.getGender()))
-                            fileWriter.append(student.getGender());
+                        if (studentListDataModel.getGender() != null && !TextUtils.isEmpty(studentListDataModel.getGender()))
+                            fileWriter.append(studentListDataModel.getGender());
                         fileWriter.append(COMMA_DELIMITER);
-                        if (!TextUtils.isEmpty(String.valueOf(student.getAge())))
-                            fileWriter.append(String.valueOf(student.getAge()));
+                        if (!TextUtils.isEmpty(String.valueOf(studentListDataModel.getAge())))
+                            fileWriter.append(String.valueOf(studentListDataModel.getAge()));
                         fileWriter.append(COMMA_DELIMITER);
-                        if (!TextUtils.isEmpty(String.valueOf(student.isSelected())))
-                            fileWriter.append(String.valueOf(student.isSelected()));
+                        if (!TextUtils.isEmpty(String.valueOf(studentListDataModel.isSelected())))
+                            fileWriter.append(String.valueOf(studentListDataModel.isSelected()));
                         fileWriter.append(NEW_LINE_SEPARATOR);
                     }
                 }

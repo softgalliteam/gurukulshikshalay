@@ -10,7 +10,7 @@ public class AppConstants {
     public static final String TEACHER_DETAILS = "Teacher_Details";
     public static final String STUDENTS_DETAILS = "Students_Details";
     public static final String PRINCIPAL = "Principal";
-    public static final String STUDENT = "Student";
+    public static final String STUDENT = "StudentListDataModel";
     public static final String TEACHER = "Teacher";
     public static final String LEAVE_MODEL = "Leave_Model";
 

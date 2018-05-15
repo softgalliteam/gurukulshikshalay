@@ -13,8 +13,8 @@ import softgalli.gurukulshikshalay.model.GalleryModel;
 import softgalli.gurukulshikshalay.model.NotificationModel;
 import softgalli.gurukulshikshalay.model.RequestedLeaveModel;
 import softgalli.gurukulshikshalay.model.StuTeaModel;
+import softgalli.gurukulshikshalay.model.StudentListDataModel;
 import softgalli.gurukulshikshalay.model.TeacherListModel;
-import softgalli.gurukulshikshalay.model.UserDetailsDataModel;
 import softgalli.gurukulshikshalay.model.TopperLisrModel;
 import softgalli.gurukulshikshalay.model.UserDetailsModel;
 
@@ -80,5 +80,9 @@ public interface ApiRetrofitService {
     @POST(ApiUrl.UPDATELEAVE)
     @FormUrlEncoded
     Call<CommonResponse> updateLeave(@Field("status") String status, @Field("user_id") String user_id, @Field("teacher_comment") String teacherComment);
+
+    @POST(ApiUrl.GET_CLASS_WISE_STUDENT_LIST)
+    @FormUrlEncoded
+    Call<StudentListDataModel> getStudentsListByClassWise(@Field("class") String className);
 
 }

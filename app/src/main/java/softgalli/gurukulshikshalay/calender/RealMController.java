@@ -6,7 +6,7 @@ import android.support.v4.app.Fragment;
 
 import io.realm.Realm;
 import io.realm.RealmResults;
-import softgalli.gurukulshikshalay.model.Student;
+import softgalli.gurukulshikshalay.model.StudentListDataModel;
 
 
 public class RealMController {
@@ -58,32 +58,32 @@ public class RealMController {
         realm.refresh();
     }
 
-    //clear all objects from Student.class
+    //clear all objects from StudentListDataModel.class
     public void clearAll() {
         realm.beginTransaction();
         realm.commitTransaction();
     }
 
-    //find all objects in the Student.class
-    public RealmResults<Student> getStudentsList() {
-        return realm.where(Student.class).findAll();
+    //find all objects in the StudentListDataModel.class
+    public RealmResults<StudentListDataModel> getStudentsList() {
+        return realm.where(StudentListDataModel.class).findAll();
     }
 
     //query a single item with the given id
-    public Student getStudent(String id) {
+    public StudentListDataModel getStudent(String id) {
 
-        return realm.where(Student.class).equalTo("id", id).findFirst();
+        return realm.where(StudentListDataModel.class).equalTo("id", id).findFirst();
     }
 
-    //check if Student.class is empty
+    //check if StudentListDataModel.class is empty
     public boolean hasStudents() {
-        return !realm.where(Student.class).findAll().isEmpty();
+        return !realm.where(StudentListDataModel.class).findAll().isEmpty();
     }
 
     //query example
-    public RealmResults<Student> queryedStudents() {
+    public RealmResults<StudentListDataModel> queryedStudents() {
 
-        return realm.where(Student.class)
+        return realm.where(StudentListDataModel.class)
                 .contains("author", "Author 0")
                 .or()
                 .contains("title", "Realm")

@@ -189,19 +189,27 @@ public class HomeScreenActivity extends AppCompatActivity
                     startActivity(new Intent(HomeScreenActivity.this, NotificationActivity.class));
                 } else if (position == 3) {
                     if (MyPreference.isLogined()) {
-                        Utilz.showAttendanceMgmtDialog(mActivity);
+                        if (AppConstants.LOGIN_AS.equalsIgnoreCase(ClsGeneral.getStrPreferences(AppConstants.STUDENT))) {
+                            startActivity(new Intent(HomeScreenActivity.this, SeeAttendenceActivity.class));
+                        } else {
+                            Utilz.showAttendanceMgmtDialog(mActivity);
+                        }
                     } else {
                         Utilz.showLoginFirstDialog(mActivity);
                     }
                 } else if (position == 4) {
                     if (MyPreference.isLogined()) {
-                        Utilz.showLeaveMgmtDialog(mActivity);
+                        if (AppConstants.LOGIN_AS.equalsIgnoreCase(ClsGeneral.getStrPreferences(AppConstants.STUDENT))) {
+                            Utilz.showLeaveMgmtDialog(mActivity);
+                        } else {
+                            startActivity(new Intent(HomeScreenActivity.this, SeeLeaveListActivity.class));
+                        }
                     } else {
                         Utilz.showLoginFirstDialog(mActivity);
                     }
                 } else if (position == 5) {
                     if (MyPreference.isLogined()) {
-                        startActivity(new Intent(HomeScreenActivity.this, TakeAttendenceActivity.class));
+                        startActivity(new Intent(HomeScreenActivity.this, TimeTableActivity.class));
                     } else {
                         Utilz.showLoginFirstDialog(mActivity);
                     }

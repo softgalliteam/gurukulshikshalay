@@ -2,7 +2,7 @@
 <shape xmlns:android="http://schemas.android.com/apk/res/android">
     <solid android:color="@color/grid_item4" />
     <stroke
-        android:width="3dp"
+        android:width="@dimen/grid_border_width"
         android:color="@color/grid_item2" />
     <corners android:radius="@dimen/margin_10" />
     <padding

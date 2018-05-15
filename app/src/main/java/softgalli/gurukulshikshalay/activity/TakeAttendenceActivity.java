@@ -57,7 +57,7 @@ import softgalli.gurukulshikshalay.common.Utilz;
 import softgalli.gurukulshikshalay.common.WeekCalendarOptions;
 import softgalli.gurukulshikshalay.fragments.WeekCalendarFragment;
 import softgalli.gurukulshikshalay.intrface.CalenderListener;
-import softgalli.gurukulshikshalay.model.Student;
+import softgalli.gurukulshikshalay.model.StudentListDataModel;
 import softgalli.gurukulshikshalay.preference.MyPreference;
 import softgalli.gurukulshikshalay.retrofit.ApiUrl;
 import softgalli.gurukulshikshalay.retrofit.RetrofitDataProvider;
@@ -93,7 +93,7 @@ public class TakeAttendenceActivity extends AppCompatActivity implements DatePic
     private Activity mActivity;
     private Realm realm;
     private AttendenceAdapter mAdapter;
-    private ArrayList<Student> studentList;
+    private ArrayList<StudentListDataModel> studentListDataModelList;
     private String className = "";
     public boolean isAttendenceTakenAndSaved = true;
 
@@ -146,7 +146,7 @@ public class TakeAttendenceActivity extends AppCompatActivity implements DatePic
 
     private void initView() {
         mActivity = this;
-        studentList = new ArrayList();
+        studentListDataModelList = new ArrayList();
 
         if (getIntent().getExtras() != null && getIntent().hasExtra("ClassName"))
             className = getIntent().getStringExtra("ClassName");
@@ -199,14 +199,14 @@ public class TakeAttendenceActivity extends AppCompatActivity implements DatePic
     private void getStudentListFromServer() {
         retrofitDataProvider = new RetrofitDataProvider(mActivity);
         if (Utilz.isOnline(mActivity)) {
-            /*retrofitDataProvider.getStudentListForAttendence("apexschool_1001", new DownlodableCallback<Student>() {
+            /*retrofitDataProvider.getStudentListForAttendence("apexschool_1001", new DownlodableCallback<StudentListDataModel>() {
                 @Override
-                public void onSuccess(final Student result) {
+                public void onSuccess(final StudentListDataModel result) {
                     //  closeDialog();
                     if (result.getStatus().contains(PreferenceName.TRUE)) {
-                        studentList = result.getData();
+                        studentListDataModelList = result.getData();
                     }
-                    if (studentList != null && studentList.size() > 0)
+                    if (studentListDataModelList != null && studentListDataModelList.size() > 0)
                         getStudentListFromRealM();
                 }
 
@@ -225,8 +225,8 @@ public class TakeAttendenceActivity extends AppCompatActivity implements DatePic
             /*###########################################################################################*/
             //TODO remove after calling api and getting response from server
             for (int i = 1; i <= 15; i++) {
-                Student st = new Student("SchoolName" + i, "Student Name " + i, "Father Name " + i, "F", 21);
-                studentList.add(st);
+                StudentListDataModel st = new StudentListDataModel("SchoolName" + i, "StudentListDataModel Name " + i, "Father Name " + i, "F", 21);
+                studentListDataModelList.add(st);
             }
             getStudentListFromRealM();
             /*###########################################################################################*/
@@ -234,7 +234,7 @@ public class TakeAttendenceActivity extends AppCompatActivity implements DatePic
         } else if (MyPreference.isPreLoaded()) {
             RealMController realMController = RealMController.with(mActivity);
             if (realMController != null)
-                studentList.addAll(realMController.getStudentsList());
+                studentListDataModelList.addAll(realMController.getStudentsList());
         } else {
             Utilz.showNoInternetConnectionDialog(mActivity);
         }
@@ -242,11 +242,11 @@ public class TakeAttendenceActivity extends AppCompatActivity implements DatePic
 
     private void getStudentListFromRealM() {
         //saving loaded data from server to realm
-        if (studentList != null && studentList.size() > 0) {
-            for (Student student : studentList) {
+        if (studentListDataModelList != null && studentListDataModelList.size() > 0) {
+            for (StudentListDataModel studentListDataModel : studentListDataModelList) {
                 // Persist your data easily
                 realm.beginTransaction();
-                realm.copyToRealm(student);
+                realm.copyToRealm(studentListDataModel);
                 realm.commitTransaction();
             }
 
@@ -263,7 +263,7 @@ public class TakeAttendenceActivity extends AppCompatActivity implements DatePic
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         // create an Object for Adapter
-        mAdapter = new AttendenceAdapter(studentList, mActivity);
+        mAdapter = new AttendenceAdapter(studentListDataModelList, mActivity);
 
         // set the adapter object to the Recyclerview
         mRecyclerView.setAdapter(mAdapter);
@@ -272,7 +272,7 @@ public class TakeAttendenceActivity extends AppCompatActivity implements DatePic
 
     public void seeAttendence() {
         try {
-            List<Student> studentsList = (mAdapter).getStudentist();
+            List<StudentListDataModel> studentsList = (mAdapter).getStudentist();
             if (!TextUtils.isEmpty(fileName) && studentsList != null && studentsList.size() > 0) {
                 CsvFileWriter.writeCsvFile(fileName, studentsList);
             } else {

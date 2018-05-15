@@ -1,5 +1,6 @@
 package softgalli.gurukulshikshalay.activity;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
@@ -70,10 +71,11 @@ public class LoginScreenActivity extends AppCompatActivity implements KenBurnsVi
         });
     }
 
+    @SuppressLint("NewApi")
     public void skipLoginSignup(View view) {
         MyPreference.setSignupSkipped(true);
         startActivity(new Intent(mActivity, HomeScreenActivity.class));
-        this.finish();
+        mActivity.finishAffinity();
     }
 
     public void principalLoginClick(View view) {
@@ -160,6 +162,7 @@ public class LoginScreenActivity extends AppCompatActivity implements KenBurnsVi
         });
     }
 
+    @SuppressLint("NewApi")
     private void saveTeacherDetailsLocally(UserDetailsDataModel result, final String loginAs) {
 
         if (!TextUtils.isEmpty(result.getId()))
@@ -195,6 +198,7 @@ public class LoginScreenActivity extends AppCompatActivity implements KenBurnsVi
         ClsGeneral.setPreferences(AppConstants.LOGINTYPE, loginAs);
 
         startActivity(new Intent(mActivity, HomeScreenActivity.class));
+        mActivity.finishAffinity();
     }
 
 
