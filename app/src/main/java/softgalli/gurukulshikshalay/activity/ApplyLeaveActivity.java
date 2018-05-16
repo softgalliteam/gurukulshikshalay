@@ -19,11 +19,8 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -259,18 +256,7 @@ public class ApplyLeaveActivity extends AppCompatActivity implements AdapterView
         if (isFromDate) {
             datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis() - 1000);
         } else {
-            String givenDateString = fromDateTv.getText().toString().trim();
-            if (!TextUtils.isEmpty(givenDateString)) {
-                SimpleDateFormat sdf = new SimpleDateFormat("dd-mm-yyyy");
-                try {
-                    Date mDate = sdf.parse(givenDateString);
-                    long timeInMilliseconds = mDate.getTime();
-                    datePickerDialog.getDatePicker().setMinDate(timeInMilliseconds - 1000);
-                } catch (ParseException e) {
-                    datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis() - 1000);
-                }
-            } else
-                datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis() - 1000);
+            datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis() - 1000);
         }
         datePickerDialog.show();
     }

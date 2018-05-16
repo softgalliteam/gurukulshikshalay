@@ -51,65 +51,61 @@ public class SeeLeaveListAdapter extends RecyclerView.Adapter<SeeLeaveListAdapte
     public void onBindViewHolder(final SeeLeaveListAdapter.MyViewHolder holder, final int position) {
         RequestedLeaveDataModel requestedLeaveDataModel = mLeaveArrayList.get(position);
 
-        if (requestedLeaveDataModel != null && !requestedLeaveDataModel.getStatus().equalsIgnoreCase("0")) {
-            String imageUrl = "", userName = "";
-            if (requestedLeaveDataModel.getUserDetails() != null && requestedLeaveDataModel.getUserDetails().size() > 0) {
-                imageUrl = requestedLeaveDataModel.getUserDetails().get(0).getProfile_pic();
-                userName = requestedLeaveDataModel.getUserDetails().get(0).getName();
-            }
-            holder.itemView.setVisibility(View.VISIBLE);
-            RequestOptions requestOptions = new RequestOptions();
-            requestOptions.placeholder(R.drawable.user);
-            requestOptions.error(R.drawable.user);
-            requestOptions.fitCenter();
-            Glide.with(mActivity)
-                    .load(ApiUrl.IMAGE_BASE_URL + imageUrl)
-                    .apply(requestOptions)
-                    .listener(new RequestListener<Drawable>() {
-                        @Override
-                        public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
-                            holder.progressBar.setVisibility(View.GONE);
-                            return false;
-                        }
+        String imageUrl = "", userName = "";
+        if (requestedLeaveDataModel.getUserDetails() != null && requestedLeaveDataModel.getUserDetails().size() > 0) {
+            imageUrl = requestedLeaveDataModel.getUserDetails().get(0).getProfile_pic();
+            userName = requestedLeaveDataModel.getUserDetails().get(0).getName();
+        }
+        holder.itemView.setVisibility(View.VISIBLE);
+        RequestOptions requestOptions = new RequestOptions();
+        requestOptions.placeholder(R.drawable.user);
+        requestOptions.error(R.drawable.user);
+        requestOptions.fitCenter();
+        Glide.with(mActivity)
+                .load(ApiUrl.IMAGE_BASE_URL + imageUrl)
+                .apply(requestOptions)
+                .listener(new RequestListener<Drawable>() {
+                    @Override
+                    public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
+                        holder.progressBar.setVisibility(View.GONE);
+                        return false;
+                    }
 
-                        @Override
-                        public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
-                            holder.progressBar.setVisibility(View.GONE);
-                            return false;
-                        }
-                    })
-                    .into(holder.teacherProfilePicIv);
-            if (!TextUtils.isEmpty(userName)) {
-                holder.studentName.setText(userName);
+                    @Override
+                    public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
+                        holder.progressBar.setVisibility(View.GONE);
+                        return false;
+                    }
+                })
+                .into(holder.teacherProfilePicIv);
+        if (!TextUtils.isEmpty(userName)) {
+            holder.studentName.setText(userName);
+        } else {
+            holder.studentName.setText(mActivity.getResources().getString(R.string.na));
+        }
+        if (!TextUtils.isEmpty(requestedLeaveDataModel.getFrom_date())) {
+            holder.leaveFromToDateTv.setText("From " + requestedLeaveDataModel.getFrom_date() + " to " + requestedLeaveDataModel.getTo_date());
+        } else {
+            holder.leaveFromToDateTv.setText(mActivity.getResources().getString(R.string.na));
+        }
+        if (!TextUtils.isEmpty(requestedLeaveDataModel.getDescription())) {
+            holder.reasonOfLeaveTv.setText(requestedLeaveDataModel.getDescription());
+        } else {
+            holder.reasonOfLeaveTv.setText(mActivity.getResources().getString(R.string.na));
+        }
+        if (!TextUtils.isEmpty(requestedLeaveDataModel.getStatus())) {
+            if (requestedLeaveDataModel.getStatus().equalsIgnoreCase("2")) {
+                holder.leaveStatusTv.setText(mActivity.getResources().getString(R.string.disapproved));
+                holder.leaveStatusTv.setTextColor(ContextCompat.getColor(mActivity, R.color.red));
+            } else if (requestedLeaveDataModel.getStatus().equalsIgnoreCase("1")) {
+                holder.leaveStatusTv.setText(mActivity.getResources().getString(R.string.approved));
+                holder.leaveStatusTv.setTextColor(ContextCompat.getColor(mActivity, R.color.green));
             } else {
-                holder.studentName.setText(mActivity.getResources().getString(R.string.na));
-            }
-            if (!TextUtils.isEmpty(requestedLeaveDataModel.getFrom_date())) {
-                holder.leaveFromToDateTv.setText("From " + requestedLeaveDataModel.getFrom_date() + " to " + requestedLeaveDataModel.getTo_date());
-            } else {
-                holder.leaveFromToDateTv.setText(mActivity.getResources().getString(R.string.na));
-            }
-            if (!TextUtils.isEmpty(requestedLeaveDataModel.getDescription())) {
-                holder.reasonOfLeaveTv.setText(requestedLeaveDataModel.getDescription());
-            } else {
-                holder.reasonOfLeaveTv.setText(mActivity.getResources().getString(R.string.na));
-            }
-            if (!TextUtils.isEmpty(requestedLeaveDataModel.getStatus())) {
-                if (requestedLeaveDataModel.getStatus().equalsIgnoreCase("2")) {
-                    holder.leaveStatusTv.setText(mActivity.getResources().getString(R.string.disapproved));
-                    holder.leaveStatusTv.setTextColor(ContextCompat.getColor(mActivity, R.color.red));
-                } else if (requestedLeaveDataModel.getStatus().equalsIgnoreCase("1")) {
-                    holder.leaveStatusTv.setText(mActivity.getResources().getString(R.string.approved));
-                    holder.leaveStatusTv.setTextColor(ContextCompat.getColor(mActivity, R.color.green));
-                } else {
-                    holder.leaveStatusTv.setText(mActivity.getResources().getString(R.string.pending));
-                    holder.leaveStatusTv.setTextColor(ContextCompat.getColor(mActivity, R.color.yellow));
-                }
-            } else {
-                holder.leaveStatusTv.setText(mActivity.getResources().getString(R.string.na));
+                holder.leaveStatusTv.setText(mActivity.getResources().getString(R.string.pending));
+                holder.leaveStatusTv.setTextColor(ContextCompat.getColor(mActivity, R.color.yellow));
             }
         } else {
-            holder.itemView.setVisibility(View.GONE);
+            holder.leaveStatusTv.setText(mActivity.getResources().getString(R.string.na));
         }
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override

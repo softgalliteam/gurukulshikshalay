@@ -20,7 +20,6 @@ import android.util.TypedValue;
 import android.view.View;
 import android.view.Window;
 import android.widget.ArrayAdapter;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -36,9 +35,7 @@ import java.util.List;
 import softgalli.gurukulshikshalay.R;
 import softgalli.gurukulshikshalay.activity.ApplyLeaveActivity;
 import softgalli.gurukulshikshalay.activity.LoginScreenActivity;
-import softgalli.gurukulshikshalay.activity.SeeAttendenceActivity;
 import softgalli.gurukulshikshalay.activity.SeeLeaveListActivity;
-import softgalli.gurukulshikshalay.activity.TakeAttendenceActivity;
 import softgalli.gurukulshikshalay.preference.MyPreference;
 
 
@@ -445,10 +442,12 @@ public class Utilz {
                 @Override
                 public void onClick(View view) {
                     if (isValidClassAndSection(mActivity, classNameSpinner, sectionNameSpinner)) {
-                        Intent mIntent = new Intent(mActivity, TakeAttendenceActivity.class);
+                        /*Intent mIntent = new Intent(mActivity, TakeAttendenceActivity.class);
                         mIntent.putExtra(AppConstants.CLASS_NAME, classNameSpinner.getSelectedItem().toString());
                         mIntent.putExtra(AppConstants.SECTION_NAME, sectionNameSpinner.getSelectedItem().toString());
                         mActivity.startActivity(mIntent);
+                        */
+                        Toast.makeText(mActivity, "Coming Soon!!", Toast.LENGTH_SHORT).show();
                         dialog.dismiss();
                     }
                 }
@@ -457,10 +456,12 @@ public class Utilz {
                 @Override
                 public void onClick(View view) {
                     if (isValidClassAndSection(mActivity, classNameSpinner, sectionNameSpinner)) {
-                        Intent mIntent = new Intent(mActivity, SeeAttendenceActivity.class);
+                        /*Intent mIntent = new Intent(mActivity, SeeAttendenceActivity.class);
                         mIntent.putExtra(AppConstants.CLASS_NAME, classNameSpinner.getSelectedItem().toString());
                         mIntent.putExtra(AppConstants.SECTION_NAME, sectionNameSpinner.getSelectedItem().toString());
-                        mActivity.startActivity(mIntent);
+                        mActivity.startActivity(mIntent);*/
+
+                        Toast.makeText(mActivity, "Coming Soon!!", Toast.LENGTH_SHORT).show();
                         dialog.dismiss();
                     }
                 }

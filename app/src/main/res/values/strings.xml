@@ -154,7 +154,11 @@
     <string name="app_name">SPS Nawalshahi</string>
 
     <string name="principal_name">Saddam Hussain</string>
+    <string name="principal_name_with_designation">Saddam Hussain(Principal)</string>
+    <string name="vice_principal_name">Pawan Kumar Das</string>
+    <string name="vice_principal_name_with_designation">Pawan Kumar Das(Vice-Principal)</string>
     <string name="school_name">SPS Nawalshahi</string>
+    <string name="school_name_with_dist">SPS Nawalshahi, Koderma, Jharkhand</string>
     <string name="state">Jharkhand</string>
     <string name="slide_1_desc">We are best education provider in Nawalshahi, Koderma, Jharkhand(825418).</string>
 

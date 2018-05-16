@@ -55,7 +55,10 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="@string/principal_name"
+                                android:ellipsize="end"
+                                android:maxLines="1"
+                                android:singleLine="true"
+                                android:text="@string/principal_name_with_designation"
                                 android:textColor="@color/colorTextWhite"
                                 android:textSize="@dimen/text_size"
                                 android:textStyle="bold" />
@@ -63,17 +66,23 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="@string/school_name"
+                                android:ellipsize="end"
+                                android:maxLines="1"
+                                android:singleLine="true"
+                                android:text="@string/vice_principal_name_with_designation"
                                 android:textColor="@color/colorTextWhite"
-                                android:textSize="@dimen/text_size_20sp"
+                                android:textSize="@dimen/text_size"
                                 android:textStyle="bold" />
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="@string/state"
+                                android:ellipsize="end"
+                                android:maxLines="1"
+                                android:singleLine="true"
+                                android:text="@string/school_name_with_dist"
                                 android:textColor="@color/colorTextWhite"
-                                android:textSize="@dimen/text_size_20sp"
+                                android:textSize="@dimen/heading_size"
                                 android:textStyle="bold" />
                         </LinearLayout>
                     </RelativeLayout>
@@ -83,11 +92,12 @@
                         android:layout_height="95dp"
                         android:gravity="center_vertical"
                         android:orientation="horizontal"
-                        android:padding="@dimen/padding_15dp">
+                        android:paddingBottom="@dimen/padding_15dp"
+                        android:paddingTop="@dimen/padding_15dp">
 
                         <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            android:layout_width="@dimen/margin_40"
+                            android:layout_height="@dimen/margin_40"
                             android:src="@drawable/phone_call" />
 
                         <LinearLayout
@@ -131,7 +141,8 @@
                         android:layout_marginTop="-15dp"
                         android:gravity="center_vertical"
                         android:orientation="horizontal"
-                        android:padding="@dimen/padding_15dp">
+                        android:paddingBottom="@dimen/padding_15dp"
+                        android:paddingTop="@dimen/padding_15dp">
 
                         <ImageView
                             android:layout_width="wrap_content"
@@ -149,7 +160,7 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="School"
+                                android:text="@string/vice_principal_name"
                                 android:textColor="@color/textColor"
                                 android:textSize="@dimen/heading_text_size" />
 
@@ -186,7 +197,8 @@
                         android:layout_height="wrap_content"
                         android:gravity="center_vertical"
                         android:orientation="horizontal"
-                        android:padding="@dimen/padding_15dp">
+                        android:paddingBottom="@dimen/padding_15dp"
+                        android:paddingTop="@dimen/padding_15dp">
 
                         <ImageView
                             android:layout_width="wrap_content"
@@ -240,7 +252,8 @@
                         android:layout_height="95dp"
                         android:gravity="center_vertical"
                         android:orientation="horizontal"
-                        android:padding="@dimen/padding_15dp">
+                        android:paddingBottom="@dimen/padding_15dp"
+                        android:paddingTop="@dimen/padding_15dp">
 
                         <ImageView
                             android:layout_width="wrap_content"
