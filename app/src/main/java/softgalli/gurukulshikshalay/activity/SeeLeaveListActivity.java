@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -37,6 +38,10 @@ public class SeeLeaveListActivity extends AppCompatActivity {
     Toolbar toolbar;
     @BindView(R.id.noRecordFoundTv)
     TextView noRecordFoundTv;
+    @BindView(R.id.mainCardView)
+    CardView mainCardView;
+    @BindView(R.id.noRecordFoundCardView)
+    CardView noRecordFoundCardView;
     private ArrayList<RequestedLeaveDataModel> mLeavesArrayList = new ArrayList();
     private RetrofitDataProvider retrofitDataProvider;
 
@@ -77,6 +82,9 @@ public class SeeLeaveListActivity extends AppCompatActivity {
                         mLeavesArrayList.addAll(result.getData());
                     }
                     if (mLeavesArrayList != null && mLeavesArrayList.size() > 0) {
+                        noRecordFoundCardView.setVisibility(View.GONE);
+                        mainCardView.setVisibility(View.VISIBLE);
+
                         recyclerView.setAdapter(new SeeLeaveListAdapter(mActivity, mLeavesArrayList, new OnClickListener() {
                             @Override
                             public void onClick(int position) {
@@ -87,7 +95,8 @@ public class SeeLeaveListActivity extends AppCompatActivity {
                             }
                         }));
                     } else {
-                        noRecordFoundTv.setVisibility(View.VISIBLE);
+                        noRecordFoundCardView.setVisibility(View.VISIBLE);
+                        mainCardView.setVisibility(View.GONE);
                     }
                 }
             }

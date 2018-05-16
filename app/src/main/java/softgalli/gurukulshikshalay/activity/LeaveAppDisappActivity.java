@@ -110,10 +110,8 @@ public class LeaveAppDisappActivity extends AppCompatActivity {
         }
         if (ClsGeneral.getStrPreferences(AppConstants.LOGIN_AS).equalsIgnoreCase(AppConstants.STUDENT)) {
             buttonContainerCardView.setVisibility(View.GONE);
-            teacherComment.setVisibility(View.GONE);
         } else {
             buttonContainerCardView.setVisibility(View.VISIBLE);
-            teacherComment.setVisibility(View.VISIBLE);
         }
         if (!TextUtils.isEmpty(userName))
             sname.setText(userName);

@@ -15,14 +15,28 @@
 
         <!--For absent present count -->
         <android.support.v7.widget.CardView
+            android:id="@+id/mainCardView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
+            android:visibility="gone"
             card_view:cardCornerRadius="10dp"
             card_view:cardElevation="10dp">
 
             <include layout="@layout/common_recyclerview" />
         </android.support.v7.widget.CardView>
-        <include layout="@layout/no_record_found"/>
+
+        <!--For absent present count -->
+        <android.support.v7.widget.CardView
+            android:id="@+id/noRecordFoundCardView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="10dp"
+            card_view:cardCornerRadius="10dp"
+            card_view:cardElevation="10dp">
+
+            <include layout="@layout/no_record_found" />
+        </android.support.v7.widget.CardView>
+
     </RelativeLayout>
 </RelativeLayout>
