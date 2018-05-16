@@ -1,15 +1,27 @@
 package softgalli.gurukulshikshalay.retrofit;
 
+import softgalli.gurukulshikshalay.BuildConfig;
+
 public class ApiUrl {
 
     /*#################################### FOR GURUKUL ######################################*/
     /*public static final String BASE_URL = "http://apextechies.com/gurukul/index.php/";
-    public static final String IMAGE_BASE_URL = "http://www.gurukulshikshalay.com/";*/
+    public static final String IMAGE_BASE_URL = "http://www.gurukulshikshalay.com/";
+
+    public static String PLAYSTORE_LINK = "https://play.google.com/store/apps/details?id=softgalli.gurukulshikshalay";
+    public static String FACEBOOK_LINK = "https://www.facebook.com/gurukulsikshalay/";
+    public static String MAIN_URL = "http://www.gurukulshikshalay.com/";
+    public static String ADMISSION_API = "takeAdmission.php";*/
 
 
     /*#################################### FOR SPS NAWALSHAHI ##############################*/
     public static final String BASE_URL = "http://apextechies.com/sps/index.php/";
     public static final String IMAGE_BASE_URL = "http://spsnawalshahi.com/";
+
+    public static String PLAYSTORE_LINK = "https://play.google.com/store/apps/details?id=" + BuildConfig.APPLICATION_ID;
+    public static String FACEBOOK_LINK = "https://www.facebook.com/groups/189555905134765/";
+    public static String MAIN_URL = "http://spsnawalshahi.com/";
+    public static String ADMISSION_API = "takeAdmission.php";
 
 
     /*#################################### COMMON LINKS ##############################*/

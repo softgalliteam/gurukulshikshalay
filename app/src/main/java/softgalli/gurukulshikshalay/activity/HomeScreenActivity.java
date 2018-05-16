@@ -43,7 +43,6 @@ import butterknife.OnClick;
 import de.hdodenhof.circleimageview.CircleImageView;
 import softgalli.gurukulshikshalay.R;
 import softgalli.gurukulshikshalay.adapter.HomeCategoryAdapter;
-import softgalli.gurukulshikshalay.common.Apis;
 import softgalli.gurukulshikshalay.common.AppConstants;
 import softgalli.gurukulshikshalay.common.ClsGeneral;
 import softgalli.gurukulshikshalay.common.Utilz;
@@ -131,7 +130,7 @@ public class HomeScreenActivity extends AppCompatActivity
         if (id == R.id.feedback) {
             startActivity(new Intent(mActivity, FeedbackActivity.class));
         } else if (id == R.id.share) {
-            String msg = "Download & install " + mActivity.getResources().getString(R.string.app_name) + " app.\nClick here to install" + mActivity.getResources().getString(R.string.app_name) + " : " + Apis.PLAYSTORE_LINK;
+            String msg = "Download & install " + mActivity.getResources().getString(R.string.app_name) + " app.\nClick here to install" + mActivity.getResources().getString(R.string.app_name) + " : " + ApiUrl.PLAYSTORE_LINK;
             Intent shareIntent = new Intent(Intent.ACTION_SEND);
             shareIntent.setType("text/html");
             shareIntent.putExtra(Intent.EXTRA_TEXT, msg);
@@ -139,15 +138,14 @@ public class HomeScreenActivity extends AppCompatActivity
         } else if (id == R.id.fb_like) {
             try {
                 getPackageManager().getPackageInfo("com.facebook.katana", 0);
-                Uri uri = Uri.parse(Apis.FACEBOOK_LINK);
+                Uri uri = Uri.parse(ApiUrl.FACEBOOK_LINK);
                 startActivity(new Intent(Intent.ACTION_VIEW, uri));
             } catch (Exception e) {
-                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(Apis.FACEBOOK_LINK)));
+                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(ApiUrl.FACEBOOK_LINK)));
             }
         } else if (id == R.id.rate_app) {
             try {
-                String appPackageName = getPackageName();
-                Uri uri = Uri.parse("https://play.google.com/store/apps/details?id=" + appPackageName);
+                Uri uri = Uri.parse(ApiUrl.PLAYSTORE_LINK);
                 Intent in = new Intent(Intent.ACTION_VIEW, uri);
                 startActivity(in);
             } catch (ActivityNotFoundException e) {
@@ -156,7 +154,7 @@ public class HomeScreenActivity extends AppCompatActivity
         } else if (id == R.id.logout) {
             Utilz.logout(mActivity);
         } else if (id == R.id.nav_website) {
-            Utilz.openBrowser(mActivity, Apis.MAIN_URL);
+            Utilz.openBrowser(mActivity, ApiUrl.MAIN_URL);
         } else if (id == R.id.nav_map) {
             Utilz.openBrowser(mActivity, mActivity.getResources().getString(R.string.school_on_map_url));
         } else if (id == R.id.softgalli) {
@@ -189,8 +187,11 @@ public class HomeScreenActivity extends AppCompatActivity
                     startActivity(new Intent(HomeScreenActivity.this, NotificationActivity.class));
                 } else if (position == 3) {
                     if (MyPreference.isLogined()) {
-                        if (AppConstants.LOGIN_AS.equalsIgnoreCase(ClsGeneral.getStrPreferences(AppConstants.STUDENT))) {
-                            startActivity(new Intent(HomeScreenActivity.this, SeeAttendenceActivity.class));
+                        if (AppConstants.STUDENT.equalsIgnoreCase(ClsGeneral.getStrPreferences(AppConstants.LOGIN_AS))) {
+                            Intent mIntent = new Intent(mActivity, SeeAttendenceActivity.class);
+                            mIntent.putExtra(AppConstants.CLASS_NAME, ClsGeneral.getStrPreferences(AppConstants.CLAS));
+                            mIntent.putExtra(AppConstants.SECTION_NAME, ClsGeneral.getStrPreferences(AppConstants.SEC));
+                            startActivity(mIntent);
                         } else {
                             Utilz.showAttendanceMgmtDialog(mActivity);
                         }
@@ -199,7 +200,7 @@ public class HomeScreenActivity extends AppCompatActivity
                     }
                 } else if (position == 4) {
                     if (MyPreference.isLogined()) {
-                        if (AppConstants.LOGIN_AS.equalsIgnoreCase(ClsGeneral.getStrPreferences(AppConstants.STUDENT))) {
+                        if (AppConstants.STUDENT.equalsIgnoreCase(ClsGeneral.getStrPreferences(AppConstants.LOGIN_AS))) {
                             Utilz.showLeaveMgmtDialog(mActivity);
                         } else {
                             startActivity(new Intent(HomeScreenActivity.this, SeeLeaveListActivity.class));

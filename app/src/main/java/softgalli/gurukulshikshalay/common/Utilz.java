@@ -19,7 +19,10 @@ import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.Window;
+import android.widget.ArrayAdapter;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -33,6 +36,7 @@ import java.util.List;
 import softgalli.gurukulshikshalay.R;
 import softgalli.gurukulshikshalay.activity.ApplyLeaveActivity;
 import softgalli.gurukulshikshalay.activity.LoginScreenActivity;
+import softgalli.gurukulshikshalay.activity.SeeAttendenceActivity;
 import softgalli.gurukulshikshalay.activity.SeeLeaveListActivity;
 import softgalli.gurukulshikshalay.activity.TakeAttendenceActivity;
 import softgalli.gurukulshikshalay.preference.MyPreference;
@@ -397,29 +401,87 @@ public class Utilz {
             dialog.setContentView(R.layout.attendance_mgmt_dialog);
             dialog.setTitle(null);
             dialog.setCanceledOnTouchOutside(false);
+            List<String> classList, sectionList;
+            classList = new ArrayList<>();
 
-            RelativeLayout takeLeavesRl = dialog.findViewById(R.id.takeLeavesRl);
-            RelativeLayout seeLeavesRl = dialog.findViewById(R.id.seeLeavesRl);
-            takeLeavesRl.setOnClickListener(new View.OnClickListener() {
+            classList.add("Select Class");
+            classList.add("Class 10");
+            classList.add("Class 9");
+            classList.add("Class 8");
+            classList.add("Class 7");
+            classList.add("Class 6");
+            classList.add("Class 5");
+            classList.add("Class 4");
+            classList.add("Class 3");
+            classList.add("Class 2");
+            classList.add("Class 1");
+            classList.add("Class LKG");
+            classList.add("Class UKG");
+            classList.add("Class NURSERY");
+
+            sectionList = new ArrayList<>();
+            sectionList.add("Select Section");
+            sectionList.add("A");
+            sectionList.add("B");
+            sectionList.add("C");
+            sectionList.add("D");
+
+            final Spinner classNameSpinner, sectionNameSpinner;
+            classNameSpinner = dialog.findViewById(R.id.classNameSpinner);
+            sectionNameSpinner = dialog.findViewById(R.id.sectionNameSpinner);
+
+            RelativeLayout takeAttendanceRl = dialog.findViewById(R.id.takeLeavesRl);
+            RelativeLayout seeAttendanceRl = dialog.findViewById(R.id.seeLeavesRl);
+
+            ArrayAdapter<String> classAdapter = new ArrayAdapter<>(mActivity,
+                    android.R.layout.simple_dropdown_item_1line, classList);
+            ArrayAdapter<String> sectionAdapter = new ArrayAdapter<>(mActivity,
+                    android.R.layout.simple_dropdown_item_1line, sectionList);
+            classAdapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
+            classNameSpinner.setAdapter(classAdapter);
+            sectionNameSpinner.setAdapter(sectionAdapter);
+
+            takeAttendanceRl.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    mActivity.startActivity(new Intent(mActivity, TakeAttendenceActivity.class));
-                    dialog.dismiss();
+                    if (isValidClassAndSection(mActivity, classNameSpinner, sectionNameSpinner)) {
+                        Intent mIntent = new Intent(mActivity, TakeAttendenceActivity.class);
+                        mIntent.putExtra(AppConstants.CLASS_NAME, classNameSpinner.getSelectedItem().toString());
+                        mIntent.putExtra(AppConstants.SECTION_NAME, sectionNameSpinner.getSelectedItem().toString());
+                        mActivity.startActivity(mIntent);
+                        dialog.dismiss();
+                    }
                 }
             });
-            seeLeavesRl.setOnClickListener(new View.OnClickListener() {
+            seeAttendanceRl.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Toast.makeText(mActivity, "Coming Soon!!", Toast.LENGTH_SHORT).show();
-                    //mActivity.startActivity(new Intent(mActivity, SeeAttendenceActivity.class));
-                    dialog.dismiss();
+                    if (isValidClassAndSection(mActivity, classNameSpinner, sectionNameSpinner)) {
+                        Intent mIntent = new Intent(mActivity, SeeAttendenceActivity.class);
+                        mIntent.putExtra(AppConstants.CLASS_NAME, classNameSpinner.getSelectedItem().toString());
+                        mIntent.putExtra(AppConstants.SECTION_NAME, sectionNameSpinner.getSelectedItem().toString());
+                        mActivity.startActivity(mIntent);
+                        dialog.dismiss();
+                    }
                 }
             });
             dialog.show();
+
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
+    private static boolean isValidClassAndSection(Activity mActivity, Spinner classNameSpinner, Spinner sectionNameSpinner) {
+        boolean isValid = true;
+        if (classNameSpinner.getSelectedItemPosition() == 0) {
+            Toast.makeText(mActivity, "Please select class", Toast.LENGTH_SHORT).show();
+            isValid = false;
+        } else if (sectionNameSpinner.getSelectedItemPosition() == 0) {
+            Toast.makeText(mActivity, "Please select section", Toast.LENGTH_SHORT).show();
+            isValid = false;
+        }
+        return isValid;
+    }
 }
 

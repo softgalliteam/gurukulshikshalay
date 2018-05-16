@@ -21,9 +21,9 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cz.msebera.android.httpclient.Header;
 import softgalli.gurukulshikshalay.R;
-import softgalli.gurukulshikshalay.common.Apis;
 import softgalli.gurukulshikshalay.common.Utilz;
 import softgalli.gurukulshikshalay.common.Validation;
+import softgalli.gurukulshikshalay.retrofit.ApiUrl;
 
 
 /**
@@ -125,7 +125,7 @@ public class AdmissionActivity extends AppCompatActivity {
         params.add("email", userEmail);
         params.add("class", classNameStr);
         params.add("address", commentStr);
-        String finalReqUrl = Apis.MAIN_URL + Apis.ADMISSION_API;
+        String finalReqUrl = ApiUrl.MAIN_URL + ApiUrl.ADMISSION_API;
         AsyncHttpClient client = new AsyncHttpClient();
 
         client.get(mActivity, finalReqUrl, params, new TextHttpResponseHandler() {

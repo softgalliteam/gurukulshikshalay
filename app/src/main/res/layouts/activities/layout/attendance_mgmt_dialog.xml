@@ -13,7 +13,8 @@
         android:layout_height="wrap_content"
         android:background="@drawable/ss_hollow_rect_green"
         android:gravity="center"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/padding_15dp">
 
         <ImageView
             android:layout_width="80dp"
@@ -26,18 +27,52 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="Manage Leave"
+            android:text="Manage Attendance"
             android:textColor="@color/colorPrimary"
             android:textSize="@dimen/heading_text_size"
             android:textStyle="bold" />
 
         <LinearLayout
-            android:layout_width="280dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/margin_15dp"
             android:layout_marginLeft="@dimen/margin_15dp"
             android:layout_marginRight="@dimen/margin_15dp"
-            android:layout_marginTop="@dimen/margin_5dp"
+            android:layout_marginTop="@dimen/margin_5dp">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/button_height"
+                android:layout_marginRight="@dimen/margin_5dp"
+                android:layout_weight="1"
+                android:background="@drawable/ss_hollow_rect_green">
+
+                <Spinner
+                    android:id="@+id/classNameSpinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@null" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/button_height"
+                android:layout_marginLeft="@dimen/margin_5dp"
+                android:layout_weight="1"
+                android:background="@drawable/ss_hollow_rect_green">
+
+                <Spinner
+                    android:id="@+id/sectionNameSpinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@null" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="280dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/margin_15dp"
+            android:layout_marginRight="@dimen/margin_15dp"
             android:gravity="center"
             android:orientation="horizontal">
 

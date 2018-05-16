@@ -3,7 +3,8 @@ package softgalli.gurukulshikshalay.activity;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.widget.CalendarView;
+import android.support.v7.widget.Toolbar;
+import android.view.View;
 import android.widget.TextView;
 
 import com.applandeo.materialcalendarview.EventDay;
@@ -24,17 +25,18 @@ import softgalli.gurukulshikshalay.preference.MyPreference;
  */
 
 public class SeeAttendenceActivity extends AppCompatActivity {
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
     private String TAG = SeeAttendenceActivity.class.getSimpleName();
-    @BindView(R.id.calendarView)
-    CalendarView calendarView;
     @BindView(R.id.totalStudentCount)
     TextView totalStudentCount;
     @BindView(R.id.presentStudentCount)
     TextView presentStudentCount;
     @BindView(R.id.absentStudentCount)
     TextView absentStudentCount;
+    com.applandeo.materialcalendarview.CalendarView calendarView;
     private Activity mActivity;
-    private String className;
+    private String className = "", sectionName = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,16 +44,37 @@ public class SeeAttendenceActivity extends AppCompatActivity {
         setContentView(R.layout.see_attendence_activity);
         mActivity = this;
         ButterKnife.bind(this);
+        calendarView = findViewById(R.id.calendarView);
+        initToolbar();
 
-        if (getIntent().getExtras() != null && getIntent().hasExtra("ClassName"))
-            className = getIntent().getStringExtra("ClassName");
-        getSupportActionBar().setHomeButtonEnabled(true);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle("See Attendence " + className);
+        getIntentData();
 
         manageCalenderView();
 
         getStudentsAttendance(12);
+    }
+
+    private void getIntentData() {
+        Bundle mBundle = getIntent().getExtras();
+        if (mBundle != null) {
+            if (mBundle.containsKey(AppConstants.CLASS_NAME))
+                className = mBundle.getString(AppConstants.CLASS_NAME);
+            if (mBundle.containsKey(AppConstants.SECTION_NAME))
+                sectionName = className = mBundle.getString(AppConstants.SECTION_NAME);
+        }
+    }
+
+    private void initToolbar() {
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setTitle("See Attendence");
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 
     private void manageCalenderView() {
@@ -87,9 +110,7 @@ public class SeeAttendenceActivity extends AppCompatActivity {
     private void getStudentsAttendance(int date) {
         //get attendence of that particular date
         if (Utilz.isOnline(mActivity)) {
-
             if (MyPreference.getLoginedAs().equalsIgnoreCase(AppConstants.STUDENT)) {
-
             } else {
                 //Show here present students count and absent students count for example
                 manageAbsentPresentCount(15, 2);

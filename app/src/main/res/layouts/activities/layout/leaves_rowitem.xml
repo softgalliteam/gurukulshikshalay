@@ -12,12 +12,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/margin_10"
-        android:layout_marginTop="@dimen/margin_10"
         android:orientation="horizontal">
 
         <RelativeLayout
-            android:layout_width="100dp"
-            android:layout_height="100dp">
+            android:layout_width="80dp"
+            android:layout_height="80dp">
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/teacherProfilePicIv"
@@ -52,8 +51,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/textColor"
-                android:textSize="@dimen/text_size_18sp"
-                android:textStyle="bold" />
+                android:textSize="@dimen/heading_size" />
 
             <TextView
                 android:id="@+id/leaveFromToDateTv"
@@ -62,8 +60,7 @@
                 android:ellipsize="end"
                 android:singleLine="true"
                 android:textColor="@color/textColor"
-                android:textSize="@dimen/text_size"
-                android:textStyle="bold" />
+                android:textSize="@dimen/text_size" />
 
             <TextView
                 android:id="@+id/reasonOfLeaveTv"
@@ -72,16 +69,14 @@
                 android:ellipsize="end"
                 android:maxLines="2"
                 android:textColor="@color/textColor"
-                android:textSize="@dimen/text_size"
-                android:textStyle="bold" />
+                android:textSize="@dimen/text_size" />
 
             <TextView
                 android:id="@+id/leaveStatusTv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/textColor"
-                android:textSize="@dimen/text_size"
-                android:textStyle="bold" />
+                android:textSize="@dimen/text_size" />
 
         </LinearLayout>
     </LinearLayout>

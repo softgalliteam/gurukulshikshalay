@@ -41,7 +41,7 @@ public interface ServiceMethods {
 
     void requestedLeaveList(String login_as, String user_id, DownlodableCallback<RequestedLeaveModel> callback);
 
-    void updateRequestedLeave(String status, String user_id, String teacherComment, DownlodableCallback<CommonResponse> callback);
+    void updateRequestedLeave(String status, String user_id, String teacherId, String teacherComment, DownlodableCallback<CommonResponse> callback);
 
     void getStudentsListByClassWise(String className, DownlodableCallback<StudentListDataModel> callback);
 

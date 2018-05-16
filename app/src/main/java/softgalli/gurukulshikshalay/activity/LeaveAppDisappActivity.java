@@ -50,6 +50,7 @@ public class LeaveAppDisappActivity extends AppCompatActivity {
     private int mPosition;
     private ArrayList<RequestedLeaveDataModel> mLeavesArrayList = new ArrayList<>();
     private Activity mActivity;
+    private String studentId = "";
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -61,7 +62,7 @@ public class LeaveAppDisappActivity extends AppCompatActivity {
         mActivity = this;
         initToolbar();
         getIntentsData();
-        if (AppConstants.LOGIN_AS.equalsIgnoreCase(ClsGeneral.getStrPreferences(AppConstants.STUDENT))) {
+        if (AppConstants.STUDENT.equalsIgnoreCase(ClsGeneral.getStrPreferences(AppConstants.LOGIN_AS))) {
             teacherComment.setClickable(false);
             teacherComment.setFocusable(false);
         } else {
@@ -90,7 +91,7 @@ public class LeaveAppDisappActivity extends AppCompatActivity {
         if (mBundle != null) {
             if (mBundle.containsKey(AppConstants.POSITION))
                 mPosition = mBundle.getInt(AppConstants.POSITION);
-            if (mBundle.containsKey(AppConstants.TEACHER_DETAILS))
+            if (mBundle.containsKey(AppConstants.LEAVE_MODEL))
                 mLeavesArrayList = (ArrayList<RequestedLeaveDataModel>) mBundle.getSerializable(AppConstants.LEAVE_MODEL);
         }
         if (mLeavesArrayList != null && mLeavesArrayList.size() > 0 && mLeavesArrayList.get(mPosition) != null) {
@@ -99,6 +100,14 @@ public class LeaveAppDisappActivity extends AppCompatActivity {
     }
 
     private void updateOnUI(RequestedLeaveDataModel requestedLeaveDataModel) {
+        String imageUrl = "", userName = "";
+        if (requestedLeaveDataModel.getUserDetails() != null && requestedLeaveDataModel.getUserDetails().size() > 0) {
+            imageUrl = requestedLeaveDataModel.getUserDetails().get(0).getProfile_pic();
+            userName = requestedLeaveDataModel.getUserDetails().get(0).getName();
+        }
+        if (!TextUtils.isEmpty(requestedLeaveDataModel.getUser_id())) {
+            studentId = requestedLeaveDataModel.getUser_id();
+        }
         if (ClsGeneral.getStrPreferences(AppConstants.LOGIN_AS).equalsIgnoreCase(AppConstants.STUDENT)) {
             buttonContainerCardView.setVisibility(View.GONE);
             teacherComment.setVisibility(View.GONE);
@@ -106,8 +115,8 @@ public class LeaveAppDisappActivity extends AppCompatActivity {
             buttonContainerCardView.setVisibility(View.VISIBLE);
             teacherComment.setVisibility(View.VISIBLE);
         }
-        if (!TextUtils.isEmpty(requestedLeaveDataModel.getUserName()))
-            sname.setText(requestedLeaveDataModel.getUserName());
+        if (!TextUtils.isEmpty(userName))
+            sname.setText(userName);
         else
             sname.setText(mActivity.getResources().getString(R.string.na));
         if (!TextUtils.isEmpty(requestedLeaveDataModel.getFrom_date()))
@@ -124,23 +133,24 @@ public class LeaveAppDisappActivity extends AppCompatActivity {
         else
             comment.setText(mActivity.getResources().getString(R.string.na));
 
-        if (!TextUtils.isEmpty(requestedLeaveDataModel.getTeacherCommeent()))
-            teacherComment.setText(requestedLeaveDataModel.getTeacherCommeent());
+        if (!TextUtils.isEmpty(requestedLeaveDataModel.getTeacherComment()))
+            teacherComment.setText(requestedLeaveDataModel.getTeacherComment());
         else
             teacherComment.setText(mActivity.getResources().getString(R.string.na));
     }
 
     private void appDisappLeave(String status, String commentStr) {
         Utilz.showDailog(mActivity, mActivity.getResources().getString(R.string.pleasewait));
-        String userId = MyPreference.getUserId();
-        if (!TextUtils.isEmpty(userId)) {
-            userId = ClsGeneral.getStrPreferences(AppConstants.USER_ID);
+        String teacherId = MyPreference.getUserId();
+        if (TextUtils.isEmpty(teacherId)) {
+            teacherId = ClsGeneral.getStrPreferences(AppConstants.USER_ID);
         }
-        retrofitDataProvider.updateRequestedLeave(status, userId, commentStr, new DownlodableCallback<CommonResponse>() {
+        retrofitDataProvider.updateRequestedLeave(status, studentId, teacherId, commentStr, new DownlodableCallback<CommonResponse>() {
             @Override
             public void onSuccess(final CommonResponse result) {
                 Utilz.closeDialog();
                 Toast.makeText(mActivity, R.string.sent_successfully, Toast.LENGTH_LONG).show();
+                finish();
             }
 
             @Override

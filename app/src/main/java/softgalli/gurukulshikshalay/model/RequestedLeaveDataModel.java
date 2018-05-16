@@ -3,17 +3,15 @@ package softgalli.gurukulshikshalay.model;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 public class RequestedLeaveDataModel implements Serializable{
     public String getLeave_application_id() {
         return leave_application_id;
     }
 
-    public String getUserId() {
+    public String getUser_id() {
         return user_id;
-    }
-    public String getUserName() {
-        return name;
     }
 
     public String getFrom_date() {
@@ -28,25 +26,27 @@ public class RequestedLeaveDataModel implements Serializable{
         return teacher_id;
     }
 
-    public String getTeacherCommeent() {
-        return teacher_comment;
-    }
-
     public String getDescription() {
         return description;
-    }
-    public String getImage() {
-        return image;
     }
 
     public String getStatus() {
         return status;
     }
 
+    public ArrayList<UserDetails> getUserDetails() {
+        return userDetails;
+    }
+
     @SerializedName("leave_application_id")
     String leave_application_id;
     @SerializedName("user_id")
     String user_id;
+
+    public String getTeacherComment() {
+        return teacherComment;
+    }
+
     @SerializedName("from_date")
     String from_date;
     @SerializedName("to_date")
@@ -58,9 +58,7 @@ public class RequestedLeaveDataModel implements Serializable{
     @SerializedName("status")
     String status;
     @SerializedName("teacher_comment")
-    String teacher_comment;
-    @SerializedName("image")
-    String image;
-    @SerializedName("name")
-    String name;
+    String teacherComment;
+    @SerializedName("userDetails")
+    ArrayList<UserDetails> userDetails;
 }

@@ -79,7 +79,7 @@ public interface ApiRetrofitService {
 
     @POST(ApiUrl.UPDATELEAVE)
     @FormUrlEncoded
-    Call<CommonResponse> updateLeave(@Field("status") String status, @Field("user_id") String user_id, @Field("teacher_comment") String teacherComment);
+    Call<CommonResponse> updateLeave(@Field("status") String status, @Field("user_id") String user_id, @Field("teacher_id") String teacherId, @Field("teacher_comment") String teacherComment);
 
     @POST(ApiUrl.GET_CLASS_WISE_STUDENT_LIST)
     @FormUrlEncoded

@@ -2,6 +2,7 @@ package softgalli.gurukulshikshalay.activity;
 
 import android.app.Activity;
 import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
@@ -184,6 +185,7 @@ public class ApplyLeaveActivity extends AppCompatActivity implements AdapterView
             public void onSuccess(final CommonResponse result) {
                 Utilz.closeDialog();
                 Toast.makeText(mActivity, R.string.sent_successfully, Toast.LENGTH_LONG).show();
+                mActivity.startActivity(new Intent(mActivity, SeeLeaveListActivity.class));
             }
 
             @Override
@@ -263,7 +265,7 @@ public class ApplyLeaveActivity extends AppCompatActivity implements AdapterView
                 try {
                     Date mDate = sdf.parse(givenDateString);
                     long timeInMilliseconds = mDate.getTime();
-                    datePickerDialog.getDatePicker().setMinDate(timeInMilliseconds-1000);
+                    datePickerDialog.getDatePicker().setMinDate(timeInMilliseconds - 1000);
                 } catch (ParseException e) {
                     datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis() - 1000);
                 }

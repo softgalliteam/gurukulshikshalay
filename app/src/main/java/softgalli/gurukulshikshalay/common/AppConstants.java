@@ -5,16 +5,19 @@ package softgalli.gurukulshikshalay.common;
  */
 
 public class AppConstants {
+    /*Intent Keys*/
     public static final String LOGINTYPE = "login_type";
     public static final String POSITION = "Position";
     public static final String TEACHER_DETAILS = "Teacher_Details";
     public static final String STUDENTS_DETAILS = "Students_Details";
     public static final String PRINCIPAL = "Principal";
-    public static final String STUDENT = "StudentListDataModel";
+    public static final String STUDENT = "Student";
     public static final String TEACHER = "Teacher";
     public static final String LEAVE_MODEL = "Leave_Model";
+    public static final String CLASS_NAME = "class_name";
+    public static final String SECTION_NAME = "section_name";
 
-
+    /*Parsing response key*/
     public static final String ID = "id";
     public static final String USER_ID = "user_id";
     public static final String NAME = "name";

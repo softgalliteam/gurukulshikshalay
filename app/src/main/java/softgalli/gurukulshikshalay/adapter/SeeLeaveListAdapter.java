@@ -3,6 +3,7 @@ package softgalli.gurukulshikshalay.adapter;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -50,14 +51,19 @@ public class SeeLeaveListAdapter extends RecyclerView.Adapter<SeeLeaveListAdapte
     public void onBindViewHolder(final SeeLeaveListAdapter.MyViewHolder holder, final int position) {
         RequestedLeaveDataModel requestedLeaveDataModel = mLeaveArrayList.get(position);
 
-        if (requestedLeaveDataModel != null && requestedLeaveDataModel.getStatus().equalsIgnoreCase("1")) {
+        if (requestedLeaveDataModel != null && !requestedLeaveDataModel.getStatus().equalsIgnoreCase("0")) {
+            String imageUrl = "", userName = "";
+            if (requestedLeaveDataModel.getUserDetails() != null && requestedLeaveDataModel.getUserDetails().size() > 0) {
+                imageUrl = requestedLeaveDataModel.getUserDetails().get(0).getProfile_pic();
+                userName = requestedLeaveDataModel.getUserDetails().get(0).getName();
+            }
             holder.itemView.setVisibility(View.VISIBLE);
             RequestOptions requestOptions = new RequestOptions();
             requestOptions.placeholder(R.drawable.user);
             requestOptions.error(R.drawable.user);
             requestOptions.fitCenter();
             Glide.with(mActivity)
-                    .load(ApiUrl.IMAGE_BASE_URL + requestedLeaveDataModel.getImage())
+                    .load(ApiUrl.IMAGE_BASE_URL + imageUrl)
                     .apply(requestOptions)
                     .listener(new RequestListener<Drawable>() {
                         @Override
@@ -73,8 +79,8 @@ public class SeeLeaveListAdapter extends RecyclerView.Adapter<SeeLeaveListAdapte
                         }
                     })
                     .into(holder.teacherProfilePicIv);
-            if (!TextUtils.isEmpty(requestedLeaveDataModel.getUserName())) {
-                holder.studentName.setText(requestedLeaveDataModel.getUserName());
+            if (!TextUtils.isEmpty(userName)) {
+                holder.studentName.setText(userName);
             } else {
                 holder.studentName.setText(mActivity.getResources().getString(R.string.na));
             }
@@ -88,18 +94,20 @@ public class SeeLeaveListAdapter extends RecyclerView.Adapter<SeeLeaveListAdapte
             } else {
                 holder.reasonOfLeaveTv.setText(mActivity.getResources().getString(R.string.na));
             }
-            if (!TextUtils.isEmpty(requestedLeaveDataModel.getTeacherCommeent())) {
+            if (!TextUtils.isEmpty(requestedLeaveDataModel.getStatus())) {
                 if (requestedLeaveDataModel.getStatus().equalsIgnoreCase("2")) {
                     holder.leaveStatusTv.setText(mActivity.getResources().getString(R.string.disapproved));
+                    holder.leaveStatusTv.setTextColor(ContextCompat.getColor(mActivity, R.color.red));
                 } else if (requestedLeaveDataModel.getStatus().equalsIgnoreCase("1")) {
                     holder.leaveStatusTv.setText(mActivity.getResources().getString(R.string.approved));
+                    holder.leaveStatusTv.setTextColor(ContextCompat.getColor(mActivity, R.color.green));
                 } else {
                     holder.leaveStatusTv.setText(mActivity.getResources().getString(R.string.pending));
+                    holder.leaveStatusTv.setTextColor(ContextCompat.getColor(mActivity, R.color.yellow));
                 }
             } else {
                 holder.leaveStatusTv.setText(mActivity.getResources().getString(R.string.na));
             }
-
         } else {
             holder.itemView.setVisibility(View.GONE);
         }

@@ -51,6 +51,11 @@ public class SeeLeaveListActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         initToolbar();
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
         if (Utilz.isOnline(mActivity)) {
             getRequestedLeaveList();
         } else {
@@ -67,8 +72,10 @@ public class SeeLeaveListActivity extends AppCompatActivity {
             public void onSuccess(final RequestedLeaveModel result) {
                 Utilz.closeDialog();
                 if (result != null && result.getStatus().contains(PreferenceName.TRUE)) {
-                    if (result.getData() != null && result.getData().size() > 0)
+                    if (result.getData() != null && result.getData().size() > 0) {
+                        mLeavesArrayList.clear();
                         mLeavesArrayList.addAll(result.getData());
+                    }
                     if (mLeavesArrayList != null && mLeavesArrayList.size() > 0) {
                         recyclerView.setAdapter(new SeeLeaveListAdapter(mActivity, mLeavesArrayList, new OnClickListener() {
                             @Override
