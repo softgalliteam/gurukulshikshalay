@@ -224,7 +224,7 @@ public class TimeTableActivity extends AppCompatActivity {
             params.add("class", "7");
             params.add("sec", "A");
             params.add("date", mStrDate);
-            String finalReqUrl = ApiUrl.MAIN_URL + ApiUrl.TIME_TABLE;
+            String finalReqUrl = ApiUrl.BASE_URL + ApiUrl.TIME_TABLE;
             AsyncHttpClient client = new AsyncHttpClient();
             client.get(mActivity, finalReqUrl, params, new TextHttpResponseHandler() {
                 @Override
