@@ -5,10 +5,11 @@ android {
     compileSdkVersion 27
     defaultConfig {
         applicationId "softgalli.gurukulshikshalay"
+        /*applicationId "softgalli.spsnawalshahi"*/
         minSdkVersion 15
         targetSdkVersion 27
-        versionCode 1
-        versionName "1.0"
+        versionCode 3
+        versionName "1.2"
         multiDexEnabled true
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
@@ -18,7 +19,9 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-
+    dexOptions {
+        jumboMode true
+    }
     sourceSets {
         main {
             res.srcDirs =
@@ -48,9 +51,6 @@ dependencies {
     //noinspection GradleCompatible
     implementation 'com.android.support:appcompat-v7:27.1.1'
     implementation 'com.android.support.constraint:constraint-layout:1.0.2'
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'com.android.support.test:runner:1.0.1'
-    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
     implementation 'com.squareup.retrofit2:retrofit:2.4.0'
     implementation 'com.android.support:design:27.1.1'
     implementation 'com.android.support:cardview-v7:27.1.1'
@@ -71,7 +71,11 @@ dependencies {
     //Calender library for seeing my attendence
     implementation 'com.applandeo:material-calendar-view:1.4.0'
     implementation files('libs/android-query-full.0.26.8.jar')
-    compile 'com.loopj.android:android-async-http:1.4.9'
 
     implementation 'com.flaviofaria:kenburnsview:1.0.7'
+    //Library for calling API
+    implementation 'com.loopj.android:android-async-http:1.4.9'
+    //For Chatting/database
+    implementation 'com.firebase:firebase-client-android:2.5.2+'
 }
+apply plugin: 'com.google.gms.google-services'
