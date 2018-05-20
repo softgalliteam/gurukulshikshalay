@@ -43,6 +43,7 @@ import butterknife.OnClick;
 import de.hdodenhof.circleimageview.CircleImageView;
 import softgalli.gurukulshikshalay.R;
 import softgalli.gurukulshikshalay.adapter.HomeCategoryAdapter;
+import softgalli.gurukulshikshalay.chatting.ChattingActivity;
 import softgalli.gurukulshikshalay.common.AppConstants;
 import softgalli.gurukulshikshalay.common.ClsGeneral;
 import softgalli.gurukulshikshalay.common.Utilz;
@@ -96,6 +97,10 @@ public class HomeScreenActivity extends AppCompatActivity
 
         //Upcoming Activity Handling
         upcomingActivityHandling();
+        if (Utilz.isOnline(mActivity)) {
+            //Showing update your app popup
+            Utilz.genericAPI(mActivity);
+        }
     }
 
     private void upcomingActivityHandling() {
@@ -211,8 +216,27 @@ public class HomeScreenActivity extends AppCompatActivity
                     }
                 } else if (position == 5) {
                     if (MyPreference.isLogined()) {
+                        startActivity(new Intent(HomeScreenActivity.this, TimeTableActivity.class));
+                    } else {
+                        Utilz.showLoginFirstDialog(mActivity);
+                    }
+                }else if (position == 6) {
+                    if (MyPreference.isLogined()) {
                         //startActivity(new Intent(HomeScreenActivity.this, TimeTableActivity.class));
                         Toast.makeText(mActivity, "Sorry no data is available at this time", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Utilz.showLoginFirstDialog(mActivity);
+                    }
+                }else if (position == 7) {
+                    if (MyPreference.isLogined()) {
+                        startActivity(new Intent(HomeScreenActivity.this, SyllabusActivity.class));
+                        Toast.makeText(mActivity, "Sorry no data is available at this time", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Utilz.showLoginFirstDialog(mActivity);
+                    }
+                } else if (position == 8) {
+                    if (MyPreference.isLogined()) {
+                        startActivity(new Intent(HomeScreenActivity.this, ChattingActivity.class));
                     } else {
                         Utilz.showLoginFirstDialog(mActivity);
                     }

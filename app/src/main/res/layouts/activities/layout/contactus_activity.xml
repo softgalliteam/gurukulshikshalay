@@ -3,6 +3,7 @@
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/tools"
     android:orientation="vertical">
 
     <include layout="@layout/common_toolbar" />
@@ -51,7 +52,15 @@
                             android:gravity="bottom"
                             android:orientation="vertical"
                             android:padding="@dimen/padding_15dp">
-
+                            <de.hdodenhof.circleimageview.CircleImageView
+                                android:id="@+id/userProfilePicIv"
+                                android:layout_width="90dp"
+                                android:layout_height="90dp"
+                                android:scaleType="centerCrop"
+                                android:src="@drawable/logo"
+                                app:civ_border_color="#dc5da4"
+                                app:civ_border_overlay="true"
+                                app:civ_border_width="2dp" />
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
@@ -215,7 +224,7 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="School"
+                                android:text="Email"
                                 android:textColor="@color/textColor"
                                 android:textSize="@dimen/heading_text_size" />
 
@@ -249,7 +258,7 @@
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="95dp"
+                        android:layout_height="wrap_content"
                         android:gravity="center_vertical"
                         android:orientation="horizontal"
                         android:paddingBottom="@dimen/padding_15dp"
@@ -270,7 +279,7 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="School"
+                                android:text="Address"
                                 android:textColor="@color/textColor"
                                 android:textSize="@dimen/heading_text_size" />
 

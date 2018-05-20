@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/author"
+        fontPath="@string/roboto_regular"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:singleLine="true"
+        android:textColor="@color/textColor"
+        android:textSize="@dimen/heading_size"
+        tools:ignore="MissingPrefix" />
+
+
+    <TextView
+        android:id="@+id/message"
+        fontPath="@string/roboto_regular"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/margin_5dp"
+        android:layout_marginLeft="@dimen/margin_25dp"
+        android:gravity="center"
+        android:padding="5dp"
+        android:textColor="@color/hintTextColor"
+        android:textSize="@dimen/text_size"
+        tools:ignore="MissingPrefix" />
+
+
+</LinearLayout>

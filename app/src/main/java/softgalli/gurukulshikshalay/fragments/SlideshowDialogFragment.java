@@ -1,6 +1,8 @@
 package softgalli.gurukulshikshalay.fragments;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -17,14 +19,15 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.DataSource;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.Target;
 
 import java.util.ArrayList;
 
 import softgalli.gurukulshikshalay.R;
+import softgalli.gurukulshikshalay.activity.ParticularImage;
 import softgalli.gurukulshikshalay.model.GalleryImages;
 import softgalli.gurukulshikshalay.retrofit.ApiUrl;
 
@@ -36,8 +39,9 @@ public class SlideshowDialogFragment extends DialogFragment {
     private MyViewPagerAdapter myViewPagerAdapter;
     private TextView lblCount, lblTitle, lblDate;
     private int selectedPosition = 0;
+    private Activity mActivity;
 
-   public static SlideshowDialogFragment newInstance() {
+    public static SlideshowDialogFragment newInstance() {
         SlideshowDialogFragment f = new SlideshowDialogFragment();
         return f;
     }
@@ -46,6 +50,7 @@ public class SlideshowDialogFragment extends DialogFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_image_slider, container, false);
+        mActivity = getActivity();
         viewPager = v.findViewById(R.id.viewpager);
         lblCount = v.findViewById(R.id.lbl_count);
         lblTitle = v.findViewById(R.id.title);
@@ -94,8 +99,8 @@ public class SlideshowDialogFragment extends DialogFragment {
         lblCount.setText((position + 1) + " of " + images.size());
 
         GalleryImages image = images.get(position);
-       // lblTitle.setText(image.getName());
-       // lblDate.setText(image.getTimestamp());
+        // lblTitle.setText(image.getName());
+        // lblDate.setText(image.getTimestamp());
     }
 
     @Override
@@ -113,7 +118,7 @@ public class SlideshowDialogFragment extends DialogFragment {
         }
 
         @Override
-        public Object instantiateItem(ViewGroup container, int position) {
+        public Object instantiateItem(ViewGroup container, final int position) {
 
             layoutInflater = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             View view = layoutInflater.inflate(R.layout.image_fullscreen_preview, container, false);
@@ -121,14 +126,15 @@ public class SlideshowDialogFragment extends DialogFragment {
             ImageView imageViewPreview = view.findViewById(R.id.image_preview);
             final ProgressBar progress = view.findViewById(R.id.progress);
 
-            GalleryImages image = images.get(position);
-
-           /* Glide.with(getActivity()).load(ApiUrl.IMAGE_BASE_URL+image.getImage())
-                    .thumbnail(0.5f)
-                    .into(imageViewPreview);*/
-
+            final GalleryImages image = images.get(position);
+            RequestOptions requestOptions = new RequestOptions();
+            requestOptions.placeholder(R.drawable.logo);
+            requestOptions.error(R.drawable.logo);
+            requestOptions.fitCenter();
+            final String imgUrl = ApiUrl.IMAGE_BASE_URL + image.getImage();
             Glide.with(getActivity())
-                    .load(ApiUrl.IMAGE_BASE_URL+image.getImage())
+                    .load(imgUrl)
+                    .apply(requestOptions)
                     .listener(new RequestListener<Drawable>() {
                         @Override
                         public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
@@ -146,7 +152,16 @@ public class SlideshowDialogFragment extends DialogFragment {
                     .into(imageViewPreview);
 
             container.addView(view);
-
+            if (mActivity != null && imageViewPreview != null) {
+                imageViewPreview.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent i = new Intent(mActivity, ParticularImage.class);
+                        i.putExtra("particularImage", imgUrl);
+                        mActivity.startActivity(i);
+                    }
+                });
+            }
             return view;
         }
 

@@ -185,7 +185,7 @@ public class LoginScreenActivity extends AppCompatActivity implements KenBurnsVi
         ClsGeneral.setPreferences(AppConstants.STATUS, result.getStatus());
         ClsGeneral.setPreferences(AppConstants.QUALIFICATION, result.getQualification());
         ClsGeneral.setPreferences(AppConstants.ALTERNTE_NUMBER, result.getAlternate_number());
-        ClsGeneral.setPreferences(AppConstants.PHONE_NO, result.getAlternate_number());
+        ClsGeneral.setPreferences(AppConstants.PHONE_NO, result.getMobile());
         ClsGeneral.setPreferences(AppConstants.WHAT_TEACH, result.getWhat_teach());
         ClsGeneral.setPreferences(AppConstants.SUBJECT, result.getSubject());
         ClsGeneral.setPreferences(AppConstants.CLASS_TEACHER_FOR, result.getClassteacher_for());

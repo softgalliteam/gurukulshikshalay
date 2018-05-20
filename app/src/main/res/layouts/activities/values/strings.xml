@@ -4,4 +4,7 @@
     <string name="no_record_found">No record found</string>
     <string name="no_leave_requested_till_now">No leave has been requested till now.</string>
     <string name="leave_status">Leave Status</string>
+    <string name="later">Later</string>
+    <string name="update_app">Update Now</string>
+    <string name="update_your_app">Update Your App</string>
 </resources>

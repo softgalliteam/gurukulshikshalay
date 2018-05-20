@@ -355,6 +355,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 android:text="@string/na"
+                                android:textAllCaps="true"
                                 android:textColor="@color/textColor"
                                 android:textSize="@dimen/text_size" />
                         </LinearLayout>
@@ -395,6 +396,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 android:text="@string/na"
+                                android:textAllCaps="true"
                                 android:textColor="@color/textColor"
                                 android:textSize="@dimen/text_size" />
                         </LinearLayout>

@@ -41,4 +41,10 @@ public class AppConstants {
     public static final String IS_LOGINED = "is_logined";
     public static final String LOGIN_AS = "login_as";
     public static final String FATHER_NAME = "father_name";
+
+    public static final String IS_NEW_APP_AVAILABLE = "isNewAppAvailable";
+    public static final String DATA = "data";
+    public static final String VERSION = "verson";
+
+
 }

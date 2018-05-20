@@ -1,27 +1,31 @@
 package softgalli.gurukulshikshalay.retrofit;
 
-import softgalli.gurukulshikshalay.BuildConfig;
-
 public class ApiUrl {
 
     /*#################################### FOR GURUKUL ######################################*/
-    /*public static final String BASE_URL = "http://apextechies.com/gurukul/index.php/";
+    public static final String BASE_URL = "http://apextechies.com/gurukul/index.php/";
     public static final String IMAGE_BASE_URL = "http://www.gurukulshikshalay.com/";
 
     public static String PLAYSTORE_LINK = "https://play.google.com/store/apps/details?id=softgalli.gurukulshikshalay";
     public static String FACEBOOK_LINK = "https://www.facebook.com/gurukulsikshalay/";
     public static String MAIN_URL = "http://www.gurukulshikshalay.com/";
-    public static String ADMISSION_API = "takeAdmission.php";*/
+    public static String ADMISSION_API = "takeAdmission.php";
+    public static String GENERIC_API = "app_version";
+    // TODO: change this to your own Firebase URL
+    public static final String FIREBASE_URL = "https://gurukul-shikshalay.firebaseio.com/";
 
 
     /*#################################### FOR SPS NAWALSHAHI ##############################*/
-    public static final String BASE_URL = "http://apextechies.com/sps/index.php/";
+    /*public static final String BASE_URL = "http://apextechies.com/sps/index.php/";
     public static final String IMAGE_BASE_URL = "http://spsnawalshahi.com/";
 
     public static String PLAYSTORE_LINK = "https://play.google.com/store/apps/details?id=" + BuildConfig.APPLICATION_ID;
     public static String FACEBOOK_LINK = "https://www.facebook.com/groups/189555905134765/";
     public static String MAIN_URL = "http://spsnawalshahi.com/";
     public static String ADMISSION_API = "takeAdmission.php";
+    public static String GENERIC_API = "app_version";
+    // TODO: change this to your own Firebase URL
+    public static final String FIREBASE_URL = "https://sps-nawalshahi.firebaseio.com/";*/
 
 
     /*#################################### COMMON LINKS ##############################*/

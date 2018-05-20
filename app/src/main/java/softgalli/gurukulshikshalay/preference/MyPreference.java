@@ -105,4 +105,16 @@ public class MyPreference {
         SharedPreferences pref = AppController.getInstance().getSharedPreferences("UserId1", 0);
         return pref.getString("UserId", "");
     }
+
+    public static void setNewVarsionOfApp(boolean isNewAppAvailable) {
+        SharedPreferences pref = AppController.getInstance().getSharedPreferences("NewAppAvailable1", 0);
+        SharedPreferences.Editor editor = pref.edit();
+        editor.putBoolean("NewAppAvailable", isNewAppAvailable);
+        editor.commit();
+    }
+
+    public static boolean isNewAppAvailable() {
+        SharedPreferences pref = AppController.getInstance().getSharedPreferences("NewAppAvailable1", 0);
+        return pref.getBoolean("NewAppAvailable", false);
+    }
 }

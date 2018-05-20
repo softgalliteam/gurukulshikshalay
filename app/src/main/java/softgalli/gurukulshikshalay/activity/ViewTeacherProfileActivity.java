@@ -251,7 +251,6 @@ public class ViewTeacherProfileActivity extends AppCompatActivity {
         }
 
         //Students Details
-
         if (!TextUtils.isEmpty(ClsGeneral.getStrPreferences(AppConstants.CLAS))) {
             classNameTv.setText(ClsGeneral.getStrPreferences(AppConstants.CLAS));
         } else {

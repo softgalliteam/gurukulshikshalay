@@ -5,6 +5,7 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -25,6 +26,14 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.JsonHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.security.SecureRandom;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -32,17 +41,33 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import cz.msebera.android.httpclient.Header;
+import softgalli.gurukulshikshalay.BuildConfig;
 import softgalli.gurukulshikshalay.R;
 import softgalli.gurukulshikshalay.activity.ApplyLeaveActivity;
 import softgalli.gurukulshikshalay.activity.LoginScreenActivity;
 import softgalli.gurukulshikshalay.activity.SeeLeaveListActivity;
 import softgalli.gurukulshikshalay.preference.MyPreference;
+import softgalli.gurukulshikshalay.retrofit.ApiUrl;
 
 
 public class Utilz {
     private static String TAG = Utilz.class.getSimpleName();
     static ProgressDialog dialog;
 
+
+    public static String getRandomName() {
+
+        final String AB = "abcdefghijklmnopqrstuvwxyz0123456789";
+        SecureRandom rnd = new SecureRandom();
+
+        StringBuilder sb = new StringBuilder(10);
+        for (int i = 0; i < 8; i++) {
+            sb.append(AB.charAt(rnd.nextInt(AB.length())));
+        }
+        return sb.toString();
+
+    }
 
     public static boolean isInternetConnected(Context c) {
         ConnectivityManager cm = (ConnectivityManager) c
@@ -484,5 +509,94 @@ public class Utilz {
         }
         return isValid;
     }
+
+
+    public static void genericAPI(final Context mActivity) {
+        final RequestParams requestParams = new RequestParams();
+        String url = ApiUrl.BASE_URL + ApiUrl.GENERIC_API;
+        AsyncHttpClient client = new AsyncHttpClient();
+        client.get(mActivity, url, requestParams, new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject jsonObject) {
+                super.onSuccess(statusCode, headers, jsonObject);
+                Log.i("TAG", "Response : " + jsonObject);
+                try {
+                    String newAppVersion = "", currentAppVersion = BuildConfig.VERSION_NAME;
+                    if (statusCode == 200 && jsonObject.length() > 0) {
+                        if (jsonObject != null && jsonObject.has(AppConstants.DATA)) {
+                            JSONArray jsonArrayData = jsonObject.optJSONArray(AppConstants.DATA);
+                            if (jsonArrayData != null && jsonArrayData.length() > 0) {
+                                JSONObject jsonObject1 = jsonArrayData.getJSONObject(0);
+                                if (jsonObject1 != null && jsonObject1.has(AppConstants.VERSION))
+                                    newAppVersion = jsonObject.optString(AppConstants.VERSION);
+                                Log.i(TAG, "New App version : " + newAppVersion);
+                                if (!newAppVersion.equalsIgnoreCase(currentAppVersion)) {
+                                    String msg = String.format(mActivity.getString(R.string.update_app_message), currentAppVersion, newAppVersion);
+                                    updateAppDialog(mActivity, msg);
+                                }
+                            }
+                        }
+                    }
+                } catch (Exception e) {
+                    //trcking user
+                    Log.i(TAG, e + "");
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                Log.i(TAG, "Generic Api Failed");
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
+                super.onFailure(statusCode, headers, throwable, errorResponse);
+                Log.i(TAG, "Generic Api Failed");
+            }
+        });
+    }
+
+
+    public static void updateAppDialog(final Context mActivity, String msg) {
+        try {
+            final Dialog dialog = new Dialog(mActivity);
+            dialog.requestWindowFeature(Window.FEATURE_NO_TITLE); //before
+            dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            dialog.setContentView(R.layout.update_app_dialog);
+            dialog.setTitle(null);
+            dialog.setCancelable(true);
+            dialog.setCanceledOnTouchOutside(false);
+            TextView updateTextView = dialog.findViewById(R.id.updateTextView);
+            updateTextView.setText(msg);
+            TextView textViewLater = dialog.findViewById(R.id.textViewLater);
+            TextView textViewUpdate = dialog.findViewById(R.id.textViewUpdate);
+
+            textViewUpdate.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    try {
+                        Uri uri = Uri.parse(ApiUrl.PLAYSTORE_LINK);
+                        Intent in = new Intent(Intent.ACTION_VIEW, uri);
+                        mActivity.startActivity(in);
+                    } catch (ActivityNotFoundException e) {
+                        e.printStackTrace();
+                    }
+                    dialog.dismiss();
+                }
+            });
+            textViewLater.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    dialog.dismiss();
+                }
+            });
+
+            dialog.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
 }
 

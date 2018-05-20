@@ -3,6 +3,8 @@ package softgalli.gurukulshikshalay;
 import android.app.Application;
 import android.content.Context;
 
+import com.firebase.client.Firebase;
+
 import org.joda.time.LocalDateTime;
 
 import io.realm.Realm;
@@ -25,7 +27,7 @@ public class AppController extends Application {
     public void onCreate() {
         super.onCreate();
         mInstance = this;
-
+        Firebase.setAndroidContext(this);
         CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
                 .setDefaultFontPath(getString(R.string.roboto_regular))
                 .setFontAttrId(R.attr.fontPath)
@@ -41,11 +43,13 @@ public class AppController extends Application {
                 .build();
         Realm.setDefaultConfiguration(cfg);
     }
+/*
 
     @Override
     protected void attachBaseContext(Context newBase) {
         super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
     }
+*/
 
     /*getting the current week*/
     public LocalDateTime getDate() {

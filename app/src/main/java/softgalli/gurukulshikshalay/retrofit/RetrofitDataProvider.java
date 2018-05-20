@@ -16,6 +16,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import softgalli.gurukulshikshalay.R;
+import softgalli.gurukulshikshalay.common.Utilz;
 import softgalli.gurukulshikshalay.model.AlumniModel;
 import softgalli.gurukulshikshalay.model.CommonResponse;
 import softgalli.gurukulshikshalay.model.FeedBackModel;
@@ -75,6 +76,7 @@ public class RetrofitDataProvider extends AppCompatActivity implements ServiceMe
                             if (response.code() == 401) {
                                 callback.onUnauthorized(response.code());
                             } else {
+                                Utilz.closeDialog();
                                 Toast.makeText(context, context.getResources().getString(R.string.something_went_wrong_error_message), Toast.LENGTH_SHORT).show();
                             }
                         }
@@ -102,6 +104,7 @@ public class RetrofitDataProvider extends AppCompatActivity implements ServiceMe
                             if (response.code() == 401) {
                                 callback.onUnauthorized(response.code());
                             } else {
+                                Utilz.closeDialog();
                                 Toast.makeText(context, context.getResources().getString(R.string.something_went_wrong_error_message), Toast.LENGTH_SHORT).show();
                             }
                         }
@@ -130,6 +133,7 @@ public class RetrofitDataProvider extends AppCompatActivity implements ServiceMe
                             if (response.code() == 401) {
                                 callback.onUnauthorized(response.code());
                             } else {
+                                Utilz.closeDialog();
                                 Toast.makeText(context, context.getResources().getString(R.string.something_went_wrong_error_message), Toast.LENGTH_SHORT).show();
                             }
                         }
@@ -159,6 +163,7 @@ public class RetrofitDataProvider extends AppCompatActivity implements ServiceMe
                             if (response.code() == 401) {
                                 callback.onUnauthorized(response.code());
                             } else {
+                                Utilz.closeDialog();
                                 Toast.makeText(context, context.getResources().getString(R.string.something_went_wrong_error_message), Toast.LENGTH_SHORT).show();
                             }
                         }
@@ -188,6 +193,7 @@ public class RetrofitDataProvider extends AppCompatActivity implements ServiceMe
                             if (response.code() == 401) {
                                 callback.onUnauthorized(response.code());
                             } else {
+                                Utilz.closeDialog();
                                 Toast.makeText(context, context.getResources().getString(R.string.something_went_wrong_error_message), Toast.LENGTH_SHORT).show();
                             }
                         }
@@ -217,6 +223,7 @@ public class RetrofitDataProvider extends AppCompatActivity implements ServiceMe
                             if (response.code() == 401) {
                                 callback.onUnauthorized(response.code());
                             } else {
+                                Utilz.closeDialog();
                                 Toast.makeText(context, context.getResources().getString(R.string.something_went_wrong_error_message), Toast.LENGTH_SHORT).show();
                             }
                         }
@@ -245,6 +252,7 @@ public class RetrofitDataProvider extends AppCompatActivity implements ServiceMe
                             if (response.code() == 401) {
                                 callback.onUnauthorized(response.code());
                             } else {
+                                Utilz.closeDialog();
                                 Toast.makeText(context, context.getResources().getString(R.string.something_went_wrong_error_message), Toast.LENGTH_SHORT).show();
                             }
                         }
@@ -273,6 +281,7 @@ public class RetrofitDataProvider extends AppCompatActivity implements ServiceMe
                             if (response.code() == 401) {
                                 callback.onUnauthorized(response.code());
                             } else {
+                                Utilz.closeDialog();
                                 Toast.makeText(context, context.getResources().getString(R.string.something_went_wrong_error_message), Toast.LENGTH_SHORT).show();
                             }
                         }
@@ -300,6 +309,7 @@ public class RetrofitDataProvider extends AppCompatActivity implements ServiceMe
                             if (response.code() == 401) {
                                 callback.onUnauthorized(response.code());
                             } else {
+                                Utilz.closeDialog();
                                 Toast.makeText(context, context.getResources().getString(R.string.something_went_wrong_error_message), Toast.LENGTH_SHORT).show();
                             }
                         }
@@ -327,6 +337,7 @@ public class RetrofitDataProvider extends AppCompatActivity implements ServiceMe
                             if (response.code() == 401) {
                                 callback.onUnauthorized(response.code());
                             } else {
+                                Utilz.closeDialog();
                                 Toast.makeText(context, context.getResources().getString(R.string.something_went_wrong_error_message), Toast.LENGTH_SHORT).show();
                             }
                         }
@@ -354,6 +365,7 @@ public class RetrofitDataProvider extends AppCompatActivity implements ServiceMe
                             if (response.code() == 401) {
                                 callback.onUnauthorized(response.code());
                             } else {
+                                Utilz.closeDialog();
                                 Toast.makeText(context, context.getResources().getString(R.string.something_went_wrong_error_message), Toast.LENGTH_SHORT).show();
                             }
                         }
@@ -381,6 +393,7 @@ public class RetrofitDataProvider extends AppCompatActivity implements ServiceMe
                             if (response.code() == 401) {
                                 callback.onUnauthorized(response.code());
                             } else {
+                                Utilz.closeDialog();
                                 Toast.makeText(context, context.getResources().getString(R.string.something_went_wrong_error_message), Toast.LENGTH_SHORT).show();
                             }
                         }
@@ -408,6 +421,7 @@ public class RetrofitDataProvider extends AppCompatActivity implements ServiceMe
                             if (response.code() == 401) {
                                 callback.onUnauthorized(response.code());
                             } else {
+                                Utilz.closeDialog();
                                 Toast.makeText(context, context.getResources().getString(R.string.something_went_wrong_error_message), Toast.LENGTH_SHORT).show();
                             }
                         }
@@ -435,6 +449,7 @@ public class RetrofitDataProvider extends AppCompatActivity implements ServiceMe
                             if (response.code() == 401) {
                                 callback.onUnauthorized(response.code());
                             } else {
+                                Utilz.closeDialog();
                                 Toast.makeText(context, context.getResources().getString(R.string.something_went_wrong_error_message), Toast.LENGTH_SHORT).show();
                             }
                         }
@@ -462,6 +477,7 @@ public class RetrofitDataProvider extends AppCompatActivity implements ServiceMe
                             if (response.code() == 401) {
                                 callback.onUnauthorized(response.code());
                             } else {
+                                Utilz.closeDialog();
                                 Toast.makeText(context, context.getResources().getString(R.string.something_went_wrong_error_message), Toast.LENGTH_SHORT).show();
                             }
                         }
