@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/margin_15"
+    android:background="@drawable/ss_hollow_rect_green"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/margin_5"
+    android:paddingLeft="@dimen/margin_10"
+    android:paddingRight="@dimen/margin_10"
+    android:paddingTop="@dimen/margin_5">
+
+    <TextView
+        android:id="@+id/tv_timetable"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_toLeftOf="@+id/tv_subject"
+        android:singleLine="true"
+        android:textColor="@color/textColor"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/tv_subject"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:textColor="@color/textColor"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/tv_teac_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/tv_timetable"
+        android:layout_marginTop="@dimen/margin_5"
+        android:layout_toLeftOf="@+id/tv_status"
+        android:textColor="@color/textColor"
+        android:textSize="12sp" />
+
+    <TextView
+        android:id="@+id/tv_status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/tv_subject"
+        android:textColor="@color/textColor"
+        android:textSize="12sp" />
+
+</RelativeLayout>

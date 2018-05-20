@@ -114,7 +114,7 @@ public class LoginScreenActivity extends AppCompatActivity implements KenBurnsVi
                             userLogin(loginAs, userId.getText().toString().trim(), password.getText().toString().trim());
                         }
                     } else {
-                        Toast.makeText(mActivity, getResources().getString(R.string.no_internet_connection), Toast.LENGTH_SHORT).show();
+                        Utilz.showNoInternetConnectionDialog(mActivity);
                     }
                 }
             });

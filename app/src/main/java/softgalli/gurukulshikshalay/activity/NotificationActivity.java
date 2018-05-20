@@ -54,7 +54,7 @@ public class NotificationActivity extends AppCompatActivity {
         if (Utilz.isOnline(mActivity)) {
             getNotificationList();
         } else {
-            Toast.makeText(mActivity, R.string.no_internet_connection, Toast.LENGTH_LONG).show();
+            Utilz.showNoInternetConnectionDialog(mActivity);
         }
     }
 

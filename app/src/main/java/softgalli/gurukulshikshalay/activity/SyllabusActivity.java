@@ -50,24 +50,24 @@ public class SyllabusActivity extends AppCompatActivity {
         setContentView(R.layout.leave_list_activity);
         mActivity = this;
         ButterKnife.bind(this);
-        noRecordFoundTv.setText(mActivity.getResources().getString(R.string.no_leave_requested_till_now));
+        noRecordFoundTv.setText(mActivity.getResources().getString(R.string.no_syllabus_is_added_till_now));
         retrofitDataProvider = new RetrofitDataProvider(this);
         recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         initToolbar();
 
-    }
+        //For Now till not get implemented this
+        noRecordFoundCardView.setVisibility(View.VISIBLE);
+        mainCardView.setVisibility(View.GONE);
 
-    @Override
-    protected void onResume() {
-        super.onResume();
         if (Utilz.isOnline(mActivity)) {
-            getRequestedLeaveList();
+            //getSyllabusDataList();
         } else {
-            Toast.makeText(mActivity, R.string.no_internet_connection, Toast.LENGTH_LONG).show();
+            Utilz.showNoInternetConnectionDialog(mActivity);
         }
+
     }
 
-    private void getRequestedLeaveList() {
+    private void getSyllabusDataList() {
         Utilz.showDailog(mActivity, getResources().getString(R.string.pleasewait));
         String loginedAs = ClsGeneral.getStrPreferences(AppConstants.LOGIN_AS);
         String userId = ClsGeneral.getStrPreferences(AppConstants.USER_ID);

@@ -83,7 +83,7 @@ public class AdmissionActivity extends AppCompatActivity {
                 takeAdmissionOnline(userName, userMobile, userEmail, classNameStr, commentStr);
             }
         } else {
-            Toast.makeText(mActivity, R.string.no_internet_connection, Toast.LENGTH_LONG).show();
+            Utilz.showNoInternetConnectionDialog(mActivity);
         }
     }
 

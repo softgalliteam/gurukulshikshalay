@@ -8,9 +8,6 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.widget.Toast;
-
-import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -19,7 +16,6 @@ import softgalli.gurukulshikshalay.adapter.GalleryListAdapter;
 import softgalli.gurukulshikshalay.common.PreferenceName;
 import softgalli.gurukulshikshalay.common.Utilz;
 import softgalli.gurukulshikshalay.intrface.OnClickListener;
-import softgalli.gurukulshikshalay.model.GalleryDataModel;
 import softgalli.gurukulshikshalay.model.GalleryModel;
 import softgalli.gurukulshikshalay.retrofit.DownlodableCallback;
 import softgalli.gurukulshikshalay.retrofit.RetrofitDataProvider;
@@ -29,10 +25,13 @@ import softgalli.gurukulshikshalay.retrofit.RetrofitDataProvider;
  */
 
 public class GalleryList extends AppCompatActivity {
-    @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.recyclerView) RecyclerView recyclerView;
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
+    @BindView(R.id.recyclerView)
+    RecyclerView recyclerView;
 
     private RetrofitDataProvider retrofitDataProvider;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,26 +40,20 @@ public class GalleryList extends AppCompatActivity {
         retrofitDataProvider = new RetrofitDataProvider(this);
 
         recyclerView.setLayoutManager(new GridLayoutManager(getApplicationContext(), 2));
-        initWidgit();
+        initToolbar();
         if (Utilz.isInternetConnected(GalleryList.this)) {
             callCatApi();
         } else {
-            Toast.makeText(GalleryList.this, "" + getResources().getString(R.string.nointernet), Toast.LENGTH_SHORT).show();
+            Utilz.showNoInternetConnectionDialog(this);
         }
     }
-    private void initWidgit() {
+
+    private void initToolbar() {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowTitleEnabled(true);
-        /*if (getIntent().getStringExtra("operation").equalsIgnoreCase("alu")){
-            getSupportActionBar().setTitle(getResources().getString(R.string.alumnilist));
-        }
-        else {*/
-            getSupportActionBar().setTitle(getResources().getString(R.string.gallery_album));
-        //}
-
-
+        getSupportActionBar().setTitle(getResources().getString(R.string.gallery_album));
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -77,15 +70,15 @@ public class GalleryList extends AppCompatActivity {
                 Utilz.closeDialog();
                 if (result.getStatus().contains(PreferenceName.TRUE)) {
 
-                  recyclerView.setAdapter(new GalleryListAdapter(GalleryList.this, result.getData(), new OnClickListener() {
-                      @Override
-                      public void onClick(int pos) {
-                          Intent intent = new Intent(GalleryList.this,Gallery.class);
-                          intent.putParcelableArrayListExtra("images", result.getData().get(pos).getImages());
-                          intent.putExtra("position", pos);
-                          startActivity(intent);
-                      }
-                  }));
+                    recyclerView.setAdapter(new GalleryListAdapter(GalleryList.this, result.getData(), new OnClickListener() {
+                        @Override
+                        public void onClick(int pos) {
+                            Intent intent = new Intent(GalleryList.this, Gallery.class);
+                            intent.putParcelableArrayListExtra("images", result.getData().get(pos).getImages());
+                            intent.putExtra("position", pos);
+                            startActivity(intent);
+                        }
+                    }));
                 }
             }
 
@@ -100,4 +93,4 @@ public class GalleryList extends AppCompatActivity {
             }
         });
     }
-    }
+}

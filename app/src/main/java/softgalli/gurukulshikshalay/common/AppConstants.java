@@ -17,7 +17,7 @@ public class AppConstants {
     public static final String CLASS_NAME = "class_name";
     public static final String SECTION_NAME = "section_name";
 
-    /*Parsing response key*/
+    /*Parsing response key and preference key*/
     public static final String ID = "id";
     public static final String USER_ID = "user_id";
     public static final String NAME = "name";

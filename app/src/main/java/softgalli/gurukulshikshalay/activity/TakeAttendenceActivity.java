@@ -94,7 +94,7 @@ public class TakeAttendenceActivity extends AppCompatActivity implements DatePic
     private Realm realm;
     private AttendenceAdapter mAdapter;
     private ArrayList<StudentListDataModel> studentListDataModelList;
-    private String className = "";
+    private String className = "", sectionName = "";
     public boolean isAttendenceTakenAndSaved = true;
 
     @Override
@@ -105,6 +105,8 @@ public class TakeAttendenceActivity extends AppCompatActivity implements DatePic
         mActivity = this;
         mWeekCalendarFragment = (WeekCalendarFragment) getSupportFragmentManager()
                 .findFragmentByTag(WeekCalendarFragment.class.getSimpleName());
+
+        getIntentData();
         initToolbar();
 
         initView();
@@ -113,7 +115,24 @@ public class TakeAttendenceActivity extends AppCompatActivity implements DatePic
 
         initReam();
 
-        getStudentListFromServer();
+        if (Utilz.isOnline(mActivity)) {
+            //getStudentListFromServer();
+            /*###########################################################################################*/
+            //TODO remove after calling api and getting response from server
+            for (int i = 1; i <= 15; i++) {
+                StudentListDataModel st = new StudentListDataModel("SchoolName" + i, "StudentListDataModel Name " + i, "Father Name " + i, "F", 21);
+                studentListDataModelList.add(st);
+            }
+            getStudentListFromRealM();
+            /*###########################################################################################*/
+
+        } else if (MyPreference.isPreLoaded()) {
+            RealMController realMController = RealMController.with(mActivity);
+            if (realMController != null)
+                studentListDataModelList.addAll(realMController.getStudentsList());
+        } else {
+            Utilz.showNoInternetConnectionDialog(mActivity);
+        }
 
         manageStudentList();
 
@@ -121,6 +140,16 @@ public class TakeAttendenceActivity extends AppCompatActivity implements DatePic
 
         checkPermissionForReadStorage();
 
+    }
+
+    private void getIntentData() {
+        Bundle mBundle = getIntent().getExtras();
+        if (mBundle != null) {
+            if (mBundle.containsKey(AppConstants.CLASS_NAME))
+                className = mBundle.getString(AppConstants.CLASS_NAME);
+            if (mBundle.containsKey(AppConstants.SECTION_NAME))
+                sectionName = className = mBundle.getString(AppConstants.SECTION_NAME);
+        }
     }
 
     private void initToolbar() {
@@ -147,9 +176,6 @@ public class TakeAttendenceActivity extends AppCompatActivity implements DatePic
     private void initView() {
         mActivity = this;
         studentListDataModelList = new ArrayList();
-
-        if (getIntent().getExtras() != null && getIntent().hasExtra("ClassName"))
-            className = getIntent().getStringExtra("ClassName");
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("Take Attendence Class " + className);
@@ -197,9 +223,8 @@ public class TakeAttendenceActivity extends AppCompatActivity implements DatePic
     private RetrofitDataProvider retrofitDataProvider;
 
     private void getStudentListFromServer() {
-        retrofitDataProvider = new RetrofitDataProvider(mActivity);
-        if (Utilz.isOnline(mActivity)) {
-            /*retrofitDataProvider.getStudentListForAttendence("apexschool_1001", new DownlodableCallback<StudentListDataModel>() {
+       /* retrofitDataProvider = new RetrofitDataProvider(mActivity);
+            retrofitDataProvider.getStudentsListByClassWise(className, secti, new DownlodableCallback<StudentListDataModel>() {
                 @Override
                 public void onSuccess(final StudentListDataModel result) {
                     //  closeDialog();
@@ -220,24 +245,6 @@ public class TakeAttendenceActivity extends AppCompatActivity implements DatePic
 
                 }
             });*/
-
-
-            /*###########################################################################################*/
-            //TODO remove after calling api and getting response from server
-            for (int i = 1; i <= 15; i++) {
-                StudentListDataModel st = new StudentListDataModel("SchoolName" + i, "StudentListDataModel Name " + i, "Father Name " + i, "F", 21);
-                studentListDataModelList.add(st);
-            }
-            getStudentListFromRealM();
-            /*###########################################################################################*/
-
-        } else if (MyPreference.isPreLoaded()) {
-            RealMController realMController = RealMController.with(mActivity);
-            if (realMController != null)
-                studentListDataModelList.addAll(realMController.getStudentsList());
-        } else {
-            Utilz.showNoInternetConnectionDialog(mActivity);
-        }
     }
 
     private void getStudentListFromRealM() {

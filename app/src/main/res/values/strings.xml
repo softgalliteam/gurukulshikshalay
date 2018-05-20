@@ -60,7 +60,6 @@
     <string name="about_us">About Us</string>
     <string name="contact_us">Contact Us</string>
 
-    <string name="nointernet">No internet connection</string>
     <string name="gallery_list">Gallery List</string>
     <string name="gallery_album">Gallery Album</string>
     <string name="gallery">Gallery</string>
@@ -109,6 +108,15 @@
     <string name="saturday_three">Sat</string>
     <string name="submit">Sumbit</string>
     <string name="feedback_text">How do you feel about our school?</string>
+    <string name="select_date">Select Date</string>
+
+    <string name="no_record_found">No record found</string>
+    <string name="no_leave_requested_till_now">No leave has been requested till now.</string>
+    <string name="leave_status">Leave Status</string>
+    <string name="later">Later</string>
+    <string name="update_app">Update Now</string>
+    <string name="update_your_app">Update Your App</string>
+    <string name="no_syllabus_is_added_till_now">No syllabus data is available for now.</string>
 
     <string name="feedback_text_heading">Your feedback may help us to make this app more efficient</string>
     <string name="write_your_feedback_txt">write your feedback</string>
@@ -116,7 +124,8 @@
     <string name="email_hint_optional">Enter Your Email</string>
     <string name="phone_hint">Enter Mobile No.*</string>
     <string name="error_msg">Write your</string>
-    <string name="no_internet_connection">Please check your internet connection and try again.</string>
+    <string name="no_internet_connection_msg_title">No Internet Connection.</string>
+    <string name="no_internet_connection_msg">Please check your internet connection and try again.</string>
     <string name="something_went_wrong_error_message">Something went wrong wrong, Please try again.</string>
     <string name="softgalli">SoftGalli</string>
     <string name="softgalli_website_link">http://www.softgalli.com</string>

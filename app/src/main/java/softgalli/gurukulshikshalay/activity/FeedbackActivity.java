@@ -109,7 +109,7 @@ public class FeedbackActivity extends AppCompatActivity implements RatingBar.OnR
                     }
 
                 } else {
-                    Toast.makeText(FeedbackActivity.this, R.string.no_internet_connection, Toast.LENGTH_LONG).show();
+                    Utilz.showNoInternetConnectionDialog(mActivity);
                 }
 
             }

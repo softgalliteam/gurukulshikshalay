@@ -230,7 +230,6 @@ public class HomeScreenActivity extends AppCompatActivity
                 }else if (position == 7) {
                     if (MyPreference.isLogined()) {
                         startActivity(new Intent(HomeScreenActivity.this, SyllabusActivity.class));
-                        Toast.makeText(mActivity, "Sorry no data is available at this time", Toast.LENGTH_SHORT).show();
                     } else {
                         Utilz.showLoginFirstDialog(mActivity);
                     }

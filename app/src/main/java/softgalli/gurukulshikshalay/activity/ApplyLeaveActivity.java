@@ -80,7 +80,7 @@ public class ApplyLeaveActivity extends AppCompatActivity implements AdapterView
         if (Utilz.isOnline(mActivity)) {
             getTeacherList();
         } else {
-            Toast.makeText(mActivity, R.string.no_internet_connection, Toast.LENGTH_LONG).show();
+            Utilz.showNoInternetConnectionDialog(mActivity);
         }
     }
 
@@ -230,7 +230,7 @@ public class ApplyLeaveActivity extends AppCompatActivity implements AdapterView
                         applyLeave(fromDateTvStr, toDateTvStr, commentStr);
                     }
                 } else {
-                    Toast.makeText(mActivity, R.string.no_internet_connection, Toast.LENGTH_LONG).show();
+                    Utilz.showNoInternetConnectionDialog(mActivity);
                 }
                 break;
         }

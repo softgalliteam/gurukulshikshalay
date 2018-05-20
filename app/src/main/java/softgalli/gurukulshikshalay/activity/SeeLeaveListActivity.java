@@ -64,7 +64,7 @@ public class SeeLeaveListActivity extends AppCompatActivity {
         if (Utilz.isOnline(mActivity)) {
             getRequestedLeaveList();
         } else {
-            Toast.makeText(mActivity, R.string.no_internet_connection, Toast.LENGTH_LONG).show();
+            Utilz.showNoInternetConnectionDialog(mActivity);
         }
     }
 

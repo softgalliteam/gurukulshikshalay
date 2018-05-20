@@ -3,6 +3,10 @@ package softgalli.gurukulshikshalay.model;
 import com.google.gson.annotations.SerializedName;
 
 public class TimeTableDataModel {
+    public TimeTableDataModel(String id, String schoolName, String aClass, String sec, String date, String from_time, String to_time, String subject, String teacher_name) {
+
+    }
+
     public String getId() {
         return id;
     }

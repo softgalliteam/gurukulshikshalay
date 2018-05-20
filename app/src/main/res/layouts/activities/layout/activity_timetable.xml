@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/common_toolbar" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/main_view_margin_top"
+        android:orientation="vertical">
+        <!--For selecting class section and  -->
+        <!--For absent present count -->
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            card_view:cardCornerRadius="0dp"
+            card_view:cardElevation="10dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/margin_10dp"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:id="@+id/classSectionLl"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/margin_10dp"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/button_height"
+                        android:layout_marginRight="@dimen/margin_5dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/ss_hollow_rect_green">
+
+                        <Spinner
+                            android:id="@+id/classNameSpinner"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@null" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/button_height"
+                        android:layout_marginLeft="@dimen/margin_5dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/ss_hollow_rect_green"
+                        android:paddingRight="@dimen/padding_15dp">
+
+                        <Spinner
+                            android:id="@+id/sectionNameSpinner"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@null" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/button_height"
+                    android:background="@drawable/ss_hollow_rect_green"
+                    android:paddingLeft="@dimen/padding_15dp"
+                    android:paddingRight="@dimen/padding_15dp">
+
+                    <TextView
+                        android:id="@+id/dateTv"
+                        fontPath="@string/roboto_regular"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:drawableRight="@drawable/date"
+                        android:gravity="center_vertical"
+                        android:hint="@string/select_date"
+                        android:textColor="@color/color_de00000"
+                        android:textSize="@dimen/text_15"
+                        tools:ignore="MissingPrefix" />
+
+                </LinearLayout>
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
+        <!--For absent present count -->
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            card_view:cardCornerRadius="10dp"
+            card_view:cardElevation="10dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/margin_15dp"
+                    android:layout_marginRight="@dimen/margin_15dp"
+                    android:layout_marginTop="@dimen/margin_15dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/tv_monday"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="3dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/circle"
+                        android:gravity="center"
+                        android:padding="@dimen/margin_5dp"
+                        android:text="M"
+                        android:textAllCaps="true"
+                        android:textColor="@color/colorTextWhite"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tv_tuesday"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="3dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/circle"
+                        android:gravity="center"
+                        android:padding="@dimen/margin_5dp"
+                        android:text="T"
+                        android:textAllCaps="true"
+                        android:textColor="@color/colorTextWhite"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tv_wednesday"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="3dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/circle"
+                        android:gravity="center"
+                        android:padding="@dimen/margin_5dp"
+                        android:text="W"
+                        android:textAllCaps="true"
+                        android:textColor="@color/colorTextWhite"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tv_thursday"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="3dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/circle"
+                        android:gravity="center"
+                        android:padding="@dimen/margin_5dp"
+                        android:text="T"
+                        android:textAllCaps="true"
+                        android:textColor="@color/colorTextWhite"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tv_friday"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="3dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/circle"
+                        android:gravity="center"
+                        android:padding="@dimen/margin_5dp"
+                        android:text="F"
+                        android:textAllCaps="true"
+                        android:textColor="@color/colorTextWhite"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tv_saturday"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="3dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/circle"
+                        android:gravity="center"
+                        android:padding="@dimen/margin_5dp"
+                        android:text="S"
+                        android:textAllCaps="true"
+                        android:textColor="@color/colorTextWhite"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <include layout="@layout/common_recyclerview" />
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
+    </LinearLayout>
+</RelativeLayout>

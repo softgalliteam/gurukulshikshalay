@@ -248,9 +248,9 @@ public class Utilz {
     public static void showNoInternetConnectionDialog(final Activity mActivity) {
         try {
             android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(mActivity);
-            builder.setTitle("No Internet Connection");
-            builder.setMessage("No Internet connection. Please check your network settings.");
-            builder.setNegativeButton("close", new DialogInterface.OnClickListener() {
+            builder.setTitle(mActivity.getResources().getString(R.string.no_internet_connection_msg_title));
+            builder.setMessage(mActivity.getResources().getString(R.string.no_internet_connection_msg));
+            builder.setNegativeButton("OK", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     dialog.dismiss();
@@ -287,6 +287,11 @@ public class Utilz {
         SimpleDateFormat df = new SimpleDateFormat("dd-MMM-yyyy");
         urrentDate = df.format(c);
         return urrentDate;
+    }
+
+    public static int getCurrentDateOnly() {
+        Date c = Calendar.getInstance().getTime();
+        return c.getDate();
     }
 
     public static void openDialer(final Activity mActivity, final String mobileNo) {
@@ -415,6 +420,37 @@ public class Utilz {
         }
     }
 
+    public static List<String> getClassList() {
+        List<String> classList;
+        classList = new ArrayList<>();
+
+        classList.add("Select Class");
+        classList.add("Class 10");
+        classList.add("Class 9");
+        classList.add("Class 8");
+        classList.add("Class 7");
+        classList.add("Class 6");
+        classList.add("Class 5");
+        classList.add("Class 4");
+        classList.add("Class 3");
+        classList.add("Class 2");
+        classList.add("Class 1");
+        classList.add("Class LKG");
+        classList.add("Class UKG");
+        classList.add("Class NURSERY");
+        return classList;
+    }
+
+    public static List<String> getSectionList() {
+        List<String> sectionList = new ArrayList<>();
+        sectionList.add("Select Section");
+        sectionList.add("A");
+        sectionList.add("B");
+        sectionList.add("C");
+        sectionList.add("D");
+        return sectionList;
+    }
+
     public static void showAttendanceMgmtDialog(final Activity mActivity) {
         try {
             final Dialog dialog = new Dialog(mActivity);
@@ -423,30 +459,11 @@ public class Utilz {
             dialog.setContentView(R.layout.attendance_mgmt_dialog);
             dialog.setTitle(null);
             dialog.setCanceledOnTouchOutside(false);
-            List<String> classList, sectionList;
-            classList = new ArrayList<>();
+            List<String> classList = new ArrayList<>(), sectionList = new ArrayList<>();
 
-            classList.add("Select Class");
-            classList.add("Class 10");
-            classList.add("Class 9");
-            classList.add("Class 8");
-            classList.add("Class 7");
-            classList.add("Class 6");
-            classList.add("Class 5");
-            classList.add("Class 4");
-            classList.add("Class 3");
-            classList.add("Class 2");
-            classList.add("Class 1");
-            classList.add("Class LKG");
-            classList.add("Class UKG");
-            classList.add("Class NURSERY");
+            classList.addAll(getClassList());
 
-            sectionList = new ArrayList<>();
-            sectionList.add("Select Section");
-            sectionList.add("A");
-            sectionList.add("B");
-            sectionList.add("C");
-            sectionList.add("D");
+            sectionList.addAll(getSectionList());
 
             final Spinner classNameSpinner, sectionNameSpinner;
             classNameSpinner = dialog.findViewById(R.id.classNameSpinner);
@@ -498,7 +515,7 @@ public class Utilz {
         }
     }
 
-    private static boolean isValidClassAndSection(Activity mActivity, Spinner classNameSpinner, Spinner sectionNameSpinner) {
+    public static boolean isValidClassAndSection(Activity mActivity, Spinner classNameSpinner, Spinner sectionNameSpinner) {
         boolean isValid = true;
         if (classNameSpinner.getSelectedItemPosition() == 0) {
             Toast.makeText(mActivity, "Please select class", Toast.LENGTH_SHORT).show();
@@ -598,5 +615,48 @@ public class Utilz {
     }
 
 
+    public static String getSelectedClass(int position) {
+        if (position == 0)
+            return "10";
+        else if (position == 1)
+            return "9";
+        else if (position == 2)
+            return "8";
+        else if (position == 3)
+            return "7";
+        else if (position == 4)
+            return "6";
+        else if (position == 5)
+            return "5";
+        else if (position == 6)
+            return "4";
+        else if (position == 7)
+            return "3";
+        else if (position == 8)
+            return "2";
+        else if (position == 9)
+            return "1";
+        else if (position == 10)
+            return "LKG";
+        else if (position == 11)
+            return "UKG";
+        else if (position == 12)
+            return "Nursery";
+        else
+            return "0";
+    }
+
+    public static String getSelectedSection(int position) {
+        if (position == 0)
+            return "A";
+        else if (position == 1)
+            return "B";
+        else if (position == 2)
+            return "C";
+        else if (position == 3)
+            return "D";
+        else
+            return "A";
+    }
 }
 
