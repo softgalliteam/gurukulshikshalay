@@ -212,7 +212,13 @@ public class TimeTableActivity extends AppCompatActivity {
     }
 
     private void callTimeTableApi(String mStrDate) {
-        if (Utilz.isValidClassAndSection(mActivity, classNameSpinner, sectionNameSpinner)) {
+        if (TextUtils.isEmpty(mStrClass)) {
+            Toast.makeText(mActivity, "Please select class", Toast.LENGTH_SHORT).show();
+        } else if (TextUtils.isEmpty(mStrSection)) {
+            Toast.makeText(mActivity, "Please select section", Toast.LENGTH_SHORT).show();
+        } else if (TextUtils.isEmpty(mStrDate)) {
+            Toast.makeText(mActivity, "Please select a date", Toast.LENGTH_SHORT).show();
+        } else {
             Utilz.showDailog(mActivity, mActivity.getResources().getString(R.string.pleasewait));
             final RequestParams params = new RequestParams();
             params.add("class", "7");
