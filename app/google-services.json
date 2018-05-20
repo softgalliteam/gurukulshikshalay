@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "967859211301",
+    "firebase_url": "https://gurukul-shikshalay.firebaseio.com",
+    "project_id": "gurukul-shikshalay",
+    "storage_bucket": "gurukul-shikshalay.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:967859211301:android:17f264afb264757d",
+        "android_client_info": {
+          "package_name": "softgalli.gurukulshikshalay"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "967859211301-avspa13ddn791ki66psmjjv2noonpnbb.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "softgalli.gurukulshikshalay",
+            "certificate_hash": "cc6adb3628d7262b66bb2432310decaba8ded225"
+          }
+        },
+        {
+          "client_id": "967859211301-bakgdhobib7pbp3j0l9c7q7svmep7mc3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBkOV2FlLQ2jgVzoAIbqgrVBCL2CYwvLHw"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "967859211301-bakgdhobib7pbp3j0l9c7q7svmep7mc3.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
