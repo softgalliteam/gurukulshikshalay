@@ -16,6 +16,12 @@ public class AppConstants {
     public static final String LEAVE_MODEL = "Leave_Model";
     public static final String CLASS_NAME = "class_name";
     public static final String SECTION_NAME = "section_name";
+    public static final String MONDAY = "Monday";
+    public static final String TUESDAY = "Tuesday";
+    public static final String WEDNESDAY = "Wednesday";
+    public static final String THURSDAY = "Thursday";
+    public static final String FRIDAY = "Friday";
+    public static final String SATURDAY = "Saturday";
 
     /*Parsing response key and preference key*/
     public static final String ID = "id";

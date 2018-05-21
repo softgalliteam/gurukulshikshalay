@@ -115,6 +115,7 @@
     <string name="leave_status">Leave Status</string>
     <string name="later">Later</string>
     <string name="update_app">Update Now</string>
+    <string name="admission_successfully">Congratulations! You admission request is accepted.</string>
     <string name="update_your_app">Update Your App</string>
     <string name="no_syllabus_is_added_till_now">No syllabus data is available for now.</string>
 

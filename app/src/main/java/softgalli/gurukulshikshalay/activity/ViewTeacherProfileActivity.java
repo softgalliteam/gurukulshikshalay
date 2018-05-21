@@ -270,11 +270,8 @@ public class ViewTeacherProfileActivity extends AppCompatActivity {
 
     @OnClick(R.id.callButton)
     public void onViewClicked() {
-        if (mTeachersArrayList != null && mTeachersArrayList.size() > 0) {
-            if (!TextUtils.isEmpty(mTeachersArrayList.get(mPosition).getMobile()))
-                Utilz.openDialer(mActivity, mTeachersArrayList.get(mPosition).getMobile());
-            else if (!TextUtils.isEmpty(mTeachersArrayList.get(mPosition).getAlternate_number()))
-                Utilz.openDialer(mActivity, mTeachersArrayList.get(mPosition).getAlternate_number());
+        if (userPhoneTv != null && !TextUtils.isEmpty(userPhoneTv.getText().toString().trim())) {
+            Utilz.openDialer(mActivity, userPhoneTv.getText().toString().trim());
         } else {
             Toast.makeText(mActivity, R.string.phone_no_not_provide_yet, Toast.LENGTH_SHORT).show();
         }

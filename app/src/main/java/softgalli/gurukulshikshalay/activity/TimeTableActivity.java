@@ -1,7 +1,6 @@
 package softgalli.gurukulshikshalay.activity;
 
 import android.app.Activity;
-import android.app.DatePickerDialog;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -12,13 +11,11 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.DatePicker;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.apextechies.eretort.adapter.TimeTableAdapter;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.RequestParams;
 import com.loopj.android.http.TextHttpResponseHandler;
@@ -27,8 +24,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import butterknife.BindView;
@@ -36,6 +34,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cz.msebera.android.httpclient.Header;
 import softgalli.gurukulshikshalay.R;
+import softgalli.gurukulshikshalay.adapter.TimeTableAdapter;
 import softgalli.gurukulshikshalay.common.AppConstants;
 import softgalli.gurukulshikshalay.common.ClsGeneral;
 import softgalli.gurukulshikshalay.common.Utilz;
@@ -53,8 +52,6 @@ public class TimeTableActivity extends AppCompatActivity {
     Spinner classNameSpinner;
     @BindView(R.id.sectionNameSpinner)
     Spinner sectionNameSpinner;
-    @BindView(R.id.dateTv)
-    TextView dateTv;
     @BindView(R.id.tv_monday)
     TextView tvMonday;
     @BindView(R.id.tv_tuesday)
@@ -74,7 +71,7 @@ public class TimeTableActivity extends AppCompatActivity {
     LinearLayout classSectionLl;
     private TimeTableAdapter timeTableAdapter;
     private List<String> dateList;
-    private int datePos;
+    private String mStrSelectedDay;
     private int mYear, mMonth, mDay;
     private String mStrClass = "", mStrSection = "";
     private Activity mActivity;
@@ -97,7 +94,27 @@ public class TimeTableActivity extends AppCompatActivity {
 
         initWidgit();
 
-        callTimeTableApi(dateList.get(datePos));
+        manageDefaultSelection();
+    }
+
+    private void manageDefaultSelection() {
+        String dayOfTheWeek = new SimpleDateFormat("EEEE").format(new Date());
+        if (TextUtils.isEmpty(dayOfTheWeek))
+            dayOfTheWeek = AppConstants.MONDAY;
+        if (dayOfTheWeek.equalsIgnoreCase(AppConstants.MONDAY))
+            changeBackNText(tvMonday);
+        else if (dayOfTheWeek.equalsIgnoreCase(AppConstants.TUESDAY))
+            changeBackNText(tvTuesday);
+        else if (dayOfTheWeek.equalsIgnoreCase(AppConstants.WEDNESDAY))
+            changeBackNText(tvWednesday);
+        else if (dayOfTheWeek.equalsIgnoreCase(AppConstants.THURSDAY))
+            changeBackNText(tvThursday);
+        else if (dayOfTheWeek.equalsIgnoreCase(AppConstants.FRIDAY))
+            changeBackNText(tvFriday);
+        else if (dayOfTheWeek.equalsIgnoreCase(AppConstants.SATURDAY))
+            changeBackNText(tvSaturday);
+        //Calling API to get timetable of selected date
+        callTimeTableApi(dayOfTheWeek);
     }
 
     private void manageSelectingClassAndSec() {
@@ -131,6 +148,7 @@ public class TimeTableActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
                 mStrClass = Utilz.getSelectedClass(position);
+                callTimeTableApi(mStrSelectedDay);
             }
 
             @Override
@@ -141,7 +159,8 @@ public class TimeTableActivity extends AppCompatActivity {
         sectionNameSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
-                mStrClass = Utilz.getSelectedSection(position);
+                mStrSection = Utilz.getSelectedSection(position);
+                callTimeTableApi(mStrSelectedDay);
             }
 
             @Override
@@ -149,23 +168,6 @@ public class TimeTableActivity extends AppCompatActivity {
 
             }
         });
-    }
-
-    private void openDatePicker() {
-        // Get Current Date
-        final Calendar c = Calendar.getInstance();
-        mYear = c.get(Calendar.YEAR);
-        mMonth = c.get(Calendar.MONTH);
-        mDay = c.get(Calendar.DAY_OF_MONTH);
-        DatePickerDialog datePickerDialog = new DatePickerDialog(this,
-                new DatePickerDialog.OnDateSetListener() {
-                    @Override
-                    public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                        dateTv.setText(dayOfMonth + "-" + (monthOfYear + 1) + "-" + year);
-                    }
-                }, mYear, mMonth, mDay);
-        datePickerDialog.getDatePicker().setMaxDate(System.currentTimeMillis());
-        datePickerDialog.show();
     }
 
     private void initToolbar() {
@@ -183,50 +185,51 @@ public class TimeTableActivity extends AppCompatActivity {
 
     private void getTodayday() {
         String dayOfTheWeek = Utilz.todaysday(TimeTableActivity.this);
-        if (dayOfTheWeek.equalsIgnoreCase("Monday")) {
+        if (dayOfTheWeek.equalsIgnoreCase(AppConstants.MONDAY)) {
             tvMonday.setBackgroundResource(R.drawable.circle);
             tvMonday.setTextColor(getResources().getColor(R.color.colorTextWhite));
-            datePos = 0;
-        } else if (dayOfTheWeek.equalsIgnoreCase("Tuesday")) {
+            mStrSelectedDay = AppConstants.MONDAY;
+        } else if (dayOfTheWeek.equalsIgnoreCase(AppConstants.TUESDAY)) {
             tvTuesday.setBackgroundResource(R.drawable.circle);
             tvTuesday.setTextColor(getResources().getColor(R.color.colorTextWhite));
-            datePos = 1;
-        } else if (dayOfTheWeek.equalsIgnoreCase("Wednesday")) {
+            mStrSelectedDay = AppConstants.TUESDAY;
+        } else if (dayOfTheWeek.equalsIgnoreCase(AppConstants.WEDNESDAY)) {
             tvWednesday.setBackgroundResource(R.drawable.circle);
             tvWednesday.setTextColor(getResources().getColor(R.color.colorTextWhite));
-            datePos = 2;
-        } else if (dayOfTheWeek.equalsIgnoreCase("Thursday")) {
+            mStrSelectedDay = AppConstants.WEDNESDAY;
+        } else if (dayOfTheWeek.equalsIgnoreCase(AppConstants.THURSDAY)) {
             tvThursday.setBackgroundResource(R.drawable.circle);
             tvThursday.setTextColor(getResources().getColor(R.color.colorTextWhite));
-            datePos = 3;
-        } else if (dayOfTheWeek.equalsIgnoreCase("Friday")) {
+            mStrSelectedDay = AppConstants.THURSDAY;
+        } else if (dayOfTheWeek.equalsIgnoreCase(AppConstants.FRIDAY)) {
             tvFriday.setBackgroundResource(R.drawable.circle);
             tvFriday.setTextColor(getResources().getColor(R.color.colorTextWhite));
-            datePos = 4;
-        } else if (dayOfTheWeek.equalsIgnoreCase("Saturday")) {
+            mStrSelectedDay = AppConstants.FRIDAY;
+        } else if (dayOfTheWeek.equalsIgnoreCase(AppConstants.SATURDAY)) {
             tvSaturday.setBackgroundResource(R.drawable.circle);
             tvSaturday.setTextColor(getResources().getColor(R.color.colorTextWhite));
-            datePos = 5;
+            mStrSelectedDay = AppConstants.SATURDAY;
         }
 
     }
 
-    private void callTimeTableApi(String mStrDate) {
+    private void callTimeTableApi(String mStrSelectedDay) {
+        if (TextUtils.isEmpty(mStrSelectedDay)) {
+            mStrSelectedDay = AppConstants.MONDAY;
+        }
         if (TextUtils.isEmpty(mStrClass)) {
             Toast.makeText(mActivity, "Please select class", Toast.LENGTH_SHORT).show();
         } else if (TextUtils.isEmpty(mStrSection)) {
             Toast.makeText(mActivity, "Please select section", Toast.LENGTH_SHORT).show();
-        } else if (TextUtils.isEmpty(mStrDate)) {
-            Toast.makeText(mActivity, "Please select a date", Toast.LENGTH_SHORT).show();
         } else {
             Utilz.showDailog(mActivity, mActivity.getResources().getString(R.string.pleasewait));
             final RequestParams params = new RequestParams();
-            params.add("class", "7");
-            params.add("sec", "A");
-            params.add("date", mStrDate);
+            params.add("class", mStrClass);
+            params.add("sec", mStrSection);
+            params.add("date", mStrSelectedDay);
             String finalReqUrl = ApiUrl.BASE_URL + ApiUrl.TIME_TABLE;
             AsyncHttpClient client = new AsyncHttpClient();
-            client.get(mActivity, finalReqUrl, params, new TextHttpResponseHandler() {
+            client.post(mActivity, finalReqUrl, params, new TextHttpResponseHandler() {
                 @Override
                 public void onSuccess(int statusCode, Header[] headers, String response) {
                     Utilz.closeDialog();
@@ -234,15 +237,50 @@ public class TimeTableActivity extends AppCompatActivity {
                         tableModels.clear();
                         try {
                             JSONObject object = new JSONObject(response);
+                            String className = "", sec = "", date = "";
                             if (object.optString("status").equals("true")) {
                                 JSONArray jsonArray = object.getJSONArray("data");
-                                for (int i = 0; i < jsonArray.length(); i++) {
-                                    JSONObject jo = jsonArray.getJSONObject(i);
-                                    tableModels.add(new TimeTableDataModel(jo.optString("id"), jo.optString("schoolName"),
-                                            jo.optString("class"), jo.optString("sec"), jo.optString("date"),
-                                            jo.optString("from_time"), jo.optString("to_time"), jo.optString("subject"), jo.optString("teacher_name")));
+                                if (jsonArray != null && jsonArray.length() > 0) {
+                                    JSONObject jsonObject = jsonArray.getJSONObject(0);
+                                    if (jsonObject != null && jsonObject.length() > 0) {
+
+                                        if (jsonObject.has("class"))
+                                            className = jsonObject.optString("class");
+                                        if (jsonObject.has("sec"))
+                                            sec = jsonObject.optString("sec");
+                                        if (jsonObject.has("date"))
+                                            date = jsonObject.optString("date");
+
+                                        JSONArray jsonArraySubDetails = null;
+                                        if (jsonObject.has("subjectdetails"))
+                                            jsonArraySubDetails = jsonObject.optJSONArray("subjectdetails");
+                                        if (jsonArraySubDetails != null && jsonArraySubDetails.length() > 0) {
+                                            for (int i = 0; i < jsonArraySubDetails.length(); i++) {
+                                                JSONObject oneClassJsonObj = jsonArraySubDetails.getJSONObject(i);
+                                                String name = "", id = "", schoolName = "", from_time = "", to_time = "", subject = "";
+                                                if (oneClassJsonObj != null && oneClassJsonObj.length() > 0) {
+                                                    JSONObject teacherDetailJsonObj = null;
+                                                    if (oneClassJsonObj.has("teacherdetails"))
+                                                        teacherDetailJsonObj = oneClassJsonObj.optJSONObject("teacherdetails");
+
+                                                    if (teacherDetailJsonObj != null && teacherDetailJsonObj.has("name"))
+                                                        name = teacherDetailJsonObj.optString("name");
+
+                                                    if (oneClassJsonObj.has("id"))
+                                                        id = oneClassJsonObj.optString("id");
+                                                    if (oneClassJsonObj.has("from_time"))
+                                                        from_time = oneClassJsonObj.optString("from_time");
+                                                    if (oneClassJsonObj.has("to_time"))
+                                                        to_time = oneClassJsonObj.optString("to_time");
+                                                    if (oneClassJsonObj.has("subject"))
+                                                        subject = oneClassJsonObj.optString("subject");
+                                                    tableModels.add(new TimeTableDataModel(id, schoolName, className, sec, date, from_time, to_time, subject, name));
+                                                }
+                                            }
+                                        }
+                                    }
+                                    timeTableAdapter.notifyDataSetChanged();
                                 }
-                                timeTableAdapter.notifyDataSetChanged();
                             } else {
                                 Toast.makeText(TimeTableActivity.this, "" + object.optString("msg"), Toast.LENGTH_SHORT).show();
                             }
@@ -262,7 +300,6 @@ public class TimeTableActivity extends AppCompatActivity {
     }
 
     private void initWidgit() {
-
         mTimeTableRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         timeTableAdapter = new TimeTableAdapter(TimeTableActivity.this, tableModels, R.layout.timetable_row, new OnClickListener() {
             @Override
@@ -305,35 +342,32 @@ public class TimeTableActivity extends AppCompatActivity {
 
     }
 
-    @OnClick({R.id.dateTv, R.id.tv_monday, R.id.tv_tuesday, R.id.tv_wednesday, R.id.tv_thursday, R.id.tv_friday, R.id.tv_saturday})
+    @OnClick({R.id.tv_monday, R.id.tv_tuesday, R.id.tv_wednesday, R.id.tv_thursday, R.id.tv_friday, R.id.tv_saturday})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.tv_monday:
                 changeBackNText(tvMonday);
-                callTimeTableApi(dateList.get(0));
+                callTimeTableApi(AppConstants.MONDAY);
                 break;
             case R.id.tv_tuesday:
                 changeBackNText(tvTuesday);
-                callTimeTableApi(dateList.get(1));
+                callTimeTableApi(AppConstants.TUESDAY);
                 break;
             case R.id.tv_wednesday:
                 changeBackNText(tvWednesday);
-                callTimeTableApi(dateList.get(2));
+                callTimeTableApi(AppConstants.WEDNESDAY);
                 break;
             case R.id.tv_thursday:
                 changeBackNText(tvThursday);
-                callTimeTableApi(dateList.get(3));
+                callTimeTableApi(AppConstants.THURSDAY);
                 break;
             case R.id.tv_friday:
                 changeBackNText(tvFriday);
-                callTimeTableApi(dateList.get(4));
+                callTimeTableApi(AppConstants.FRIDAY);
                 break;
             case R.id.tv_saturday:
                 changeBackNText(tvSaturday);
-                callTimeTableApi(dateList.get(5));
-                break;
-            case R.id.dateTv:
-                openDatePicker();
+                callTimeTableApi(AppConstants.SATURDAY);
                 break;
         }
     }

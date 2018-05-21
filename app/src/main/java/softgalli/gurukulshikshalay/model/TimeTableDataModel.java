@@ -1,22 +1,26 @@
 package softgalli.gurukulshikshalay.model;
 
-import com.google.gson.annotations.SerializedName;
-
 public class TimeTableDataModel {
-    public TimeTableDataModel(String id, String schoolName, String aClass, String sec, String date, String from_time, String to_time, String subject, String teacher_name) {
-
-    }
+    String id, schoolName, aClass, sec, date, from_time, to_time, subject, teacher_name;
 
     public String getId() {
         return id;
     }
 
-    public String getClas() {
-        return clas;
+    public String getSchoolName() {
+        return schoolName;
+    }
+
+    public String getaClass() {
+        return aClass;
     }
 
     public String getSec() {
         return sec;
+    }
+
+    public String getDate() {
+        return date;
     }
 
     public String getFrom_time() {
@@ -27,33 +31,23 @@ public class TimeTableDataModel {
         return to_time;
     }
 
-    public String getDate() {
-        return date;
-    }
-
     public String getSubject() {
         return subject;
     }
 
-    public TimeTableTeacherDetails getTeacher_name() {
+    public String getTeacher_name() {
         return teacher_name;
     }
 
-    @SerializedName("id")
-    String id;
-    @SerializedName("class")
-    String clas;
-    @SerializedName("sec")
-    String sec;
-    @SerializedName("from_time")
-    String from_time;
-    @SerializedName("to_time")
-    String to_time;
-    @SerializedName("date")
-    String date;
-    @SerializedName("subject")
-    String subject;
-    @SerializedName("teacherdetails")
-    TimeTableTeacherDetails teacher_name;
-
+    public TimeTableDataModel(String id, String schoolName, String aClass, String sec, String date, String from_time, String to_time, String subject, String teacher_name) {
+        this.id = id;
+        this.schoolName = schoolName;
+        this.aClass = aClass;
+        this.sec = sec;
+        this.date = date;
+        this.from_time = from_time;
+        this.to_time = to_time;
+        this.subject = subject;
+        this.teacher_name = teacher_name;
+    }
 }

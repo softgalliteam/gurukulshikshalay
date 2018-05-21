@@ -1,7 +1,8 @@
-package com.apextechies.eretort.adapter;
+package softgalli.gurukulshikshalay.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -58,9 +59,20 @@ public class TimeTableAdapter extends RecyclerView.Adapter<TimeTableAdapter.MyVi
         final TimeTableDataModel sa = noticeBoardModels.get(position);
         // holder.CatTextView.setTypeface(Utilz.font(mContext, "bold"));
 
-        holder.tv_timetable.setText("Time " + sa.getFrom_time() + " to " + sa.getTo_time());
-        holder.tv_subject.setText(sa.getSubject());
-        holder.tv_teac_name.setText("Faculty - " + sa.getTeacher_name());
+        if (!TextUtils.isEmpty(sa.getFrom_time()) && !TextUtils.isEmpty(sa.getTo_time()))
+            holder.tv_timetable.setText(sa.getFrom_time() + " - " + sa.getTo_time());
+        else
+            holder.tv_timetable.setText("N/A - N/A");
+
+        if (!TextUtils.isEmpty(sa.getSubject()))
+            holder.tv_subject.setText(sa.getSubject());
+        else
+            holder.tv_subject.setText("N/A");
+
+        if (!TextUtils.isEmpty(sa.getTeacher_name()))
+            holder.tv_teac_name.setText("Teacher - " + sa.getTeacher_name());
+        else
+            holder.tv_teac_name.setText("N/A");
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -105,7 +105,8 @@ public class Utilz {
         dialog = new ProgressDialog(c);
         dialog.setCanceledOnTouchOutside(false);
         dialog.setMessage(msg);
-        dialog.show();
+        if (dialog != null && !dialog.isShowing())
+            dialog.show();
     }
 
     public static void closeDialog() {
@@ -538,14 +539,14 @@ public class Utilz {
                 super.onSuccess(statusCode, headers, jsonObject);
                 Log.i("TAG", "Response : " + jsonObject);
                 try {
-                    String newAppVersion = "", currentAppVersion = BuildConfig.VERSION_NAME;
+                    String newAppVersion = "", currentAppVersion = BuildConfig.VERSION_CODE + "";
                     if (statusCode == 200 && jsonObject.length() > 0) {
                         if (jsonObject != null && jsonObject.has(AppConstants.DATA)) {
                             JSONArray jsonArrayData = jsonObject.optJSONArray(AppConstants.DATA);
                             if (jsonArrayData != null && jsonArrayData.length() > 0) {
                                 JSONObject jsonObject1 = jsonArrayData.getJSONObject(0);
                                 if (jsonObject1 != null && jsonObject1.has(AppConstants.VERSION))
-                                    newAppVersion = jsonObject.optString(AppConstants.VERSION);
+                                    newAppVersion = jsonObject1.optString(AppConstants.VERSION);
                                 Log.i(TAG, "New App version : " + newAppVersion);
                                 if (!newAppVersion.equalsIgnoreCase(currentAppVersion)) {
                                     String msg = String.format(mActivity.getString(R.string.update_app_message), currentAppVersion, newAppVersion);
@@ -616,47 +617,47 @@ public class Utilz {
 
 
     public static String getSelectedClass(int position) {
-        if (position == 0)
+        if (position == 1)
             return "10";
-        else if (position == 1)
-            return "9";
         else if (position == 2)
-            return "8";
+            return "9";
         else if (position == 3)
-            return "7";
+            return "8";
         else if (position == 4)
-            return "6";
+            return "7";
         else if (position == 5)
-            return "5";
+            return "6";
         else if (position == 6)
-            return "4";
+            return "5";
         else if (position == 7)
-            return "3";
+            return "4";
         else if (position == 8)
-            return "2";
+            return "3";
         else if (position == 9)
-            return "1";
+            return "2";
         else if (position == 10)
-            return "LKG";
+            return "1";
         else if (position == 11)
-            return "UKG";
+            return "LKG";
         else if (position == 12)
+            return "UKG";
+        else if (position == 13)
             return "Nursery";
         else
-            return "0";
+            return "";
     }
 
     public static String getSelectedSection(int position) {
-        if (position == 0)
+        if (position == 1)
             return "A";
-        else if (position == 1)
-            return "B";
         else if (position == 2)
-            return "C";
+            return "B";
         else if (position == 3)
+            return "C";
+        else if (position == 4)
             return "D";
         else
-            return "A";
+            return "";
     }
 }
 

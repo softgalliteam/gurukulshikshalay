@@ -135,7 +135,8 @@ public class AdmissionActivity extends AppCompatActivity {
                 Log.i("TAG", statusCode + "Response : " + responseString);
                 try {
                     if (statusCode == 200) {
-                        Toast.makeText(mActivity, R.string.sent_successfully, Toast.LENGTH_LONG).show();
+                        Utilz.showDailog(mActivity, mActivity.getResources().getString(R.string.admission_successfully));
+                        emptyAllFields();
                     } else {
                         Toast.makeText(mActivity, R.string.something_went_wrong_error_message, Toast.LENGTH_LONG).show();
                     }
@@ -156,5 +157,13 @@ public class AdmissionActivity extends AppCompatActivity {
                 Toast.makeText(mActivity, getString(R.string.something_went_wrong_error_message), Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    private void emptyAllFields() {
+        sname.setText("");
+        phoneNo.setText("");
+        emailId.setText("");
+        className.setText("");
+        comment.setText("");
     }
 }
