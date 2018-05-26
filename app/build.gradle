@@ -77,5 +77,8 @@ dependencies {
     implementation 'com.loopj.android:android-async-http:1.4.9'
     //For Chatting/database
     implementation 'com.firebase:firebase-client-android:2.5.2+'
+
+    //FCM
+    implementation 'com.google.firebase:firebase-messaging:17.0.0'
 }
 apply plugin: 'com.google.gms.google-services'
