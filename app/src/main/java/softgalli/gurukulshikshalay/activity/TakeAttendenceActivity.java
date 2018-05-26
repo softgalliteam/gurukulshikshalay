@@ -53,13 +53,19 @@ import softgalli.gurukulshikshalay.calender.CsvFileWriter;
 import softgalli.gurukulshikshalay.calender.RealMController;
 import softgalli.gurukulshikshalay.common.AppConstants;
 import softgalli.gurukulshikshalay.common.ClsGeneral;
+import softgalli.gurukulshikshalay.common.PreferenceName;
 import softgalli.gurukulshikshalay.common.Utilz;
 import softgalli.gurukulshikshalay.common.WeekCalendarOptions;
 import softgalli.gurukulshikshalay.fragments.WeekCalendarFragment;
 import softgalli.gurukulshikshalay.intrface.CalenderListener;
+import softgalli.gurukulshikshalay.model.AttendanceStatusModel;
+import softgalli.gurukulshikshalay.model.CommonResponse;
+import softgalli.gurukulshikshalay.model.InsertAttendanceModel;
+import softgalli.gurukulshikshalay.model.StudentListByClassModel;
 import softgalli.gurukulshikshalay.model.StudentListDataModel;
 import softgalli.gurukulshikshalay.preference.MyPreference;
 import softgalli.gurukulshikshalay.retrofit.ApiUrl;
+import softgalli.gurukulshikshalay.retrofit.DownlodableCallback;
 import softgalli.gurukulshikshalay.retrofit.RetrofitDataProvider;
 
 public class TakeAttendenceActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
@@ -103,6 +109,7 @@ public class TakeAttendenceActivity extends AppCompatActivity implements DatePic
         setContentView(R.layout.take_attendance_activity);
         ButterKnife.bind(this);
         mActivity = this;
+        retrofitDataProvider = new RetrofitDataProvider(mActivity);
         mWeekCalendarFragment = (WeekCalendarFragment) getSupportFragmentManager()
                 .findFragmentByTag(WeekCalendarFragment.class.getSimpleName());
 
@@ -115,14 +122,16 @@ public class TakeAttendenceActivity extends AppCompatActivity implements DatePic
 
         initReam();
 
+        mRecyclerView.setHasFixedSize(true);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         if (Utilz.isOnline(mActivity)) {
-            //getStudentListFromServer();
+            getStudentListFromServer();
             /*###########################################################################################*/
             //TODO remove after calling api and getting response from server
-            for (int i = 1; i <= 15; i++) {
+            /*for (int i = 1; i <= 15; i++) {
                 StudentListDataModel st = new StudentListDataModel("SchoolName" + i, "StudentListDataModel Name " + i, "Father Name " + i, "F", 21);
                 studentListDataModelList.add(st);
-            }
+            }*/
             getStudentListFromRealM();
             /*###########################################################################################*/
 
@@ -134,7 +143,6 @@ public class TakeAttendenceActivity extends AppCompatActivity implements DatePic
             Utilz.showNoInternetConnectionDialog(mActivity);
         }
 
-        manageStudentList();
 
         manageCreateAndUploadAttendence();
 
@@ -148,7 +156,7 @@ public class TakeAttendenceActivity extends AppCompatActivity implements DatePic
             if (mBundle.containsKey(AppConstants.CLASS_NAME))
                 className = mBundle.getString(AppConstants.CLASS_NAME);
             if (mBundle.containsKey(AppConstants.SECTION_NAME))
-                sectionName = className = mBundle.getString(AppConstants.SECTION_NAME);
+                sectionName =  mBundle.getString(AppConstants.SECTION_NAME);
         }
     }
 
@@ -223,13 +231,14 @@ public class TakeAttendenceActivity extends AppCompatActivity implements DatePic
     private RetrofitDataProvider retrofitDataProvider;
 
     private void getStudentListFromServer() {
-       /* retrofitDataProvider = new RetrofitDataProvider(mActivity);
-            retrofitDataProvider.getStudentsListByClassWise(className, secti, new DownlodableCallback<StudentListDataModel>() {
+        Utilz.showDailog(TakeAttendenceActivity.this, getResources().getString(R.string.pleasewait));
+            retrofitDataProvider.getStudentsListByClassWise(className, sectionName, new DownlodableCallback<StudentListByClassModel>() {
                 @Override
-                public void onSuccess(final StudentListDataModel result) {
-                    //  closeDialog();
+                public void onSuccess(final StudentListByClassModel result) {
+                    Utilz.closeDialog();
                     if (result.getStatus().contains(PreferenceName.TRUE)) {
                         studentListDataModelList = result.getData();
+                        mRecyclerView.setAdapter(new AttendenceAdapter(studentListDataModelList, mActivity));
                     }
                     if (studentListDataModelList != null && studentListDataModelList.size() > 0)
                         getStudentListFromRealM();
@@ -237,14 +246,14 @@ public class TakeAttendenceActivity extends AppCompatActivity implements DatePic
 
                 @Override
                 public void onFailure(String error) {
-                    // closeDialog();
+                    Utilz.closeDialog();
                 }
 
                 @Override
                 public void onUnauthorized(int errorNumber) {
-
+                    Utilz.closeDialog();
                 }
-            });*/
+            });
     }
 
     private void getStudentListFromRealM() {
@@ -264,16 +273,7 @@ public class TakeAttendenceActivity extends AppCompatActivity implements DatePic
     private void manageStudentList() {
         // use this setting to improve performance if you know that changes
         // in content do not change the layout size of the RecyclerView
-        mRecyclerView.setHasFixedSize(true);
 
-        // use a linear layout manager
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-
-        // create an Object for Adapter
-        mAdapter = new AttendenceAdapter(studentListDataModelList, mActivity);
-
-        // set the adapter object to the Recyclerview
-        mRecyclerView.setAdapter(mAdapter);
 
     }
 
@@ -470,12 +470,61 @@ public class TakeAttendenceActivity extends AppCompatActivity implements DatePic
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.uploadAttendenceBtn:
-                //uploadAttendence();
+                uploadAttendence();
                 break;
             case R.id.seeAttendenceBtn:
                 seeAttendence();
                 break;
         }
+    }
+
+    private void uploadAttendence() {
+        /*if (MyPreference.isPreLoaded()) {
+            RealMController realMController = RealMController.with(mActivity);
+            if (realMController != null)
+                studentListDataModelList.addAll(realMController.getStudentsList());
+            Log.d("Attendence Taken", ""+studentListDataModelList);
+        }*/
+
+        Utilz.showDailog(TakeAttendenceActivity.this, getResources().getString(R.string.pleasewait));
+        InsertAttendanceModel insertAttendanceModel = getListOfStudentAttendance();
+        retrofitDataProvider.attendance(insertAttendanceModel, new DownlodableCallback<CommonResponse>() {
+            @Override
+            public void onSuccess(final CommonResponse result) {
+                Utilz.closeDialog();
+
+            }
+
+            @Override
+            public void onFailure(String error) {
+                Utilz.closeDialog();
+            }
+
+            @Override
+            public void onUnauthorized(int errorNumber) {
+                Utilz.closeDialog();
+            }
+        });
+
+
+    }
+
+    private InsertAttendanceModel getListOfStudentAttendance() {
+        InsertAttendanceModel insertAttendanceModel = new InsertAttendanceModel();
+        insertAttendanceModel.setClas("10");
+        insertAttendanceModel.setSec("A");
+        insertAttendanceModel.setDate(Utilz.getCurrentDate(TakeAttendenceActivity.this));
+        insertAttendanceModel.setTeacher_id("1");
+        ArrayList<AttendanceStatusModel> list = new ArrayList<>();
+        //Create loop here and add student present/Absent status to AttendanceStatusModel
+        for(int i=0; i<100; i++) {
+            list.add(new AttendanceStatusModel("1056",("present"+i) ));
+        }
+
+        insertAttendanceModel.setAttendance(list);
+        //End loop
+
+        return insertAttendanceModel;
     }
 
     public void manageAbsentPresentCount(int mIntTotalStudentCount, int mIntAbsentStudentCount) {

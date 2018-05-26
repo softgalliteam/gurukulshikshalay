@@ -5,9 +5,11 @@ import softgalli.gurukulshikshalay.model.AlumniModel;
 import softgalli.gurukulshikshalay.model.CommonResponse;
 import softgalli.gurukulshikshalay.model.FeedBackModel;
 import softgalli.gurukulshikshalay.model.GalleryModel;
+import softgalli.gurukulshikshalay.model.InsertAttendanceModel;
 import softgalli.gurukulshikshalay.model.NotificationModel;
 import softgalli.gurukulshikshalay.model.RequestedLeaveModel;
 import softgalli.gurukulshikshalay.model.StuTeaModel;
+import softgalli.gurukulshikshalay.model.StudentListByClassModel;
 import softgalli.gurukulshikshalay.model.StudentListDataModel;
 import softgalli.gurukulshikshalay.model.TeacherListModel;
 import softgalli.gurukulshikshalay.model.TopperLisrModel;
@@ -43,11 +45,12 @@ public interface ServiceMethods {
 
     void updateRequestedLeave(String status, String user_id, String teacherId, String teacherComment, DownlodableCallback<CommonResponse> callback);
 
-    void getStudentsListByClassWise(String className, DownlodableCallback<StudentListDataModel> callback);
+    void getStudentsListByClassWise(String clas, String sec, DownlodableCallback<StudentListByClassModel> callback);
 
     void updateTeacher(String teacher_id, String name, String mobile_number, String alternate_number, String email_id, String address, String qualification, DownlodableCallback<CommonResponse> callback);
 
     void updateStudent(String user_id, String name, String email, String mobile, String residential_address, DownlodableCallback<CommonResponse> callback);
 
     void alumniList(DownlodableCallback<AlumniModel> callback);
+    void attendance(InsertAttendanceModel insertAttendanceModel, DownlodableCallback<CommonResponse> callback);
 }

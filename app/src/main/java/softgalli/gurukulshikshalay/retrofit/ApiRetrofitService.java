@@ -2,6 +2,7 @@ package softgalli.gurukulshikshalay.retrofit;
 
 
 import retrofit2.Call;
+import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
@@ -10,9 +11,11 @@ import softgalli.gurukulshikshalay.model.AlumniModel;
 import softgalli.gurukulshikshalay.model.CommonResponse;
 import softgalli.gurukulshikshalay.model.FeedBackModel;
 import softgalli.gurukulshikshalay.model.GalleryModel;
+import softgalli.gurukulshikshalay.model.InsertAttendanceModel;
 import softgalli.gurukulshikshalay.model.NotificationModel;
 import softgalli.gurukulshikshalay.model.RequestedLeaveModel;
 import softgalli.gurukulshikshalay.model.StuTeaModel;
+import softgalli.gurukulshikshalay.model.StudentListByClassModel;
 import softgalli.gurukulshikshalay.model.StudentListDataModel;
 import softgalli.gurukulshikshalay.model.TeacherListModel;
 import softgalli.gurukulshikshalay.model.TopperLisrModel;
@@ -83,6 +86,9 @@ public interface ApiRetrofitService {
 
     @POST(ApiUrl.GET_CLASS_WISE_STUDENT_LIST)
     @FormUrlEncoded
-    Call<StudentListDataModel> getStudentsListByClassWise(@Field("class") String className);
+    Call<StudentListByClassModel> getStudentsListByClassWise(@Field("class") String className, @Field("sec") String sec);
+
+    @POST(ApiUrl.INSERTATTENDANCE)
+    Call<CommonResponse> insertAttendance(@Body InsertAttendanceModel insertAttendanceModel);
 
 }

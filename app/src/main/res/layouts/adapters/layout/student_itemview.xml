@@ -10,14 +10,15 @@
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:padding="10dp">
+        android:paddingTop="10dp"
+        android:paddingBottom="@dimen/margin_10">
 
         <de.hdodenhof.circleimageview.CircleImageView
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:src="@drawable/logo"
             app:civ_border_color="@color/colorAccent"
-            app:civ_border_width="2dp" />
+            app:civ_border_width="1dp" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -26,15 +27,6 @@
             android:layout_marginRight="5dp"
             android:layout_weight="1"
             android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/tvName"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="name"
-                android:textColor="@color/textColor"
-                android:textSize="@dimen/heading_text_size" />
-
             <TextView
                 android:id="@+id/tvEmailId"
                 android:layout_width="match_parent"
@@ -43,6 +35,15 @@
                 android:text="email"
                 android:textColor="@color/subTextColor"
                 android:textSize="@dimen/text_size" />
+            <TextView
+                android:id="@+id/tvName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="name"
+                android:textColor="@color/textColor"
+                android:textSize="@dimen/heading_text_size" />
+
+
         </LinearLayout>
 
         <LinearLayout
@@ -51,27 +52,29 @@
             android:gravity="center"
             android:orientation="horizontal">
 
-            <Button
+            <TextView
                 android:id="@+id/presentButton"
-                android:layout_width="70dp"
-                android:layout_height="35dp"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
                 android:background="@drawable/border"
                 android:gravity="center"
-                android:padding="5dp"
                 android:text="Present"
+                android:paddingRight="@dimen/margin_5"
+                android:paddingLeft="@dimen/margin_5"
                 android:textAllCaps="false"
                 android:textColor="@color/textColor"
                 android:textSize="@dimen/sub_text_size" />
 
-            <Button
+            <TextView
                 android:id="@+id/absentButton"
-                android:layout_width="70dp"
-                android:layout_height="35dp"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
                 android:layout_marginLeft="5dp"
                 android:background="@drawable/absent_checkbox_image"
                 android:gravity="center"
-                android:padding="5dp"
                 android:text="Absent"
+                android:paddingLeft="@dimen/margin_5"
+                android:paddingRight="@dimen/margin_5"
                 android:textAllCaps="false"
                 android:textColor="@color/colorTextWhite"
                 android:textSize="@dimen/sub_text_size" />
@@ -80,7 +83,7 @@
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="1dp"
+        android:layout_height="0.5dp"
         android:layout_marginLeft="65dp"
         android:background="@color/dark_gray" />
 </LinearLayout>
