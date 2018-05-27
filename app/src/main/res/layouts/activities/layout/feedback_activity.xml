@@ -11,7 +11,6 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/main_view_margin_top"
         android:layout_marginTop="@dimen/main_view_margin_top"
         android:fillViewport="true">
 
@@ -177,6 +176,24 @@
                             <requestFocus />
                         </EditText>
 
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1px"
+                            android:layout_marginTop="1dp"
+                            android:background="@color/hintTextColor" />
+
+                        <TextView
+                            android:id="@+id/submit_feedback_btn"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/done_button_height"
+                            android:layout_margin="10dp"
+                            android:background="@drawable/button_background"
+                            android:gravity="center"
+                            android:text="@string/submit"
+                            android:textAllCaps="true"
+                            android:textColor="@color/colorTextWhite"
+                            android:textSize="16sp" />
+
                     </LinearLayout>
                 </LinearLayout>
             </android.support.v7.widget.CardView>
@@ -185,22 +202,4 @@
 
     </ScrollView>
 
-
-    <LinearLayout
-        android:id="@+id/submitButtonLl"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true">
-        <!--For absent present count -->
-        <android.support.v7.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/margin_10dp"
-            android:clickable="false"
-            card_view:cardCornerRadius="10dp"
-            card_view:cardElevation="10dp">
-
-            <include layout="@layout/common_button" />
-        </android.support.v7.widget.CardView>
-    </LinearLayout>
 </RelativeLayout>

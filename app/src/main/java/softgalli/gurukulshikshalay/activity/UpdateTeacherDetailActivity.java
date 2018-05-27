@@ -128,7 +128,7 @@ public class UpdateTeacherDetailActivity extends AppCompatActivity {
         String classteacherOf = teacherOfClassTv.getText().toString().trim();
         String joindate = teacherJoinDateTv.getText().toString().trim();
         String address = teacherAddressTv.getText().toString().trim();
-        retrofitDataProvider.updateTeacher(teacherId, teacherName, mobile, alternatenumber, emailid, address, qualification, classteacherOf, joindate,
+        retrofitDataProvider.updateTeacher(teacherId, teacherName, mobile, alternatenumber, emailid, address, qualification,
                 new DownlodableCallback<CommonResponse>() {
                     @Override
                     public void onSuccess(final CommonResponse result) {

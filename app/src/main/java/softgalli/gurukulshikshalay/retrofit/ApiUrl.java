@@ -1,22 +1,24 @@
 package softgalli.gurukulshikshalay.retrofit;
 
+import softgalli.gurukulshikshalay.BuildConfig;
+
 public class ApiUrl {
 
     /*#################################### FOR GURUKUL ######################################*/
-    public static final String BASE_URL = "http://apextechies.com/apexschool/index.php/";
+   /* public static final String BASE_URL = "http://apextechies.com/gurukul/index.php/";
     public static final String IMAGE_BASE_URL = "http://www.gurukulshikshalay.com/";
 
-    public static String PLAYSTORE_LINK = "https://play.google.com/store/apps/details?id=softgalli.gurukulshikshalay";
+    public static String PLAYSTORE_LINK = "https://play.google.com/store/apps/details?id=" + BuildConfig.APPLICATION_ID;
     public static String FACEBOOK_LINK = "https://www.facebook.com/gurukulsikshalay/";
     public static String MAIN_URL = "http://www.gurukulshikshalay.com/";
     public static String ADMISSION_API = "takeAdmission.php";
     public static String GENERIC_API = "app_version";
     // TODO: change this to your own Firebase URL
-    public static final String FIREBASE_URL = "https://gurukul-shikshalay.firebaseio.com/";
+    public static final String FIREBASE_URL = "https://gurukul-shikshalay.firebaseio.com/";*/
 
 
     /*#################################### FOR SPS NAWALSHAHI ##############################*/
-    /*public static final String BASE_URL = "http://apextechies.com/sps/index.php/";
+    public static final String BASE_URL = "http://apextechies.com/sps/index.php/";
     public static final String IMAGE_BASE_URL = "http://spsnawalshahi.com/";
 
     public static String PLAYSTORE_LINK = "https://play.google.com/store/apps/details?id=" + BuildConfig.APPLICATION_ID;
@@ -25,7 +27,7 @@ public class ApiUrl {
     public static String ADMISSION_API = "takeAdmission.php";
     public static String GENERIC_API = "app_version";
     // TODO: change this to your own Firebase URL
-    public static final String FIREBASE_URL = "https://sps-nawalshahi.firebaseio.com/";*/
+    public static final String FIREBASE_URL = "https://sps-nawalshahi.firebaseio.com/";
 
 
     /*#################################### COMMON LINKS ##############################*/
@@ -48,8 +50,8 @@ public class ApiUrl {
     public static final String EXAM_SCHEDULE = "get_ExanSchedule";
     public static final String GET_ATTENDANCE = "getAttendance";
     public static final String UPLOAD_ATTENDANCE = "uploadAttendance";
+    public static final String GET_CLASS_WISE_STUDENT_LIST = "getClassWiseStudentsList";
     public static final String GET_RESULT = "getResult";
     public static final String ADD_RESULT = "addResult";
-    public static final String GET_CLASS_WISE_STUDENT_LIST = "studentlist_byclas_sec";
     public static final String INSERTATTENDANCE = "insert_attendance";
 }

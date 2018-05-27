@@ -66,7 +66,7 @@ public interface ApiRetrofitService {
     @POST(ApiUrl.UPDATETEACHER)
     @FormUrlEncoded
     Call<CommonResponse> updateTeacher(@Field("teacher_id") String teacher_id, @Field("name") String name, @Field("mobile_number") String mobile_number, @Field("alternate_number") String alternate_number
-            , @Field("email_id") String email_id, @Field("address") String address, @Field("qualification") String qualificationString, @Field("classteacher_for") String classteacher_for, @Field("joining_date") String joining_date);
+            , @Field("email_id") String email_id, @Field("address") String address, @Field("qualification") String qualification);
 
     @POST(ApiUrl.UPDATESTUDENT)
     @FormUrlEncoded
@@ -86,9 +86,12 @@ public interface ApiRetrofitService {
 
     @POST(ApiUrl.GET_CLASS_WISE_STUDENT_LIST)
     @FormUrlEncoded
+    Call<StudentListDataModel> getStudentsListByClassWise(@Field("class") String className);
+
+    @POST(ApiUrl.GET_CLASS_WISE_STUDENT_LIST)
+    @FormUrlEncoded
     Call<StudentListByClassModel> getStudentsListByClassWise(@Field("class") String className, @Field("sec") String sec);
 
     @POST(ApiUrl.INSERTATTENDANCE)
     Call<CommonResponse> insertAttendance(@Body InsertAttendanceModel insertAttendanceModel);
-
 }

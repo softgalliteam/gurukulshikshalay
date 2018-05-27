@@ -9,7 +9,6 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
-import android.provider.Settings;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentTransaction;
@@ -126,15 +125,6 @@ public class TakeAttendenceActivity extends AppCompatActivity implements DatePic
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         if (Utilz.isOnline(mActivity)) {
             getStudentListFromServer();
-            /*###########################################################################################*/
-            //TODO remove after calling api and getting response from server
-            /*for (int i = 1; i <= 15; i++) {
-                StudentListDataModel st = new StudentListDataModel("SchoolName" + i, "StudentListDataModel Name " + i, "Father Name " + i, "F", 21);
-                studentListDataModelList.add(st);
-            }*/
-            getStudentListFromRealM();
-            /*###########################################################################################*/
-
         } else if (MyPreference.isPreLoaded()) {
             RealMController realMController = RealMController.with(mActivity);
             if (realMController != null)
@@ -156,7 +146,7 @@ public class TakeAttendenceActivity extends AppCompatActivity implements DatePic
             if (mBundle.containsKey(AppConstants.CLASS_NAME))
                 className = mBundle.getString(AppConstants.CLASS_NAME);
             if (mBundle.containsKey(AppConstants.SECTION_NAME))
-                sectionName =  mBundle.getString(AppConstants.SECTION_NAME);
+                sectionName = mBundle.getString(AppConstants.SECTION_NAME);
         }
     }
 
@@ -232,31 +222,33 @@ public class TakeAttendenceActivity extends AppCompatActivity implements DatePic
 
     private void getStudentListFromServer() {
         Utilz.showDailog(TakeAttendenceActivity.this, getResources().getString(R.string.pleasewait));
-            retrofitDataProvider.getStudentsListByClassWise(className, sectionName, new DownlodableCallback<StudentListByClassModel>() {
-                @Override
-                public void onSuccess(final StudentListByClassModel result) {
-                    Utilz.closeDialog();
-                    if (result.getStatus().contains(PreferenceName.TRUE)) {
-                        studentListDataModelList = result.getData();
-                        mRecyclerView.setAdapter(new AttendenceAdapter(studentListDataModelList, mActivity));
-                    }
-                    if (studentListDataModelList != null && studentListDataModelList.size() > 0)
-                        getStudentListFromRealM();
+        retrofitDataProvider.getStudentsListByClassWise(className, sectionName, new DownlodableCallback<StudentListByClassModel>() {
+            @Override
+            public void onSuccess(final StudentListByClassModel result) {
+                Utilz.closeDialog();
+                if (result.getStatus().contains(PreferenceName.TRUE)) {
+                    studentListDataModelList.clear();
+                    studentListDataModelList = result.getData();
+                    mRecyclerView.setAdapter(new AttendenceAdapter(studentListDataModelList, mActivity));
                 }
+                //saving loaded data from server to realm
+                if (studentListDataModelList != null && studentListDataModelList.size() > 0)
+                    saveStudentListToRealM();
+            }
 
-                @Override
-                public void onFailure(String error) {
-                    Utilz.closeDialog();
-                }
+            @Override
+            public void onFailure(String error) {
+                Utilz.closeDialog();
+            }
 
-                @Override
-                public void onUnauthorized(int errorNumber) {
-                    Utilz.closeDialog();
-                }
-            });
+            @Override
+            public void onUnauthorized(int errorNumber) {
+                Utilz.closeDialog();
+            }
+        });
     }
 
-    private void getStudentListFromRealM() {
+    private void saveStudentListToRealM() {
         //saving loaded data from server to realm
         if (studentListDataModelList != null && studentListDataModelList.size() > 0) {
             for (StudentListDataModel studentListDataModel : studentListDataModelList) {
@@ -265,16 +257,8 @@ public class TakeAttendenceActivity extends AppCompatActivity implements DatePic
                 realm.copyToRealm(studentListDataModel);
                 realm.commitTransaction();
             }
-
             MyPreference.setPreLoad(true);
         }
-    }
-
-    private void manageStudentList() {
-        // use this setting to improve performance if you know that changes
-        // in content do not change the layout size of the RecyclerView
-
-
     }
 
     public void seeAttendence() {
@@ -334,25 +318,11 @@ public class TakeAttendenceActivity extends AppCompatActivity implements DatePic
                             //showPopupForCameraPermission();
                         } else if (!showRationale) {
                             // for NEVER ASK AGAIN deny permission
-                            showPopupForCameraPermission();
                         }
                     }
                 }
             }
         }
-    }
-
-    /**
-     * Method Name : showPopupForCameraPermission
-     * Description : Method used to show popup for camera permission
-     */
-    private void showPopupForCameraPermission() {
-        Toast.makeText(mActivity, "Need storage permission, please enable it from settings.", Toast.LENGTH_SHORT).show();
-        Intent intent = new Intent();
-        intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
-        Uri uri = Uri.fromParts("package", mActivity.getPackageName(), null);
-        intent.setData(uri);
-        startActivity(intent);
     }
 
     /*###############################################################################################################################################################################
@@ -492,7 +462,6 @@ public class TakeAttendenceActivity extends AppCompatActivity implements DatePic
             @Override
             public void onSuccess(final CommonResponse result) {
                 Utilz.closeDialog();
-
             }
 
             @Override
@@ -511,14 +480,17 @@ public class TakeAttendenceActivity extends AppCompatActivity implements DatePic
 
     private InsertAttendanceModel getListOfStudentAttendance() {
         InsertAttendanceModel insertAttendanceModel = new InsertAttendanceModel();
-        insertAttendanceModel.setClas("10");
-        insertAttendanceModel.setSec("A");
+        insertAttendanceModel.setClas(className);
+        insertAttendanceModel.setSec(sectionName);
         insertAttendanceModel.setDate(Utilz.getCurrentDate(TakeAttendenceActivity.this));
-        insertAttendanceModel.setTeacher_id("1");
+        if (!TextUtils.isEmpty(ClsGeneral.getStrPreferences(AppConstants.USER_ID)))
+            insertAttendanceModel.setTeacher_id(ClsGeneral.getStrPreferences(AppConstants.USER_ID));
+        else
+            insertAttendanceModel.setTeacher_id(ClsGeneral.getStrPreferences(AppConstants.ID));
         ArrayList<AttendanceStatusModel> list = new ArrayList<>();
         //Create loop here and add student present/Absent status to AttendanceStatusModel
-        for(int i=0; i<100; i++) {
-            list.add(new AttendanceStatusModel("1056",("present"+i) ));
+        for (int i = 0; i < 100; i++) {
+            list.add(new AttendanceStatusModel("1056", ("present" + i)));
         }
 
         insertAttendanceModel.setAttendance(list);

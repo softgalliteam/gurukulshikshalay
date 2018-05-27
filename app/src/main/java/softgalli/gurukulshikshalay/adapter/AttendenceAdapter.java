@@ -50,9 +50,9 @@ public class AttendenceAdapter extends
 
         final int pos = position;
         if (mStudentsList != null && mStudentsList.size() > 0) {
-            viewHolder.tvName.setText("Name: "+mStudentsList.get(position).getStudentName());
+            viewHolder.tvName.setText(mStudentsList.get(position).getStudentName());
 
-            viewHolder.tvEmailId.setText("Roll No.: "+mStudentsList.get(position).getStudentId());
+            viewHolder.tvEmailId.setText(mStudentsList.get(position).getStudentId());
 
             viewHolder.presentButton.setTag(mStudentsList.get(position));
             viewHolder.absentButton.setTag(mStudentsList.get(position));
@@ -61,7 +61,7 @@ public class AttendenceAdapter extends
             viewHolder.presentButton.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
                     managePresentAbsent(viewHolder.presentButton, viewHolder.absentButton, true);
-                    TextView cb = (TextView) v;
+                    Button cb = (Button) v;
                     StudentListDataModel contact = (StudentListDataModel) cb.getTag();
                     contact.setSelected(true);
                     mStudentsList.get(pos).setSelected(true);
@@ -74,7 +74,7 @@ public class AttendenceAdapter extends
             viewHolder.absentButton.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
                     managePresentAbsent(viewHolder.presentButton, viewHolder.absentButton, false);
-                    TextView cb = (TextView) v;
+                    Button cb = (Button) v;
                     StudentListDataModel contact = (StudentListDataModel) cb.getTag();
                     contact.setSelected(false);
                     mStudentsList.get(pos).setSelected(false);
@@ -94,7 +94,7 @@ public class AttendenceAdapter extends
     }
 
     @SuppressLint("NewApi")
-    private void managePresentAbsent(TextView presentBtn, TextView absentBtn, boolean isPresent) {
+    private void managePresentAbsent(Button presentBtn, Button absentBtn, boolean isPresent) {
         if (presentBtn != null && absentBtn != null) {
             if (isPresent) {
                 presentBtn.setTextColor(mActivity.getResources().getColor(R.color.colorTextWhite));
@@ -125,7 +125,7 @@ public class AttendenceAdapter extends
 
         public TextView tvName;
         public TextView tvEmailId;
-        public TextView absentButton, presentButton;
+        public Button absentButton, presentButton;
 
         public ViewHolder(View itemLayoutView) {
             super(itemLayoutView);

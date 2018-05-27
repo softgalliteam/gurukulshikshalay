@@ -452,8 +452,6 @@ public class Utilz {
         sectionList.add("Select Section");
         sectionList.add("A");
         sectionList.add("B");
-        sectionList.add("C");
-        sectionList.add("D");
         return sectionList;
     }
 
