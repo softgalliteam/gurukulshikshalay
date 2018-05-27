@@ -320,22 +320,22 @@ public class TimeTableActivity extends AppCompatActivity {
 
     private void changeBackNText(TextView tv_day) {
         tvMonday.setBackgroundResource(R.drawable.circle);
-        tvMonday.setTextColor(getResources().getColor(R.color.textColor));
+        tvMonday.setTextColor(getResources().getColor(R.color.colorTextWhite));
 
         tvTuesday.setBackgroundResource(R.drawable.circle);
-        tvTuesday.setTextColor(getResources().getColor(R.color.textColor));
+        tvTuesday.setTextColor(getResources().getColor(R.color.colorTextWhite));
 
         tvWednesday.setBackgroundResource(R.drawable.circle);
-        tvWednesday.setTextColor(getResources().getColor(R.color.textColor));
+        tvWednesday.setTextColor(getResources().getColor(R.color.colorTextWhite));
 
         tvThursday.setBackgroundResource(R.drawable.circle);
-        tvThursday.setTextColor(getResources().getColor(R.color.textColor));
+        tvThursday.setTextColor(getResources().getColor(R.color.colorTextWhite));
 
         tvFriday.setBackgroundResource(R.drawable.circle);
-        tvFriday.setTextColor(getResources().getColor(R.color.textColor));
+        tvFriday.setTextColor(getResources().getColor(R.color.colorTextWhite));
 
         tvSaturday.setBackgroundResource(R.drawable.circle);
-        tvSaturday.setTextColor(getResources().getColor(R.color.textColor));
+        tvSaturday.setTextColor(getResources().getColor(R.color.colorTextWhite));
 
         tv_day.setBackgroundResource(R.drawable.ss_hollow_rect_green);
         tv_day.setTextColor(getResources().getColor(R.color.colorAccent));

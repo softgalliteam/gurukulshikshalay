@@ -327,8 +327,9 @@ public class RetrofitDataProvider extends AppCompatActivity implements ServiceMe
     }
 
     @Override
-    public void updateTeacher(String teacher_id, String name, String mobile_number, String alternate_number, String email_id, String address, String qualification, final DownlodableCallback<CommonResponse> callback) {
-        createRetrofitService().updateTeacher(teacher_id, name, mobile_number, alternate_number, email_id, address, qualification).enqueue(
+    public void updateTeacher(String teacher_id, String name, String mobile_number, String alternate_number, String email_id, String address, String qualification,
+                              String classteacherOf,String joindate,final DownlodableCallback<CommonResponse> callback) {
+        createRetrofitService().updateTeacher(teacher_id, name, mobile_number, alternate_number, email_id, address, qualification, classteacherOf, joindate).enqueue(
                 new Callback<CommonResponse>() {
                     @Override
                     public void onResponse(@NonNull Call<CommonResponse> call, @NonNull final Response<CommonResponse> response) {

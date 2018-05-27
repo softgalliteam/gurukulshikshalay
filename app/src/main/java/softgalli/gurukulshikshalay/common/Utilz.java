@@ -30,6 +30,9 @@ import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 
+import org.joda.time.LocalDate;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -46,6 +49,7 @@ import softgalli.gurukulshikshalay.BuildConfig;
 import softgalli.gurukulshikshalay.R;
 import softgalli.gurukulshikshalay.activity.ApplyLeaveActivity;
 import softgalli.gurukulshikshalay.activity.LoginScreenActivity;
+import softgalli.gurukulshikshalay.activity.SeeAttendenceActivity;
 import softgalli.gurukulshikshalay.activity.SeeLeaveListActivity;
 import softgalli.gurukulshikshalay.activity.TakeAttendenceActivity;
 import softgalli.gurukulshikshalay.preference.MyPreference;
@@ -89,7 +93,6 @@ public class Utilz {
 
 
     public static int getDateFromString(String dateStr) {
-        Calendar c = Calendar.getInstance();
         int date = 0;
         SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd");
         try {
@@ -116,19 +119,11 @@ public class Utilz {
             dialog.cancel();
     }
 
-  /*  public static String getCurrentDate(Context askQuestion) {
-        Calendar c = Calendar.getInstance();
-        System.out.println("Current time => " + c.getTime());
-
-        SimpleDateFormat df = new SimpleDateFormat("dd-MMM-yyyy");
-        String formattedDate = df.format(c.getTime());
-        return formattedDate;
-    }*/
     public static String getCurrentDate(Context askQuestion) {
         Calendar c = Calendar.getInstance();
         System.out.println("Current time => " + c.getTime());
 
-        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat df = new SimpleDateFormat("dd-MMM-yyyy");
         String formattedDate = df.format(c.getTime());
         return formattedDate;
     }
@@ -436,19 +431,19 @@ public class Utilz {
         classList = new ArrayList<>();
 
         classList.add("Select Class");
-        classList.add("10");
-        classList.add("9");
-        classList.add("8");
-        classList.add("7");
-        classList.add("6");
-        classList.add("5");
-        classList.add("4");
-        classList.add("3");
-        classList.add("2");
-        classList.add("1");
-        classList.add("LKG");
-        classList.add("UKG");
-        classList.add("NURSERY");
+        classList.add("Class 10");
+        classList.add("Class 9");
+        classList.add("Class 8");
+        classList.add("Class 7");
+        classList.add("Class 6");
+        classList.add("Class 5");
+        classList.add("Class 4");
+        classList.add("Class 3");
+        classList.add("Class 2");
+        classList.add("Class 1");
+        classList.add("Class LKG");
+        classList.add("Class UKG");
+        classList.add("Class NURSERY");
         return classList;
     }
 
@@ -499,7 +494,6 @@ public class Utilz {
                         mIntent.putExtra(AppConstants.CLASS_NAME, classNameSpinner.getSelectedItem().toString());
                         mIntent.putExtra(AppConstants.SECTION_NAME, sectionNameSpinner.getSelectedItem().toString());
                         mActivity.startActivity(mIntent);
-                        Toast.makeText(mActivity, "Coming Soon!!", Toast.LENGTH_SHORT).show();
                         dialog.dismiss();
                     }
                 }
@@ -508,12 +502,10 @@ public class Utilz {
                 @Override
                 public void onClick(View view) {
                     if (isValidClassAndSection(mActivity, classNameSpinner, sectionNameSpinner)) {
-                        /*Intent mIntent = new Intent(mActivity, SeeAttendenceActivity.class);
+                        Intent mIntent = new Intent(mActivity, SeeAttendenceActivity.class);
                         mIntent.putExtra(AppConstants.CLASS_NAME, classNameSpinner.getSelectedItem().toString());
                         mIntent.putExtra(AppConstants.SECTION_NAME, sectionNameSpinner.getSelectedItem().toString());
-                        mActivity.startActivity(mIntent);*/
-
-                        Toast.makeText(mActivity, "Coming Soon!!", Toast.LENGTH_SHORT).show();
+                        mActivity.startActivity(mIntent);
                         dialog.dismiss();
                     }
                 }
@@ -668,5 +660,39 @@ public class Utilz {
         else
             return "";
     }
+
+    public static boolean isAttendanceTakenToday(String mStrDate) {
+        boolean isAttendanceTakenToday = true;
+        String mCurrentDate = getCurrentDate();
+        if (mCurrentDate != null && mStrDate != null && mCurrentDate.equalsIgnoreCase(mStrDate)) {
+            Date dt = new Date();
+            int hours = dt.getHours();
+            if (hours >= 1 || hours <= 12) {
+                isAttendanceTakenToday = false;
+            }
+        }
+        return isAttendanceTakenToday;
+    }
+
+    public static String getDayNameFromDate(String mStrDate) {
+        DateTimeFormatter formatter = DateTimeFormat.forPattern("dd-mm-yyyy");
+        LocalDate localDate = formatter.parseLocalDate(mStrDate);
+        int dayOfWeek = localDate.getDayOfWeek(); // Follows ISO 8601 standard, where Monday = 1, Sunday = 7.
+        if (dayOfWeek == 1)
+            return AppConstants.MONDAY;
+        else if (dayOfWeek == 2)
+            return AppConstants.TUESDAY;
+        else if (dayOfWeek == 3)
+            return AppConstants.WEDNESDAY;
+        else if (dayOfWeek == 4)
+            return AppConstants.THURSDAY;
+        else if (dayOfWeek == 5)
+            return AppConstants.FRIDAY;
+        else if (dayOfWeek == 6)
+            return AppConstants.SATURDAY;
+        else
+            return "Sunday";
+    }
+
 }
 

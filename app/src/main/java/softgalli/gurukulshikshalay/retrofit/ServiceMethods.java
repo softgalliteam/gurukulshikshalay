@@ -47,7 +47,7 @@ public interface ServiceMethods {
 
     void getStudentsListByClassWise(String clas, String sec, DownlodableCallback<StudentListByClassModel> callback);
 
-    void updateTeacher(String teacher_id, String name, String mobile_number, String alternate_number, String email_id, String address, String qualification, DownlodableCallback<CommonResponse> callback);
+    void updateTeacher(String teacher_id, String name, String mobile_number, String alternate_number, String email_id, String address, String qualification, String classteacherOf, String joindate, DownlodableCallback<CommonResponse> callback);
 
     void updateStudent(String user_id, String name, String email, String mobile, String residential_address, DownlodableCallback<CommonResponse> callback);
 

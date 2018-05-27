@@ -284,7 +284,7 @@ public class ViewTeacherProfileActivity extends AppCompatActivity {
         if (mTeachersArrayList != null && mTeachersArrayList.size() > 0) {
             menu.findItem(R.id.editProfile).setVisible(false);
         } else {
-            menu.findItem(R.id.editProfile).setVisible(false);//For now no edit profile option 
+            menu.findItem(R.id.editProfile).setVisible(true);//For now no edit profile option
         }
         // return true so that the menu pop up is opened
         return true;
@@ -294,7 +294,10 @@ public class ViewTeacherProfileActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.editProfile:
-                startActivity(new Intent(mActivity, AddTeacher.class));
+                if (MyPreference.getLoginedAs().equalsIgnoreCase(AppConstants.STUDENT))
+                    startActivity(new Intent(mActivity, UpdateStudentDetailActivity.class));
+                else
+                    startActivity(new Intent(mActivity, UpdateTeacherDetailActivity.class));
                 break;
         }
         return super.onOptionsItemSelected(item);

@@ -66,7 +66,7 @@ public interface ApiRetrofitService {
     @POST(ApiUrl.UPDATETEACHER)
     @FormUrlEncoded
     Call<CommonResponse> updateTeacher(@Field("teacher_id") String teacher_id, @Field("name") String name, @Field("mobile_number") String mobile_number, @Field("alternate_number") String alternate_number
-            , @Field("email_id") String email_id, @Field("address") String address, @Field("qualification") String qualification);
+            , @Field("email_id") String email_id, @Field("address") String address, @Field("qualification") String qualificationString, @Field("classteacher_for") String classteacher_for, @Field("joining_date") String joining_date);
 
     @POST(ApiUrl.UPDATESTUDENT)
     @FormUrlEncoded

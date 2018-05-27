@@ -13,6 +13,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -59,7 +60,7 @@ public class FeedbackActivity extends AppCompatActivity implements RatingBar.OnR
         errorMessage = getString(R.string.error_msg);
 
 
-        TextView submitFeedbackBtn = findViewById(R.id.submit_feedback_btn);
+        LinearLayout submitButtonLl = findViewById(R.id.submitButtonLl);
         feedbackText = findViewById(R.id.feedback_Txt);
         final EditText nameTv = findViewById(R.id.nameTv);
         final EditText feedbackEmail = findViewById(R.id.email_Txt);
@@ -82,7 +83,7 @@ public class FeedbackActivity extends AppCompatActivity implements RatingBar.OnR
             }
         }
 
-        submitFeedbackBtn.setOnClickListener(new View.OnClickListener() {
+        submitButtonLl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String msg = feedbackText.getText().toString();
