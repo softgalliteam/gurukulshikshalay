@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -17,20 +18,26 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
+            <!--For showing students list with attendance status-->
             <android.support.v7.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                card_view:cardCornerRadius="10dp"
                 card_view:cardElevation="10dp">
 
-                <com.applandeo.materialcalendarview.CalendarView
-                    android:id="@+id/calendarView"
+                <TextView
+                    android:id="@+id/attendanceDateTv"
+                    fontPath="@string/roboto_regular"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
-
+                    android:layout_height="@dimen/button_height"
+                    android:layout_margin="@dimen/margin_10dp"
+                    android:background="@drawable/ss_hollow_rect_green"
+                    android:drawableRight="@drawable/date"
+                    android:gravity="center_vertical"
+                    android:hint="@string/select_date"
+                    android:textColor="@color/color_de00000"
+                    android:textSize="@dimen/text_15"
+                    tools:ignore="MissingPrefix" />
             </android.support.v7.widget.CardView>
-
             <!--For showing students list with attendance status-->
             <android.support.v7.widget.CardView
                 android:layout_width="match_parent"

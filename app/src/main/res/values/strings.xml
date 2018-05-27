@@ -118,6 +118,7 @@
     <string name="admission_successfully">Congratulations! You admission request is accepted.</string>
     <string name="update_your_app">Update Your App</string>
     <string name="no_syllabus_is_added_till_now">No syllabus data is available for now.</string>
+    <string name="attendance_not_take_till_now">Attendance is either not take till now or not updated on app, Please try later.</string>
 
     <string name="feedback_text_heading">Your feedback may help us to make this app more efficient</string>
     <string name="write_your_feedback_txt">write your feedback</string>
@@ -140,7 +141,7 @@
     ###########################################################################################################################################################################
     -->
 
-    <string name="app_name">Gurukul Shikshalay</string>
+    <!--<string name="app_name">Gurukul Shikshalay</string>
 
     <string name="principal_name">Chandrika Barnwal</string>
     <string name="school_name">Gurukul Shikshalay</string>
@@ -161,12 +162,14 @@
     <string name="school_on_map_url"><![CDATA[https://www.google.com/maps?ll=24.445404,85.881632&z=15&t=m&hl=en-US&gl=IN&mapclient=embed&cid=6936239094202783588]]></string>
 
     <string name="aboutus_desc">Gurukul Shikshalay serves nearly 1500 students, 1 to 10th class students at Ghodthamba, near Petrol Pump, Giridih, Jharkhand. In addition, Gurukul Shikshalay provides highly educated teachers and with the help of digital technology we are connecting parents teachers and students to understand each other and help our students for his all kind of growth. We provide best study environment for the growth and development of all students. Every learner can succeed in Gurukul Shikshalay with academic acceleration and enrichment available for the gifted and talented students. Computer and English as a preferred knowledge programs are also offered to make students capable to go for technology and higher education field. We want to remove the trend of schools for earning money only. We want to really make students capable to be a great person who can serve nation with their knowledge and also can be a great human being. We also emphasize on new digital technology which is most important for future.</string>
+    -->
+
     <!--
    ###########################################################################################################################################################################
    ####################################################################### GURUKUL DETAILS################################################################
    ###########################################################################################################################################################################
    -->
-    <!--<string name="app_name">SPS Nawalshahi</string>
+    <string name="app_name">SPS Nawalshahi</string>
 
     <string name="principal_name">Saddam Hussain</string>
     <string name="principal_name_with_designation">Saddam Hussain(Principal)</string>
@@ -179,7 +182,7 @@
 
     <string name="short_address">Nawalshahi, Koderma, Jharkhand(825418).</string>
     <string name="full_address">At-Nawalshahi, PO+PS-Nawalshahi, Dist.-Koderma, State-Jharkhand, India(825418)</string>
-    <string name="helpline_no1">+91 09939119583</string>
+    <string name="helpline_no1">+91 9939119583</string>
     <string name="principal_phone">+91 9631784042</string>
     <string name="principal_email">hussainsaddam03@gmail.com</string>
 
@@ -187,5 +190,6 @@
     <string name="school_on_map_url"><![CDATA[https://www.google.com/maps?ll=24.429955,85.762535&z=14&t=m&hl=en-US&gl=IN&mapclient=embed&q=Nawalsahi+Jharkhand+825418]]></string>
 
     <string name="aboutus_desc">SANSKAR Public School serves nearly 400 students, 1 to 10th class students at Nawalshahi, near Kalimanda, Koderma, Jharkhand. In addition, SANSKAR Public School provides highly educated teachers and with the help of digital technology we are connecting parents teachers and studets to understand each other and help our students for his all kind of growth. We provide best study environment for the growth and development of all students. Every learner can succeed in SANSKAR Public School with academic acceleration and enrichment available for the gifted and talented students. Computer and English as a preferred knowledge programs are also offered to make students capable to go for technology and higher education field. We want to remove the trend of schools for earning money only. We want to really make students capable to be a great person who can serve nation with their knowledge and also can be a great human being. We also emphasis on new digital technology which is most important for future.</string>
--->
+
+
 </resources>

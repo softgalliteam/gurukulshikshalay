@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background_color"
+    android:orientation="vertical">
+
+    <include layout="@layout/common_toolbar" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/main_view_margin_top"
+        android:layout_marginTop="@dimen/main_view_margin_top"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <!--For absent present count -->
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                card_view:cardCornerRadius="10dp"
+                card_view:cardElevation="10dp">
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#FFF"
+                    android:orientation="vertical"
+                    android:padding="@dimen/padding_15dp">
+
+                    <TextView
+                        android:id="@+id/teacherIdTv"
+                        android:layout_width="match_parent"
+                        android:layout_height="45dp"
+                        android:background="@drawable/ss_hollow_rect_green"
+                        android:gravity="center_vertical"
+                        android:hint="Teacher Id"
+                        android:imeOptions="actionNext"
+                        android:paddingLeft="10dp"
+                        android:singleLine="true"
+                        android:textColor="@color/textColor"
+                        android:textSize="@dimen/text_size" />
+
+
+                    <TextView
+                        android:id="@+id/teacherNameTv"
+                        android:layout_width="match_parent"
+                        android:layout_height="45dp"
+                        android:layout_marginTop="@dimen/margin_10dp"
+                        android:background="@drawable/ss_hollow_rect_green"
+                        android:gravity="center_vertical"
+                        android:hint="Teacher's Full Name*"
+                        android:imeOptions="actionNext"
+                        android:paddingLeft="10dp"
+                        android:singleLine="true"
+                        android:textColor="@color/textColor"
+                        android:textSize="@dimen/text_size" />
+
+                    <EditText
+                        android:id="@+id/teacherQualTv"
+                        android:layout_width="match_parent"
+                        android:layout_height="45dp"
+                        android:layout_marginTop="@dimen/margin_10dp"
+                        android:background="@drawable/ss_hollow_rect_green"
+                        android:hint="Qualification"
+                        android:imeOptions="actionNext"
+                        android:paddingLeft="10dp"
+                        android:singleLine="true"
+                        android:textColor="@color/textColor"
+                        android:textSize="@dimen/text_size" />
+
+
+                    <EditText
+                        android:id="@+id/teacherPhoneTv"
+                        android:layout_width="match_parent"
+                        android:layout_height="45dp"
+                        android:layout_marginTop="@dimen/margin_10dp"
+                        android:background="@drawable/ss_hollow_rect_green"
+                        android:hint="Mobile Number"
+                        android:imeOptions="actionNext"
+                        android:inputType="number"
+                        android:maxLength="10"
+                        android:paddingLeft="10dp"
+                        android:singleLine="true"
+                        android:textColor="@color/textColor"
+                        android:textSize="@dimen/text_size" />
+
+                    <EditText
+                        android:id="@+id/teacherAltPhomeTv"
+                        android:layout_width="match_parent"
+                        android:layout_height="45dp"
+                        android:layout_marginTop="@dimen/margin_10dp"
+                        android:background="@drawable/ss_hollow_rect_green"
+                        android:hint="Alternate Mobile Number"
+                        android:imeOptions="actionNext"
+                        android:inputType="number"
+                        android:maxLength="10"
+                        android:paddingLeft="10dp"
+                        android:singleLine="true"
+                        android:textColor="@color/textColor"
+                        android:textSize="@dimen/text_size" />
+
+                    <EditText
+                        android:id="@+id/teacherEmailTv"
+                        android:layout_width="match_parent"
+                        android:layout_height="45dp"
+                        android:layout_marginTop="@dimen/margin_10dp"
+                        android:background="@drawable/ss_hollow_rect_green"
+                        android:hint="Email Id"
+                        android:imeOptions="actionNext"
+                        android:inputType="textEmailAddress"
+                        android:paddingLeft="10dp"
+                        android:singleLine="true"
+                        android:textColor="@color/textColor"
+                        android:textSize="@dimen/text_size" />
+
+
+                    <EditText
+                        android:id="@+id/teacherOfClassTv"
+                        android:layout_width="match_parent"
+                        android:layout_height="45dp"
+                        android:layout_marginTop="@dimen/margin_10dp"
+                        android:background="@drawable/ss_hollow_rect_green"
+                        android:hint="Class Teacher For which class"
+                        android:imeOptions="actionNext"
+                        android:inputType="number"
+                        android:paddingLeft="10dp"
+                        android:singleLine="true"
+                        android:textColor="@color/textColor"
+                        android:textSize="@dimen/text_size" />
+
+
+                    <EditText
+                        android:id="@+id/teacherJoinDateTv"
+                        android:layout_width="match_parent"
+                        android:layout_height="45dp"
+                        android:layout_marginTop="@dimen/margin_10dp"
+                        android:background="@drawable/ss_hollow_rect_green"
+                        android:focusable="false"
+                        android:hint="Joining Date"
+                        android:imeOptions="actionNext"
+                        android:paddingLeft="10dp"
+                        android:singleLine="true"
+                        android:textColor="@color/textColor"
+                        android:textSize="@dimen/text_size" />
+
+
+                    <EditText
+                        android:id="@+id/teacherAddressTv"
+                        android:layout_width="match_parent"
+                        android:layout_height="45dp"
+                        android:layout_marginTop="@dimen/margin_10dp"
+                        android:background="@drawable/ss_hollow_rect_green"
+                        android:hint="Address"
+                        android:imeOptions="actionDone"
+                        android:paddingLeft="10dp"
+                        android:singleLine="true"
+                        android:textColor="@color/textColor"
+                        android:textSize="@dimen/text_size" />
+                </LinearLayout>
+            </android.support.v7.widget.CardView>
+        </LinearLayout>
+    </ScrollView>
+
+
+    <LinearLayout
+        android:id="@+id/submitButtonLl"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true">
+        <!--For absent present count -->
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_10dp"
+            android:clickable="false"
+            card_view:cardCornerRadius="10dp"
+            card_view:cardElevation="10dp">
+
+            <include layout="@layout/common_button" />
+        </android.support.v7.widget.CardView>
+    </LinearLayout>
+</RelativeLayout>
