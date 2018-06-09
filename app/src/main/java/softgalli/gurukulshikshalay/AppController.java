@@ -3,8 +3,10 @@ package softgalli.gurukulshikshalay;
 import android.app.Application;
 import android.content.Context;
 
+import com.crashlytics.android.Crashlytics;
 import com.firebase.client.Firebase;
 
+import io.fabric.sdk.android.Fabric;
 import org.joda.time.LocalDateTime;
 
 import io.realm.Realm;
@@ -26,6 +28,7 @@ public class AppController extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        Fabric.with(this, new Crashlytics());
         mInstance = this;
         Firebase.setAndroidContext(this);
         CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
