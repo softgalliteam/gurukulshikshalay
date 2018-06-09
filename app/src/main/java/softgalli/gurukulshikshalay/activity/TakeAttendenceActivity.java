@@ -68,9 +68,7 @@ import softgalli.gurukulshikshalay.retrofit.DownlodableCallback;
 import softgalli.gurukulshikshalay.retrofit.RetrofitDataProvider;
 
 public class TakeAttendenceActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
-    public static final int REQ_CODE_READ_EXTERNAL_STORAGE_PERMISSION = 301;
     private static final String TAG = TakeAttendenceActivity.class.getSimpleName();
-    public static String[] mStrArrExternalStorageReadWritePermissions = {Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE};
     @BindView(R.id.totalStudentCount)
     TextView totalStudentCount;
     @BindView(R.id.presentStudentCount)
@@ -97,7 +95,6 @@ public class TakeAttendenceActivity extends AppCompatActivity implements DatePic
     private String fileName = "";
     private Activity mActivity;
     private Realm realm;
-    private AttendenceAdapter mAdapter;
     private ArrayList<StudentListDataModel> studentListDataModelList;
     private String className = "", sectionName = "";
     public boolean isAttendenceTakenAndSaved = true;
@@ -119,25 +116,14 @@ public class TakeAttendenceActivity extends AppCompatActivity implements DatePic
 
         manageWeekCalenderView();
 
-        initReam();
 
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         if (Utilz.isOnline(mActivity)) {
             getStudentListFromServer();
-        } else if (MyPreference.isPreLoaded()) {
-            RealMController realMController = RealMController.with(mActivity);
-            if (realMController != null)
-                studentListDataModelList.addAll(realMController.getStudentsList());
         } else {
             Utilz.showNoInternetConnectionDialog(mActivity);
         }
-
-
-        manageCreateAndUploadAttendence();
-
-        checkPermissionForReadStorage();
-
     }
 
     private void getIntentData() {
@@ -163,13 +149,6 @@ public class TakeAttendenceActivity extends AppCompatActivity implements DatePic
         });
     }
 
-    private void initReam() {
-        //get realm instance
-        this.realm = RealMController.with(this).getRealm();
-
-        // refresh the realm instance
-        RealMController.with(this).refresh();
-    }
 
     private void initView() {
         mActivity = this;
@@ -203,20 +182,6 @@ public class TakeAttendenceActivity extends AppCompatActivity implements DatePic
                 .into(userProfilePicIv);
     }
 
-    private void manageCreateAndUploadAttendence() {
-        File folder = new File(Environment.getExternalStorageDirectory() + "/Attendence");
-        Date c = Calendar.getInstance().getTime();
-        SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy");
-        String formattedDate = df.format(c);
-        boolean var = false;
-        if (!folder.exists())
-            var = folder.mkdir();
-
-        Log.i(TAG, "var : " + var);
-
-        fileName = folder.toString() + "/Class_" + className + "_" + formattedDate + ".csv";
-        filePath.setText(fileName);
-    }
 
     private RetrofitDataProvider retrofitDataProvider;
 
@@ -231,9 +196,6 @@ public class TakeAttendenceActivity extends AppCompatActivity implements DatePic
                     studentListDataModelList = result.getData();
                     mRecyclerView.setAdapter(new AttendenceAdapter(studentListDataModelList, mActivity));
                 }
-                //saving loaded data from server to realm
-                if (studentListDataModelList != null && studentListDataModelList.size() > 0)
-                    saveStudentListToRealM();
             }
 
             @Override
@@ -248,86 +210,7 @@ public class TakeAttendenceActivity extends AppCompatActivity implements DatePic
         });
     }
 
-    private void saveStudentListToRealM() {
-        //saving loaded data from server to realm
-        if (studentListDataModelList != null && studentListDataModelList.size() > 0) {
-            for (StudentListDataModel studentListDataModel : studentListDataModelList) {
-                // Persist your data easily
-                realm.beginTransaction();
-                realm.copyToRealm(studentListDataModel);
-                realm.commitTransaction();
-            }
-            MyPreference.setPreLoad(true);
-        }
-    }
 
-    public void seeAttendence() {
-        try {
-            List<StudentListDataModel> studentsList = (mAdapter).getStudentist();
-            if (!TextUtils.isEmpty(fileName) && studentsList != null && studentsList.size() > 0) {
-                CsvFileWriter.writeCsvFile(fileName, studentsList);
-            } else {
-                Toast.makeText(mActivity, "Something went wrong while creating attendence csv file", Toast.LENGTH_SHORT).show();
-            }
-            showAttendence();
-        } catch (Exception e) {
-            Log.e(TAG, "Something went wrong while creating attendence csv file,\nReason : " + e);
-        }
-    }
-
-    public void showAttendence() {
-        // Create URI
-        File file = new File(fileName);
-        if (file.exists()) {
-            Uri path = Uri.fromFile(file);
-            Intent pdfIntent = new Intent(Intent.ACTION_VIEW);
-            pdfIntent.setDataAndType(path, "application/vnd.ms-excel");
-            pdfIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            try {
-                startActivity(pdfIntent);
-            } catch (Exception e) {
-                Utilz.showMessageOnDialog(mActivity, "Install MS-Excel", "Please install MS-Excel app to view the file.");
-            }
-        }
-    }
-
-    /*******************************************************************************
-     * Method Name : checkPermissionForReadStorage
-     * Description : This method will request  Permission  for read and Write Storage
-     */
-    public void checkPermissionForReadStorage() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M &&
-                ActivityCompat.checkSelfPermission(mActivity, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED &&
-                ActivityCompat.checkSelfPermission(mActivity, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(mActivity, mStrArrExternalStorageReadWritePermissions,
-                    REQ_CODE_READ_EXTERNAL_STORAGE_PERMISSION);
-        }
-    }
-
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
-        switch (requestCode) {
-            case REQ_CODE_READ_EXTERNAL_STORAGE_PERMISSION: {
-                for (int i = 0, len = permissions.length; i < len; i++) {
-                    String permission = permissions[i];
-                    if (grantResults[i] == PackageManager.PERMISSION_DENIED) {
-                        boolean showRationale = ActivityCompat.shouldShowRequestPermissionRationale(this, permission);
-                        if (showRationale) {
-                            //For simple deny permission
-                            //showPopupForCameraPermission();
-                        } else if (!showRationale) {
-                            // for NEVER ASK AGAIN deny permission
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-    /*###############################################################################################################################################################################
-    ###############################################################################################################################################################################
-    ###############################################################################################################################################################################*/
 
 
     private void manageWeekCalenderView() {
@@ -443,7 +326,7 @@ public class TakeAttendenceActivity extends AppCompatActivity implements DatePic
                 uploadAttendence();
                 break;
             case R.id.seeAttendenceBtn:
-                seeAttendence();
+                //seeAttendence();
                 break;
         }
     }
@@ -462,6 +345,7 @@ public class TakeAttendenceActivity extends AppCompatActivity implements DatePic
             @Override
             public void onSuccess(final CommonResponse result) {
                 Utilz.closeDialog();
+                finish();
             }
 
             @Override
@@ -489,8 +373,11 @@ public class TakeAttendenceActivity extends AppCompatActivity implements DatePic
             insertAttendanceModel.setTeacher_id(ClsGeneral.getStrPreferences(AppConstants.ID));
         ArrayList<AttendanceStatusModel> list = new ArrayList<>();
         //Create loop here and add student present/Absent status to AttendanceStatusModel
-        for (int i = 0; i < 100; i++) {
-            list.add(new AttendanceStatusModel("1056", ("present" + i)));
+        for (int i = 0; i < studentListDataModelList.size(); i++) {
+            if (studentListDataModelList.get(i).isSelected())
+            list.add(new AttendanceStatusModel(studentListDataModelList.get(i).getStudentId(), "Present"));
+            else list.add(new AttendanceStatusModel(studentListDataModelList.get(i).getStudentId(), "Absent"));
+
         }
 
         insertAttendanceModel.setAttendance(list);

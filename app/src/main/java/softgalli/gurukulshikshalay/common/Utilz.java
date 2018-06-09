@@ -431,19 +431,19 @@ public class Utilz {
         classList = new ArrayList<>();
 
         classList.add("Select Class");
-        classList.add("Class 10");
-        classList.add("Class 9");
-        classList.add("Class 8");
-        classList.add("Class 7");
-        classList.add("Class 6");
-        classList.add("Class 5");
-        classList.add("Class 4");
-        classList.add("Class 3");
-        classList.add("Class 2");
-        classList.add("Class 1");
-        classList.add("Class LKG");
-        classList.add("Class UKG");
-        classList.add("Class NURSERY");
+        classList.add("10");
+        classList.add("9");
+        classList.add("8");
+        classList.add("7");
+        classList.add("6");
+        classList.add("5");
+        classList.add("4");
+        classList.add("3");
+        classList.add("2");
+        classList.add("1");
+        classList.add("LKG");
+        classList.add("UKG");
+        classList.add("NURSERY");
         return classList;
     }
 
