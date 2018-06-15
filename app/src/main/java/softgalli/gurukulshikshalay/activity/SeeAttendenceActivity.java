@@ -4,32 +4,46 @@ import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.DatePicker;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.Calendar;
+import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import softgalli.gurukulshikshalay.R;
+import softgalli.gurukulshikshalay.adapter.AttendenceAdapter;
 import softgalli.gurukulshikshalay.common.AppConstants;
+import softgalli.gurukulshikshalay.common.ClsGeneral;
+import softgalli.gurukulshikshalay.common.PreferenceName;
 import softgalli.gurukulshikshalay.common.Utilz;
+import softgalli.gurukulshikshalay.model.StudentListByClassModel;
+import softgalli.gurukulshikshalay.model.StudentListDataModel;
+import softgalli.gurukulshikshalay.preference.MyPreference;
+import softgalli.gurukulshikshalay.retrofit.DownlodableCallback;
+import softgalli.gurukulshikshalay.retrofit.RetrofitDataProvider;
 
 /**
  * Created by Welcome on 2/12/2018.
  */
 
 public class SeeAttendenceActivity extends AppCompatActivity {
+    private String TAG = SeeAttendenceActivity.class.getSimpleName();
     @BindView(R.id.toolbar)
     Toolbar toolbar;
     @BindView(R.id.attendanceDateTv)
     TextView attendanceDateTv;
-    private String TAG = SeeAttendenceActivity.class.getSimpleName();
+    @BindView(R.id.totalAbsentPresentCardView)
+    LinearLayout totalAbsentPresentCardView;
+    @BindView(R.id.rv_common)
+    RecyclerView mRecyclerView;
     @BindView(R.id.totalStudentCount)
     TextView totalStudentCount;
     @BindView(R.id.presentStudentCount)
@@ -38,17 +52,27 @@ public class SeeAttendenceActivity extends AppCompatActivity {
     TextView absentStudentCount;
     private Activity mActivity;
     int mYear, mMonth, mDay;
-    private String mClassName = "", mSectionName = "";
+    private String mClassName = "", mSectionName = "", mStudentId = "";
+    private RetrofitDataProvider retrofitDataProvider;
+    private ArrayList<StudentListDataModel> studentListDataModelList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.see_attendence_activity);
         mActivity = this;
+        studentListDataModelList = new ArrayList();
+
+        retrofitDataProvider = new RetrofitDataProvider(mActivity);
+
         ButterKnife.bind(this);
         initToolbar();
         initView();
         getIntentData();
+        if (MyPreference.isLogined() && MyPreference.getLoginedAs().equalsIgnoreCase(AppConstants.STUDENT))
+            mStudentId = MyPreference.getUserId();
+        if (TextUtils.isEmpty(mStudentId) && MyPreference.isLogined() && MyPreference.getLoginedAs().equalsIgnoreCase(AppConstants.STUDENT))
+            mStudentId = ClsGeneral.getStrPreferences(AppConstants.LOGIN_AS);
     }
 
     private void getAttendenceByDateClassSec(String mStrDateOfAtt) {
@@ -82,6 +106,7 @@ public class SeeAttendenceActivity extends AppCompatActivity {
                 mClassName = mBundle.getString(AppConstants.CLASS_NAME);
             if (mBundle.containsKey(AppConstants.SECTION_NAME))
                 mSectionName = mBundle.getString(AppConstants.SECTION_NAME);
+            getSupportActionBar().setTitle("Attendence of Class-" + mClassName);
         }
     }
 
@@ -99,19 +124,60 @@ public class SeeAttendenceActivity extends AppCompatActivity {
     }
 
     private void getStudentsAttendance(String mStrDate) {
+        Utilz.showDailog(mActivity, mActivity.getResources().getString(R.string.pleasewait));
+        retrofitDataProvider.getStudentsAttendance(mClassName, mSectionName, mStudentId, mStrDate, new DownlodableCallback<StudentListByClassModel>() {
+            @Override
+            public void onSuccess(final StudentListByClassModel result) {
+                Utilz.closeDialog();
+                if (result != null && result.getStatus().contains(PreferenceName.TRUE)) {
+                    studentListDataModelList.clear();
+                    studentListDataModelList = result.getData();
+                    mRecyclerView.setAdapter(new AttendenceAdapter(mActivity, studentListDataModelList, false));
 
-        Toast.makeText(mActivity, "API is calling for getting attendance of " + mStrDate + " date", Toast.LENGTH_SHORT).show();
-        //Show here present students count and absent students count for example
-        manageAbsentPresentCount(15, 2);
+                    if (studentListDataModelList != null && studentListDataModelList.size() > 0) {
+                        //Show here present students count and absent students count for example
+                        manageAbsentPresentCount(studentListDataModelList.size(), getAbsentStudentCount(studentListDataModelList));
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(String error) {
+                Utilz.closeDialog();
+            }
+
+            @Override
+            public void onUnauthorized(int errorNumber) {
+                Utilz.closeDialog();
+            }
+        });
+    }
+
+    private int getAbsentStudentCount(ArrayList<StudentListDataModel> studentListDataModelList) {
+        int totalAbsentStudentsCount = 0;
+        for (int i = 0; i < studentListDataModelList.size(); i++) {
+            if (!studentListDataModelList.get(i).isSelected())
+                totalAbsentStudentsCount = totalAbsentStudentsCount + 1;
+        }
+        return totalAbsentStudentsCount;
     }
 
     public void manageAbsentPresentCount(int mIntTotalStudentCount, int mIntAbsentStudentCount) {
         if (totalStudentCount != null)
-            totalStudentCount.setText(mIntTotalStudentCount + "\nTotal Students");
-        if (presentStudentCount != null && mIntTotalStudentCount > mIntAbsentStudentCount)
-            presentStudentCount.setText((mIntTotalStudentCount - mIntAbsentStudentCount) + "\nPresent");
+            totalStudentCount.setText("Total-" + mIntTotalStudentCount);
+        if (presentStudentCount != null) {
+            presentStudentCount.setText((mIntTotalStudentCount - mIntAbsentStudentCount) + "");
+        }
         if (absentStudentCount != null)
-            absentStudentCount.setText(mIntAbsentStudentCount + "\nAbsent");
+            absentStudentCount.setText(mIntAbsentStudentCount + "");
+
+        if (totalAbsentPresentCardView != null) {
+            if ((mIntTotalStudentCount - mIntAbsentStudentCount) > 0) {
+                totalAbsentPresentCardView.setVisibility(View.VISIBLE);
+            } else {
+                totalAbsentPresentCardView.setVisibility(View.GONE);
+            }
+        }
     }
 
     @OnClick(R.id.attendanceDateTv)
@@ -135,4 +201,5 @@ public class SeeAttendenceActivity extends AppCompatActivity {
         datePickerDialog.getDatePicker().setMaxDate(System.currentTimeMillis());
         datePickerDialog.show();
     }
+
 }

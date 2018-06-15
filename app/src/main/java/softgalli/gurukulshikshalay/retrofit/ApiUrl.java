@@ -47,11 +47,12 @@ public class ApiUrl {
     public static final String UPDATESTUDENT = "update_Student";
 
     public static final String TIME_TABLE = "get_TimeTable";
+    public static final String GET_CLASS_WISE_STUDENT_LIST = "studentlist_byclas_sec";
+    public static final String INSER_TATTENDANCE = "insert_attendance";
+    public static final String GET_STUDENT_ATTENDANCE_LIST = "get_student_attendance_list";
     public static final String EXAM_SCHEDULE = "get_ExanSchedule";
     public static final String GET_ATTENDANCE = "getAttendance";
     public static final String UPLOAD_ATTENDANCE = "uploadAttendance";
-    public static final String GET_CLASS_WISE_STUDENT_LIST = "studentlist_byclas_sec";
     public static final String GET_RESULT = "getResult";
     public static final String ADD_RESULT = "addResult";
-    public static final String INSERTATTENDANCE = "insert_attendance";
 }

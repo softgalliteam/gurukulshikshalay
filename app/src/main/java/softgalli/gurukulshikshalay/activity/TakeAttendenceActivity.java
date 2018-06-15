@@ -76,6 +76,7 @@ public class TakeAttendenceActivity extends AppCompatActivity {
         setContentView(R.layout.take_attendance_activity);
         ButterKnife.bind(this);
         mActivity = this;
+        studentListDataModelList = new ArrayList();
         retrofitDataProvider = new RetrofitDataProvider(mActivity);
         getIntentData();
         initToolbar();
@@ -103,6 +104,7 @@ public class TakeAttendenceActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -113,10 +115,6 @@ public class TakeAttendenceActivity extends AppCompatActivity {
 
 
     private void initView() {
-        mActivity = this;
-        studentListDataModelList = new ArrayList();
-        getSupportActionBar().setHomeButtonEnabled(true);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("Attendence Class-" + className + " (" + Utilz.getCurrentDayNameAndDate() + ")");
 
         mRecyclerView.setNestedScrollingEnabled(false);
@@ -148,7 +146,7 @@ public class TakeAttendenceActivity extends AppCompatActivity {
     private RetrofitDataProvider retrofitDataProvider;
 
     private void getStudentListFromServer() {
-        Utilz.showDailog(TakeAttendenceActivity.this, getResources().getString(R.string.pleasewait));
+        Utilz.showDailog(TakeAttendenceActivity.this, mActivity.getResources().getString(R.string.pleasewait));
         retrofitDataProvider.getStudentsListByClassWise(className, sectionName, new DownlodableCallback<StudentListByClassModel>() {
             @Override
             public void onSuccess(final StudentListByClassModel result) {
@@ -156,7 +154,7 @@ public class TakeAttendenceActivity extends AppCompatActivity {
                 if (result.getStatus().contains(PreferenceName.TRUE)) {
                     studentListDataModelList.clear();
                     studentListDataModelList = result.getData();
-                    mRecyclerView.setAdapter(new AttendenceAdapter(studentListDataModelList, mActivity));
+                    mRecyclerView.setAdapter(new AttendenceAdapter(mActivity, studentListDataModelList, true));
                 }
             }
 

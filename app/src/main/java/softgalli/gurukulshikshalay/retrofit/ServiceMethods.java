@@ -52,5 +52,8 @@ public interface ServiceMethods {
     void updateStudent(String user_id, String name, String email, String mobile, String residential_address, DownlodableCallback<CommonResponse> callback);
 
     void alumniList(DownlodableCallback<AlumniModel> callback);
+
+    void getStudentsAttendance(String className, String sec, String studentId, String date, DownlodableCallback<StudentListByClassModel> callback);
+
     void attendance(InsertAttendanceModel insertAttendanceModel, DownlodableCallback<CommonResponse> callback);
 }

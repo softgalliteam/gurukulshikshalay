@@ -21,14 +21,19 @@ public class AttendenceAdapter extends
     private Activity mActivity;
     private int mIntTotalStudentCount;
     private int mIntAbsentStudentCount;
+    private boolean isForTakeAttendanceScreen;
 
-    public AttendenceAdapter(List<StudentListDataModel> studentListDataModels, Activity mActivity) {
+    public AttendenceAdapter(Activity mActivity, List<StudentListDataModel> studentListDataModels, boolean isForTakeAttendanceScreen) {
         this.mStudentsList = studentListDataModels;
         this.mActivity = mActivity;
+        this.isForTakeAttendanceScreen = isForTakeAttendanceScreen;
         mIntTotalStudentCount = 0;
-        if (studentListDataModels != null && studentListDataModels.size() > 0)
+        if (studentListDataModels != null && studentListDataModels.size() > 0) {
             mIntAbsentStudentCount = mIntTotalStudentCount = mStudentsList.size();
-        ((TakeAttendenceActivity) mActivity).manageAbsentPresentCount(mIntTotalStudentCount, mIntAbsentStudentCount);
+        }
+        if (isForTakeAttendanceScreen) {
+            ((TakeAttendenceActivity) mActivity).manageAbsentPresentCount(mIntTotalStudentCount, mIntAbsentStudentCount);
+        }
     }
 
     // Create new views
@@ -55,41 +60,41 @@ public class AttendenceAdapter extends
             viewHolder.presentButton.setTag(mStudentsList.get(position));
             viewHolder.absentButton.setTag(mStudentsList.get(position));
 
+            if (isForTakeAttendanceScreen) {
+                viewHolder.presentButton.setOnClickListener(new View.OnClickListener() {
+                    public void onClick(View v) {
+                        managePresentAbsent(viewHolder.presentButton, viewHolder.absentButton, true);
 
-            viewHolder.presentButton.setOnClickListener(new View.OnClickListener() {
-                public void onClick(View v) {
-                    managePresentAbsent(viewHolder.presentButton, viewHolder.absentButton, true);
-
-                    if (v != null && v instanceof TextView) {
-                        TextView cb = (TextView) v;
-                        StudentListDataModel contact = (StudentListDataModel) cb.getTag();
-                        if (!contact.isSelected()) {
-                            mIntAbsentStudentCount = mIntAbsentStudentCount - 1;
-                            ((TakeAttendenceActivity) mActivity).manageAbsentPresentCount(mIntTotalStudentCount, mIntAbsentStudentCount);
+                        if (v != null && v instanceof TextView) {
+                            TextView cb = (TextView) v;
+                            StudentListDataModel contact = (StudentListDataModel) cb.getTag();
+                            if (!contact.isSelected()) {
+                                mIntAbsentStudentCount = mIntAbsentStudentCount - 1;
+                                ((TakeAttendenceActivity) mActivity).manageAbsentPresentCount(mIntTotalStudentCount, mIntAbsentStudentCount);
+                            }
+                            contact.setSelected(true);
                         }
-                        contact.setSelected(true);
+                        mStudentsList.get(pos).setSelected(true);
                     }
-                    mStudentsList.get(pos).setSelected(true);
-                }
-            });
-            viewHolder.absentButton.setOnClickListener(new View.OnClickListener() {
-                public void onClick(View v) {
-                    managePresentAbsent(viewHolder.presentButton, viewHolder.absentButton, false);
-                    if (v != null && v instanceof TextView) {
-                        TextView cb = (TextView) v;
-                        StudentListDataModel contact = (StudentListDataModel) cb.getTag();
+                });
+                viewHolder.absentButton.setOnClickListener(new View.OnClickListener() {
+                    public void onClick(View v) {
+                        managePresentAbsent(viewHolder.presentButton, viewHolder.absentButton, false);
+                        if (v != null && v instanceof TextView) {
+                            TextView cb = (TextView) v;
+                            StudentListDataModel contact = (StudentListDataModel) cb.getTag();
 
-                        if (contact.isSelected()) {
-                            mIntAbsentStudentCount = mIntAbsentStudentCount + 1;
-                            ((TakeAttendenceActivity) mActivity).manageAbsentPresentCount(mIntTotalStudentCount, mIntAbsentStudentCount);
+                            if (contact.isSelected()) {
+                                mIntAbsentStudentCount = mIntAbsentStudentCount + 1;
+                                ((TakeAttendenceActivity) mActivity).manageAbsentPresentCount(mIntTotalStudentCount, mIntAbsentStudentCount);
+                            }
+
+                            contact.setSelected(false);
                         }
-
-                        contact.setSelected(false);
+                        mStudentsList.get(pos).setSelected(false);
                     }
-                    mStudentsList.get(pos).setSelected(false);
-                }
-            });
-
+                });
+            }
             if (mStudentsList.get(position).isSelected()) {
                 managePresentAbsent(viewHolder.presentButton, viewHolder.absentButton, true);
             } else {
@@ -119,11 +124,6 @@ public class AttendenceAdapter extends
     @Override
     public int getItemCount() {
         return mStudentsList.size();
-    }
-
-    // method to access in activity after updating selection
-    public List<StudentListDataModel> getStudentist() {
-        return mStudentsList;
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {

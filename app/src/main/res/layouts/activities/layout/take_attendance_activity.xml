@@ -51,7 +51,6 @@
                     android:gravity="center"
                     android:paddingLeft="@dimen/margin_5"
                     android:paddingRight="@dimen/margin_5"
-                    android:text="5"
                     android:textColor="@color/colorTextWhite"
                     android:textSize="@dimen/sub_text_size"
                     android:textStyle="bold" />
@@ -62,7 +61,6 @@
                     android:layout_height="30dp"
                     android:background="@drawable/absent_checkbox_image"
                     android:gravity="center"
-                    android:text="20"
                     android:textColor="@color/colorTextWhite"
                     android:textSize="@dimen/sub_text_size"
                     android:textStyle="bold" />
@@ -99,7 +97,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/margin_10dp"
                     android:gravity="center_vertical"
-                    android:text="Teacher Name Here"
+                    android:hint="Teacher Name Here"
                     android:textColor="@color/colorTextWhite"
                     android:textSize="@dimen/heading_text_size"
                     android:textStyle="bold|italic" />

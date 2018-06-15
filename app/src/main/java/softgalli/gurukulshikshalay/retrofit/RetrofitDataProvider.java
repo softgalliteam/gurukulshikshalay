@@ -492,6 +492,33 @@ public class RetrofitDataProvider extends AppCompatActivity implements ServiceMe
                 }
         );
     }
+ @Override
+    public void getStudentsAttendance(String className, String sec, String studentId, String date, final DownlodableCallback<StudentListByClassModel> callback) {
+        createRetrofitService().getStudentsAttendance(className, sec, studentId, date).enqueue(
+                new Callback<StudentListByClassModel>() {
+                    @Override
+                    public void onResponse(@NonNull Call<StudentListByClassModel> call, @NonNull final Response<StudentListByClassModel> response) {
+                        if (response.isSuccessful()) {
+                            StudentListByClassModel teacherListDataModelPojo = response.body();
+                            callback.onSuccess(teacherListDataModelPojo);
+                        } else {
+                            if (response.code() == 401) {
+                                callback.onUnauthorized(response.code());
+                            } else {
+                                Utilz.closeDialog();
+                                Toast.makeText(context, context.getResources().getString(R.string.something_went_wrong_error_message), Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(@NonNull Call<StudentListByClassModel> call, @NonNull Throwable t) {
+                        Log.d("Result", "t" + t.getMessage());
+                        callback.onFailure(t.getMessage());
+                    }
+                }
+        );
+    }
 
     @Override
     public void attendance(InsertAttendanceModel insertAttendanceModel, final DownlodableCallback<CommonResponse> callback) {
