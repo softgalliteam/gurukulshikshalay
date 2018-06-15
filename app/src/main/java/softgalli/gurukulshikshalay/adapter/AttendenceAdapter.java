@@ -6,9 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.List;
 
@@ -61,25 +59,34 @@ public class AttendenceAdapter extends
             viewHolder.presentButton.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
                     managePresentAbsent(viewHolder.presentButton, viewHolder.absentButton, true);
-                    TextView cb = (TextView) v;
-                    StudentListDataModel contact = (StudentListDataModel) cb.getTag();
-                    contact.setSelected(true);
+
+                    if (v != null && v instanceof TextView) {
+                        TextView cb = (TextView) v;
+                        StudentListDataModel contact = (StudentListDataModel) cb.getTag();
+                        if (!contact.isSelected()) {
+                            mIntAbsentStudentCount = mIntAbsentStudentCount - 1;
+                            ((TakeAttendenceActivity) mActivity).manageAbsentPresentCount(mIntTotalStudentCount, mIntAbsentStudentCount);
+                        }
+                        contact.setSelected(true);
+                    }
                     mStudentsList.get(pos).setSelected(true);
-                    ((TakeAttendenceActivity) mActivity).isAttendenceTakenAndSaved = false;
-                    mIntAbsentStudentCount = mIntAbsentStudentCount - 1;
-                    ((TakeAttendenceActivity) mActivity).manageAbsentPresentCount(mIntTotalStudentCount, mIntAbsentStudentCount);
                 }
             });
             viewHolder.absentButton.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
                     managePresentAbsent(viewHolder.presentButton, viewHolder.absentButton, false);
-                    TextView cb = (TextView) v;
-                    StudentListDataModel contact = (StudentListDataModel) cb.getTag();
-                    contact.setSelected(false);
+                    if (v != null && v instanceof TextView) {
+                        TextView cb = (TextView) v;
+                        StudentListDataModel contact = (StudentListDataModel) cb.getTag();
+
+                        if (contact.isSelected()) {
+                            mIntAbsentStudentCount = mIntAbsentStudentCount + 1;
+                            ((TakeAttendenceActivity) mActivity).manageAbsentPresentCount(mIntTotalStudentCount, mIntAbsentStudentCount);
+                        }
+
+                        contact.setSelected(false);
+                    }
                     mStudentsList.get(pos).setSelected(false);
-                    ((TakeAttendenceActivity) mActivity).isAttendenceTakenAndSaved = false;
-                    mIntAbsentStudentCount = mIntAbsentStudentCount + 1;
-                    ((TakeAttendenceActivity) mActivity).manageAbsentPresentCount(mIntTotalStudentCount, mIntAbsentStudentCount);
                 }
             });
 

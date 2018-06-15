@@ -10,8 +10,8 @@
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:paddingTop="10dp"
-        android:paddingBottom="@dimen/margin_10">
+        android:paddingBottom="@dimen/margin_10"
+        android:paddingTop="10dp">
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:layout_width="40dp"
@@ -27,22 +27,26 @@
             android:layout_marginRight="5dp"
             android:layout_weight="1"
             android:orientation="vertical">
-            <TextView
-                android:id="@+id/tvEmailId"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/tvName"
-                android:text="email"
-                android:textColor="@color/subTextColor"
-                android:textSize="@dimen/text_size" />
+
             <TextView
                 android:id="@+id/tvName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="name"
                 android:textColor="@color/textColor"
-                android:textSize="@dimen/heading_text_size" />
+                android:textSize="@dimen/text_size" />
 
+            <TextView
+                android:id="@+id/tvEmailId"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tvName"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:singleLine="true"
+                android:text="email"
+                android:textColor="@color/subTextColor"
+                android:textSize="@dimen/sub_text_size" />
 
         </LinearLayout>
 
@@ -58,9 +62,9 @@
                 android:layout_height="30dp"
                 android:background="@drawable/border"
                 android:gravity="center"
-                android:text="Present"
-                android:paddingRight="@dimen/margin_5"
                 android:paddingLeft="@dimen/margin_5"
+                android:paddingRight="@dimen/margin_5"
+                android:text="Present"
                 android:textAllCaps="false"
                 android:textColor="@color/textColor"
                 android:textSize="@dimen/sub_text_size" />
@@ -72,9 +76,9 @@
                 android:layout_marginLeft="5dp"
                 android:background="@drawable/absent_checkbox_image"
                 android:gravity="center"
-                android:text="Absent"
                 android:paddingLeft="@dimen/margin_5"
                 android:paddingRight="@dimen/margin_5"
+                android:text="Absent"
                 android:textAllCaps="false"
                 android:textColor="@color/colorTextWhite"
                 android:textSize="@dimen/sub_text_size" />

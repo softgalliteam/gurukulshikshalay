@@ -71,17 +71,8 @@ public class SeeAttendenceActivity extends AppCompatActivity {
     }
 
     private void initView() {
-        // Get Current Date
-        final Calendar c = Calendar.getInstance();
-        mYear = c.get(Calendar.YEAR);
-        mMonth = c.get(Calendar.MONTH);
-        mDay = c.get(Calendar.DAY_OF_MONTH);
-        String mStrCurrentDate = mDay + "-" + (mMonth + 1) + "-" + mYear;
-        String mStrDayName = Utilz.getDayNameFromDate(mStrCurrentDate);
-        if (!TextUtils.isEmpty(mStrDayName))
-            mStrDayName = mStrDayName + ", " + mStrCurrentDate;
-        attendanceDateTv.setText(mStrDayName);
-        getAttendenceByDateClassSec(mStrCurrentDate);
+        attendanceDateTv.setText(Utilz.getCurrentDayNameAndDate());
+        getAttendenceByDateClassSec(Utilz.getCurrentDate());
     }
 
     private void getIntentData() {

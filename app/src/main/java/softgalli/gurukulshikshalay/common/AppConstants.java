@@ -16,12 +16,13 @@ public class AppConstants {
     public static final String LEAVE_MODEL = "Leave_Model";
     public static final String CLASS_NAME = "class_name";
     public static final String SECTION_NAME = "section_name";
-    public static final String MONDAY = "Monday";
-    public static final String TUESDAY = "Tuesday";
-    public static final String WEDNESDAY = "Wednesday";
-    public static final String THURSDAY = "Thursday";
-    public static final String FRIDAY = "Friday";
-    public static final String SATURDAY = "Saturday";
+    public static final String MONDAY = "Mon";
+    public static final String TUESDAY = "Tues";
+    public static final String WEDNESDAY = "Wed";
+    public static final String THURSDAY = "Thu";
+    public static final String FRIDAY = "Fri";
+    public static final String SATURDAY = "Sat";
+    public static final String SUNDAY = "Sun";
 
     /*Parsing response key and preference key*/
     public static final String ID = "id";
@@ -51,6 +52,12 @@ public class AppConstants {
     public static final String IS_NEW_APP_AVAILABLE = "isNewAppAvailable";
     public static final String DATA = "data";
     public static final String VERSION = "verson";
+
+
+    public static final String OK = "OK";
+    public static final String NO = "NO";
+    public static final String CANCEL = "CANCEL";
+    public static final String YES = "YES";
 
 
 }

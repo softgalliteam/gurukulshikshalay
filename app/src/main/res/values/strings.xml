@@ -33,6 +33,10 @@
     <string name="section">Section</string>
     <string name="colon">:</string>
     <string name="sent_successfully">Sent Successfully</string>
+    <string name="warning">Warning!!</string>
+    <string name="success">Success!!</string>
+    <string name="attendance_taken_success_msg">Attendance taken successfully!!</string>
+    <string name="attendance_taken_not_saved_msg">Do you want to exit before taking attendance?</string>
 
     <string name="phone_no_not_provide_yet">Phone number is not provided yet</string>
     <string name="take_admission_by_filling_form_simply">Take admission by filling form simply.</string>

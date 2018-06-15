@@ -9,166 +9,124 @@
 
     <include layout="@layout/common_toolbar" />
 
-    <android.support.v4.widget.NestedScrollView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="@dimen/main_view_margin_top">
-
+        android:layout_marginTop="@dimen/main_view_margin_top"
+        android:orientation="vertical">
+        <!--For absent present count -->
         <LinearLayout
-            android:id="@+id/mainLL"
+            android:id="@+id/totalAbsentPresentCardView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:descendantFocusability="blocksDescendants"
-            android:orientation="vertical">
-
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/userProfilePicIv"
-                android:layout_width="@dimen/margin_50"
-                android:layout_height="@dimen/margin_50"
-                android:layout_centerInParent="true"
-                android:layout_marginLeft="@dimen/margin_10dp"
-                android:scaleType="centerCrop"
-                android:src="@drawable/user"
-                app:civ_border_color="#dc5da4"
-                app:civ_border_overlay="true"
-                app:civ_border_width="1dp" />
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_10"
+            android:background="@android:color/transparent"
+            android:gravity="center"
+            android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/classTeacherNameTv"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/margin_10dp"
-                android:gravity="center_vertical"
-                android:text="Teacher Name Here"
+                android:id="@+id/totalStudentCount"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_weight="1"
+                android:background="@drawable/rect_pink"
+                android:gravity="center"
                 android:textColor="@color/colorTextWhite"
-                android:textSize="@dimen/heading_text_size"
-                android:textStyle="bold|italic" />
-
-            <android.support.v7.widget.CardView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                card_view:cardCornerRadius="10dp"
-                card_view:cardElevation="10dp">
-
-                <LinearLayout
-                    android:id="@+id/container"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical" />
-            </android.support.v7.widget.CardView>
+                android:textSize="@dimen/text_size"
+                android:textStyle="bold" />
 
             <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/presentStudentCount"
+                    android:layout_width="75dp"
+                    android:layout_height="30dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:background="@drawable/present_checkbox_image"
+                    android:gravity="center"
+                    android:paddingLeft="@dimen/margin_5"
+                    android:paddingRight="@dimen/margin_5"
+                    android:text="5"
+                    android:textColor="@color/colorTextWhite"
+                    android:textSize="@dimen/sub_text_size"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/absentStudentCount"
+                    android:layout_width="75dp"
+                    android:layout_height="30dp"
+                    android:background="@drawable/absent_checkbox_image"
+                    android:gravity="center"
+                    android:text="20"
+                    android:textColor="@color/colorTextWhite"
+                    android:textSize="@dimen/sub_text_size"
+                    android:textStyle="bold" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <android.support.v4.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:id="@+id/mainLL"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
+                android:descendantFocusability="blocksDescendants"
                 android:orientation="vertical">
 
-                <android.support.v7.widget.CardView
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/userProfilePicIv"
+                    android:layout_width="@dimen/margin_50"
+                    android:layout_height="@dimen/margin_50"
+                    android:layout_centerInParent="true"
+                    android:layout_marginLeft="@dimen/margin_10dp"
+                    android:layout_marginTop="@dimen/margin_5dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/user"
+                    app:civ_border_color="#dc5da4"
+                    app:civ_border_overlay="true"
+                    app:civ_border_width="1dp" />
+
+                <TextView
+                    android:id="@+id/classTeacherNameTv"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
-                    card_view:cardCornerRadius="10dp"
-                    card_view:cardElevation="10dp">
+                    android:layout_marginLeft="@dimen/margin_10dp"
+                    android:gravity="center_vertical"
+                    android:text="Teacher Name Here"
+                    android:textColor="@color/colorTextWhite"
+                    android:textSize="@dimen/heading_text_size"
+                    android:textStyle="bold|italic" />
 
-                    <LinearLayout
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <android.support.v7.widget.CardView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:id="@+id/mDateSelectedTv"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:gravity="center"
-                            android:textSize="20sp" />
-
+                        android:layout_margin="10dp"
+                        card_view:cardCornerRadius="10dp"
+                        card_view:cardElevation="10dp">
 
                         <include layout="@layout/common_recyclerview" />
 
-                    </LinearLayout>
-                </android.support.v7.widget.CardView>
-                <!--For absent present count -->
-                <android.support.v7.widget.CardView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
-                    card_view:cardCornerRadius="10dp"
-                    card_view:cardElevation="10dp">
+                    </android.support.v7.widget.CardView>
 
-                    <LinearLayout
+                    <!--For saving and uploading attendence -->
+                    <android.support.v7.widget.CardView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:id="@+id/totalStudentCount"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:background="@drawable/button_background"
-                            android:gravity="center"
-                            android:padding="10dp"
-                            android:textColor="@color/colorTextWhite"
-                            android:textSize="@dimen/heading_text_size"
-                            android:textStyle="italic|bold" />
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_margin="10dp"
-                            android:gravity="center"
-                            android:orientation="horizontal">
-
-                            <TextView
-                                android:id="@+id/presentStudentCount"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginRight="5dp"
-                                android:layout_weight="1"
-                                android:background="@drawable/button_background"
-                                android:gravity="center"
-                                android:padding="10dp"
-                                android:textColor="@color/colorTextWhite"
-                                android:textSize="@dimen/heading_text_size"
-                                android:textStyle="italic|bold" />
-
-                            <TextView
-                                android:id="@+id/absentStudentCount"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginLeft="5dp"
-                                android:layout_weight="1"
-                                android:background="@drawable/button_background"
-                                android:gravity="center"
-                                android:padding="10dp"
-                                android:textColor="@color/colorTextWhite"
-                                android:textSize="@dimen/heading_text_size"
-                                android:textStyle="italic|bold" />
-                        </LinearLayout>
-                    </LinearLayout>
-                </android.support.v7.widget.CardView>
-                <!--For saving and uploading attendence -->
-                <android.support.v7.widget.CardView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
-                    card_view:cardCornerRadius="10dp"
-                    card_view:cardElevation="10dp">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:id="@+id/filePath"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:layout_marginTop="10dp"
-                            android:padding="10dp"
-                            android:textSize="12sp"
-                            android:textStyle="italic|bold" />
+                        android:layout_margin="10dp"
+                        card_view:cardCornerRadius="10dp"
+                        card_view:cardElevation="10dp">
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -205,10 +163,10 @@
                                 android:textSize="14sp"
                                 android:textStyle="italic|bold" />
                         </LinearLayout>
-                    </LinearLayout>
-                </android.support.v7.widget.CardView>
-            </LinearLayout>
+                    </android.support.v7.widget.CardView>
+                </LinearLayout>
 
-        </LinearLayout>
-    </android.support.v4.widget.NestedScrollView>
+            </LinearLayout>
+        </android.support.v4.widget.NestedScrollView>
+    </LinearLayout>
 </RelativeLayout>

@@ -16,6 +16,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.support.v4.app.ActivityCompat;
+import android.text.TextUtils;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
@@ -43,6 +44,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import cz.msebera.android.httpclient.Header;
 import softgalli.gurukulshikshalay.BuildConfig;
@@ -123,7 +125,7 @@ public class Utilz {
         Calendar c = Calendar.getInstance();
         System.out.println("Current time => " + c.getTime());
 
-        SimpleDateFormat df = new SimpleDateFormat("dd-MMM-yyyy");
+        SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
         String formattedDate = df.format(c.getTime());
         return formattedDate;
     }
@@ -269,17 +271,28 @@ public class Utilz {
         }
     }
 
-    public static void showMessageOnDialog(final Activity mActivity, final String title, final String message) {
+    public static void showMessageOnDialog(final Activity mActivity, final String title, final String message, final String negBtnTitle, final String posBtnTitle) {
         try {
             android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(mActivity);
             builder.setTitle(title);
             builder.setMessage(message);
-            builder.setNegativeButton("close", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    dialog.dismiss();
-                }
-            });
+            if (!TextUtils.isEmpty(posBtnTitle)) {
+                builder.setPositiveButton(posBtnTitle, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                        mActivity.finish();
+                    }
+                });
+            }
+            if (!TextUtils.isEmpty(negBtnTitle)) {
+                builder.setNegativeButton(negBtnTitle, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+            }
             android.support.v7.app.AlertDialog alertDialog = builder.create();
             alertDialog.show();
         } catch (Exception e) {
@@ -290,14 +303,17 @@ public class Utilz {
     public static String getCurrentDate() {
         String urrentDate = "";
         Date c = Calendar.getInstance().getTime();
-        SimpleDateFormat df = new SimpleDateFormat("dd-MMM-yyyy");
+        SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
         urrentDate = df.format(c);
         return urrentDate;
     }
 
-    public static int getCurrentDateOnly() {
-        Date c = Calendar.getInstance().getTime();
-        return c.getDate();
+    public static String getCurrentDayNameAndDate() {
+        String mStrCurrentDate = getCurrentDate();
+        String mStrDayName = getDayNameFromDate(getCurrentDate());
+        if (!TextUtils.isEmpty(mStrDayName))
+            mStrDayName = mStrDayName + ", " + mStrCurrentDate;
+        return mStrDayName;
     }
 
     public static void openDialer(final Activity mActivity, final String mobileNo) {
@@ -673,7 +689,7 @@ public class Utilz {
     }
 
     public static String getDayNameFromDate(String mStrDate) {
-        DateTimeFormatter formatter = DateTimeFormat.forPattern("dd-mm-yyyy");
+        DateTimeFormatter formatter = DateTimeFormat.forPattern("dd/MM/yyyy").withLocale(Locale.ENGLISH);
         LocalDate localDate = formatter.parseLocalDate(mStrDate);
         int dayOfWeek = localDate.getDayOfWeek(); // Follows ISO 8601 standard, where Monday = 1, Sunday = 7.
         if (dayOfWeek == 1)

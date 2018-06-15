@@ -1,30 +1,19 @@
 package softgalli.gurukulshikshalay.activity;
 
-import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
-import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
-import android.os.Environment;
 import android.support.annotation.Nullable;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
-import android.util.Log;
-import android.view.MenuItem;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.android.datetimepicker.date.DatePickerDialog;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.DataSource;
 import com.bumptech.glide.load.engine.GlideException;
@@ -32,31 +21,18 @@ import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.Target;
 
-import org.joda.time.LocalDateTime;
-
-import java.io.File;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import de.hdodenhof.circleimageview.CircleImageView;
-import io.realm.Realm;
 import softgalli.gurukulshikshalay.R;
 import softgalli.gurukulshikshalay.adapter.AttendenceAdapter;
-import softgalli.gurukulshikshalay.calender.CsvFileWriter;
-import softgalli.gurukulshikshalay.calender.RealMController;
 import softgalli.gurukulshikshalay.common.AppConstants;
 import softgalli.gurukulshikshalay.common.ClsGeneral;
 import softgalli.gurukulshikshalay.common.PreferenceName;
 import softgalli.gurukulshikshalay.common.Utilz;
-import softgalli.gurukulshikshalay.common.WeekCalendarOptions;
-import softgalli.gurukulshikshalay.fragments.WeekCalendarFragment;
-import softgalli.gurukulshikshalay.intrface.CalenderListener;
 import softgalli.gurukulshikshalay.model.AttendanceStatusModel;
 import softgalli.gurukulshikshalay.model.CommonResponse;
 import softgalli.gurukulshikshalay.model.InsertAttendanceModel;
@@ -67,7 +43,7 @@ import softgalli.gurukulshikshalay.retrofit.ApiUrl;
 import softgalli.gurukulshikshalay.retrofit.DownlodableCallback;
 import softgalli.gurukulshikshalay.retrofit.RetrofitDataProvider;
 
-public class TakeAttendenceActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
+public class TakeAttendenceActivity extends AppCompatActivity {
     private static final String TAG = TakeAttendenceActivity.class.getSimpleName();
     @BindView(R.id.totalStudentCount)
     TextView totalStudentCount;
@@ -75,14 +51,10 @@ public class TakeAttendenceActivity extends AppCompatActivity implements DatePic
     TextView presentStudentCount;
     @BindView(R.id.absentStudentCount)
     TextView absentStudentCount;
-    @BindView(R.id.filePath)
-    TextView filePath;
     @BindView(R.id.uploadAttendenceBtn)
     TextView uploadAttendenceBtn;
     @BindView(R.id.seeAttendenceBtn)
     TextView seeAttendenceBtn;
-    @BindView(R.id.mDateSelectedTv)
-    TextView mDateSelectedTv;
     @BindView(R.id.toolbar)
     Toolbar toolbar;
     @BindView(R.id.rv_common)
@@ -91,10 +63,9 @@ public class TakeAttendenceActivity extends AppCompatActivity implements DatePic
     CircleImageView userProfilePicIv;
     @BindView(R.id.classTeacherNameTv)
     TextView classTeacherNameTv;
-    private WeekCalendarFragment mWeekCalendarFragment;
-    private String fileName = "";
+    @BindView(R.id.totalAbsentPresentCardView)
+    LinearLayout totalAbsentPresentCardView;
     private Activity mActivity;
-    private Realm realm;
     private ArrayList<StudentListDataModel> studentListDataModelList;
     private String className = "", sectionName = "";
     public boolean isAttendenceTakenAndSaved = true;
@@ -106,17 +77,9 @@ public class TakeAttendenceActivity extends AppCompatActivity implements DatePic
         ButterKnife.bind(this);
         mActivity = this;
         retrofitDataProvider = new RetrofitDataProvider(mActivity);
-        mWeekCalendarFragment = (WeekCalendarFragment) getSupportFragmentManager()
-                .findFragmentByTag(WeekCalendarFragment.class.getSimpleName());
-
         getIntentData();
         initToolbar();
-
         initView();
-
-        manageWeekCalenderView();
-
-
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         if (Utilz.isOnline(mActivity)) {
@@ -140,11 +103,10 @@ public class TakeAttendenceActivity extends AppCompatActivity implements DatePic
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setTitle("Take Attendance");
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
+                saveAttendenceBeforeLeave();
             }
         });
     }
@@ -155,7 +117,7 @@ public class TakeAttendenceActivity extends AppCompatActivity implements DatePic
         studentListDataModelList = new ArrayList();
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle("Take Attendence Class " + className);
+        getSupportActionBar().setTitle("Attendence Class-" + className + " (" + Utilz.getCurrentDayNameAndDate() + ")");
 
         mRecyclerView.setNestedScrollingEnabled(false);
 
@@ -210,101 +172,6 @@ public class TakeAttendenceActivity extends AppCompatActivity implements DatePic
         });
     }
 
-
-
-
-    private void manageWeekCalenderView() {
-        if (mWeekCalendarFragment == null) {
-            mWeekCalendarFragment = new WeekCalendarFragment();
-
-            Bundle args = new Bundle();
-
-            /* Must add this attribute if using ARGUMENT_NOW_BACKGROUND or ARGUMENT_SELECTED_DATE_BACKGROUND*/
-            args.putString(WeekCalendarFragment.ARGUMENT_PACKAGE_NAME
-                    , getApplicationContext().getPackageName());
-
-            // Sets color to the primary views (Month name and dates)
-            args.putInt(WeekCalendarFragment.ARGUMENT_PRIMARY_TEXT_COLOR
-                    , ContextCompat.getColor(this, R.color.colorTextPrimary));
-
-            // Picks between three or one date header letters ex. "Sun" or "S"
-            // two options:
-            // 1. WeekCalendarOptions.DAY_HEADER_LENGTH_THREE_LETTERS
-            // 2. WeekCalendarOptions.DAY_HEADER_LENGTH_ONE_LETTER
-            args.putString(WeekCalendarFragment.ARGUMENT_DAY_HEADER_LENGTH
-                    , WeekCalendarOptions.DAY_HEADER_LENGTH_ONE_LETTER);
-
-            // Days that have events
-            ArrayList<Calendar> eventDays = new ArrayList<>();
-            eventDays.add(Calendar.getInstance());
-            long[] eventLong = new long[10];
-            for (int i = 0; i < eventDays.size(); i++) {
-                eventLong[i] = eventDays.get(i).getTimeInMillis();
-            }
-            args.putSerializable(WeekCalendarFragment.ARGUMENT_EVENT_DAYS, eventLong);
-
-            mWeekCalendarFragment.setArguments(args);
-
-            // Attach to the activity
-            FragmentTransaction t = getSupportFragmentManager().beginTransaction();
-            t.replace(R.id.container, mWeekCalendarFragment, WeekCalendarFragment.class.getSimpleName());
-            t.commit();
-        }
-
-        CalenderListener listener = new CalenderListener() {
-            @Override
-            public void onSelectPicker() {
-                //User can use any type of pickers here the below picker is only Just a example
-                DatePickerDialog.newInstance(TakeAttendenceActivity.this,
-                        Calendar.getInstance().get(Calendar.YEAR),
-                        Calendar.getInstance().get(Calendar.MONTH),
-                        Calendar.getInstance().get(Calendar.DAY_OF_MONTH))
-                        .show(getFragmentManager(), "datePicker");
-            }
-
-            @Override
-            public void onSelectDate(LocalDateTime mSelectedDate) {
-                int sunday = mSelectedDate.getDayOfWeek();
-                if (sunday == Calendar.SATURDAY) {
-                    mDateSelectedTv.setText("Its Sunday !!");
-                } else {
-                    //callback when a date is selcted
-                    mDateSelectedTv.setText(""
-                            + mSelectedDate.getDayOfMonth()
-                            + "-"
-                            + mSelectedDate.getMonthOfYear()
-                            + "-"
-                            + mSelectedDate.getYear());
-                }
-            }
-        };
-        //setting the listener
-        mWeekCalendarFragment.setCalenderListener(listener);
-
-        mWeekCalendarFragment.setPreSelectedDate(Calendar.getInstance());
-    }
-
-    @Override
-    public void onDateSet(DatePickerDialog dialog, int year, int monthOfYear, int dayOfMonth) {
-        //This is the call back from picker used in the sample. You can use custom or any other picker
-        //IMPORTANT: get the year,month and date from picker you using and call setDateWeek method
-        Calendar calendar = Calendar.getInstance();
-        calendar.set(year, monthOfYear, dayOfMonth);
-        mWeekCalendarFragment.setDateWeek(calendar);//Sets the selected date from Picker
-    }
-
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home: {
-                saveAttendenceBeforeLeave();
-                break;
-            }
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
     @Override
     public void onBackPressed() {
         super.onBackPressed();
@@ -312,40 +179,39 @@ public class TakeAttendenceActivity extends AppCompatActivity implements DatePic
     }
 
     private void saveAttendenceBeforeLeave() {
-        if (isAttendenceTakenAndSaved) {
-            Toast.makeText(mActivity, "Attendence Taken", Toast.LENGTH_SHORT).show();
-        } else
-            Toast.makeText(mActivity, "Are you sure?", Toast.LENGTH_SHORT).show();
-
+        if (!isAttendenceTakenAndSaved) {
+            Utilz.showMessageOnDialog(mActivity, mActivity.getString(R.string.warning), mActivity.getString(R.string.attendance_taken_not_saved_msg), AppConstants.NO, AppConstants.YES);
+        }
     }
 
     @OnClick({R.id.uploadAttendenceBtn, R.id.seeAttendenceBtn})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.uploadAttendenceBtn:
-                uploadAttendence();
+                if (Utilz.isOnline(mActivity)) {
+                    uploadAttendence();
+                } else {
+                    Utilz.showNoInternetConnectionDialog(mActivity);
+                }
                 break;
             case R.id.seeAttendenceBtn:
-                //seeAttendence();
+                Intent mIntent = new Intent(mActivity, SeeAttendenceActivity.class);
+                mIntent.putExtra(AppConstants.CLASS_NAME, className);
+                mIntent.putExtra(AppConstants.SECTION_NAME, sectionName);
+                mActivity.startActivity(mIntent);
                 break;
         }
     }
 
     private void uploadAttendence() {
-        /*if (MyPreference.isPreLoaded()) {
-            RealMController realMController = RealMController.with(mActivity);
-            if (realMController != null)
-                studentListDataModelList.addAll(realMController.getStudentsList());
-            Log.d("Attendence Taken", ""+studentListDataModelList);
-        }*/
-
         Utilz.showDailog(TakeAttendenceActivity.this, getResources().getString(R.string.pleasewait));
         InsertAttendanceModel insertAttendanceModel = getListOfStudentAttendance();
         retrofitDataProvider.attendance(insertAttendanceModel, new DownlodableCallback<CommonResponse>() {
             @Override
             public void onSuccess(final CommonResponse result) {
                 Utilz.closeDialog();
-                finish();
+                isAttendenceTakenAndSaved = true;
+                Utilz.showMessageOnDialog(mActivity, mActivity.getString(R.string.success), mActivity.getString(R.string.attendance_taken_success_msg), "", AppConstants.OK);
             }
 
             @Override
@@ -366,18 +232,29 @@ public class TakeAttendenceActivity extends AppCompatActivity implements DatePic
         InsertAttendanceModel insertAttendanceModel = new InsertAttendanceModel();
         insertAttendanceModel.setClas(className);
         insertAttendanceModel.setSec(sectionName);
-        insertAttendanceModel.setDate(Utilz.getCurrentDate(TakeAttendenceActivity.this));
+        insertAttendanceModel.setDate(Utilz.getCurrentDate());
         if (!TextUtils.isEmpty(ClsGeneral.getStrPreferences(AppConstants.USER_ID)))
             insertAttendanceModel.setTeacher_id(ClsGeneral.getStrPreferences(AppConstants.USER_ID));
         else
-            insertAttendanceModel.setTeacher_id(ClsGeneral.getStrPreferences(AppConstants.ID));
+            insertAttendanceModel.setTeacher_id(MyPreference.getUserId());
         ArrayList<AttendanceStatusModel> list = new ArrayList<>();
         //Create loop here and add student present/Absent status to AttendanceStatusModel
-        for (int i = 0; i < studentListDataModelList.size(); i++) {
-            if (studentListDataModelList.get(i).isSelected())
-            list.add(new AttendanceStatusModel(studentListDataModelList.get(i).getStudentId(), "Present"));
-            else list.add(new AttendanceStatusModel(studentListDataModelList.get(i).getStudentId(), "Absent"));
-
+        if (studentListDataModelList != null && studentListDataModelList.size() > 0) {
+            for (int i = 0; i < studentListDataModelList.size(); i++) {
+                if (studentListDataModelList.get(i).isSelected()) {
+                    if (!TextUtils.isEmpty(studentListDataModelList.get(i).getStudentId())) {
+                        list.add(new AttendanceStatusModel(studentListDataModelList.get(i).getStudentId(), "Present"));
+                    } else {
+                        list.add(new AttendanceStatusModel(studentListDataModelList.get(i).getId(), "Present"));
+                    }
+                } else {
+                    if (!TextUtils.isEmpty(studentListDataModelList.get(i).getStudentId())) {
+                        list.add(new AttendanceStatusModel(studentListDataModelList.get(i).getStudentId(), "Absent"));
+                    } else {
+                        list.add(new AttendanceStatusModel(studentListDataModelList.get(i).getId(), "Absent"));
+                    }
+                }
+            }
         }
 
         insertAttendanceModel.setAttendance(list);
@@ -388,10 +265,21 @@ public class TakeAttendenceActivity extends AppCompatActivity implements DatePic
 
     public void manageAbsentPresentCount(int mIntTotalStudentCount, int mIntAbsentStudentCount) {
         if (totalStudentCount != null)
-            totalStudentCount.setText(mIntTotalStudentCount + "\nTotal Students");
-        if (presentStudentCount != null)
-            presentStudentCount.setText((mIntTotalStudentCount - mIntAbsentStudentCount) + "\nPresent");
+            totalStudentCount.setText("Total-" + mIntTotalStudentCount);
+        if (presentStudentCount != null) {
+            presentStudentCount.setText((mIntTotalStudentCount - mIntAbsentStudentCount) + "");
+        }
         if (absentStudentCount != null)
-            absentStudentCount.setText(mIntAbsentStudentCount + "\nAbsent");
+            absentStudentCount.setText(mIntAbsentStudentCount + "");
+
+        if (totalAbsentPresentCardView != null) {
+            if ((mIntTotalStudentCount - mIntAbsentStudentCount) > 0) {
+                totalAbsentPresentCardView.setVisibility(View.VISIBLE);
+                isAttendenceTakenAndSaved = false;
+            } else {
+                isAttendenceTakenAndSaved = true;
+                totalAbsentPresentCardView.setVisibility(View.GONE);
+            }
+        }
     }
 }
