@@ -491,6 +491,7 @@ public class Utilz {
 
             RelativeLayout takeAttendanceRl = dialog.findViewById(R.id.takeLeavesRl);
             RelativeLayout seeAttendanceRl = dialog.findViewById(R.id.seeLeavesRl);
+            RelativeLayout updateAttendanceRl = dialog.findViewById(R.id.updateAttendanceRl);
 
             ArrayAdapter<String> classAdapter = new ArrayAdapter<>(mActivity,
                     android.R.layout.simple_dropdown_item_1line, classList);
@@ -507,6 +508,7 @@ public class Utilz {
                         Intent mIntent = new Intent(mActivity, TakeAttendenceActivity.class);
                         mIntent.putExtra(AppConstants.CLASS_NAME, classNameSpinner.getSelectedItem().toString());
                         mIntent.putExtra(AppConstants.SECTION_NAME, sectionNameSpinner.getSelectedItem().toString());
+                        mIntent.putExtra(AppConstants.IS_FOR_UPDATE_ATTENDANCE, AppConstants.YES);
                         mActivity.startActivity(mIntent);
                         dialog.dismiss();
                     }
@@ -519,6 +521,19 @@ public class Utilz {
                         Intent mIntent = new Intent(mActivity, SeeAttendenceActivity.class);
                         mIntent.putExtra(AppConstants.CLASS_NAME, classNameSpinner.getSelectedItem().toString());
                         mIntent.putExtra(AppConstants.SECTION_NAME, sectionNameSpinner.getSelectedItem().toString());
+                        mActivity.startActivity(mIntent);
+                        dialog.dismiss();
+                    }
+                }
+            });
+            updateAttendanceRl.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (isValidClassAndSection(mActivity, classNameSpinner, sectionNameSpinner)) {
+                        Intent mIntent = new Intent(mActivity, TakeAttendenceActivity.class);
+                        mIntent.putExtra(AppConstants.CLASS_NAME, classNameSpinner.getSelectedItem().toString());
+                        mIntent.putExtra(AppConstants.SECTION_NAME, sectionNameSpinner.getSelectedItem().toString());
+                        mIntent.putExtra(AppConstants.IS_FOR_UPDATE_ATTENDANCE, AppConstants.YES);
                         mActivity.startActivity(mIntent);
                         dialog.dismiss();
                     }
@@ -681,7 +696,7 @@ public class Utilz {
         if (mCurrentDate != null && mStrDate != null && mCurrentDate.equalsIgnoreCase(mStrDate)) {
             Date dt = new Date();
             int hours = dt.getHours();
-            if (hours >= 1 || hours <= 12) {
+            if (hours >= 1 && hours <= 12) {
                 isAttendanceTakenToday = false;
             }
         }

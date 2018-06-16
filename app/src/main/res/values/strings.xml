@@ -122,7 +122,7 @@
     <string name="admission_successfully">Congratulations! You admission request is accepted.</string>
     <string name="update_your_app">Update Your App</string>
     <string name="no_syllabus_is_added_till_now">No syllabus data is available for now.</string>
-    <string name="attendance_not_take_till_now">Attendance is either not taken till now or not updated on app, Please try later.</string>
+    <string name="attendance_not_take_till_now">Attendance is either not taken till now or not updated on app, Please select previous date.</string>
 
     <string name="feedback_text_heading">Your feedback may help us to make this app more efficient</string>
     <string name="write_your_feedback_txt">write your feedback</string>

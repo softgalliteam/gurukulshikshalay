@@ -16,6 +16,7 @@ public class AppConstants {
     public static final String LEAVE_MODEL = "Leave_Model";
     public static final String CLASS_NAME = "class_name";
     public static final String SECTION_NAME = "section_name";
+    public static final String IS_FOR_UPDATE_ATTENDANCE = "update_attendance";
     public static final String MONDAY = "Mon";
     public static final String TUESDAY = "Tues";
     public static final String WEDNESDAY = "Wed";

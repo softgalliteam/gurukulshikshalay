@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
@@ -14,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -50,8 +52,11 @@ public class SeeAttendenceActivity extends AppCompatActivity {
     TextView presentStudentCount;
     @BindView(R.id.absentStudentCount)
     TextView absentStudentCount;
+    @BindView(R.id.noRecordFoundCardView)
+    CardView noRecordFoundCardView;
+    @BindView(R.id.mainCardView)
+    CardView mainCardView;
     private Activity mActivity;
-    int mYear, mMonth, mDay;
     private String mClassName = "", mSectionName = "", mStudentId = "";
     private RetrofitDataProvider retrofitDataProvider;
     private ArrayList<StudentListDataModel> studentListDataModelList;
@@ -67,8 +72,8 @@ public class SeeAttendenceActivity extends AppCompatActivity {
 
         ButterKnife.bind(this);
         initToolbar();
-        initView();
         getIntentData();
+        initView();
         if (MyPreference.isLogined() && MyPreference.getLoginedAs().equalsIgnoreCase(AppConstants.STUDENT))
             mStudentId = MyPreference.getUserId();
         if (TextUtils.isEmpty(mStudentId) && MyPreference.isLogined() && MyPreference.getLoginedAs().equalsIgnoreCase(AppConstants.STUDENT))
@@ -86,7 +91,7 @@ public class SeeAttendenceActivity extends AppCompatActivity {
                 if (Utilz.isAttendanceTakenToday(mStrDateOfAtt)) {
                     getStudentsAttendance(mStrDateOfAtt.trim());
                 } else {
-                    Utilz.showDailog(mActivity, mActivity.getResources().getString(R.string.attendance_not_take_till_now));
+                    Utilz.showMessageOnDialog(mActivity, "", mActivity.getResources().getString(R.string.attendance_not_take_till_now), AppConstants.OK, "");
                 }
             }
         } else {
@@ -97,6 +102,8 @@ public class SeeAttendenceActivity extends AppCompatActivity {
     private void initView() {
         attendanceDateTv.setText(Utilz.getCurrentDayNameAndDate());
         getAttendenceByDateClassSec(Utilz.getCurrentDate());
+
+        manageAbsentPresentCount(studentListDataModelList.size(), getAbsentStudentCount(studentListDataModelList));
     }
 
     private void getIntentData() {
@@ -178,6 +185,13 @@ public class SeeAttendenceActivity extends AppCompatActivity {
                 totalAbsentPresentCardView.setVisibility(View.GONE);
             }
         }
+        if (mIntTotalStudentCount > 0 && noRecordFoundCardView != null && mainCardView != null) {
+            noRecordFoundCardView.setVisibility(View.GONE);
+            mainCardView.setVisibility(View.VISIBLE);
+        } else if (noRecordFoundCardView != null && mainCardView != null) {
+            noRecordFoundCardView.setVisibility(View.VISIBLE);
+            mainCardView.setVisibility(View.GONE);
+        }
     }
 
     @OnClick(R.id.attendanceDateTv)
@@ -186,11 +200,16 @@ public class SeeAttendenceActivity extends AppCompatActivity {
     }
 
     private void openDatePicker() {
+        Calendar c = Calendar.getInstance();
+        int mYear = c.get(Calendar.YEAR);
+        int mMonth = c.get(Calendar.MONTH);
+        int mDay = c.get(Calendar.DAY_OF_MONTH);
+
         DatePickerDialog datePickerDialog = new DatePickerDialog(this,
                 new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                        String mStrSelectedDate = dayOfMonth + "-" + (monthOfYear + 1) + "-" + year;
+                        String mStrSelectedDate = dayOfMonth + "/" + (monthOfYear + 1) + "/" + year;
                         String mStrDayName = Utilz.getDayNameFromDate(mStrSelectedDate);
                         if (!TextUtils.isEmpty(mStrDayName))
                             mStrDayName = mStrDayName + ", " + mStrSelectedDate;
