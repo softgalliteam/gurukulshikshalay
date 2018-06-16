@@ -12,6 +12,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_above="@+id/submitButtonLl"
         android:layout_marginTop="@dimen/main_view_margin_top"
         android:orientation="vertical">
         <!--For absent present count -->
@@ -118,53 +119,27 @@
 
                     </android.support.v7.widget.CardView>
 
-                    <!--For saving and uploading attendence -->
-                    <android.support.v7.widget.CardView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="10dp"
-                        card_view:cardCornerRadius="10dp"
-                        card_view:cardElevation="10dp">
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_margin="10dp"
-                            android:gravity="center"
-                            android:orientation="horizontal">
-
-                            <TextView
-                                android:id="@+id/uploadAttendenceBtn"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginRight="5dp"
-                                android:layout_weight="1"
-                                android:background="@drawable/button_background"
-                                android:gravity="center"
-                                android:padding="10dp"
-                                android:text="Upload Attendence"
-                                android:textColor="@color/colorTextWhite"
-                                android:textSize="14sp"
-                                android:textStyle="italic|bold" />
-
-                            <TextView
-                                android:id="@+id/seeAttendenceBtn"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginLeft="5dp"
-                                android:layout_weight="1"
-                                android:background="@drawable/button_background"
-                                android:gravity="center"
-                                android:padding="10dp"
-                                android:text="See Attendence"
-                                android:textColor="@color/colorTextWhite"
-                                android:textSize="14sp"
-                                android:textStyle="italic|bold" />
-                        </LinearLayout>
-                    </android.support.v7.widget.CardView>
                 </LinearLayout>
 
             </LinearLayout>
         </android.support.v4.widget.NestedScrollView>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/submitButtonLl"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true">
+        <!--For absent present count -->
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_10dp"
+            android:clickable="false"
+            card_view:cardCornerRadius="10dp"
+            card_view:cardElevation="10dp">
+
+            <include layout="@layout/common_button" />
+        </android.support.v7.widget.CardView>
     </LinearLayout>
 </RelativeLayout>

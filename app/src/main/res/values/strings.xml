@@ -111,6 +111,8 @@
     <string name="friday_three">Fri</string>
     <string name="saturday_three">Sat</string>
     <string name="submit">Sumbit</string>
+    <string name="update_attendance">Update Attendance</string>
+    <string name="upload_attendance">Upload Attendance</string>
     <string name="feedback_text">How do you feel about our school?</string>
     <string name="select_date">Select Date</string>
 
