@@ -23,9 +23,12 @@ public class AttendanceStatusModel {
     String student_id;
     @SerializedName("status")
     String status;
+    @SerializedName("student_name")
+    String student_name;
 
-    public AttendanceStatusModel(String student_id, String status){
+    public AttendanceStatusModel(String student_id, String student_name, String status) {
         this.student_id = student_id;
         this.status = status;
+        this.student_name = student_name;
     }
 }

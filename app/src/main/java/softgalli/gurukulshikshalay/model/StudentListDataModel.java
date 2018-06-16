@@ -34,6 +34,18 @@ public class StudentListDataModel extends RealmObject implements Serializable {
     @SerializedName("admission_date")
     private String admission_date;
 
+    public String getStudent_id() {
+        return student_id;
+    }
+    public String getTeacher_id() {
+        return teacher_id;
+    }
+
+    @SerializedName("student_id")
+    private String student_id;
+    @SerializedName("teacher_id")
+    private String teacher_id;
+
     public String getId() {
         return id;
     }

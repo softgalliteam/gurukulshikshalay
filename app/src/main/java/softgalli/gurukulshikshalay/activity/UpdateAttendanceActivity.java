@@ -297,15 +297,15 @@ public class UpdateAttendanceActivity extends AppCompatActivity {
             for (int i = 0; i < studentListDataModelList.size(); i++) {
                 if (studentListDataModelList.get(i).isSelected()) {
                     if (!TextUtils.isEmpty(studentListDataModelList.get(i).getStudentId())) {
-                        list.add(new AttendanceStatusModel(studentListDataModelList.get(i).getStudentId(), "Present"));
+                        list.add(new AttendanceStatusModel(studentListDataModelList.get(i).getStudentId(), studentListDataModelList.get(i).getStudentName(), "Present"));
                     } else {
-                        list.add(new AttendanceStatusModel(studentListDataModelList.get(i).getId(), "Present"));
+                        list.add(new AttendanceStatusModel(studentListDataModelList.get(i).getStudent_id(), studentListDataModelList.get(i).getStudentName(), "Present"));
                     }
                 } else {
                     if (!TextUtils.isEmpty(studentListDataModelList.get(i).getStudentId())) {
-                        list.add(new AttendanceStatusModel(studentListDataModelList.get(i).getStudentId(), "Absent"));
+                        list.add(new AttendanceStatusModel(studentListDataModelList.get(i).getStudentId(), studentListDataModelList.get(i).getStudentName(), "Absent"));
                     } else {
-                        list.add(new AttendanceStatusModel(studentListDataModelList.get(i).getId(), "Absent"));
+                        list.add(new AttendanceStatusModel(studentListDataModelList.get(i).getStudent_id(), studentListDataModelList.get(i).getStudentName(), "Absent"));
                     }
                 }
             }
