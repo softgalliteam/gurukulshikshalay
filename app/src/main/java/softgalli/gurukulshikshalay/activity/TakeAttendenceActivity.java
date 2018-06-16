@@ -1,7 +1,6 @@
 package softgalli.gurukulshikshalay.activity;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -11,6 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -51,10 +51,6 @@ public class TakeAttendenceActivity extends AppCompatActivity {
     TextView presentStudentCount;
     @BindView(R.id.absentStudentCount)
     TextView absentStudentCount;
-    @BindView(R.id.uploadAttendenceBtn)
-    TextView uploadAttendenceBtn;
-    @BindView(R.id.seeAttendenceBtn)
-    TextView seeAttendenceBtn;
     @BindView(R.id.toolbar)
     Toolbar toolbar;
     @BindView(R.id.rv_common)
@@ -65,6 +61,10 @@ public class TakeAttendenceActivity extends AppCompatActivity {
     TextView classTeacherNameTv;
     @BindView(R.id.totalAbsentPresentCardView)
     LinearLayout totalAbsentPresentCardView;
+    @BindView(R.id.sendButton)
+    Button sendButton;
+    @BindView(R.id.submitButtonLl)
+    LinearLayout submitButtonLl;
     private Activity mActivity;
     private ArrayList<StudentListDataModel> studentListDataModelList;
     private String className = "", sectionName = "";
@@ -115,6 +115,7 @@ public class TakeAttendenceActivity extends AppCompatActivity {
 
 
     private void initView() {
+        sendButton.setText(mActivity.getResources().getString(R.string.upload_attendance));
         getSupportActionBar().setTitle("Attendence Class-" + className + " (" + Utilz.getCurrentDayNameAndDate() + ")");
 
         mRecyclerView.setNestedScrollingEnabled(false);
@@ -154,7 +155,7 @@ public class TakeAttendenceActivity extends AppCompatActivity {
                 if (result.getStatus().contains(PreferenceName.TRUE)) {
                     studentListDataModelList.clear();
                     studentListDataModelList = result.getData();
-                    mRecyclerView.setAdapter(new AttendenceAdapter(mActivity, studentListDataModelList, true));
+                    mRecyclerView.setAdapter(new AttendenceAdapter(mActivity, studentListDataModelList));
                 }
             }
 
@@ -182,25 +183,6 @@ public class TakeAttendenceActivity extends AppCompatActivity {
         }
     }
 
-    @OnClick({R.id.uploadAttendenceBtn, R.id.seeAttendenceBtn})
-    public void onViewClicked(View view) {
-        switch (view.getId()) {
-            case R.id.uploadAttendenceBtn:
-                if (Utilz.isOnline(mActivity)) {
-                    uploadAttendence();
-                } else {
-                    Utilz.showNoInternetConnectionDialog(mActivity);
-                }
-                break;
-            case R.id.seeAttendenceBtn:
-                Intent mIntent = new Intent(mActivity, SeeAttendenceActivity.class);
-                mIntent.putExtra(AppConstants.CLASS_NAME, className);
-                mIntent.putExtra(AppConstants.SECTION_NAME, sectionName);
-                mActivity.startActivity(mIntent);
-                break;
-        }
-    }
-
     private void uploadAttendence() {
         Utilz.showDailog(TakeAttendenceActivity.this, getResources().getString(R.string.pleasewait));
         InsertAttendanceModel insertAttendanceModel = getListOfStudentAttendance();
@@ -222,8 +204,6 @@ public class TakeAttendenceActivity extends AppCompatActivity {
                 Utilz.closeDialog();
             }
         });
-
-
     }
 
     private InsertAttendanceModel getListOfStudentAttendance() {
@@ -270,14 +250,25 @@ public class TakeAttendenceActivity extends AppCompatActivity {
         if (absentStudentCount != null)
             absentStudentCount.setText(mIntAbsentStudentCount + "");
 
-        if (totalAbsentPresentCardView != null) {
+        if (totalAbsentPresentCardView != null && submitButtonLl != null) {
             if ((mIntTotalStudentCount - mIntAbsentStudentCount) > 0) {
                 totalAbsentPresentCardView.setVisibility(View.VISIBLE);
+                submitButtonLl.setVisibility(View.VISIBLE);
                 isAttendenceTakenAndSaved = false;
             } else {
                 isAttendenceTakenAndSaved = true;
                 totalAbsentPresentCardView.setVisibility(View.GONE);
+                submitButtonLl.setVisibility(View.GONE);
             }
+        }
+    }
+
+    @OnClick(R.id.submitButtonLl)
+    public void onViewClicked() {
+        if (Utilz.isOnline(mActivity)) {
+            uploadAttendence();
+        } else {
+            Utilz.showNoInternetConnectionDialog(mActivity);
         }
     }
 }

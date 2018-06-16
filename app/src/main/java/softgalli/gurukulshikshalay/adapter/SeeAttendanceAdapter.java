@@ -11,83 +11,37 @@ import android.widget.TextView;
 import java.util.List;
 
 import softgalli.gurukulshikshalay.R;
-import softgalli.gurukulshikshalay.activity.TakeAttendenceActivity;
+import softgalli.gurukulshikshalay.common.AppConstants;
 import softgalli.gurukulshikshalay.model.StudentListDataModel;
 
-public class AttendenceAdapter extends RecyclerView.Adapter<AttendenceAdapter.ViewHolder> {
+public class SeeAttendanceAdapter extends RecyclerView.Adapter<SeeAttendanceAdapter.MyViewHolder> {
 
     private List<StudentListDataModel> mStudentsList;
     private Activity mActivity;
-    private int mIntTotalStudentCount;
-    private int mIntAbsentStudentCount;
 
-    public AttendenceAdapter(Activity mActivity, List<StudentListDataModel> studentListDataModels) {
+    public SeeAttendanceAdapter(Activity mActivity, List<StudentListDataModel> studentListDataModels) {
         this.mStudentsList = studentListDataModels;
         this.mActivity = mActivity;
-        mIntTotalStudentCount = 0;
-        if (studentListDataModels != null && studentListDataModels.size() > 0) {
-            mIntAbsentStudentCount = mIntTotalStudentCount = mStudentsList.size();
-        }
-        ((TakeAttendenceActivity) mActivity).manageAbsentPresentCount(mIntTotalStudentCount, mIntAbsentStudentCount);
     }
 
     // Create new views
     @Override
-    public AttendenceAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         // create a new view
         View itemLayoutView = LayoutInflater.from(parent.getContext()).inflate(R.layout.student_itemview, parent, false);
 
         // create ViewHolder
-        ViewHolder viewHolder = new ViewHolder(itemLayoutView);
-
-        return viewHolder;
+        return new MyViewHolder(itemLayoutView);
     }
 
     @Override
-    public void onBindViewHolder(final ViewHolder viewHolder, int position) {
-
-        final int pos = position;
+    public void onBindViewHolder(final MyViewHolder viewHolder, int position) {
         if (mStudentsList != null && mStudentsList.size() > 0) {
             viewHolder.tvName.setText(mStudentsList.get(position).getStudentName());
             viewHolder.tvEmailId.setText(mStudentsList.get(position).getStudentId());
             viewHolder.presentButton.setTag(mStudentsList.get(position));
             viewHolder.absentButton.setTag(mStudentsList.get(position));
-
-            viewHolder.presentButton.setOnClickListener(new View.OnClickListener() {
-                public void onClick(View v) {
-                    managePresentAbsent(viewHolder.presentButton, viewHolder.absentButton, true);
-
-                    if (v != null && v instanceof TextView) {
-                        TextView cb = (TextView) v;
-                        StudentListDataModel contact = (StudentListDataModel) cb.getTag();
-                        if (!contact.isSelected()) {
-                            mIntAbsentStudentCount = mIntAbsentStudentCount - 1;
-                            ((TakeAttendenceActivity) mActivity).manageAbsentPresentCount(mIntTotalStudentCount, mIntAbsentStudentCount);
-                        }
-                        contact.setSelected(true);
-                    }
-                    mStudentsList.get(pos).setSelected(true);
-                }
-            });
-            viewHolder.absentButton.setOnClickListener(new View.OnClickListener() {
-                public void onClick(View v) {
-                    managePresentAbsent(viewHolder.presentButton, viewHolder.absentButton, false);
-                    if (v != null && v instanceof TextView) {
-                        TextView cb = (TextView) v;
-                        StudentListDataModel contact = (StudentListDataModel) cb.getTag();
-
-                        if (contact.isSelected()) {
-                            mIntAbsentStudentCount = mIntAbsentStudentCount + 1;
-                            ((TakeAttendenceActivity) mActivity).manageAbsentPresentCount(mIntTotalStudentCount, mIntAbsentStudentCount);
-                        }
-
-                        contact.setSelected(false);
-                    }
-                    mStudentsList.get(pos).setSelected(false);
-                }
-            });
-
-            if (mStudentsList.get(position).isSelected()) {
+            if (mStudentsList.get(position).getStatus().equalsIgnoreCase(AppConstants.PRESENT)) {
                 managePresentAbsent(viewHolder.presentButton, viewHolder.absentButton, true);
             } else {
                 managePresentAbsent(viewHolder.presentButton, viewHolder.absentButton, false);
@@ -118,20 +72,18 @@ public class AttendenceAdapter extends RecyclerView.Adapter<AttendenceAdapter.Vi
         return mStudentsList.size();
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
+    public static class MyViewHolder extends RecyclerView.ViewHolder {
 
         public TextView tvName;
         public TextView tvEmailId;
         public TextView absentButton, presentButton;
 
-        public ViewHolder(View itemLayoutView) {
+        public MyViewHolder(View itemLayoutView) {
             super(itemLayoutView);
             tvName = itemLayoutView.findViewById(R.id.tvName);
             tvEmailId = itemLayoutView.findViewById(R.id.tvEmailId);
             absentButton = itemLayoutView.findViewById(R.id.absentButton);
             presentButton = itemLayoutView.findViewById(R.id.presentButton);
         }
-
     }
-
 }

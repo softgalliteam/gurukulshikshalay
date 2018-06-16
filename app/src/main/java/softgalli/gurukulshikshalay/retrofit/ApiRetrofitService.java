@@ -94,7 +94,7 @@ public interface ApiRetrofitService {
 
     @POST(ApiUrl.GET_STUDENT_ATTENDANCE_LIST)
     @FormUrlEncoded
-    Call<StudentListByClassModel> getStudentsAttendance(@Field("class") String className, @Field("sec") String sec, @Field("student_id") String studentId, @Field("date") String date);
+    Call<StudentListByClassModel> getStudentsAttendance(@Field("class") String className, @Field("sec") String sec, @Field("studentId") String studentId, @Field("date") String date);
 
     @POST(ApiUrl.INSER_TATTENDANCE)
     Call<CommonResponse> insertAttendance(@Body InsertAttendanceModel insertAttendanceModel);

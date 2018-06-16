@@ -59,6 +59,8 @@ public class AppConstants {
     public static final String NO = "NO";
     public static final String CANCEL = "CANCEL";
     public static final String YES = "YES";
+    public static final String PRESENT = "Present";
+    public static final String ABSENT = "Absent";
 
 
 }

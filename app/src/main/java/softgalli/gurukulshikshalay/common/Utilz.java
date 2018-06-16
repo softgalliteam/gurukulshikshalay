@@ -54,6 +54,7 @@ import softgalli.gurukulshikshalay.activity.LoginScreenActivity;
 import softgalli.gurukulshikshalay.activity.SeeAttendenceActivity;
 import softgalli.gurukulshikshalay.activity.SeeLeaveListActivity;
 import softgalli.gurukulshikshalay.activity.TakeAttendenceActivity;
+import softgalli.gurukulshikshalay.activity.UpdateAttendanceActivity;
 import softgalli.gurukulshikshalay.preference.MyPreference;
 import softgalli.gurukulshikshalay.retrofit.ApiUrl;
 
@@ -508,7 +509,6 @@ public class Utilz {
                         Intent mIntent = new Intent(mActivity, TakeAttendenceActivity.class);
                         mIntent.putExtra(AppConstants.CLASS_NAME, classNameSpinner.getSelectedItem().toString());
                         mIntent.putExtra(AppConstants.SECTION_NAME, sectionNameSpinner.getSelectedItem().toString());
-                        mIntent.putExtra(AppConstants.IS_FOR_UPDATE_ATTENDANCE, AppConstants.YES);
                         mActivity.startActivity(mIntent);
                         dialog.dismiss();
                     }
@@ -530,10 +530,9 @@ public class Utilz {
                 @Override
                 public void onClick(View view) {
                     if (isValidClassAndSection(mActivity, classNameSpinner, sectionNameSpinner)) {
-                        Intent mIntent = new Intent(mActivity, TakeAttendenceActivity.class);
+                        Intent mIntent = new Intent(mActivity, UpdateAttendanceActivity.class);
                         mIntent.putExtra(AppConstants.CLASS_NAME, classNameSpinner.getSelectedItem().toString());
                         mIntent.putExtra(AppConstants.SECTION_NAME, sectionNameSpinner.getSelectedItem().toString());
-                        mIntent.putExtra(AppConstants.IS_FOR_UPDATE_ATTENDANCE, AppConstants.YES);
                         mActivity.startActivity(mIntent);
                         dialog.dismiss();
                     }

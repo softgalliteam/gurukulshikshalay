@@ -8,32 +8,34 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import java.util.List;
+import java.util.ArrayList;
 
 import softgalli.gurukulshikshalay.R;
-import softgalli.gurukulshikshalay.activity.TakeAttendenceActivity;
+import softgalli.gurukulshikshalay.activity.UpdateAttendanceActivity;
+import softgalli.gurukulshikshalay.common.AppConstants;
 import softgalli.gurukulshikshalay.model.StudentListDataModel;
 
-public class AttendenceAdapter extends RecyclerView.Adapter<AttendenceAdapter.ViewHolder> {
+public class UpdateAttendanceAdapter extends RecyclerView.Adapter<UpdateAttendanceAdapter.ViewHolder> {
 
-    private List<StudentListDataModel> mStudentsList;
+    private ArrayList<StudentListDataModel> mStudentsList;
     private Activity mActivity;
     private int mIntTotalStudentCount;
     private int mIntAbsentStudentCount;
 
-    public AttendenceAdapter(Activity mActivity, List<StudentListDataModel> studentListDataModels) {
+    public UpdateAttendanceAdapter(Activity mActivity, ArrayList<StudentListDataModel> studentListDataModels) {
         this.mStudentsList = studentListDataModels;
         this.mActivity = mActivity;
         mIntTotalStudentCount = 0;
         if (studentListDataModels != null && studentListDataModels.size() > 0) {
-            mIntAbsentStudentCount = mIntTotalStudentCount = mStudentsList.size();
+            mIntTotalStudentCount = mStudentsList.size();
+            mIntAbsentStudentCount = ((UpdateAttendanceActivity) mActivity).getAbsentStudentCount(mStudentsList);
         }
-        ((TakeAttendenceActivity) mActivity).manageAbsentPresentCount(mIntTotalStudentCount, mIntAbsentStudentCount);
+        ((UpdateAttendanceActivity) mActivity).manageAbsentPresentCount(mIntTotalStudentCount, mIntAbsentStudentCount);
     }
 
     // Create new views
     @Override
-    public AttendenceAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public UpdateAttendanceAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         // create a new view
         View itemLayoutView = LayoutInflater.from(parent.getContext()).inflate(R.layout.student_itemview, parent, false);
 
@@ -62,7 +64,7 @@ public class AttendenceAdapter extends RecyclerView.Adapter<AttendenceAdapter.Vi
                         StudentListDataModel contact = (StudentListDataModel) cb.getTag();
                         if (!contact.isSelected()) {
                             mIntAbsentStudentCount = mIntAbsentStudentCount - 1;
-                            ((TakeAttendenceActivity) mActivity).manageAbsentPresentCount(mIntTotalStudentCount, mIntAbsentStudentCount);
+                            ((UpdateAttendanceActivity) mActivity).manageAbsentPresentCount(mIntTotalStudentCount, mIntAbsentStudentCount);
                         }
                         contact.setSelected(true);
                     }
@@ -78,19 +80,20 @@ public class AttendenceAdapter extends RecyclerView.Adapter<AttendenceAdapter.Vi
 
                         if (contact.isSelected()) {
                             mIntAbsentStudentCount = mIntAbsentStudentCount + 1;
-                            ((TakeAttendenceActivity) mActivity).manageAbsentPresentCount(mIntTotalStudentCount, mIntAbsentStudentCount);
+                            ((UpdateAttendanceActivity) mActivity).manageAbsentPresentCount(mIntTotalStudentCount, mIntAbsentStudentCount);
                         }
-
                         contact.setSelected(false);
                     }
                     mStudentsList.get(pos).setSelected(false);
                 }
             });
 
-            if (mStudentsList.get(position).isSelected()) {
+            if (mStudentsList.get(position).getStatus().equalsIgnoreCase(AppConstants.PRESENT)) {
+                mStudentsList.get(position).setSelected(true);//means present
                 managePresentAbsent(viewHolder.presentButton, viewHolder.absentButton, true);
             } else {
                 managePresentAbsent(viewHolder.presentButton, viewHolder.absentButton, false);
+                mStudentsList.get(position).setSelected(false);//means absent
             }
         }
     }

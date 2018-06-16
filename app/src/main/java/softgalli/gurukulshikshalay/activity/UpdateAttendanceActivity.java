@@ -10,6 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -25,11 +26,14 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import softgalli.gurukulshikshalay.R;
-import softgalli.gurukulshikshalay.adapter.SeeAttendanceAdapter;
+import softgalli.gurukulshikshalay.adapter.UpdateAttendanceAdapter;
 import softgalli.gurukulshikshalay.common.AppConstants;
 import softgalli.gurukulshikshalay.common.ClsGeneral;
 import softgalli.gurukulshikshalay.common.PreferenceName;
 import softgalli.gurukulshikshalay.common.Utilz;
+import softgalli.gurukulshikshalay.model.AttendanceStatusModel;
+import softgalli.gurukulshikshalay.model.CommonResponse;
+import softgalli.gurukulshikshalay.model.InsertAttendanceModel;
 import softgalli.gurukulshikshalay.model.StudentListByClassModel;
 import softgalli.gurukulshikshalay.model.StudentListDataModel;
 import softgalli.gurukulshikshalay.preference.MyPreference;
@@ -40,8 +44,12 @@ import softgalli.gurukulshikshalay.retrofit.RetrofitDataProvider;
  * Created by Welcome on 2/12/2018.
  */
 
-public class SeeAttendenceActivity extends AppCompatActivity {
-    private String TAG = SeeAttendenceActivity.class.getSimpleName();
+public class UpdateAttendanceActivity extends AppCompatActivity {
+    @BindView(R.id.sendButton)
+    Button sendButton;
+    @BindView(R.id.submitButtonLl)
+    LinearLayout submitButtonLl;
+    private String TAG = UpdateAttendanceActivity.class.getSimpleName();
     @BindView(R.id.toolbar)
     Toolbar toolbar;
     @BindView(R.id.attendanceDateTv)
@@ -96,6 +104,7 @@ public class SeeAttendenceActivity extends AppCompatActivity {
     }
 
     private void initView() {
+        sendButton.setText(mActivity.getResources().getString(R.string.update_attendance));
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerView.setNestedScrollingEnabled(false);
@@ -111,7 +120,7 @@ public class SeeAttendenceActivity extends AppCompatActivity {
                 mClassName = mBundle.getString(AppConstants.CLASS_NAME);
             if (mBundle.containsKey(AppConstants.SECTION_NAME))
                 mSectionName = mBundle.getString(AppConstants.SECTION_NAME);
-            getSupportActionBar().setTitle("Attendence of Class-" + mClassName);
+            getSupportActionBar().setTitle("Update Attendence of Class-" + mClassName);
         }
 
         if (MyPreference.isLogined() && MyPreference.getLoginedAs().equalsIgnoreCase(AppConstants.STUDENT))
@@ -124,7 +133,6 @@ public class SeeAttendenceActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setTitle("See Attendence");
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -142,7 +150,7 @@ public class SeeAttendenceActivity extends AppCompatActivity {
                 if (result != null && result.getStatus().contains(PreferenceName.TRUE)) {
                     studentListDataModelList.clear();
                     studentListDataModelList = result.getData();
-                    mRecyclerView.setAdapter(new SeeAttendanceAdapter(mActivity, studentListDataModelList));
+                    mRecyclerView.setAdapter(new UpdateAttendanceAdapter(mActivity, studentListDataModelList));
 
                     if (studentListDataModelList != null && studentListDataModelList.size() > 0) {
                         //Show here present students count and absent students count for example
@@ -164,13 +172,19 @@ public class SeeAttendenceActivity extends AppCompatActivity {
         });
     }
 
-    private int getAbsentStudentCount(ArrayList<StudentListDataModel> studentListDataModelList) {
-        int totalAbsentStudentsCount = studentListDataModelList.size();
+    public int getAbsentStudentCount(ArrayList<StudentListDataModel> studentListDataModelList) {
+        int totalPresentStudentsCount = 0;
         for (int i = 0; i < studentListDataModelList.size(); i++) {
-            if ((studentListDataModelList.get(i).getStatus()).equalsIgnoreCase(AppConstants.PRESENT))
-                totalAbsentStudentsCount = totalAbsentStudentsCount - 1;
+            if (studentListDataModelList.get(i).isSelected() || (studentListDataModelList.get(i).getStatus()).equalsIgnoreCase(AppConstants.PRESENT)) {
+                totalPresentStudentsCount = totalPresentStudentsCount + 1;
+                studentListDataModelList.get(i).setSelected(true);
+                studentListDataModelList.get(i).setStatus(AppConstants.PRESENT);
+            } else {
+                studentListDataModelList.get(i).setSelected(false);
+                studentListDataModelList.get(i).setStatus(AppConstants.ABSENT);
+            }
         }
-        return totalAbsentStudentsCount;
+        return (studentListDataModelList.size() - totalPresentStudentsCount);
     }
 
     public void manageAbsentPresentCount(int mIntTotalStudentCount, int mIntAbsentStudentCount) {
@@ -182,11 +196,13 @@ public class SeeAttendenceActivity extends AppCompatActivity {
         if (absentStudentCount != null)
             absentStudentCount.setText(mIntAbsentStudentCount + "");
 
-        if (totalAbsentPresentCardView != null) {
+        if (totalAbsentPresentCardView != null && submitButtonLl != null) {
             if ((mIntTotalStudentCount - mIntAbsentStudentCount) > 0) {
                 totalAbsentPresentCardView.setVisibility(View.VISIBLE);
+                submitButtonLl.setVisibility(View.VISIBLE);
             } else {
                 totalAbsentPresentCardView.setVisibility(View.GONE);
+                submitButtonLl.setVisibility(View.GONE);
             }
         }
         if (mIntTotalStudentCount > 0 && noRecordFoundCardView != null && mainCardView != null) {
@@ -196,11 +212,6 @@ public class SeeAttendenceActivity extends AppCompatActivity {
             noRecordFoundCardView.setVisibility(View.VISIBLE);
             mainCardView.setVisibility(View.GONE);
         }
-    }
-
-    @OnClick(R.id.attendanceDateTv)
-    public void onViewClicked() {
-        openDatePicker();
     }
 
     private void openDatePicker() {
@@ -231,6 +242,79 @@ public class SeeAttendenceActivity extends AppCompatActivity {
                 }, mYear, mMonth, mDay);
         datePickerDialog.getDatePicker().setMaxDate(System.currentTimeMillis());
         datePickerDialog.show();
+    }
+
+    @OnClick({R.id.attendanceDateTv, R.id.submitButtonLl})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.attendanceDateTv:
+                openDatePicker();
+                break;
+            case R.id.submitButtonLl:
+                if (Utilz.isOnline(mActivity)) {
+                    uploadAttendence();
+                } else {
+                    Utilz.showNoInternetConnectionDialog(mActivity);
+                }
+                break;
+        }
+    }
+
+    private void uploadAttendence() {
+        Utilz.showDailog(mActivity, getResources().getString(R.string.pleasewait));
+        InsertAttendanceModel insertAttendanceModel = getListOfStudentAttendance();
+        retrofitDataProvider.attendance(insertAttendanceModel, new DownlodableCallback<CommonResponse>() {
+            @Override
+            public void onSuccess(final CommonResponse result) {
+                Utilz.closeDialog();
+                Utilz.showMessageOnDialog(mActivity, mActivity.getString(R.string.success), mActivity.getString(R.string.attendance_taken_success_msg), "", AppConstants.OK);
+            }
+
+            @Override
+            public void onFailure(String error) {
+                Utilz.closeDialog();
+            }
+
+            @Override
+            public void onUnauthorized(int errorNumber) {
+                Utilz.closeDialog();
+            }
+        });
+    }
+
+    private InsertAttendanceModel getListOfStudentAttendance() {
+        InsertAttendanceModel insertAttendanceModel = new InsertAttendanceModel();
+        insertAttendanceModel.setClas(mClassName);
+        insertAttendanceModel.setSec(mSectionName);
+        insertAttendanceModel.setDate(Utilz.getCurrentDate());
+        if (!TextUtils.isEmpty(ClsGeneral.getStrPreferences(AppConstants.USER_ID)))
+            insertAttendanceModel.setTeacher_id(ClsGeneral.getStrPreferences(AppConstants.USER_ID));
+        else
+            insertAttendanceModel.setTeacher_id(MyPreference.getUserId());
+        ArrayList<AttendanceStatusModel> list = new ArrayList<>();
+        //Create loop here and add student present/Absent status to AttendanceStatusModel
+        if (studentListDataModelList != null && studentListDataModelList.size() > 0) {
+            for (int i = 0; i < studentListDataModelList.size(); i++) {
+                if (studentListDataModelList.get(i).isSelected()) {
+                    if (!TextUtils.isEmpty(studentListDataModelList.get(i).getStudentId())) {
+                        list.add(new AttendanceStatusModel(studentListDataModelList.get(i).getStudentId(), "Present"));
+                    } else {
+                        list.add(new AttendanceStatusModel(studentListDataModelList.get(i).getId(), "Present"));
+                    }
+                } else {
+                    if (!TextUtils.isEmpty(studentListDataModelList.get(i).getStudentId())) {
+                        list.add(new AttendanceStatusModel(studentListDataModelList.get(i).getStudentId(), "Absent"));
+                    } else {
+                        list.add(new AttendanceStatusModel(studentListDataModelList.get(i).getId(), "Absent"));
+                    }
+                }
+            }
+        }
+
+        insertAttendanceModel.setAttendance(list);
+        //End loop
+
+        return insertAttendanceModel;
     }
 
 }

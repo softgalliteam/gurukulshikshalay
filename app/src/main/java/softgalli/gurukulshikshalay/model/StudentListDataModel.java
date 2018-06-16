@@ -81,6 +81,11 @@ public class StudentListDataModel extends RealmObject implements Serializable {
     private String residential_address;
     private String permanent_address;
     private String profile_pic;
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
     private String status;
 
     public StudentListDataModel() {
