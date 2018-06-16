@@ -38,7 +38,7 @@ public class SeeAttendanceAdapter extends RecyclerView.Adapter<SeeAttendanceAdap
     public void onBindViewHolder(final MyViewHolder viewHolder, int position) {
         if (mStudentsList != null && mStudentsList.size() > 0) {
             viewHolder.tvName.setText(mStudentsList.get(position).getStudentName());
-            viewHolder.tvEmailId.setText(mStudentsList.get(position).getStudentId());
+            viewHolder.tvEmailId.setText(mStudentsList.get(position).getStudent_id());
             viewHolder.presentButton.setTag(mStudentsList.get(position));
             viewHolder.absentButton.setTag(mStudentsList.get(position));
             if (mStudentsList.get(position).getStatus().equalsIgnoreCase(AppConstants.PRESENT)) {

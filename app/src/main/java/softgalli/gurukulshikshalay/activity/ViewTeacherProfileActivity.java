@@ -284,7 +284,10 @@ public class ViewTeacherProfileActivity extends AppCompatActivity {
         if (mTeachersArrayList != null && mTeachersArrayList.size() > 0) {
             menu.findItem(R.id.editProfile).setVisible(false);
         } else {
-            menu.findItem(R.id.editProfile).setVisible(false);//For now no edit profile option 
+            if (MyPreference.getLoginedAs().equalsIgnoreCase(AppConstants.TEACHER))
+                menu.findItem(R.id.editProfile).setVisible(true);//For now edit profile option is enable for teacher only
+            else
+                menu.findItem(R.id.editProfile).setVisible(false);//For now no edit profile option
         }
         // return true so that the menu pop up is opened
         return true;

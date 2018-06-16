@@ -51,7 +51,7 @@ public class UpdateAttendanceAdapter extends RecyclerView.Adapter<UpdateAttendan
         final int pos = position;
         if (mStudentsList != null && mStudentsList.size() > 0) {
             viewHolder.tvName.setText(mStudentsList.get(position).getStudentName());
-            viewHolder.tvEmailId.setText(mStudentsList.get(position).getStudentId());
+            viewHolder.tvEmailId.setText(mStudentsList.get(position).getStudent_id());
             viewHolder.presentButton.setTag(mStudentsList.get(position));
             viewHolder.absentButton.setTag(mStudentsList.get(position));
 
