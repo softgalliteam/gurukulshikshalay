@@ -10,6 +10,7 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/main_view_margin_top"
         android:layout_marginTop="@dimen/main_view_margin_top"
         android:fillViewport="true">
 
@@ -33,16 +34,17 @@
                     android:orientation="vertical"
                     android:padding="@dimen/padding_15dp">
 
-                    <EditText
-                        android:id="@+id/input_rollnumber"
+                    <TextView
+                        android:id="@+id/teacher_id"
                         android:layout_width="match_parent"
                         android:layout_height="45dp"
                         android:background="@drawable/ss_hollow_rect_green"
-                        android:hint="Roll Number*(Ask principal for your id )"
+                        android:gravity="center_vertical"
+                        android:hint="Teacher Id*(i.e.-Name012345)"
                         android:imeOptions="actionNext"
                         android:paddingLeft="10dp"
                         android:singleLine="true"
-                        android:textColor="@color/textColor"
+                        android:textColor="@color/colorPrimary"
                         android:textSize="@dimen/text_size" />
 
 
@@ -161,18 +163,26 @@
                         android:textColor="@color/textColor"
                         android:textSize="@dimen/text_size" />
 
-                    <TextView
-                        android:id="@+id/submit"
-                        android:layout_width="match_parent"
-                        android:layout_height="50dp"
-                        android:layout_margin="30dp"
-                        android:background="@drawable/background1"
-                        android:gravity="center"
-                        android:text="Submit"
-                        android:textAllCaps="true"
-                        android:textColor="@color/colorTextWhite" />
                 </LinearLayout>
             </android.support.v7.widget.CardView>
         </LinearLayout>
     </ScrollView>
+
+    <LinearLayout
+        android:id="@+id/submitButtonLl"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true">
+        <!--For absent present count -->
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_10dp"
+            android:clickable="false"
+            card_view:cardCornerRadius="10dp"
+            card_view:cardElevation="10dp">
+
+            <include layout="@layout/common_button" />
+        </android.support.v7.widget.CardView>
+    </LinearLayout>
 </RelativeLayout>

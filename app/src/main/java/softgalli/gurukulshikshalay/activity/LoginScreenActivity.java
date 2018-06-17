@@ -141,10 +141,9 @@ public class LoginScreenActivity extends AppCompatActivity implements KenBurnsVi
             @Override
             public void onSuccess(final UserDetailsModel result) {
                 Utilz.closeDialog();
-                if (result.getStatus().contains(PreferenceName.TRUE)) {
-                    MyPreference.setLoginedAs(loginAs);
-                    MyPreference.setLogin(true);
-                    saveTeacherDetailsLocally(result.getData().get(0), loginAs);
+                if (result != null && result.getStatus().contains(PreferenceName.TRUE)) {
+                    if (result.getData() != null && result.getData().size() > 0)
+                        saveTeacherDetailsLocally(result.getData().get(0), loginAs);
                 }
             }
 
@@ -165,13 +164,19 @@ public class LoginScreenActivity extends AppCompatActivity implements KenBurnsVi
     @SuppressLint("NewApi")
     private void saveTeacherDetailsLocally(UserDetailsDataModel result, final String loginAs) {
 
+        MyPreference.setLoginedAs(loginAs);
+        MyPreference.setLogin(true);
         if (!TextUtils.isEmpty(result.getId()))
             MyPreference.setId(Integer.parseInt(result.getId()));
         if (!TextUtils.isEmpty(result.getName()))
             MyPreference.setUserName(result.getName());
         if (!TextUtils.isEmpty(result.getUser_id()))
             MyPreference.setUserId(result.getUser_id());
-
+        if (!TextUtils.isEmpty(result.getDesignation()) &&
+                (AppConstants.PRINCIPAL.equalsIgnoreCase(result.getDesignation()) || AppConstants.VICE_PRINCIPAL.equalsIgnoreCase(result.getDesignation()))) {
+            MyPreference.setPrincipalLogin(true);
+            ClsGeneral.setPreferences(AppConstants.IS_PRINCIPAL_LOGINED, true);
+        }
         ClsGeneral.setPreferences(AppConstants.ID, result.getId());
         ClsGeneral.setPreferences(AppConstants.USER_ID, result.getUser_id());
         ClsGeneral.setPreferences(AppConstants.NAME, result.getName());
@@ -193,6 +198,7 @@ public class LoginScreenActivity extends AppCompatActivity implements KenBurnsVi
         ClsGeneral.setPreferences(AppConstants.FACEBOOK_ID, result.getFacebook_id());
         ClsGeneral.setPreferences(AppConstants.DESIGNATION, result.getDesignation());
         ClsGeneral.setPreferences(AppConstants.FATHER_NAME, result.getFatherName());
+        ClsGeneral.setPreferences(AppConstants.ROLL_NUMBER, result.getRollNumber());
         ClsGeneral.setPreferences(AppConstants.IS_LOGINED, true);
         ClsGeneral.setPreferences(AppConstants.LOGIN_AS, loginAs);
         ClsGeneral.setPreferences(AppConstants.LOGINTYPE, loginAs);

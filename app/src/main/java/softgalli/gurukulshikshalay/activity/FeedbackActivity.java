@@ -124,8 +124,7 @@ public class FeedbackActivity extends AppCompatActivity implements RatingBar.OnR
             public void onSuccess(final FeedBackModel result) {
                 Utilz.closeDialog();
                 if (result.getStatus().contains(PreferenceName.TRUE)) {
-                    Toast.makeText(mActivity, R.string.sent_successfully, Toast.LENGTH_LONG).show();
-                    finish();
+                    Utilz.showMessageOnDialog(mActivity, mActivity.getString(R.string.success), mActivity.getString(R.string.sent_successfully), "", AppConstants.OK);
                 }
             }
 

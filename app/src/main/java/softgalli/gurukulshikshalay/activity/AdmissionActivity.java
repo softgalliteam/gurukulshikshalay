@@ -21,6 +21,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cz.msebera.android.httpclient.Header;
 import softgalli.gurukulshikshalay.R;
+import softgalli.gurukulshikshalay.common.AppConstants;
 import softgalli.gurukulshikshalay.common.Utilz;
 import softgalli.gurukulshikshalay.common.Validation;
 import softgalli.gurukulshikshalay.retrofit.ApiUrl;
@@ -135,7 +136,7 @@ public class AdmissionActivity extends AppCompatActivity {
                 Log.i("TAG", statusCode + "Response : " + responseString);
                 try {
                     if (statusCode == 200) {
-                        Utilz.showDailog(mActivity, mActivity.getResources().getString(R.string.admission_successfully));
+                        Utilz.showMessageOnDialog(mActivity, mActivity.getString(R.string.success), mActivity.getString(R.string.admission_successfully), "", AppConstants.OK);
                         emptyAllFields();
                     } else {
                         Toast.makeText(mActivity, R.string.something_went_wrong_error_message, Toast.LENGTH_LONG).show();

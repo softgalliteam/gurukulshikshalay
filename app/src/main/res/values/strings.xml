@@ -33,6 +33,7 @@
     <string name="section">Section</string>
     <string name="colon">:</string>
     <string name="sent_successfully">Sent Successfully</string>
+    <string name="updated_successfully">Updated Successfully</string>
     <string name="warning">Warning!!</string>
     <string name="success">Success!!</string>
     <string name="attendance_taken_success_msg">Attendance taken successfully!!</string>
@@ -112,6 +113,8 @@
     <string name="saturday_three">Sat</string>
     <string name="submit">Sumbit</string>
     <string name="update_attendance">Update Attendance</string>
+    <string name="update_details">Update Details</string>
+    <string name="add_teacher">Add Teacher</string>
     <string name="upload_attendance">Upload Attendance</string>
     <string name="feedback_text">How do you feel about our school?</string>
     <string name="select_date">Select Date</string>

@@ -11,12 +11,13 @@ public class AppConstants {
     public static final String TEACHER_DETAILS = "Teacher_Details";
     public static final String STUDENTS_DETAILS = "Students_Details";
     public static final String PRINCIPAL = "Principal";
+    public static final String VICE_PRINCIPAL = "Vice-Principal";
     public static final String STUDENT = "Student";
     public static final String TEACHER = "Teacher";
     public static final String LEAVE_MODEL = "Leave_Model";
     public static final String CLASS_NAME = "class_name";
     public static final String SECTION_NAME = "section_name";
-    public static final String IS_FOR_UPDATE_ATTENDANCE = "update_attendance";
+    public static final String IS_FOR_UPDATE = "update";
     public static final String MONDAY = "Mon";
     public static final String TUESDAY = "Tues";
     public static final String WEDNESDAY = "Wed";
@@ -32,6 +33,7 @@ public class AppConstants {
     public static final String EMAIL = "email";
     public static final String CLAS = "clas";
     public static final String SEC = "sec";
+    public static final String ROLL_NUMBER = "roll_number";
     public static final String JOINING_DATE = "joining_date";
     public static final String RESIDENTIAL_ADDRESS = "residential_address";
     public static final String PERMANENT_ADDRESS = "permanent_address";
@@ -47,6 +49,7 @@ public class AppConstants {
     public static final String FACEBOOK_ID = "facebook_id";
     public static final String DESIGNATION = "designation";
     public static final String IS_LOGINED = "is_logined";
+    public static final String IS_PRINCIPAL_LOGINED = "is_principal_logined";
     public static final String LOGIN_AS = "login_as";
     public static final String FATHER_NAME = "father_name";
 

@@ -58,6 +58,18 @@ public class MyPreference {
         return pref.getBoolean("Login", false);
     }
 
+    public static void setPrincipalLogin(boolean isLogin) {
+        SharedPreferences pref = AppController.getInstance().getSharedPreferences("PrincipalLogin1", 0);
+        SharedPreferences.Editor editor = pref.edit();
+        editor.putBoolean("PrincipalLogin", isLogin);
+        editor.commit();
+    }
+
+    public static boolean isPrincipalLogined() {
+        SharedPreferences pref = AppController.getInstance().getSharedPreferences("PrincipalLogin1", 0);
+        return pref.getBoolean("PrincipalLogin", false);
+    }
+
     public static void setLoginedAs(String name) {
         SharedPreferences pref = AppController.getInstance().getSharedPreferences("LoginedAs1", 0);
         SharedPreferences.Editor editor = pref.edit();

@@ -147,8 +147,7 @@ public class LeaveAppDisappActivity extends AppCompatActivity {
             @Override
             public void onSuccess(final CommonResponse result) {
                 Utilz.closeDialog();
-                Toast.makeText(mActivity, R.string.sent_successfully, Toast.LENGTH_LONG).show();
-                finish();
+                Utilz.showMessageOnDialog(mActivity, mActivity.getString(R.string.success), mActivity.getString(R.string.sent_successfully), "", AppConstants.OK);
             }
 
             @Override
