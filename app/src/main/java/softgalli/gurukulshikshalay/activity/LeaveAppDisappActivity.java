@@ -77,7 +77,12 @@ public class LeaveAppDisappActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setTitle("Approve/Disapprove Leave");
+        if (AppConstants.STUDENT.equalsIgnoreCase(ClsGeneral.getStrPreferences(AppConstants.LOGIN_AS))) {
+            getSupportActionBar().setTitle("Leave Details");
+        }else
+        {
+            getSupportActionBar().setTitle("Approve/Disapprove Leave");
+        }
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

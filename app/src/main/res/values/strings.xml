@@ -20,7 +20,7 @@
     <string name="email">Email</string>
     <string name="phone">Phone</string>
     <string name="address">Address</string>
-    <string name="qualification">Qualification</string>
+    <string name="qualification">Qualification - </string>
     <string name="teaching">Teaching</string>
     <string name="designation">Designation</string>
     <string name="roll_no">Roll No.</string>

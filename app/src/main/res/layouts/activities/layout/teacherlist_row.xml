@@ -15,8 +15,8 @@
         android:orientation="horizontal">
 
         <RelativeLayout
-            android:layout_width="100dp"
-            android:layout_height="100dp">
+            android:layout_width="70dp"
+            android:layout_height="70dp">
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/teacherProfilePicIv"
@@ -27,7 +27,7 @@
                 android:src="@drawable/logo"
                 app:civ_border_color="#dc5da4"
                 app:civ_border_overlay="true"
-                app:civ_border_width="2dp" />
+                app:civ_border_width="1dp" />
 
             <ProgressBar
                 android:id="@+id/progress"
@@ -38,10 +38,9 @@
 
 
         <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/margin_10dp"
-            android:layout_weight="1"
             android:gravity="center_vertical"
             android:orientation="vertical">
 
@@ -64,20 +63,32 @@
                 android:textSize="@dimen/text_size"
                 android:textStyle="bold" />
 
-            <TextView
-                android:id="@+id/qualificationTv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/textColor"
-                android:textSize="@dimen/text_size"
-                android:textStyle="bold" />
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/qualification"
+                    android:textColor="@color/textColor"
+                    android:textSize="@dimen/text_size" />
+
+                <TextView
+                    android:id="@+id/qualificationTv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/textColor"
+                    android:textSize="@dimen/text_size"
+                    android:textStyle="bold" />
+            </RelativeLayout>
 
         </LinearLayout>
     </LinearLayout>
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="1dp"
+        android:layout_height="@dimen/divider_height"
         android:layout_marginLeft="120dp"
         android:background="@color/yellow" />
 </LinearLayout>

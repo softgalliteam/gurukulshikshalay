@@ -181,8 +181,9 @@ public class ApplyLeaveActivity extends AppCompatActivity implements AdapterView
             @Override
             public void onSuccess(final CommonResponse result) {
                 Utilz.closeDialog();
-                Utilz.showMessageOnDialog(mActivity, mActivity.getString(R.string.success), mActivity.getString(R.string.sent_successfully), AppConstants.OK, "");
+              //  Utilz.showMessageOnDialog(mActivity, mActivity.getString(R.string.success), mActivity.getString(R.string.sent_successfully), AppConstants.OK, "");
                 mActivity.startActivity(new Intent(mActivity, SeeLeaveListActivity.class));
+                finish();
             }
 
             @Override
