@@ -164,7 +164,17 @@ public class LoginScreenActivity extends AppCompatActivity implements KenBurnsVi
     @SuppressLint("NewApi")
     private void saveTeacherDetailsLocally(UserDetailsDataModel result, final String loginAs) {
 
-        MyPreference.setLoginedAs(loginAs);
+        if (loginAs.equalsIgnoreCase(AppConstants.PRINCIPAL) ||
+                loginAs.equalsIgnoreCase(AppConstants.VICE_PRINCIPAL) ||
+                loginAs.equalsIgnoreCase(AppConstants.TEACHER)) {
+            MyPreference.setLoginedAs(AppConstants.TEACHER);
+            ClsGeneral.setPreferences(AppConstants.LOGIN_AS, AppConstants.TEACHER);
+            ClsGeneral.setPreferences(AppConstants.LOGINTYPE, AppConstants.TEACHER);
+        } else {
+            MyPreference.setLoginedAs(AppConstants.STUDENT);
+            ClsGeneral.setPreferences(AppConstants.LOGIN_AS, AppConstants.STUDENT);
+            ClsGeneral.setPreferences(AppConstants.LOGINTYPE, AppConstants.STUDENT);
+        }
         MyPreference.setLogin(true);
         if (!TextUtils.isEmpty(result.getId()))
             MyPreference.setId(Integer.parseInt(result.getId()));
@@ -200,8 +210,6 @@ public class LoginScreenActivity extends AppCompatActivity implements KenBurnsVi
         ClsGeneral.setPreferences(AppConstants.FATHER_NAME, result.getFatherName());
         ClsGeneral.setPreferences(AppConstants.ROLL_NUMBER, result.getRollNumber());
         ClsGeneral.setPreferences(AppConstants.IS_LOGINED, true);
-        ClsGeneral.setPreferences(AppConstants.LOGIN_AS, loginAs);
-        ClsGeneral.setPreferences(AppConstants.LOGINTYPE, loginAs);
 
         startActivity(new Intent(mActivity, HomeScreenActivity.class));
         mActivity.finishAffinity();
