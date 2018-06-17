@@ -21,8 +21,8 @@ public class TeacherListDataModel implements Serializable {
         return qualification;
     }
 
-    public String getMobile_number() {
-        return mobile_number;
+    public String getMobile() {
+        return mobile;
     }
 
     public String getAlternate_number() {
@@ -77,8 +77,8 @@ public class TeacherListDataModel implements Serializable {
     String name;
     @SerializedName("qualification")
     String qualification;
-    @SerializedName("mobile_number")
-    String mobile_number;
+    @SerializedName("mobile")
+    String mobile;
     @SerializedName("alternate_number")
     String alternate_number;
     @SerializedName("email_id")

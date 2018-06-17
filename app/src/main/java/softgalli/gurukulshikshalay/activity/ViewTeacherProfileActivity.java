@@ -115,13 +115,13 @@ public class ViewTeacherProfileActivity extends AppCompatActivity {
         } else {
             studentDetailsLl.setVisibility(View.GONE);
             teacherDetailsLl.setVisibility(View.VISIBLE);
-            if (mTeachersArrayList != null && mTeachersArrayList.size() > 0) {
-                updateOnUI(mTeachersArrayList.get(mPosition));
-                isToShowEditProfileIcon = false;
-            } else {
-                updateOnUICachedDetails();
-                isToShowEditProfileIcon = true;
-            }
+        }
+        if (mTeachersArrayList != null && mTeachersArrayList.size() > 0) {
+            updateOnUI(mTeachersArrayList.get(mPosition));
+            isToShowEditProfileIcon = false;
+        } else {
+            updateOnUICachedDetails();
+            isToShowEditProfileIcon = true;
         }
     }
 

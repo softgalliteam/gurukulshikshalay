@@ -41,6 +41,8 @@ import softgalli.gurukulshikshalay.retrofit.RetrofitDataProvider;
  */
 
 public class SeeAttendenceActivity extends AppCompatActivity {
+    @BindView(R.id.noRecordFoundTv)
+    TextView noRecordFoundTv;
     private String TAG = SeeAttendenceActivity.class.getSimpleName();
     @BindView(R.id.toolbar)
     Toolbar toolbar;
@@ -96,6 +98,7 @@ public class SeeAttendenceActivity extends AppCompatActivity {
     }
 
     private void initView() {
+        noRecordFoundTv.setText(mActivity.getResources().getString(R.string.no_attendance_data_msg));
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerView.setNestedScrollingEnabled(false);
@@ -183,10 +186,14 @@ public class SeeAttendenceActivity extends AppCompatActivity {
             absentStudentCount.setText(mIntAbsentStudentCount + "");
 
         if (totalAbsentPresentCardView != null) {
-            if ((mIntTotalStudentCount - mIntAbsentStudentCount) > 0) {
-                totalAbsentPresentCardView.setVisibility(View.VISIBLE);
-            } else {
+            if (AppConstants.STUDENT.equalsIgnoreCase(ClsGeneral.getStrPreferences(AppConstants.LOGIN_AS))) {
                 totalAbsentPresentCardView.setVisibility(View.GONE);
+            } else {
+                if ((mIntTotalStudentCount - mIntAbsentStudentCount) > 0) {
+                    totalAbsentPresentCardView.setVisibility(View.VISIBLE);
+                } else {
+                    totalAbsentPresentCardView.setVisibility(View.GONE);
+                }
             }
         }
         if (mIntTotalStudentCount > 0 && noRecordFoundCardView != null && mainCardView != null) {

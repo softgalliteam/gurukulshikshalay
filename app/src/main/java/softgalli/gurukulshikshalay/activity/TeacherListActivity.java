@@ -71,7 +71,7 @@ public class TeacherListActivity extends AppCompatActivity {
                                     TeacherListDataModel model = teachersArrayList.get(position);
                                     if (model != null) {
                                         mTeachersArrayList.add(new UserDetailsDataModel(
-                                                model.getId(), model.getName(), model.getEmail_id(), model.getMobile_number(), model.getJoining_date(), model.getImage(), model.getStatus(),
+                                                model.getId(), model.getName(), model.getEmail_id(), model.getMobile(), model.getJoining_date(), model.getImage(), model.getStatus(),
                                                 model.getQualification(), model.getAlternate_number(), model.getClassteacher_for(), model.getAddress(), model.getFacebook_id(), model.getWhat_teach(), model.getDesignation()
                                         ));
                                     }

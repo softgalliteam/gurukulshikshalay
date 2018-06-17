@@ -193,11 +193,10 @@ public class HomeScreenActivity extends AppCompatActivity
                 } else if (position == 3) {
                     if (MyPreference.isLogined()) {
                         if (AppConstants.STUDENT.equalsIgnoreCase(ClsGeneral.getStrPreferences(AppConstants.LOGIN_AS))) {
-                            /*Intent mIntent = new Intent(mActivity, SeeAttendenceActivity.class);
+                            Intent mIntent = new Intent(mActivity, SeeAttendenceActivity.class);
                             mIntent.putExtra(AppConstants.CLASS_NAME, ClsGeneral.getStrPreferences(AppConstants.CLAS));
                             mIntent.putExtra(AppConstants.SECTION_NAME, ClsGeneral.getStrPreferences(AppConstants.SEC));
-                            startActivity(mIntent);*/
-                            Toast.makeText(mActivity, "Coming Soon!!", Toast.LENGTH_SHORT).show();
+                            startActivity(mIntent);
                         } else {
                             Utilz.showAttendanceMgmtDialog(mActivity);
                         }
@@ -220,14 +219,14 @@ public class HomeScreenActivity extends AppCompatActivity
                     } else {
                         Utilz.showLoginFirstDialog(mActivity);
                     }
-                }else if (position == 6) {
+                } else if (position == 6) {
                     if (MyPreference.isLogined()) {
                         //startActivity(new Intent(HomeScreenActivity.this, TimeTableActivity.class));
                         Toast.makeText(mActivity, "Sorry no data is available at this time", Toast.LENGTH_SHORT).show();
                     } else {
                         Utilz.showLoginFirstDialog(mActivity);
                     }
-                }else if (position == 7) {
+                } else if (position == 7) {
                     if (MyPreference.isLogined()) {
                         startActivity(new Intent(HomeScreenActivity.this, SyllabusActivity.class));
                     } else {

@@ -118,6 +118,7 @@
     <string name="upload_attendance">Upload Attendance</string>
     <string name="feedback_text">How do you feel about our school?</string>
     <string name="select_date">Select Date</string>
+    <string name="no_attendance_data_msg">No data is found for above selected date. It could be a holiday or attendance was not taken on this date.</string>
 
     <string name="no_record_found">No record found</string>
     <string name="no_leave_requested_till_now">No leave has been requested till now.</string>

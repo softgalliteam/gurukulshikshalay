@@ -54,7 +54,7 @@ public class TeacherListAdapter extends RecyclerView.Adapter<TeacherListAdapter.
             qualificationTv = view.findViewById(R.id.qualificationTv);
             subjectTv = view.findViewById(R.id.subjectTv);
             teacherName = view.findViewById(R.id.teacherName);
-          //  progressBar = (ProgressBar)view.findViewById(R.id.progress);
+            //  progressBar = (ProgressBar)view.findViewById(R.id.progress);
         }
     }
 
@@ -113,7 +113,7 @@ public class TeacherListAdapter extends RecyclerView.Adapter<TeacherListAdapter.
                     .into(holder.teacherProfilePicIv);
             if (!TextUtils.isEmpty(teacherListDataModel.getQualification())) {
                 holder.qualificationTv.setVisibility(View.VISIBLE);
-                holder.qualificationTv.setText(teacherListDataModel.getQualification());
+                holder.qualificationTv.setText("Qual.-" + teacherListDataModel.getQualification());
             } else {
                 holder.qualificationTv.setVisibility(View.GONE);
             }
