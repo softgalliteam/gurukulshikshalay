@@ -5,7 +5,7 @@
     <string name="roboto_medium">fonts/Roboto-Medium.ttf</string>
     <string name="roboto_regular">fonts/Roboto-Regular.ttf</string>
     <string name="roboto_bold">fonts/Roboto-Bold.ttf</string>
-    <string name="app_registrationno">Rrgistration No:</string>
+    <string name="app_registrationno">Registration No:</string>
     <string name="text_upcominactivity">Upcoming Activities</string>
     <string name="toast_back_press">Press back again to exit from app</string>
     <string name="text_timetable">Time Table</string>
@@ -32,6 +32,7 @@
     <string name="pending">Pending</string>
     <string name="section">Section</string>
     <string name="colon">:</string>
+    <string name="principal_zone">Principal Zone</string>
     <string name="sent_successfully">Sent Successfully</string>
     <string name="updated_successfully">Updated Successfully</string>
     <string name="warning">Warning!!</string>

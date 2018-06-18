@@ -35,6 +35,7 @@ import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.Target;
 
+import java.security.Principal;
 import java.util.ArrayList;
 
 import butterknife.BindView;
@@ -129,10 +130,14 @@ public class HomeScreenActivity extends AppCompatActivity
             startActivity(new Intent(mActivity, AboutUsActivity.class));
         } else if (id == R.id.contact_us) {
             startActivity(new Intent(mActivity, ContactUsActivity.class));
-        } else if (id == R.id.admission) {
-            startActivity(new Intent(mActivity, AdmissionActivity.class));
         } else*/
-        if (id == R.id.feedback) {
+        if (id == R.id.principal_zone) {
+            if (AppConstants.PRINCIPAL.equalsIgnoreCase(MyPreference.getLoginedAs()) ||
+                    AppConstants.VICE_PRINCIPAL.equalsIgnoreCase(MyPreference.getLoginedAs()) ||
+                    AppConstants.TEACHER.equalsIgnoreCase(MyPreference.getLoginedAs())) {
+                startActivity(new Intent(mActivity, PrincipalZoneActivity.class));
+            }
+        } else if (id == R.id.feedback) {
             startActivity(new Intent(mActivity, FeedbackActivity.class));
         } else if (id == R.id.share) {
             String msg = "Download & install " + mActivity.getResources().getString(R.string.app_name) + " app.\nClick here to install" + mActivity.getResources().getString(R.string.app_name) + " : " + ApiUrl.PLAYSTORE_LINK;
