@@ -122,8 +122,8 @@ public class RetrofitDataProvider extends AppCompatActivity implements ServiceMe
     }
 
     @Override
-    public void addstudent(String regestration_id, String name, String email, String mobile, String clas, String sec, String admission_date, String residential_address, final DownlodableCallback<StuTeaModel> callback) {
-        createRetrofitService().addStudent(regestration_id, name, email, mobile, clas, sec, admission_date, residential_address).enqueue(
+    public void addstudent(String user_id, String rollNumber, String name, String email, String mobile, String clas, String sec, String admission_date, String residential_address, final DownlodableCallback<StuTeaModel> callback) {
+        createRetrofitService().addStudent(user_id, rollNumber, name, email, mobile, clas, sec, admission_date, residential_address).enqueue(
                 new Callback<StuTeaModel>() {
                     @Override
                     public void onResponse(@NonNull Call<StuTeaModel> call, @NonNull final Response<StuTeaModel> response) {
@@ -492,7 +492,8 @@ public class RetrofitDataProvider extends AppCompatActivity implements ServiceMe
                 }
         );
     }
- @Override
+
+    @Override
     public void getStudentsAttendance(String className, String sec, String studentId, String date, final DownlodableCallback<StudentListByClassModel> callback) {
         createRetrofitService().getStudentsAttendance(className, sec, studentId, date).enqueue(
                 new Callback<StudentListByClassModel>() {
@@ -523,6 +524,62 @@ public class RetrofitDataProvider extends AppCompatActivity implements ServiceMe
     @Override
     public void attendance(InsertAttendanceModel insertAttendanceModel, final DownlodableCallback<CommonResponse> callback) {
         createRetrofitService().insertAttendance(insertAttendanceModel).enqueue(
+                new Callback<CommonResponse>() {
+                    @Override
+                    public void onResponse(@NonNull Call<CommonResponse> call, @NonNull final Response<CommonResponse> response) {
+                        if (response.isSuccessful()) {
+                            CommonResponse teacherListDataModelPojo = response.body();
+                            callback.onSuccess(teacherListDataModelPojo);
+                        } else {
+                            if (response.code() == 401) {
+                                callback.onUnauthorized(response.code());
+                            } else {
+                                Utilz.closeDialog();
+                                Toast.makeText(context, context.getResources().getString(R.string.something_went_wrong_error_message), Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(@NonNull Call<CommonResponse> call, @NonNull Throwable t) {
+                        Log.d("Result", "t" + t.getMessage());
+                        callback.onFailure(t.getMessage());
+                    }
+                }
+        );
+    }
+
+    @Override
+    public void deleteStudent(String studentUserIdStr, final DownlodableCallback<CommonResponse> callback) {
+        createRetrofitService().deleteStudent(studentUserIdStr).enqueue(
+                new Callback<CommonResponse>() {
+                    @Override
+                    public void onResponse(@NonNull Call<CommonResponse> call, @NonNull final Response<CommonResponse> response) {
+                        if (response.isSuccessful()) {
+                            CommonResponse teacherListDataModelPojo = response.body();
+                            callback.onSuccess(teacherListDataModelPojo);
+                        } else {
+                            if (response.code() == 401) {
+                                callback.onUnauthorized(response.code());
+                            } else {
+                                Utilz.closeDialog();
+                                Toast.makeText(context, context.getResources().getString(R.string.something_went_wrong_error_message), Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(@NonNull Call<CommonResponse> call, @NonNull Throwable t) {
+                        Log.d("Result", "t" + t.getMessage());
+                        callback.onFailure(t.getMessage());
+                    }
+                }
+        );
+    }
+
+    @Override
+    public void deleteTeacher(String teacherRegId, final DownlodableCallback<CommonResponse> callback) {
+        createRetrofitService().deleteTeacher(teacherRegId).enqueue(
                 new Callback<CommonResponse>() {
                     @Override
                     public void onResponse(@NonNull Call<CommonResponse> call, @NonNull final Response<CommonResponse> response) {

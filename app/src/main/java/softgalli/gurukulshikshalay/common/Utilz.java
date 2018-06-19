@@ -45,6 +45,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.Random;
 
 import cz.msebera.android.httpclient.Header;
 import softgalli.gurukulshikshalay.BuildConfig;
@@ -220,41 +221,38 @@ public class Utilz {
      * @param activity
      * @return
      */
-    public static boolean isOnline(Activity activity) {
-        {
-            boolean haveConnectedWifi = false;
-            boolean haveConnectedMobile = false;
+    public static boolean isOnline(Context activity) {
+        boolean haveConnectedWifi = false;
+        boolean haveConnectedMobile = false;
 
-            ConnectivityManager cm = null;
-            if (activity != null)
-                cm = (ConnectivityManager) activity.getSystemService(Context.CONNECTIVITY_SERVICE);
-            if (cm != null) {
-                NetworkInfo[] netInfo = cm.getAllNetworkInfo();
-                for (NetworkInfo ni : netInfo) {
-                    if (ni.getTypeName().equalsIgnoreCase("WIFI")) {
-                        if (ni.isConnected()) {
-                            haveConnectedWifi = true;
-                            Log.i("", "WIFI CONNECTION : AVAILABLE");
-                        } else {
-                            Log.i(TAG, "WIFI CONNECTION : NOT AVAILABLE");
-                        }
+        ConnectivityManager cm = null;
+        if (activity != null)
+            cm = (ConnectivityManager) activity.getSystemService(Context.CONNECTIVITY_SERVICE);
+        if (cm != null) {
+            NetworkInfo[] netInfo = cm.getAllNetworkInfo();
+            for (NetworkInfo ni : netInfo) {
+                if (ni.getTypeName().equalsIgnoreCase("WIFI")) {
+                    if (ni.isConnected()) {
+                        haveConnectedWifi = true;
+                        Log.i("", "WIFI CONNECTION : AVAILABLE");
+                    } else {
+                        Log.i(TAG, "WIFI CONNECTION : NOT AVAILABLE");
                     }
-                    if (ni.getTypeName().equalsIgnoreCase("MOBILE")) {
-                        if (ni.isConnected()) {
-                            haveConnectedMobile = true;
-                            Log.i(TAG, "MOBILE INTERNET CONNECTION : AVAILABLE");
-                        } else {
-                            Log.i(TAG, "MOBILE INTERNET CONNECTION : NOT AVAILABLE");
-                        }
+                }
+                if (ni.getTypeName().equalsIgnoreCase("MOBILE")) {
+                    if (ni.isConnected()) {
+                        haveConnectedMobile = true;
+                        Log.i(TAG, "MOBILE INTERNET CONNECTION : AVAILABLE");
+                    } else {
+                        Log.i(TAG, "MOBILE INTERNET CONNECTION : NOT AVAILABLE");
                     }
                 }
             }
-            return haveConnectedWifi || haveConnectedMobile;
         }
-
+        return haveConnectedWifi || haveConnectedMobile;
     }
 
-    public static void showNoInternetConnectionDialog(final Activity mActivity) {
+    public static void showNoInternetConnectionDialog(final Context mActivity) {
         try {
             android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(mActivity);
             builder.setTitle(mActivity.getResources().getString(R.string.no_internet_connection_msg_title));
@@ -317,7 +315,7 @@ public class Utilz {
         return mStrDayName;
     }
 
-    public static void openDialer(final Activity mActivity, final String mobileNo) {
+    public static void openDialer(final Context mActivity, final String mobileNo) {
         Intent intent = new Intent(Intent.ACTION_DIAL);
         intent.setData(Uri.parse("tel:" + mobileNo));
         mActivity.startActivity(intent);
@@ -328,7 +326,7 @@ public class Utilz {
     }
 
 
-    public static void whatsappShare(final Activity mActivity, final String mobileNo) {
+    public static void whatsappShare(final Context mActivity, final String mobileNo) {
         Intent intent = new Intent(Intent.ACTION_DIAL);
         intent.setData(Uri.parse("tel:" + mobileNo));
         mActivity.startActivity(intent);
@@ -722,5 +720,15 @@ public class Utilz {
             return "Sunday";
     }
 
+    public static String getRandomUserIdFromName(String userNameStr) {
+        String finalUserIdStr = "";
+        Random rand = new Random();
+        int randomNo = rand.nextInt(90000) + 10000;
+        if (!TextUtils.isEmpty(userNameStr) && userNameStr.length() > 3) {
+            userNameStr = userNameStr.substring(0, 3).toUpperCase();
+        }
+        finalUserIdStr = userNameStr + "-" + randomNo;
+        return finalUserIdStr;
+    }
 }
 

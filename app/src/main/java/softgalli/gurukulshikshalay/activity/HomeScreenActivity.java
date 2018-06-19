@@ -35,7 +35,6 @@ import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.Target;
 
-import java.security.Principal;
 import java.util.ArrayList;
 
 import butterknife.BindView;
@@ -132,10 +131,16 @@ public class HomeScreenActivity extends AppCompatActivity
             startActivity(new Intent(mActivity, ContactUsActivity.class));
         } else*/
         if (id == R.id.principal_zone) {
-            if (AppConstants.PRINCIPAL.equalsIgnoreCase(MyPreference.getLoginedAs()) ||
-                    AppConstants.VICE_PRINCIPAL.equalsIgnoreCase(MyPreference.getLoginedAs()) ||
-                    AppConstants.TEACHER.equalsIgnoreCase(MyPreference.getLoginedAs())) {
-                startActivity(new Intent(mActivity, PrincipalZoneActivity.class));
+            if (MyPreference.isLogined()) {
+                if (AppConstants.PRINCIPAL.equalsIgnoreCase(MyPreference.getLoginedAs()) ||
+                        AppConstants.VICE_PRINCIPAL.equalsIgnoreCase(MyPreference.getLoginedAs()) ||
+                        AppConstants.TEACHER.equalsIgnoreCase(MyPreference.getLoginedAs())) {
+                    startActivity(new Intent(mActivity, PrincipalZoneActivity.class));
+                } else {
+                    Toast.makeText(mActivity, "Sorry, This feature is not for students.", Toast.LENGTH_SHORT).show();
+                }
+            } else {
+                Utilz.showLoginFirstDialog(mActivity);
             }
         } else if (id == R.id.feedback) {
             startActivity(new Intent(mActivity, FeedbackActivity.class));

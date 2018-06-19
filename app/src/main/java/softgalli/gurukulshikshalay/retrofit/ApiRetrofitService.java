@@ -16,7 +16,6 @@ import softgalli.gurukulshikshalay.model.NotificationModel;
 import softgalli.gurukulshikshalay.model.RequestedLeaveModel;
 import softgalli.gurukulshikshalay.model.StuTeaModel;
 import softgalli.gurukulshikshalay.model.StudentListByClassModel;
-import softgalli.gurukulshikshalay.model.StudentListDataModel;
 import softgalli.gurukulshikshalay.model.TeacherListModel;
 import softgalli.gurukulshikshalay.model.TopperLisrModel;
 import softgalli.gurukulshikshalay.model.UserDetailsModel;
@@ -38,7 +37,7 @@ public interface ApiRetrofitService {
 
     @POST(ApiUrl.ADDSTUDENT)
     @FormUrlEncoded
-    Call<StuTeaModel> addStudent(@Field("regestration_id") String regestration_id, @Field("name") String name, @Field("email") String email
+    Call<StuTeaModel> addStudent(@Field("user_id") String user_id, @Field("roll_no") String roll_no, @Field("name") String name, @Field("email") String email
             , @Field("mobile") String mobile_number, @Field("class") String clas, @Field("sec") String classteacher_for,
                                  @Field("admission_date") String admission_date, @Field("residential_address") String residential_address);
 
@@ -86,10 +85,6 @@ public interface ApiRetrofitService {
 
     @POST(ApiUrl.GET_CLASS_WISE_STUDENT_LIST)
     @FormUrlEncoded
-    Call<StudentListDataModel> getStudentsListByClassWise(@Field("class") String className);
-
-    @POST(ApiUrl.GET_CLASS_WISE_STUDENT_LIST)
-    @FormUrlEncoded
     Call<StudentListByClassModel> getStudentsListByClassWise(@Field("class") String className, @Field("sec") String sec);
 
     @POST(ApiUrl.GET_STUDENT_ATTENDANCE_LIST)
@@ -98,4 +93,12 @@ public interface ApiRetrofitService {
 
     @POST(ApiUrl.INSER_TATTENDANCE)
     Call<CommonResponse> insertAttendance(@Body InsertAttendanceModel insertAttendanceModel);
+
+    @FormUrlEncoded
+    @POST(ApiUrl.DELETE_STUDENT)
+    Call<CommonResponse> deleteStudent(@Field("user_id") String deleteStudent);
+
+    @FormUrlEncoded
+    @POST(ApiUrl.DELETE_TEACHER)
+    Call<CommonResponse> deleteTeacher(@Field("user_id") String deleteTeacher);
 }

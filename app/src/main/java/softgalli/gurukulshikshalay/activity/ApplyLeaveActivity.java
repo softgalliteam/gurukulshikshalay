@@ -174,14 +174,14 @@ public class ApplyLeaveActivity extends AppCompatActivity implements AdapterView
     private void applyLeave(String fromDateTvStr, String toDateTvStr, String commentStr) {
         Utilz.showDailog(mActivity, mActivity.getResources().getString(R.string.pleasewait));
         String studentId = MyPreference.getUserId();
-        if (!TextUtils.isEmpty(studentId)) {
+        if (TextUtils.isEmpty(studentId)) {
             studentId = ClsGeneral.getStrPreferences(AppConstants.USER_ID);
         }
         retrofitDataProvider.requestLeave(studentId, fromDateTvStr, toDateTvStr, mStrClassTeacherId, commentStr, new DownlodableCallback<CommonResponse>() {
             @Override
             public void onSuccess(final CommonResponse result) {
                 Utilz.closeDialog();
-              //  Utilz.showMessageOnDialog(mActivity, mActivity.getString(R.string.success), mActivity.getString(R.string.sent_successfully), AppConstants.OK, "");
+                //  Utilz.showMessageOnDialog(mActivity, mActivity.getString(R.string.success), mActivity.getString(R.string.sent_successfully), AppConstants.OK, "");
                 mActivity.startActivity(new Intent(mActivity, SeeLeaveListActivity.class));
                 finish();
             }

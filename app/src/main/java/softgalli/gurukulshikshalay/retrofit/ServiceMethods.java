@@ -10,7 +10,6 @@ import softgalli.gurukulshikshalay.model.NotificationModel;
 import softgalli.gurukulshikshalay.model.RequestedLeaveModel;
 import softgalli.gurukulshikshalay.model.StuTeaModel;
 import softgalli.gurukulshikshalay.model.StudentListByClassModel;
-import softgalli.gurukulshikshalay.model.StudentListDataModel;
 import softgalli.gurukulshikshalay.model.TeacherListModel;
 import softgalli.gurukulshikshalay.model.TopperLisrModel;
 import softgalli.gurukulshikshalay.model.UserDetailsModel;
@@ -25,7 +24,7 @@ public interface ServiceMethods {
     void addteacher(String teacher_id, String name, String qualification, String mobile_number, String alternate_number, String email_id,
                     String classteacher_for, String joining_date, String address, DownlodableCallback<StuTeaModel> callback);
 
-    void addstudent(String regestration_id, String name, String email, String mobile, String clas, String sec,
+    void addstudent(String user_id, String roll_no, String name, String email, String mobile, String clas, String sec,
                     String admission_date, String residential_address, DownlodableCallback<StuTeaModel> callback);
 
     void teacherList(DownlodableCallback<TeacherListModel> callback);
@@ -56,4 +55,8 @@ public interface ServiceMethods {
     void getStudentsAttendance(String className, String sec, String studentId, String date, DownlodableCallback<StudentListByClassModel> callback);
 
     void attendance(InsertAttendanceModel insertAttendanceModel, DownlodableCallback<CommonResponse> callback);
+
+    void deleteStudent(String studentRegId, DownlodableCallback<CommonResponse> callback);
+
+    void deleteTeacher(String teacherRegId, DownlodableCallback<CommonResponse> callback);
 }

@@ -2,6 +2,7 @@ package softgalli.gurukulshikshalay.activity;
 
 import android.app.Activity;
 import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -12,9 +13,11 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Locale;
 
@@ -22,15 +25,18 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import softgalli.gurukulshikshalay.R;
 import softgalli.gurukulshikshalay.common.AppConstants;
-import softgalli.gurukulshikshalay.common.ClsGeneral;
 import softgalli.gurukulshikshalay.common.PreferenceName;
 import softgalli.gurukulshikshalay.common.Utilz;
+import softgalli.gurukulshikshalay.model.CommonResponse;
 import softgalli.gurukulshikshalay.model.StuTeaModel;
+import softgalli.gurukulshikshalay.model.StudentListDataModel;
 import softgalli.gurukulshikshalay.retrofit.DownlodableCallback;
 import softgalli.gurukulshikshalay.retrofit.RetrofitDataProvider;
 
 public class AddStudent extends AppCompatActivity {
 
+    @BindView(R.id.studentRegIdTv)
+    TextView studentRegIdTv;
     @BindView(R.id.input_rollnumber)
     EditText input_rollnumber;
     @BindView(R.id.input_name)
@@ -53,10 +59,17 @@ public class AddStudent extends AppCompatActivity {
     Button sendButton;
     @BindView(R.id.submitButtonLl)
     LinearLayout submitButtonLl;
+    @BindView(R.id.updateButton)
+    Button updateButton;
+    @BindView(R.id.deleteButton)
+    Button deleteButton;
+    @BindView(R.id.updateButtonLl)
+    LinearLayout updateButtonLl;
     private boolean isForUpdate;
     private Activity mActivity;
     private RetrofitDataProvider retrofitDataProvider;
     Calendar myCalendar = Calendar.getInstance();
+    ArrayList<StudentListDataModel> mStudentsArrayList = new ArrayList<>();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -77,6 +90,8 @@ public class AddStudent extends AppCompatActivity {
         if (mBundle != null) {
             if (mBundle.containsKey(AppConstants.IS_FOR_UPDATE))
                 isForUpdate = mBundle.getBoolean(AppConstants.IS_FOR_UPDATE);
+            if (mBundle.containsKey(AppConstants.STUDENTS_DETAILS))
+                mStudentsArrayList = (ArrayList<StudentListDataModel>) mBundle.getSerializable(AppConstants.STUDENTS_DETAILS);
         }
     }
 
@@ -94,62 +109,83 @@ public class AddStudent extends AppCompatActivity {
     }
 
     private void initView() {
+        sendButton.setText(mActivity.getResources().getString(R.string.add_student));
+
         if (isForUpdate) {
-            sendButton.setText(mActivity.getResources().getString(R.string.update_details));
-            fillAllTeacherDetailsIntoFields();
+            updateButtonLl.setVisibility(View.VISIBLE);
+            submitButtonLl.setVisibility(View.GONE);
+            getSupportActionBar().setTitle(mActivity.getResources().getString(R.string.update_details));
+            if (mStudentsArrayList != null && mStudentsArrayList.size() > 0)
+                fillAllStudentsDetailsIntoFields(mStudentsArrayList.get(0));
         } else {
-            sendButton.setText(mActivity.getResources().getString(R.string.add_teacher));
+            updateButtonLl.setVisibility(View.GONE);
+            submitButtonLl.setVisibility(View.VISIBLE);
+            getSupportActionBar().setTitle(mActivity.getResources().getString(R.string.add_student));
         }
     }
 
-    private void fillAllTeacherDetailsIntoFields() {
-        input_rollnumber.setText(ClsGeneral.getStrPreferences(AppConstants.USER_ID));
-        input_name.setText(ClsGeneral.getStrPreferences(AppConstants.NAME));
-        input_rollnumber.setText(ClsGeneral.getStrPreferences(AppConstants.ROLL_NUMBER));
-        input_email.setText(ClsGeneral.getStrPreferences(AppConstants.EMAIL));
-        input_class.setText(ClsGeneral.getStrPreferences(AppConstants.CLASS_NAME));
-        input_admission.setText(ClsGeneral.getStrPreferences(AppConstants.JOINING_DATE));
+    private void fillAllStudentsDetailsIntoFields(StudentListDataModel studentListDataModel) {
+        if (studentListDataModel != null) {
+            if (!TextUtils.isEmpty(studentListDataModel.getStudent_id())) {
+                studentRegIdTv.setText(studentListDataModel.getStudent_id());
+                studentRegIdTv.setVisibility(View.VISIBLE);
+            } else if (!TextUtils.isEmpty(studentListDataModel.getStudentId())) {
+                studentRegIdTv.setText(studentListDataModel.getStudentId());
+                studentRegIdTv.setVisibility(View.VISIBLE);
+            } else {
+                studentRegIdTv.setVisibility(View.GONE);
+            }
+            if (!TextUtils.isEmpty(studentListDataModel.getStudentName()))
+                input_name.setText(studentListDataModel.getStudentName());
 
-        if (!TextUtils.isEmpty(ClsGeneral.getStrPreferences(AppConstants.PHONE_NO)))
-            input_mobile.setText(ClsGeneral.getStrPreferences(AppConstants.PHONE_NO));
-        else if (!TextUtils.isEmpty(ClsGeneral.getStrPreferences(AppConstants.ALTERNTE_NUMBER)))
-            input_mobile.setText(ClsGeneral.getStrPreferences(AppConstants.ALTERNTE_NUMBER));
+            if (!TextUtils.isEmpty(studentListDataModel.getStudent_id()))
+                input_rollnumber.setText(studentListDataModel.getStudent_id());
+            else if (!TextUtils.isEmpty(studentListDataModel.getStudentId()))
+                input_rollnumber.setText(studentListDataModel.getStudentId());
 
-        if (!TextUtils.isEmpty(ClsGeneral.getStrPreferences(AppConstants.ADDRESS)))
-            input_address.setText(ClsGeneral.getStrPreferences(AppConstants.ADDRESS));
-        else if (!TextUtils.isEmpty(ClsGeneral.getStrPreferences(AppConstants.PERMANENT_ADDRESS)))
-            input_address.setText(ClsGeneral.getStrPreferences(AppConstants.PERMANENT_ADDRESS));
-        else if (!TextUtils.isEmpty(ClsGeneral.getStrPreferences(AppConstants.RESIDENTIAL_ADDRESS)))
-            input_address.setText(ClsGeneral.getStrPreferences(AppConstants.RESIDENTIAL_ADDRESS));
+            if (!TextUtils.isEmpty(studentListDataModel.getEmail()))
+                input_email.setText(studentListDataModel.getEmail());
 
+            if (!TextUtils.isEmpty(studentListDataModel.getClassName()))
+                input_class.setText(studentListDataModel.getClassName());
+
+            if (!TextUtils.isEmpty(studentListDataModel.getAdmissionDate()))
+                input_admission.setText(studentListDataModel.getAdmissionDate());
+
+            if (!TextUtils.isEmpty(studentListDataModel.getSec()))
+                input_section.setText(studentListDataModel.getSec());
+
+            if (!TextUtils.isEmpty(studentListDataModel.getMobile()))
+                input_mobile.setText(studentListDataModel.getMobile());
+
+            if (!TextUtils.isEmpty(studentListDataModel.getPermanent_address()))
+                input_address.setText(studentListDataModel.getResidential_address());
+            else if (!TextUtils.isEmpty(studentListDataModel.getPermanent_address()))
+                input_address.setText(studentListDataModel.getPermanent_address());
+        }
     }
 
     private void handleClicks() {
         submitButtonLl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (input_rollnumber.getText().toString().trim().equals("")) {
-                    Toast.makeText(AddStudent.this, "Enter Roll Number Please", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                if (input_name.getText().toString().trim().equals("")) {
-                    Toast.makeText(AddStudent.this, "Enter Name Please", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                if (input_class.getText().toString().trim().equals("")) {
-                    Toast.makeText(AddStudent.this, "Enter Class Please", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                if (input_address.getText().toString().trim().equals("")) {
-                    Toast.makeText(AddStudent.this, "Enter Address Please", Toast.LENGTH_SHORT).show();
-                    return;
-                } else {
-                    if (Utilz.isInternetConnected(AddStudent.this)) {
-                        submitData();
-                    } else {
-                        Toast.makeText(AddStudent.this, "No Internet Connection", Toast.LENGTH_SHORT).show();
-                    }
-                }
+                String userId = Utilz.getRandomUserIdFromName(input_name.getText().toString().trim());
+                studentRegIdTv.setText(userId);
+                addUpdateStudentsDetail();
+            }
+        });
+
+        updateButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                addUpdateStudentsDetail();
+            }
+        });
+
+        deleteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                deleteStudentFromSchool();
             }
         });
 
@@ -179,6 +215,44 @@ public class AddStudent extends AppCompatActivity {
         });
     }
 
+    private void deleteStudentFromSchool() {
+        if (TextUtils.isEmpty(studentRegIdTv.getText().toString().trim())) {
+            Toast.makeText(mActivity, "Invalid student registration id", Toast.LENGTH_SHORT).show();
+            return;
+        } else {
+            if (Utilz.isOnline(mActivity)) {
+                deleteStudentFromDb();
+            } else {
+                Utilz.showNoInternetConnectionDialog(mActivity);
+            }
+        }
+    }
+
+    private void addUpdateStudentsDetail() {
+        if (input_rollnumber.getText().toString().trim().equals("")) {
+            Toast.makeText(AddStudent.this, "Enter Roll Number Please", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if (input_name.getText().toString().trim().equals("")) {
+            Toast.makeText(AddStudent.this, "Enter Name Please", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if (input_class.getText().toString().trim().equals("")) {
+            Toast.makeText(AddStudent.this, "Enter Class Please", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if (input_address.getText().toString().trim().equals("")) {
+            Toast.makeText(AddStudent.this, "Enter Address Please", Toast.LENGTH_SHORT).show();
+            return;
+        } else {
+            if (Utilz.isOnline(mActivity)) {
+                addNewStudentInDb();
+            } else {
+                Utilz.showNoInternetConnectionDialog(mActivity);
+            }
+        }
+    }
+
     private void updateLabel() {
         String myFormat = "yyyy/MM/dd"; //In which you need put here
         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
@@ -186,8 +260,12 @@ public class AddStudent extends AppCompatActivity {
         input_admission.setText(sdf.format(myCalendar.getTime()));
     }
 
-    private void submitData() {
+    private void addNewStudentInDb() {
         Utilz.showDailog(AddStudent.this, mActivity.getResources().getString(R.string.pleasewait));
+        String userId = studentRegIdTv.getText().toString().trim();
+        if (TextUtils.isEmpty(userId)) {
+            userId = Utilz.getRandomUserIdFromName(input_name.getText().toString().trim());
+        }
         String rollNumber = input_rollnumber.getText().toString().trim();
         String name = input_name.getText().toString().trim();
         String email = input_email.getText().toString().trim();
@@ -196,29 +274,55 @@ public class AddStudent extends AppCompatActivity {
         String sec = input_section.getText().toString().trim();
         String admission = input_admission.getText().toString().trim();
         String address = input_address.getText().toString().trim();
-        retrofitDataProvider.addstudent(rollNumber, name, email, mobile, clas, sec, admission, address, new DownlodableCallback<StuTeaModel>() {
+        retrofitDataProvider.addstudent(userId, rollNumber, name, email, mobile, clas, sec, admission, address, new DownlodableCallback<StuTeaModel>() {
             @Override
             public void onSuccess(final StuTeaModel result) {
                 //  closeDialog();
-
                 Utilz.closeDialog();
-
                 if (result.getStatus().contains(PreferenceName.TRUE)) {
-
-                    Toast.makeText(AddStudent.this, "" + result.getData(), Toast.LENGTH_SHORT).show();
-                    finish();
+                    if (isForUpdate)
+                        Utilz.showMessageOnDialog(mActivity, mActivity.getString(R.string.success), mActivity.getString(R.string.updated_successfully), "", AppConstants.OK);
+                    else
+                        Utilz.showMessageOnDialog(mActivity, mActivity.getString(R.string.success), mActivity.getString(R.string.added_successfully), "", AppConstants.OK);
                 }
-
             }
 
             @Override
             public void onFailure(String error) {
-                // closeDialog();
+                Utilz.closeDialog();
+                Toast.makeText(mActivity, "" + error, Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onUnauthorized(int errorNumber) {
+                Utilz.closeDialog();
+                Toast.makeText(mActivity, "Something went wrong, Please try again!!", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
 
+    private void deleteStudentFromDb() {
+        String studentUserIdStr = studentRegIdTv.getText().toString().trim();
+        if (TextUtils.isEmpty(studentUserIdStr)) {
+            return;
+        }
+        retrofitDataProvider.deleteStudent(studentUserIdStr, new DownlodableCallback<CommonResponse>() {
+            @Override
+            public void onSuccess(final CommonResponse result) {
+                Utilz.closeDialog();
+                Utilz.showMessageOnDialog(mActivity, mActivity.getString(R.string.success), mActivity.getString(R.string.deleted_successfully), "", AppConstants.OK);
+            }
+
+            @Override
+            public void onFailure(String error) {
+                Utilz.closeDialog();
+                Toast.makeText(mActivity, R.string.something_went_wrong_error_message, Toast.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onUnauthorized(int errorNumber) {
+                Utilz.closeDialog();
+                Toast.makeText(mActivity, R.string.something_went_wrong_error_message, Toast.LENGTH_LONG).show();
             }
         });
     }

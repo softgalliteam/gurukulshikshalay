@@ -2,11 +2,15 @@ package softgalli.gurukulshikshalay.fragments;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,7 +21,6 @@ import java.util.ArrayList;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import softgalli.gurukulshikshalay.R;
-import softgalli.gurukulshikshalay.activity.TakeAttendenceActivity;
 import softgalli.gurukulshikshalay.adapter.StudentsListAdapter;
 import softgalli.gurukulshikshalay.common.PreferenceName;
 import softgalli.gurukulshikshalay.common.Utilz;
@@ -28,8 +31,8 @@ import softgalli.gurukulshikshalay.retrofit.RetrofitDataProvider;
 
 @SuppressLint("ValidFragment")
 public class StudentsFragment extends Fragment {
-    String tabTitle = "", mClassName = "10", mSectionName = "A";
-    private static final String TAG = TakeAttendenceActivity.class.getSimpleName();
+    private static final String TAG = StudentsFragment.class.getSimpleName();
+    String tabTitle = "", mClassName = "10", mSectionName = "";
     @BindView(R.id.mRecyclerView)
     RecyclerView mRecyclerView;
     @BindView(R.id.noRecordFoundCardView)
@@ -42,12 +45,6 @@ public class StudentsFragment extends Fragment {
     private boolean isCallingApi = false;
     private ArrayList<StudentListDataModel> studentListDataModelList;
     private RetrofitDataProvider retrofitDataProvider;
-
-    public StudentsFragment(String tabTitle, String mClassName) {
-        // Required empty public constructor
-        this.tabTitle = tabTitle;
-        this.mClassName = mClassName;
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -69,21 +66,18 @@ public class StudentsFragment extends Fragment {
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setNestedScrollingEnabled(false);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(mActivity));
-        manageVisibility();
-        if (Utilz.isOnline(mActivity) && !isCallingApi) {
-            getStudentListFromServer();
-        } else {
-            Utilz.showNoInternetConnectionDialog(mActivity);
-        }
+        Log.i(TAG, "initView method is called : " + tabTitle + ", " + mClassName);
+        if (tabTitle.equalsIgnoreCase("Class - 10") && mClassName.equalsIgnoreCase("10"))
+            callStudentListFromServer(tabTitle, mClassName);
     }
 
     private void getStudentListFromServer() {
         isCallingApi = true;
-        Utilz.showDailog(mActivity, mActivity.getResources().getString(R.string.pleasewait));
+        showDailog(mActivity, mActivity.getResources().getString(R.string.pleasewait));
         retrofitDataProvider.getStudentsListByClassWise(mClassName, mSectionName, new DownlodableCallback<StudentListByClassModel>() {
             @Override
             public void onSuccess(final StudentListByClassModel result) {
-                Utilz.closeDialog();
+                closeDialog();
                 isCallingApi = false;
                 if (result.getStatus().contains(PreferenceName.TRUE)) {
                     studentListDataModelList.clear();
@@ -96,14 +90,16 @@ public class StudentsFragment extends Fragment {
 
             @Override
             public void onFailure(String error) {
-                Utilz.closeDialog();
+                closeDialog();
                 isCallingApi = false;
+                manageVisibility();
             }
 
             @Override
             public void onUnauthorized(int errorNumber) {
-                Utilz.closeDialog();
+                closeDialog();
                 isCallingApi = false;
+                manageVisibility();
             }
         });
     }
@@ -117,4 +113,31 @@ public class StudentsFragment extends Fragment {
             mainCardView.setVisibility(View.GONE);
         }
     }
+
+    public void callStudentListFromServer(String tabTitle, String mClassName) {
+        this.tabTitle = tabTitle;
+        this.mClassName = mClassName;
+        manageVisibility();
+        Log.i(TAG, "callStudentListFromServer method is called : " + tabTitle + ", " + mClassName);
+        if (Utilz.isOnline(mActivity) && !isCallingApi) {
+            getStudentListFromServer();
+        } else {
+            Utilz.showNoInternetConnectionDialog(mActivity);
+        }
+    }
+
+    public void showDailog(Context c, String msg) {
+        dialog = new ProgressDialog(c);
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.setMessage(msg);
+        if (dialog != null && !dialog.isShowing())
+            dialog.show();
+    }
+
+    public void closeDialog() {
+        if (dialog != null)
+            dialog.cancel();
+    }
+
+    ProgressDialog dialog;
 }

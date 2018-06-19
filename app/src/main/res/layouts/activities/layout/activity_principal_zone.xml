@@ -37,7 +37,7 @@
             app:tabIndicatorHeight="3dp"
             app:tabMode="scrollable"
             app:tabSelectedTextColor="@color/colorPrimary"
-            app:tabTextColor="@color/textColor" />
+            app:tabTextColor="@color/colorTextWhite" />
 
     </android.support.design.widget.AppBarLayout>
 
@@ -52,9 +52,9 @@
         android:id="@+id/addStudentFab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="right|bottom"
         android:layout_margin="16dp"
         android:background="@drawable/circle"
         android:clickable="true"
-        android:src="@drawable/user_plus"
-        android:layout_gravity="right|bottom" />
+        android:src="@drawable/user_plus" />
 </android.support.design.widget.CoordinatorLayout>

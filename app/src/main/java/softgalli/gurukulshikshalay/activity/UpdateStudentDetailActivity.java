@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
@@ -26,11 +27,14 @@ import softgalli.gurukulshikshalay.common.ClsGeneral;
 import softgalli.gurukulshikshalay.common.PreferenceName;
 import softgalli.gurukulshikshalay.common.Utilz;
 import softgalli.gurukulshikshalay.model.StuTeaModel;
+import softgalli.gurukulshikshalay.preference.MyPreference;
 import softgalli.gurukulshikshalay.retrofit.DownlodableCallback;
 import softgalli.gurukulshikshalay.retrofit.RetrofitDataProvider;
 
 public class UpdateStudentDetailActivity extends AppCompatActivity {
 
+    @BindView(R.id.studentRegIdTv)
+    TextView studentRegIdTv;
     @BindView(R.id.input_rollnumber)
     EditText input_rollnumber;
     @BindView(R.id.input_name)
@@ -53,7 +57,8 @@ public class UpdateStudentDetailActivity extends AppCompatActivity {
     Button sendButton;
     @BindView(R.id.submitButtonLl)
     LinearLayout submitButtonLl;
-    private boolean isForUpdate;
+    @BindView(R.id.updateButtonLl)
+    LinearLayout updateButtonLl;
     private Activity mActivity;
     private RetrofitDataProvider retrofitDataProvider;
     Calendar myCalendar = Calendar.getInstance();
@@ -65,19 +70,10 @@ public class UpdateStudentDetailActivity extends AppCompatActivity {
         mActivity = this;
         ButterKnife.bind(this);
         retrofitDataProvider = new RetrofitDataProvider(this);
-        getIntentData();
         initToolbar();
         initView();
         handleClicks();
 
-    }
-
-    private void getIntentData() {
-        Bundle mBundle = getIntent().getExtras();
-        if (mBundle != null) {
-            if (mBundle.containsKey(AppConstants.IS_FOR_UPDATE))
-                isForUpdate = mBundle.getBoolean(AppConstants.IS_FOR_UPDATE);
-        }
     }
 
     private void initToolbar() {
@@ -94,18 +90,26 @@ public class UpdateStudentDetailActivity extends AppCompatActivity {
     }
 
     private void initView() {
-        if (isForUpdate) {
-            sendButton.setText(mActivity.getResources().getString(R.string.update_details));
-            fillAllTeacherDetailsIntoFields();
+        submitButtonLl.setVisibility(View.VISIBLE);
+        updateButtonLl.setVisibility(View.GONE);
+        input_rollnumber.setVisibility(View.GONE);
+        sendButton.setText(mActivity.getResources().getString(R.string.update_details));
+        getSupportActionBar().setTitle(mActivity.getResources().getString(R.string.update_details));
+        if (!TextUtils.isEmpty(ClsGeneral.getStrPreferences(AppConstants.USER_ID))) {
+            studentRegIdTv.setText(ClsGeneral.getStrPreferences(AppConstants.USER_ID));
+            studentRegIdTv.setVisibility(View.VISIBLE);
+        } else if (!TextUtils.isEmpty(MyPreference.getUserId())) {
+            studentRegIdTv.setText(MyPreference.getUserId());
+            studentRegIdTv.setVisibility(View.VISIBLE);
         } else {
-            sendButton.setText(mActivity.getResources().getString(R.string.add_teacher));
+            studentRegIdTv.setVisibility(View.GONE);
         }
-    }
-
-    private void fillAllTeacherDetailsIntoFields() {
-        input_rollnumber.setText(ClsGeneral.getStrPreferences(AppConstants.USER_ID));
+        if (!TextUtils.isEmpty(ClsGeneral.getStrPreferences(AppConstants.ROLL_NUMBER)))
+            input_rollnumber.setText(ClsGeneral.getStrPreferences(AppConstants.ROLL_NUMBER));
+        else {
+            input_rollnumber.setVisibility(View.VISIBLE);
+        }
         input_name.setText(ClsGeneral.getStrPreferences(AppConstants.NAME));
-        input_rollnumber.setText(ClsGeneral.getStrPreferences(AppConstants.ROLL_NUMBER));
         input_email.setText(ClsGeneral.getStrPreferences(AppConstants.EMAIL));
         input_class.setText(ClsGeneral.getStrPreferences(AppConstants.CLASS_NAME));
         input_admission.setText(ClsGeneral.getStrPreferences(AppConstants.JOINING_DATE));
@@ -121,43 +125,22 @@ public class UpdateStudentDetailActivity extends AppCompatActivity {
             input_address.setText(ClsGeneral.getStrPreferences(AppConstants.PERMANENT_ADDRESS));
         else if (!TextUtils.isEmpty(ClsGeneral.getStrPreferences(AppConstants.RESIDENTIAL_ADDRESS)))
             input_address.setText(ClsGeneral.getStrPreferences(AppConstants.RESIDENTIAL_ADDRESS));
-
     }
 
     private void handleClicks() {
         submitButtonLl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (input_rollnumber.getText().toString().trim().equals("")) {
-                    Toast.makeText(mActivity, "Enter Roll Number Please", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                if (input_name.getText().toString().trim().equals("")) {
-                    Toast.makeText(mActivity, "Enter Name Please", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                if (input_class.getText().toString().trim().equals("")) {
-                    Toast.makeText(mActivity, "Enter Class Please", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                if (input_address.getText().toString().trim().equals("")) {
-                    Toast.makeText(mActivity, "Enter Address Please", Toast.LENGTH_SHORT).show();
-                    return;
-                } else {
-                    if (Utilz.isInternetConnected(mActivity)) {
-                        submitData();
-                    } else {
-                        Toast.makeText(mActivity, "No Internet Connection", Toast.LENGTH_SHORT).show();
-                    }
-                }
+                String userId = Utilz.getRandomUserIdFromName(input_name.getText().toString().trim());
+                studentRegIdTv.setText(userId);
+                addUpdateStudentsDetail();
             }
         });
 
         final DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
 
             @Override
-            public void onDateSet(DatePicker view, int year, int monthOfYear,
-                                  int dayOfMonth) {
+            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
                 // TODO Auto-generated method stub
                 myCalendar.set(Calendar.YEAR, year);
                 myCalendar.set(Calendar.MONTH, monthOfYear);
@@ -179,6 +162,31 @@ public class UpdateStudentDetailActivity extends AppCompatActivity {
         });
     }
 
+    private void addUpdateStudentsDetail() {
+        if (input_rollnumber.getText().toString().trim().equals("")) {
+            Toast.makeText(mActivity, "Enter Roll Number Please", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if (input_name.getText().toString().trim().equals("")) {
+            Toast.makeText(mActivity, "Enter Name Please", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if (input_class.getText().toString().trim().equals("")) {
+            Toast.makeText(mActivity, "Enter Class Please", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if (input_address.getText().toString().trim().equals("")) {
+            Toast.makeText(mActivity, "Enter Address Please", Toast.LENGTH_SHORT).show();
+            return;
+        } else {
+            if (Utilz.isOnline(mActivity)) {
+                addNewStudentInDb();
+            } else {
+                Utilz.showNoInternetConnectionDialog(mActivity);
+            }
+        }
+    }
+
     private void updateLabel() {
         String myFormat = "yyyy/MM/dd"; //In which you need put here
         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
@@ -186,40 +194,54 @@ public class UpdateStudentDetailActivity extends AppCompatActivity {
         input_admission.setText(sdf.format(myCalendar.getTime()));
     }
 
-    private void submitData() {
+    private void addNewStudentInDb() {
         Utilz.showDailog(mActivity, mActivity.getResources().getString(R.string.pleasewait));
-        String rollNumber = input_rollnumber.getText().toString().trim();
-        String name = input_name.getText().toString().trim();
-        String email = input_email.getText().toString().trim();
-        String mobile = input_mobile.getText().toString().trim();
-        String clas = input_class.getText().toString().trim();
-        String sec = input_section.getText().toString().trim();
-        String admission = input_admission.getText().toString().trim();
-        String address = input_address.getText().toString().trim();
-        retrofitDataProvider.addstudent(rollNumber, name, email, mobile, clas, sec, admission, address, new DownlodableCallback<StuTeaModel>() {
+        String userId = studentRegIdTv.getText().toString().trim();
+        if (TextUtils.isEmpty(userId)) {
+            userId = Utilz.getRandomUserIdFromName(input_name.getText().toString().trim());
+        }
+        final String rollNumber = input_rollnumber.getText().toString().trim();
+        final String name = input_name.getText().toString().trim();
+        final String email = input_email.getText().toString().trim();
+        final String mobile = input_mobile.getText().toString().trim();
+        final String clas = input_class.getText().toString().trim();
+        final String sec = input_section.getText().toString().trim();
+        final String admission = input_admission.getText().toString().trim();
+        final String address = input_address.getText().toString().trim();
+        retrofitDataProvider.addstudent(userId, rollNumber, name, email, mobile, clas, sec, admission, address, new DownlodableCallback<StuTeaModel>() {
             @Override
             public void onSuccess(final StuTeaModel result) {
                 //  closeDialog();
-
                 Utilz.closeDialog();
-
                 if (result.getStatus().contains(PreferenceName.TRUE)) {
+                    Utilz.showMessageOnDialog(mActivity, mActivity.getString(R.string.success), mActivity.getString(R.string.updated_successfully), "", AppConstants.OK);
 
-                    Toast.makeText(mActivity, "" + result.getData(), Toast.LENGTH_SHORT).show();
-                    finish();
+                    MyPreference.setUserName(name);
+                    ClsGeneral.setPreferences(AppConstants.NAME, name);
+                    ClsGeneral.setPreferences(AppConstants.EMAIL, email);
+                    ClsGeneral.setPreferences(AppConstants.CLAS, clas);
+                    ClsGeneral.setPreferences(AppConstants.SEC, sec);
+                    ClsGeneral.setPreferences(AppConstants.JOINING_DATE, admission);
+                    ClsGeneral.setPreferences(AppConstants.RESIDENTIAL_ADDRESS, address);
+                    ClsGeneral.setPreferences(AppConstants.PERMANENT_ADDRESS, address);
+                    ClsGeneral.setPreferences(AppConstants.PHONE_NO, mobile);
+                    ClsGeneral.setPreferences(AppConstants.ADDRESS, address);
+                    ClsGeneral.setPreferences(AppConstants.ROLL_NUMBER, rollNumber);
                 }
-
             }
 
             @Override
             public void onFailure(String error) {
-                // closeDialog();
+                Utilz.closeDialog();
+                Toast.makeText(mActivity, "" + error, Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onUnauthorized(int errorNumber) {
-
+                Utilz.closeDialog();
+                Toast.makeText(mActivity, "Something went wrong, Please try again!!", Toast.LENGTH_SHORT).show();
             }
         });
     }
+
 }

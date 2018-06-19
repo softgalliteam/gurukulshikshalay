@@ -2,6 +2,7 @@ package softgalli.gurukulshikshalay.activity;
 
 import android.app.Activity;
 import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -26,6 +27,7 @@ import softgalli.gurukulshikshalay.common.AppConstants;
 import softgalli.gurukulshikshalay.common.ClsGeneral;
 import softgalli.gurukulshikshalay.common.PreferenceName;
 import softgalli.gurukulshikshalay.common.Utilz;
+import softgalli.gurukulshikshalay.model.CommonResponse;
 import softgalli.gurukulshikshalay.model.StuTeaModel;
 import softgalli.gurukulshikshalay.retrofit.DownlodableCallback;
 import softgalli.gurukulshikshalay.retrofit.RetrofitDataProvider;
@@ -56,6 +58,12 @@ public class AddTeacher extends AppCompatActivity {
     Button sendButton;
     @BindView(R.id.submitButtonLl)
     LinearLayout submitButtonLl;
+    @BindView(R.id.updateButton)
+    Button updateButton;
+    @BindView(R.id.deleteButton)
+    Button deleteButton;
+    @BindView(R.id.updateButtonLl)
+    LinearLayout updateButtonLl;
     private boolean isForUpdate;
     private Activity mActivity;
     private RetrofitDataProvider retrofitDataProvider;
@@ -88,10 +96,6 @@ public class AddTeacher extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        if (isForUpdate)
-            getSupportActionBar().setTitle(mActivity.getResources().getString(R.string.update_details));
-        else
-            getSupportActionBar().setTitle(mActivity.getResources().getString(R.string.add_teacher));
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -103,9 +107,15 @@ public class AddTeacher extends AppCompatActivity {
     private void initView() {
         if (isForUpdate) {
             sendButton.setText(mActivity.getResources().getString(R.string.update_details));
+            getSupportActionBar().setTitle(mActivity.getResources().getString(R.string.update_details));
+            updateButtonLl.setVisibility(View.VISIBLE);
+            submitButtonLl.setVisibility(View.GONE);
             fillAllTeacherDetailsIntoFields();
         } else {
             sendButton.setText(mActivity.getResources().getString(R.string.add_teacher));
+            updateButtonLl.setVisibility(View.GONE);
+            submitButtonLl.setVisibility(View.VISIBLE);
+            getSupportActionBar().setTitle(mActivity.getResources().getString(R.string.add_teacher));
         }
     }
 
@@ -132,11 +142,21 @@ public class AddTeacher extends AppCompatActivity {
         submitButtonLl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (Utilz.isInternetConnected(AddTeacher.this)) {
-                    submitData();
-                } else {
-                    Toast.makeText(AddTeacher.this, "No Internet Connection", Toast.LENGTH_SHORT).show();
-                }
+                addUpdateTeacherDetail();
+            }
+        });
+
+        updateButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                addUpdateTeacherDetail();
+            }
+        });
+
+        deleteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                deleteStudentFromSchool();
             }
         });
         final DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
@@ -171,7 +191,7 @@ public class AddTeacher extends AppCompatActivity {
         input_joindate.setText(sdf.format(myCalendar.getTime()));
     }
 
-    private void submitData() {
+    private void addUpdateTeacherDetail() {
         Utilz.showDailog(AddTeacher.this, getResources().getString(R.string.pleasewait));
         String teacherId = teacher_id.getText().toString().trim();
         String name = input_name.getText().toString().trim();
@@ -188,7 +208,10 @@ public class AddTeacher extends AppCompatActivity {
                 //  closeDialog();
                 Utilz.closeDialog();
                 if (result.getStatus().contains(PreferenceName.TRUE)) {
-                    Utilz.showMessageOnDialog(mActivity, mActivity.getString(R.string.success), mActivity.getString(R.string.updated_successfully), "", AppConstants.OK);
+                    if (isForUpdate)
+                        Utilz.showMessageOnDialog(mActivity, mActivity.getString(R.string.success), mActivity.getString(R.string.updated_successfully), "", AppConstants.OK);
+                    else
+                        Utilz.showMessageOnDialog(mActivity, mActivity.getString(R.string.success), mActivity.getString(R.string.added_successfully), "", AppConstants.OK);
                 }
             }
 
@@ -203,6 +226,47 @@ public class AddTeacher extends AppCompatActivity {
             public void onUnauthorized(int errorNumber) {
                 Utilz.closeDialog();
                 Toast.makeText(AddTeacher.this, "Something went wrong, Please try again!!", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void deleteStudentFromSchool() {
+        if (TextUtils.isEmpty(teacher_id.getText().toString().trim())) {
+            Toast.makeText(mActivity, "Invalid teacher registration id", Toast.LENGTH_SHORT).show();
+            return;
+        } else {
+            if (Utilz.isOnline(mActivity)) {
+                deleteTeacherFromDb();
+            } else {
+                Utilz.showNoInternetConnectionDialog(mActivity);
+            }
+        }
+    }
+
+    private void deleteTeacherFromDb() {
+        String studentRegIdStr = teacher_id.getText().toString().trim();
+        if (TextUtils.isEmpty(studentRegIdStr)) {
+            return;
+        }
+        retrofitDataProvider.deleteStudent(studentRegIdStr, new DownlodableCallback<CommonResponse>() {
+            @Override
+            public void onSuccess(final CommonResponse result) {
+                Utilz.closeDialog();
+                //  Utilz.showMessageOnDialog(mActivity, mActivity.getString(R.string.success), mActivity.getString(R.string.sent_successfully), AppConstants.OK, "");
+                mActivity.startActivity(new Intent(mActivity, SeeLeaveListActivity.class));
+                finish();
+            }
+
+            @Override
+            public void onFailure(String error) {
+                Utilz.closeDialog();
+                Toast.makeText(mActivity, R.string.something_went_wrong_error_message, Toast.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onUnauthorized(int errorNumber) {
+                Utilz.closeDialog();
+                Toast.makeText(mActivity, R.string.something_went_wrong_error_message, Toast.LENGTH_LONG).show();
             }
         });
     }

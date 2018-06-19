@@ -1,6 +1,7 @@
 package softgalli.gurukulshikshalay.adapter;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -9,9 +10,12 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import softgalli.gurukulshikshalay.R;
+import softgalli.gurukulshikshalay.activity.AddStudent;
+import softgalli.gurukulshikshalay.common.AppConstants;
 import softgalli.gurukulshikshalay.model.StudentListDataModel;
 
 public class StudentsListAdapter extends RecyclerView.Adapter<StudentsListAdapter.ViewHolder> {
@@ -51,9 +55,15 @@ public class StudentsListAdapter extends RecyclerView.Adapter<StudentsListAdapte
 
             viewHolder.mainView.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
-                    if (v != null && v instanceof TextView) {
-                        TextView cb = (TextView) v;
-                        StudentListDataModel contact = (StudentListDataModel) cb.getTag();
+                    if (v != null && v instanceof LinearLayout) {
+                        LinearLayout cb = (LinearLayout) v;
+                        ArrayList<StudentListDataModel> studentDetails = new ArrayList<>();
+                        studentDetails.add((StudentListDataModel) cb.getTag());
+                        Intent studentIntent = new Intent(mActivity, AddStudent.class);
+                        studentIntent.putExtra(AppConstants.STUDENTS_DETAILS, studentDetails);
+                        studentIntent.putExtra(AppConstants.POSITION, 0);
+                        studentIntent.putExtra(AppConstants.IS_FOR_UPDATE, true);
+                        mActivity.startActivity(studentIntent);
                     }
                 }
             });
