@@ -55,6 +55,7 @@
                         android:background="@drawable/ss_hollow_rect_green"
                         android:hint="Roll Number*"
                         android:imeOptions="actionNext"
+                        android:inputType="number|phone"
                         android:paddingLeft="10dp"
                         android:singleLine="true"
                         android:textColor="@color/textColor"
@@ -104,32 +105,44 @@
                         android:textSize="@dimen/text_size" />
 
 
-                    <EditText
-                        android:id="@+id/input_class"
+                    <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="45dp"
+                        android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/margin_10dp"
-                        android:background="@drawable/ss_hollow_rect_green"
-                        android:hint="Class*"
-                        android:imeOptions="actionNext"
-                        android:paddingLeft="10dp"
-                        android:singleLine="true"
-                        android:textColor="@color/textColor"
-                        android:textSize="@dimen/text_size" />
+                        android:background="@drawable/ss_hollow_rect_green">
 
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="@dimen/button_height"
+                            android:layout_marginRight="@dimen/margin_5dp"
+                            android:layout_weight="1">
 
-                    <EditText
-                        android:id="@+id/input_section"
-                        android:layout_width="match_parent"
-                        android:layout_height="45dp"
-                        android:layout_marginTop="@dimen/margin_10dp"
-                        android:background="@drawable/ss_hollow_rect_green"
-                        android:hint="Section"
-                        android:imeOptions="actionNext"
-                        android:paddingLeft="10dp"
-                        android:singleLine="true"
-                        android:textColor="@color/textColor"
-                        android:textSize="@dimen/text_size" />
+                            <Spinner
+                                android:id="@+id/classNameSpinner"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:background="@null" />
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="1dp"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="center_vertical"
+                            android:background="@color/colorAccent" />
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="@dimen/button_height"
+                            android:layout_marginLeft="@dimen/margin_5dp"
+                            android:layout_weight="1">
+
+                            <Spinner
+                                android:id="@+id/sectionNameSpinner"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:background="@null" />
+                        </LinearLayout>
+                    </LinearLayout>
 
                     <EditText
                         android:id="@+id/input_admission"

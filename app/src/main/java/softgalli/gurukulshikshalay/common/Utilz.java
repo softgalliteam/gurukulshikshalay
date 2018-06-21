@@ -444,7 +444,6 @@ public class Utilz {
     public static List<String> getClassList() {
         List<String> classList;
         classList = new ArrayList<>();
-
         classList.add("Select Class");
         classList.add("10");
         classList.add("9");
@@ -462,11 +461,31 @@ public class Utilz {
         return classList;
     }
 
+    public static List<String> getClassNameList() {
+        List<String> classNameList;
+        classNameList = new ArrayList<>();
+        classNameList.add("Class - 10");
+        classNameList.add("Class - 9");
+        classNameList.add("Class - 8");
+        classNameList.add("Class - 7");
+        classNameList.add("Class - 6");
+        classNameList.add("Class - 5");
+        classNameList.add("Class - 4");
+        classNameList.add("Class - 3");
+        classNameList.add("Class - 2");
+        classNameList.add("Class - 1");
+        classNameList.add("Class - LKG");
+        classNameList.add("Class - UKG");
+        classNameList.add("Class - NURSERY");
+        return classNameList;
+    }
+
     public static List<String> getSectionList() {
         List<String> sectionList = new ArrayList<>();
         sectionList.add("Select Section");
         sectionList.add("A");
         //sectionList.add("B");
+        //sectionList.add("C");
         return sectionList;
     }
 

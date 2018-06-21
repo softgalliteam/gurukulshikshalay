@@ -12,13 +12,13 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import softgalli.gurukulshikshalay.R;
 import softgalli.gurukulshikshalay.common.AppConstants;
+import softgalli.gurukulshikshalay.common.Utilz;
 import softgalli.gurukulshikshalay.fragments.StudentsFragment;
 
 public class PrincipalZoneActivity extends AppCompatActivity {
@@ -103,19 +103,7 @@ public class PrincipalZoneActivity extends AppCompatActivity {
 
     private void setupViewPager(ViewPager viewPager) {
         pagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
-        pagerAdapter.addFrag(new StudentsFragment(), "Class - 10");
-        pagerAdapter.addFrag(new StudentsFragment(), "Class - 9");
-        pagerAdapter.addFrag(new StudentsFragment(), "Class - 8");
-        pagerAdapter.addFrag(new StudentsFragment(), "Class - 7");
-        pagerAdapter.addFrag(new StudentsFragment(), "Class - 6");
-        pagerAdapter.addFrag(new StudentsFragment(), "Class - 5");
-        pagerAdapter.addFrag(new StudentsFragment(), "Class - 4");
-        pagerAdapter.addFrag(new StudentsFragment(), "Class - 3");
-        pagerAdapter.addFrag(new StudentsFragment(), "Class - 2");
-        pagerAdapter.addFrag(new StudentsFragment(), "Class - 1");
-        pagerAdapter.addFrag(new StudentsFragment(), "Class - UKG");
-        pagerAdapter.addFrag(new StudentsFragment(), "Class - LKG");
-        pagerAdapter.addFrag(new StudentsFragment(), "Class - NURSERY");
+        pagerAdapter.initTabsAndPages();
         viewPager.setAdapter(pagerAdapter);
     }
 
@@ -137,9 +125,13 @@ public class PrincipalZoneActivity extends AppCompatActivity {
             return mFragmentList.size();
         }
 
-        public void addFrag(Fragment fragment, String title) {
-            mFragmentList.add(fragment);
-            mFragmentTitleList.add(title);
+        public void initTabsAndPages() {
+            mFragmentTitleList.addAll(Utilz.getClassNameList());
+            if (mFragmentTitleList != null && mFragmentTitleList.size() > 0) {
+                for (int i = 0; i < mFragmentTitleList.size(); i++) {
+                    mFragmentList.add(new StudentsFragment());
+                }
+            }
         }
 
         @Override

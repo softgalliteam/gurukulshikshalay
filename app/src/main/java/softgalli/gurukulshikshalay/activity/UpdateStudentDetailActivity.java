@@ -8,15 +8,19 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 import java.util.Locale;
 
 import butterknife.BindView;
@@ -43,16 +47,16 @@ public class UpdateStudentDetailActivity extends AppCompatActivity {
     EditText input_email;
     @BindView(R.id.input_mobile)
     EditText input_mobile;
-    @BindView(R.id.input_class)
-    EditText input_class;
-    @BindView(R.id.input_section)
-    EditText input_section;
     @BindView(R.id.input_admission)
     EditText input_admission;
     @BindView(R.id.input_address)
     EditText input_address;
     @BindView(R.id.toolbar)
     Toolbar toolbar;
+    @BindView(R.id.classNameSpinner)
+    Spinner classNameSpinner;
+    @BindView(R.id.sectionNameSpinner)
+    Spinner sectionNameSpinner;
     @BindView(R.id.sendButton)
     Button sendButton;
     @BindView(R.id.submitButtonLl)
@@ -72,6 +76,7 @@ public class UpdateStudentDetailActivity extends AppCompatActivity {
         retrofitDataProvider = new RetrofitDataProvider(this);
         initToolbar();
         initView();
+        setAllUserDetailsIntoFields();
         handleClicks();
 
     }
@@ -90,6 +95,22 @@ public class UpdateStudentDetailActivity extends AppCompatActivity {
     }
 
     private void initView() {
+        List<String> classList = new ArrayList<>(), sectionList = new ArrayList<>();
+
+        classList.addAll(Utilz.getClassList());
+
+        sectionList.addAll(Utilz.getSectionList());
+
+        ArrayAdapter<String> classAdapter = new ArrayAdapter<>(mActivity,
+                android.R.layout.simple_dropdown_item_1line, classList);
+        ArrayAdapter<String> sectionAdapter = new ArrayAdapter<>(mActivity,
+                android.R.layout.simple_dropdown_item_1line, sectionList);
+        classAdapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
+        classNameSpinner.setAdapter(classAdapter);
+        sectionNameSpinner.setAdapter(sectionAdapter);
+    }
+
+    private void setAllUserDetailsIntoFields() {
         submitButtonLl.setVisibility(View.VISIBLE);
         updateButtonLl.setVisibility(View.GONE);
         input_rollnumber.setVisibility(View.GONE);
@@ -111,9 +132,47 @@ public class UpdateStudentDetailActivity extends AppCompatActivity {
         }
         input_name.setText(ClsGeneral.getStrPreferences(AppConstants.NAME));
         input_email.setText(ClsGeneral.getStrPreferences(AppConstants.EMAIL));
-        input_class.setText(ClsGeneral.getStrPreferences(AppConstants.CLASS_NAME));
         input_admission.setText(ClsGeneral.getStrPreferences(AppConstants.JOINING_DATE));
-
+        if (!TextUtils.isEmpty(ClsGeneral.getStrPreferences(AppConstants.CLASS_NAME))) {
+            String classNameStr = ClsGeneral.getStrPreferences(AppConstants.CLASS_NAME);
+            if (classNameStr.equalsIgnoreCase("10"))
+                classNameSpinner.setSelection(1);
+            else if (classNameStr.equalsIgnoreCase("9"))
+                classNameSpinner.setSelection(2);
+            else if (classNameStr.equalsIgnoreCase("8"))
+                classNameSpinner.setSelection(3);
+            else if (classNameStr.equalsIgnoreCase("7"))
+                classNameSpinner.setSelection(4);
+            else if (classNameStr.equalsIgnoreCase("6"))
+                classNameSpinner.setSelection(5);
+            else if (classNameStr.equalsIgnoreCase("5"))
+                classNameSpinner.setSelection(6);
+            else if (classNameStr.equalsIgnoreCase("4"))
+                classNameSpinner.setSelection(7);
+            else if (classNameStr.equalsIgnoreCase("3"))
+                classNameSpinner.setSelection(8);
+            else if (classNameStr.equalsIgnoreCase("2"))
+                classNameSpinner.setSelection(9);
+            else if (classNameStr.equalsIgnoreCase("1"))
+                classNameSpinner.setSelection(10);
+            else if (classNameStr.equalsIgnoreCase("LKG"))
+                classNameSpinner.setSelection(11);
+            else if (classNameStr.equalsIgnoreCase("UKG"))
+                classNameSpinner.setSelection(12);
+            else if (classNameStr.equalsIgnoreCase("NURSERY"))
+                classNameSpinner.setSelection(13);
+        }
+        if (!TextUtils.isEmpty(ClsGeneral.getStrPreferences(AppConstants.CLASS_NAME)) && sectionNameSpinner != null) {
+            String sectionNameStr = ClsGeneral.getStrPreferences(AppConstants.CLASS_NAME);
+            if (sectionNameStr.equalsIgnoreCase("A"))
+                sectionNameSpinner.setSelection(1);
+            else if (sectionNameStr.equalsIgnoreCase("B"))
+                sectionNameSpinner.setSelection(2);
+            else if (sectionNameStr.equalsIgnoreCase("C"))
+                sectionNameSpinner.setSelection(3);
+            else if (sectionNameStr.equalsIgnoreCase("D"))
+                sectionNameSpinner.setSelection(4);
+        }
         if (!TextUtils.isEmpty(ClsGeneral.getStrPreferences(AppConstants.PHONE_NO)))
             input_mobile.setText(ClsGeneral.getStrPreferences(AppConstants.PHONE_NO));
         else if (!TextUtils.isEmpty(ClsGeneral.getStrPreferences(AppConstants.ALTERNTE_NUMBER)))
@@ -171,8 +230,12 @@ public class UpdateStudentDetailActivity extends AppCompatActivity {
             Toast.makeText(mActivity, "Enter Name Please", Toast.LENGTH_SHORT).show();
             return;
         }
-        if (input_class.getText().toString().trim().equals("")) {
-            Toast.makeText(mActivity, "Enter Class Please", Toast.LENGTH_SHORT).show();
+        if (classNameSpinner != null && classNameSpinner.getSelectedItemPosition() == 0) {
+            Toast.makeText(mActivity, "Select Class Please", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if (sectionNameSpinner != null && sectionNameSpinner.getSelectedItemPosition() == 0) {
+            Toast.makeText(mActivity, "Select Section Please", Toast.LENGTH_SHORT).show();
             return;
         }
         if (input_address.getText().toString().trim().equals("")) {
@@ -204,8 +267,8 @@ public class UpdateStudentDetailActivity extends AppCompatActivity {
         final String name = input_name.getText().toString().trim();
         final String email = input_email.getText().toString().trim();
         final String mobile = input_mobile.getText().toString().trim();
-        final String clas = input_class.getText().toString().trim();
-        final String sec = input_section.getText().toString().trim();
+        final String clas = classNameSpinner.getSelectedItem().toString().trim();
+        final String sec = sectionNameSpinner.getSelectedItem().toString().trim();
         final String admission = input_admission.getText().toString().trim();
         final String address = input_address.getText().toString().trim();
         retrofitDataProvider.addstudent(userId, rollNumber, name, email, mobile, clas, sec, admission, address, new DownlodableCallback<StuTeaModel>() {
