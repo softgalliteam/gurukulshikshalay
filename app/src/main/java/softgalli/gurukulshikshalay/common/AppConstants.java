@@ -64,6 +64,15 @@ public class AppConstants {
     public static final String YES = "YES";
     public static final String PRESENT = "Present";
     public static final String ABSENT = "Absent";
+    public static final String RESEND = "Resend";
+    public static final String VERIFY = "Verify";
+    public static final String VERIFYING = "Verifying";
+    public static final String OTP_SENT = "OTP Sent";
+    public static final String FAILED_TO_VERIFY = "Failed To Verify";
+    public static final String VERIFIED = "Verified";
+    public static final String GET_OTP_AND_VERIFY = "Get OTP & Verify";
 
 
+    public static final String HTTP = "http://";
+    public static final String WWW = "www";
 }

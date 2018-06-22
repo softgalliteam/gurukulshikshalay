@@ -74,7 +74,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="30dp"
                 android:layout_marginLeft="5dp"
-                android:background="@drawable/absent_checkbox_image"
+                android:background="@drawable/absent_button_bg"
                 android:gravity="center"
                 android:paddingLeft="@dimen/margin_5"
                 android:paddingRight="@dimen/margin_5"

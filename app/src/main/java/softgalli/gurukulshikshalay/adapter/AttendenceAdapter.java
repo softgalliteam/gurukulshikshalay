@@ -100,14 +100,14 @@ public class AttendenceAdapter extends RecyclerView.Adapter<AttendenceAdapter.Vi
         if (presentBtn != null && absentBtn != null) {
             if (isPresent) {
                 presentBtn.setTextColor(mActivity.getResources().getColor(R.color.colorTextWhite));
-                presentBtn.setBackground(mActivity.getResources().getDrawable(R.drawable.present_checkbox_image));
+                presentBtn.setBackground(mActivity.getResources().getDrawable(R.drawable.present_button_bg));
                 absentBtn.setTextColor(mActivity.getResources().getColor(R.color.textColor));
                 absentBtn.setBackground(mActivity.getResources().getDrawable(R.drawable.border));
             } else {
                 presentBtn.setTextColor(mActivity.getResources().getColor(R.color.textColor));
                 presentBtn.setBackground(mActivity.getResources().getDrawable(R.drawable.border));
                 absentBtn.setTextColor(mActivity.getResources().getColor(R.color.colorTextWhite));
-                absentBtn.setBackground(mActivity.getResources().getDrawable(R.drawable.absent_checkbox_image));
+                absentBtn.setBackground(mActivity.getResources().getDrawable(R.drawable.absent_button_bg));
             }
         }
     }

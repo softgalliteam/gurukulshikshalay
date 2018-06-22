@@ -11,17 +11,25 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.graphics.Point;
 import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
+import android.support.design.widget.TextInputEditText;
 import android.support.v4.app.ActivityCompat;
 import android.text.TextUtils;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.util.TypedValue;
+import android.view.Display;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -257,7 +265,24 @@ public class Utilz {
             android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(mActivity);
             builder.setTitle(mActivity.getResources().getString(R.string.no_internet_connection_msg_title));
             builder.setMessage(mActivity.getResources().getString(R.string.no_internet_connection_msg));
-            builder.setNegativeButton("OK", new DialogInterface.OnClickListener() {
+            builder.setNegativeButton(AppConstants.OK, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                }
+            });
+            android.support.v7.app.AlertDialog alertDialog = builder.create();
+            alertDialog.show();
+        } catch (Exception e) {
+            Log.d(TAG, "Show Dialog: " + e.getMessage());
+        }
+    }
+
+    public static void showMessageDialog(final Context mActivity, final String msg) {
+        try {
+            android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(mActivity);
+            builder.setMessage(msg);
+            builder.setNegativeButton(AppConstants.OK, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     dialog.dismiss();
@@ -749,5 +774,114 @@ public class Utilz {
         finalUserIdStr = userNameStr + "-" + randomNo;
         return finalUserIdStr;
     }
+
+    /**
+     * Method Name: passIconTouchListener
+     * Description: Method used to show hide password visibility
+     */
+    public static boolean passIconTouchListener(Activity mActivity, EditText mTextInputEditTexts,
+                                                MotionEvent event) {
+        final int DRAWABLE_LEFT = 0;
+        final int DRAWABLE_TOP = 1;
+        final int DRAWABLE_RIGHT = 2;
+        final int DRAWABLE_BOTTOM = 3;
+
+        if (mTextInputEditTexts != null && !mTextInputEditTexts.getText().toString().isEmpty()) {
+            if (event.getAction() == MotionEvent.ACTION_UP) {
+                //Getting drawable right from edittext
+                Drawable mDrawableRight = mTextInputEditTexts.getCompoundDrawables()[DRAWABLE_RIGHT];
+                //Putting null check before using this drawable
+                if (mDrawableRight != null) {
+                    if (checkDimension(mActivity) > 13) {
+                        if (event.getRawX() >= ((mTextInputEditTexts.getRight() -
+                                mTextInputEditTexts.getCompoundDrawables()[DRAWABLE_RIGHT].getBounds().width())) + 20) {
+                            // your action here
+                            showHidePassword(mTextInputEditTexts);
+                            return true;
+                        }
+                    } else if (checkDimension(mActivity) >= 8) {
+                        if (event.getRawX() >= ((mTextInputEditTexts.getRight() -
+                                mTextInputEditTexts.getCompoundDrawables()[DRAWABLE_RIGHT].getBounds().width())) + 20) {
+                            // your action here
+                            showHidePassword(mTextInputEditTexts);
+                            return true;
+                        }
+                    } else if (checkDimension(mActivity) >= 7.0) {
+                        if (event.getRawX() >= ((mTextInputEditTexts.getRight() -
+                                mTextInputEditTexts.getCompoundDrawables()[DRAWABLE_RIGHT].getBounds().width())) + 150) {
+                            // your action here
+                            showHidePassword(mTextInputEditTexts);
+                            return true;
+                        }
+                    } else if (checkDimension(mActivity) >= 6.9) {
+                        if (event.getRawX() >= ((mTextInputEditTexts.getRight() -
+                                mTextInputEditTexts.getCompoundDrawables()[DRAWABLE_RIGHT].getBounds().width())) + 40) {
+                            // your action here
+                            showHidePassword(mTextInputEditTexts);
+                            return true;
+                        }
+                    } else {
+                        if (event.getRawX() >= (mTextInputEditTexts.getRight() -
+                                mTextInputEditTexts.getCompoundDrawables()[DRAWABLE_RIGHT].getBounds().width())) {
+                            // your action here
+                            showHidePassword(mTextInputEditTexts);
+                            return true;
+                        }
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Method Name: showHidePassword
+     * Description: Method used to show hide password
+     */
+    private static void showHidePassword(EditText mTextInputEditText) {
+        if (!mTextInputEditText.getText().toString().isEmpty()) {
+            if (mTextInputEditText.getTransformationMethod() == null) {
+                // show password
+                mTextInputEditText.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.pass_edit, 0);
+                mTextInputEditText.setTransformationMethod(new AsteriskPasswordTransformationMethod());
+                mTextInputEditText.setSelection(mTextInputEditText.length());
+            } else {
+                //hide password
+                mTextInputEditText.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.pass, 0);
+                mTextInputEditText.setTransformationMethod(null);
+                mTextInputEditText.setSelection(mTextInputEditText.length());
+            }
+        }
+    }
+
+    public static double checkDimension(Context context) {
+
+        WindowManager windowManager = ((Activity) context).getWindowManager();
+        Display display = windowManager.getDefaultDisplay();
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        display.getMetrics(displayMetrics);
+
+        // since SDK_INT = 1;
+        int mWidthPixels = displayMetrics.widthPixels;
+        int mHeightPixels = displayMetrics.heightPixels;
+
+        // includes window decorations (statusbar bar/menu bar)
+        try {
+            Point realSize = new Point();
+            Display.class.getMethod("getRealSize", Point.class).invoke(display, realSize);
+            mWidthPixels = realSize.x;
+            mHeightPixels = realSize.y;
+        } catch (Exception ignored) {
+        }
+
+        DisplayMetrics dm = new DisplayMetrics();
+        windowManager.getDefaultDisplay().getMetrics(dm);
+        double x = Math.pow(mWidthPixels / dm.xdpi, 2);
+        double y = Math.pow(mHeightPixels / dm.ydpi, 2);
+        double screenInches = Math.sqrt(x + y);
+        Log.d("debug", "Screen inches : " + screenInches);
+        return screenInches;
+    }
+
 }
 

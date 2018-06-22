@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="action_settings">Setting</string>
+    <string name="invalide_phone_no_msg">Your Phone Number is invalid please change your phone number</string>
+    <string name="invalid_phone_no">Invalid Phone Number</string>
 </resources>

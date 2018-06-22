@@ -604,4 +604,31 @@ public class RetrofitDataProvider extends AppCompatActivity implements ServiceMe
                 }
         );
     }
+
+    public void changePassword(String userId, String loginType, String newPassword, final DownlodableCallback<CommonResponse> callback) {
+        createRetrofitService().changePassword(userId, loginType, newPassword).enqueue(
+                new Callback<CommonResponse>() {
+                    @Override
+                    public void onResponse(@NonNull Call<CommonResponse> call, @NonNull final Response<CommonResponse> response) {
+                        if (response.isSuccessful()) {
+                            CommonResponse teacherListDataModelPojo = response.body();
+                            callback.onSuccess(teacherListDataModelPojo);
+                        } else {
+                            if (response.code() == 401) {
+                                callback.onUnauthorized(response.code());
+                            } else {
+                                Utilz.closeDialog();
+                                Toast.makeText(context, context.getResources().getString(R.string.something_went_wrong_error_message), Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(@NonNull Call<CommonResponse> call, @NonNull Throwable t) {
+                        Log.d("Result", "t" + t.getMessage());
+                        callback.onFailure(t.getMessage());
+                    }
+                }
+        );
+    }
 }

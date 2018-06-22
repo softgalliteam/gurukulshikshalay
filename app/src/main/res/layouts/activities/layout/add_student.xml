@@ -209,6 +209,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/margin_10dp"
                 android:clickable="false"
+                android:background="@android:color/transparent"
                 card_view:cardCornerRadius="10dp"
                 card_view:cardElevation="10dp">
 

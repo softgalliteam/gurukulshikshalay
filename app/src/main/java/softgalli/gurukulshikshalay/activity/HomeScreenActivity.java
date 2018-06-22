@@ -166,6 +166,8 @@ public class HomeScreenActivity extends AppCompatActivity
             } catch (ActivityNotFoundException e) {
                 e.printStackTrace();
             }
+        } else if (id == R.id.change_password) {
+            startActivity(new Intent(mActivity, ChangePasswordActivity.class));
         } else if (id == R.id.logout) {
             Utilz.logout(mActivity);
         } else if (id == R.id.nav_website) {
@@ -339,6 +341,13 @@ public class HomeScreenActivity extends AppCompatActivity
             logoutMenuItem.setVisible(true);
         else
             logoutMenuItem.setVisible(false);
+
+        MenuItem changePassMenuItem = menu.findItem(R.id.change_password);
+
+        if (MyPreference.isLogined())
+            changePassMenuItem.setVisible(true);
+        else
+            changePassMenuItem.setVisible(false);
     }
 
     private void setNameAndPic() {

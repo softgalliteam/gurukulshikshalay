@@ -101,4 +101,8 @@ public interface ApiRetrofitService {
     @FormUrlEncoded
     @POST(ApiUrl.DELETE_TEACHER)
     Call<CommonResponse> deleteTeacher(@Field("user_id") String deleteTeacher);
+
+    @FormUrlEncoded
+    @POST(ApiUrl.CHANGE_PASSWORD)
+    Call<CommonResponse> changePassword(@Field("user_id") String userId, @Field("login_type") String loginType, @Field("new_password") String newPassword);
 }

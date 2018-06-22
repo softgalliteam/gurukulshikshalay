@@ -16,6 +16,7 @@
     <string name="selectteacer">Select Teacher</string>
     <string name="pleasewait">Please wait...</string>
     <string name="welcome_user">Welcome</string>
+    <string name="change_password">Change Password</string>
     <string name="tag_line">Excellence In Education</string>
     <string name="email">Email</string>
     <string name="phone">Phone</string>
@@ -46,6 +47,17 @@
     <string name="phone_no_not_provide_yet">Phone number is not provided yet</string>
     <string name="take_admission_by_filling_form_simply">Take admission by filling form simply.</string>
     <string name="send_leave_request_to_your_class_teacher">Send leave request to your class teacher.</string>
+    <string name="otp_sent_successfully">OTP sent successfully</string>
+    <string name="phone_no_verified_successfully">Your phone number %s is verified successfully!!!</string>
+    <string name="password_changed_successfully">Password is changed successfully!!</string>
+    <string name="invalid_otp">Invalid OTP</string>
+    <string name="invalide_otp_msg">OTP can not be empty or null</string>
+    <string name="otp_sent_on_phone_msg">OTP is sent on your %s registered phone number, Please make sure this phone number is working.
+        If this phone number is not in use then ask to Principal Sir to change your phone number.</string>
+    <string name="otp_will_be_sent_on_phone_msg">OTP will be sent on your %s registered phone number, Please make sure this phone number is working.
+        If this phone number is not in use then ask to Principal Sir to change your phone number.</string>
+    <string name="registered_phone_no">Reg. Phone - %s</string>
+    <string name="user_id_with_value">User Id - %s</string>
 
     <!--Intro slider texts -->
     <string name="next">NEXT</string>

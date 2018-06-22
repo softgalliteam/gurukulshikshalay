@@ -107,7 +107,6 @@ public class FeedbackActivity extends AppCompatActivity implements RatingBar.OnR
                             sendFeedback(email, mobile, msg, selectedRating);
                         }
                     }
-
                 } else {
                     Utilz.showNoInternetConnectionDialog(mActivity);
                 }
@@ -118,7 +117,7 @@ public class FeedbackActivity extends AppCompatActivity implements RatingBar.OnR
     }
 
     private void sendFeedback(String email, String mobile, String msg, float selectedRating) {
-        Utilz.showDailog(FeedbackActivity.this, getResources().getString(R.string.pleasewait));
+        Utilz.showDailog(FeedbackActivity.this, mActivity.getResources().getString(R.string.pleasewait));
         retrofitDataProvider.feedback(email, mobile, msg, "" + selectedRating, Utilz.getCurrentDate(), new DownlodableCallback<FeedBackModel>() {
             @Override
             public void onSuccess(final FeedBackModel result) {

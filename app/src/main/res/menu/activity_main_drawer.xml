@@ -23,6 +23,10 @@
             android:icon="@drawable/principal_zone"
             android:title="@string/principal_zone" />
         <item
+            android:id="@+id/change_password"
+            android:icon="@drawable/password"
+            android:title="@string/change_password" />
+        <item
             android:id="@+id/feedback"
             android:icon="@drawable/feedback_icon"
             android:title="Feedback" />
