@@ -203,12 +203,15 @@ public class ChangePasswordActivity extends AppCompatActivity {
             case R.id.timerTv:
                 if ((AppConstants.GET_OTP_AND_VERIFY).equalsIgnoreCase(timerTv.getText().toString().trim())) {
                     //Sending OTP to registerd phone number
+                    timerTv.setText(AppConstants.SENDING);
                     sendVerificationCode();
                 } else if ((AppConstants.RESEND).equalsIgnoreCase(timerTv.getText().toString().trim())) {
                     //Resending OTP to registerd phone number
+                    timerTv.setText(AppConstants.SENDING);
                     resendVerificationCode(userPhoneNumber, mResendToken);
                 } else if ((AppConstants.VERIFY).equalsIgnoreCase(timerTv.getText().toString().trim())) {
                     //Verifying OTP of phone number
+                    timerTv.setText(AppConstants.VERIFYING);
                     verifyOTPCodeNumber();
                 }
                 break;

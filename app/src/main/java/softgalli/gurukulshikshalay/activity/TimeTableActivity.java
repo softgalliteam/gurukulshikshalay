@@ -70,9 +70,7 @@ public class TimeTableActivity extends AppCompatActivity {
     @BindView(R.id.classSectionLl)
     LinearLayout classSectionLl;
     private TimeTableAdapter timeTableAdapter;
-    private List<String> dateList;
     private String mStrSelectedDay;
-    private int mYear, mMonth, mDay;
     private String mStrClass = "", mStrSection = "";
     private Activity mActivity;
 
@@ -309,7 +307,6 @@ public class TimeTableActivity extends AppCompatActivity {
         });
         mTimeTableRecyclerView.setAdapter(timeTableAdapter);
 
-        dateList = Utilz.getCalendar();
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

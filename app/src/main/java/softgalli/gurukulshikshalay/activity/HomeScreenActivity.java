@@ -145,7 +145,7 @@ public class HomeScreenActivity extends AppCompatActivity
         } else if (id == R.id.feedback) {
             startActivity(new Intent(mActivity, FeedbackActivity.class));
         } else if (id == R.id.share) {
-            String msg = "Download & install " + mActivity.getResources().getString(R.string.app_name) + " app.\nClick here to install" + mActivity.getResources().getString(R.string.app_name) + " : " + ApiUrl.PLAYSTORE_LINK;
+            String msg = "Download & install - " + mActivity.getResources().getString(R.string.app_name) + " app.\nClick here to install" + mActivity.getResources().getString(R.string.app_name) + " : " + ApiUrl.PLAYSTORE_LINK;
             Intent shareIntent = new Intent(Intent.ACTION_SEND);
             shareIntent.setType("text/html");
             shareIntent.putExtra(Intent.EXTRA_TEXT, msg);

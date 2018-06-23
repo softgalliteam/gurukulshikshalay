@@ -64,6 +64,8 @@ public class AppConstants {
     public static final String YES = "YES";
     public static final String PRESENT = "Present";
     public static final String ABSENT = "Absent";
+    public static final String SENDING = "Sending...";
+    public static final String RESENDING = "Resending...";
     public static final String RESEND = "Resend";
     public static final String VERIFY = "Verify";
     public static final String VERIFYING = "Verifying";
