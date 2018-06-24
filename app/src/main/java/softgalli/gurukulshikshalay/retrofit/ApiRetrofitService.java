@@ -104,5 +104,6 @@ public interface ApiRetrofitService {
 
     @FormUrlEncoded
     @POST(ApiUrl.CHANGE_PASSWORD)
-    Call<CommonResponse> changePassword(@Field("user_id") String userId, @Field("login_type") String loginType, @Field("new_password") String newPassword);
+    Call<CommonResponse> changePassword(@Field("user_id") String userId, @Field("login_type") String loginType,
+                                        @Field("old_password") String oldPassword, @Field("new_password") String newPassword);
 }

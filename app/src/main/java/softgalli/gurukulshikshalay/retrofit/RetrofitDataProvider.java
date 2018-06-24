@@ -605,8 +605,8 @@ public class RetrofitDataProvider extends AppCompatActivity implements ServiceMe
         );
     }
 
-    public void changePassword(String userId, String loginType, String newPassword, final DownlodableCallback<CommonResponse> callback) {
-        createRetrofitService().changePassword(userId, loginType, newPassword).enqueue(
+    public void changePassword(String userId, String loginType, String oldPassword, String newPassword, final DownlodableCallback<CommonResponse> callback) {
+        createRetrofitService().changePassword(userId, loginType, oldPassword, newPassword).enqueue(
                 new Callback<CommonResponse>() {
                     @Override
                     public void onResponse(@NonNull Call<CommonResponse> call, @NonNull final Response<CommonResponse> response) {
