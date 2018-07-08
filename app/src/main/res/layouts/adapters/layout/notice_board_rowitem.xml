@@ -8,8 +8,8 @@
     android:gravity="center_vertical"
     android:orientation="horizontal"
     android:paddingBottom="@dimen/padding_10dp"
-    android:paddingLeft="@dimen/padding_10dp"
-    android:paddingRight="@dimen/padding_10dp">
+    android:paddingLeft="@dimen/margin_5dp"
+    android:paddingRight="@dimen/margin_5dp">
 
     <ImageView
         android:layout_width="45dp"

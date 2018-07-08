@@ -118,8 +118,9 @@ public class HomeScreenActivity extends AppCompatActivity
             @Override
             public void onSuccess(final EventsAndNoticeLisrModel result) {
                 isApiCalling = false;
+                ArrayList<UpcomingActivityModel> upcomingEventsArrayList = new ArrayList<>();
                 if (result.getStatus().contains(PreferenceName.TRUE)) {
-                    ArrayList<UpcomingActivityModel> upcomingEventsArrayList = result.getData();
+                    upcomingEventsArrayList.addAll(result.getData());
                     if (!upcomingEventsArrayList.isEmpty())
                         populateUpcomingEvents(upcomingEventsArrayList);
                 }
@@ -140,6 +141,8 @@ public class HomeScreenActivity extends AppCompatActivity
     }
 
     private void populateUpcomingEvents(ArrayList<UpcomingActivityModel> upcomingEventsArrayList) {
+        if (upcomingActContainerLl != null)
+            upcomingActContainerLl.removeAllViews();
         for (final UpcomingActivityModel eachUpcmgActvty : upcomingEventsArrayList) {
             View child = getLayoutInflater().inflate(R.layout.upcoming_activity_row, null);
             upcomingActContainerLl.addView(child);
