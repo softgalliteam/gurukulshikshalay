@@ -36,6 +36,7 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@android:color/transparent</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:typeface">serif</item>
         <item name="android:statusBarColor" tools:ignore="NewApi">@color/colorPrimaryDark</item>
     </style>
 
@@ -44,11 +45,13 @@
         <item name="colorControlNormal">@color/colorTextWhite</item>
         <item name="android:textColor">@color/colorTextWhite</item>
         <item name="windowActionBar">false</item>
+        <item name="android:typeface">serif</item>
         <item name="windowNoTitle">true</item>
     </style>
 
     <style name="RatingBar" parent="Theme.AppCompat">
         <item name="colorControlNormal">@color/line_background</item>
         <item name="colorControlActivated">@color/yellow</item>
+        <item name="android:typeface">serif</item>
     </style>
 </resources>

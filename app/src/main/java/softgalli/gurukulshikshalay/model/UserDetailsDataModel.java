@@ -146,11 +146,11 @@ public class UserDetailsDataModel implements Serializable{
     private String designation;
 
     public String getRollNumber() {
-        return roll_number;
+        return roll_no;
     }
 
-    @SerializedName("roll_number")
-    private String roll_number;
+    @SerializedName("roll_no")
+    private String roll_no;
 
     public String getFatherName() {
         return fatherName;

@@ -36,6 +36,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
+                android:paddingBottom="@dimen/padding_20dp"
                 android:visibility="gone"
                 card_view:cardCornerRadius="10dp"
                 card_view:cardElevation="10dp">

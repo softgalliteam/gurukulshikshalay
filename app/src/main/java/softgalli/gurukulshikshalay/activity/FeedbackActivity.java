@@ -101,7 +101,7 @@ public class FeedbackActivity extends AppCompatActivity implements RatingBar.OnR
                         } else {
                             feedbackText.setError(errorMessage);
                         }
-                        Toast.makeText(FeedbackActivity.this, R.string.write_your_feedback_txt, Toast.LENGTH_LONG).show();
+                        Toast.makeText(mActivity, mActivity.getResources().getString(R.string.write_your_feedback_txt), Toast.LENGTH_LONG).show();
                     } else {
                         if (Validation.isPhoneNumber(feedbackMobile, true)) {
                             sendFeedback(email, mobile, msg, selectedRating);

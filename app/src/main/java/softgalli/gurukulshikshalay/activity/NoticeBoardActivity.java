@@ -16,12 +16,12 @@ import java.util.ArrayList;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import softgalli.gurukulshikshalay.R;
-import softgalli.gurukulshikshalay.adapter.NotificationAdapter;
+import softgalli.gurukulshikshalay.adapter.NoticeBoardAdapter;
 import softgalli.gurukulshikshalay.common.PreferenceName;
 import softgalli.gurukulshikshalay.common.Utilz;
-import softgalli.gurukulshikshalay.intrface.OnClickListener;
+import softgalli.gurukulshikshalay.model.EventsAndNoticeLisrModel;
 import softgalli.gurukulshikshalay.model.NotificationDateList;
-import softgalli.gurukulshikshalay.model.NotificationModel;
+import softgalli.gurukulshikshalay.model.UpcomingActivityModel;
 import softgalli.gurukulshikshalay.retrofit.DownlodableCallback;
 import softgalli.gurukulshikshalay.retrofit.RetrofitDataProvider;
 
@@ -29,20 +29,20 @@ import softgalli.gurukulshikshalay.retrofit.RetrofitDataProvider;
  * Created by Shankar on 1/27/2018.
  */
 
-public class NotificationActivity extends AppCompatActivity {
+public class NoticeBoardActivity extends AppCompatActivity {
     @BindView(R.id.rv_common)
     RecyclerView recyclerView;
     @BindView(R.id.toolbar)
     Toolbar toolbar;
     private Activity mActivity;
-    private static final String TAG = NotificationActivity.class.getSimpleName();
+    private static final String TAG = NoticeBoardActivity.class.getSimpleName();
     private ArrayList<NotificationDateList> notification_list;
     private RetrofitDataProvider retrofitDataProvider;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.notification);
+        setContentView(R.layout.notice_board_activity);
         mActivity = this;
         ButterKnife.bind(this);
         retrofitDataProvider = new RetrofitDataProvider(this);
@@ -61,13 +61,14 @@ public class NotificationActivity extends AppCompatActivity {
     private void getNotificationList() {
         final ProgressDialog dialog = ProgressDialog.show(mActivity, "", getString(R.string.pleasewait), true);
         dialog.setCancelable(false);
-        retrofitDataProvider.notification("apexschool_1001", new DownlodableCallback<NotificationModel>() {
+        retrofitDataProvider.getEventsOrNoticeList(false, new DownlodableCallback<EventsAndNoticeLisrModel>() {
             @Override
-            public void onSuccess(final NotificationModel result) {
+            public void onSuccess(final EventsAndNoticeLisrModel result) {
                 dialog.dismiss();
                 if (result.getStatus().contains(PreferenceName.TRUE)) {
-                    notification_list = result.getData();
-                    setAdapter();
+                    ArrayList<UpcomingActivityModel> upcomingEventsArrayList = result.getData();
+                    if (!upcomingEventsArrayList.isEmpty())
+                        recyclerView.setAdapter(new NoticeBoardAdapter(mActivity, upcomingEventsArrayList));
                 }
             }
 
@@ -85,20 +86,11 @@ public class NotificationActivity extends AppCompatActivity {
         });
     }
 
-    private void setAdapter() {
-        recyclerView.setAdapter(new NotificationAdapter(this, notification_list, R.layout.notification_item, new OnClickListener() {
-            @Override
-            public void onClick(int pos) {
-
-            }
-        }));
-    }
-
     private void initWidgit() {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setTitle(mActivity.getResources().getString(R.string.text_news));
+        getSupportActionBar().setTitle(mActivity.getResources().getString(R.string.notice_board));
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

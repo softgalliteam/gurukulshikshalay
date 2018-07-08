@@ -13,6 +13,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.LinearLayout;
 
 import softgalli.gurukulshikshalay.R;
+import softgalli.gurukulshikshalay.common.Utilz;
 
 public class SplasScreen extends Activity implements Animation.AnimationListener {
     Animation animFadeIn;
@@ -45,6 +46,10 @@ public class SplasScreen extends Activity implements Animation.AnimationListener
         linearLayout.setVisibility(View.VISIBLE);
         linearLayout.startAnimation(animFadeIn);
 
+        if (Utilz.isOnline(this)) {
+            //Showing update your app popup
+            Utilz.genericAPI(this);
+        }
     }
 
     @Override

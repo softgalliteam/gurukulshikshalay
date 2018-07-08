@@ -9,6 +9,7 @@ import retrofit2.http.GET;
 import retrofit2.http.POST;
 import softgalli.gurukulshikshalay.model.AlumniModel;
 import softgalli.gurukulshikshalay.model.CommonResponse;
+import softgalli.gurukulshikshalay.model.EventsAndNoticeLisrModel;
 import softgalli.gurukulshikshalay.model.FeedBackModel;
 import softgalli.gurukulshikshalay.model.GalleryModel;
 import softgalli.gurukulshikshalay.model.InsertAttendanceModel;
@@ -38,7 +39,7 @@ public interface ApiRetrofitService {
     @POST(ApiUrl.ADDSTUDENT)
     @FormUrlEncoded
     Call<StuTeaModel> addStudent(@Field("user_id") String user_id, @Field("roll_no") String roll_no, @Field("name") String name, @Field("email") String email
-            , @Field("mobile") String mobile_number, @Field("class") String clas, @Field("sec") String classteacher_for,
+            , @Field("mobile") String mobile_number, @Field("class") String clas, @Field("sec") String sec,
                                  @Field("admission_date") String admission_date, @Field("residential_address") String residential_address);
 
     @GET(ApiUrl.GALLERYLIST)
@@ -106,4 +107,17 @@ public interface ApiRetrofitService {
     @POST(ApiUrl.CHANGE_PASSWORD)
     Call<CommonResponse> changePassword(@Field("user_id") String userId, @Field("login_type") String loginType,
                                         @Field("old_password") String oldPassword, @Field("new_password") String newPassword);
+    @FormUrlEncoded
+    @POST(ApiUrl.PUBLISH_NOTICE)
+    Call<CommonResponse> publishNotice(@Field("title") String title, @Field("message") String message, @Field("date") String date, @Field("posted_by") String posted_by, @Field("status") String status);
+
+    @FormUrlEncoded
+    @POST(ApiUrl.ADD_EVENT)
+    Call<CommonResponse> addEvent(@Field("title") String title, @Field("message") String message, @Field("date") String date, @Field("posted_by") String posted_by, @Field("status") String status);
+
+    @GET(ApiUrl.GET_EVENT_LIST)
+    Call<EventsAndNoticeLisrModel> getEventsList();
+
+    @GET(ApiUrl.GET_NOTICE_LIST)
+    Call<EventsAndNoticeLisrModel> getNoticeBoardList();
 }

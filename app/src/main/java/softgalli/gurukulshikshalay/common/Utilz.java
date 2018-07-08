@@ -17,8 +17,8 @@ import android.graphics.drawable.Drawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
-import android.support.design.widget.TextInputEditText;
 import android.support.v4.app.ActivityCompat;
+import android.telephony.SmsManager;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -350,15 +350,14 @@ public class Utilz {
         }
     }
 
-
-    public static void whatsappShare(final Context mActivity, final String mobileNo) {
-        Intent intent = new Intent(Intent.ACTION_DIAL);
-        intent.setData(Uri.parse("tel:" + mobileNo));
-        mActivity.startActivity(intent);
-        if (ActivityCompat.checkSelfPermission(mActivity, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
-            mActivity.startActivity(intent);
-            return;
-        }
+    public static void shareContent(final Context mActivity, final String title, String message) {
+        String signature = mActivity.getResources().getString(R.string.app_name);
+        String shareBody = message + "\n" + signature;
+        Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
+        sharingIntent.setType("text/plain");
+        sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, title);
+        sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
+        mActivity.startActivity(Intent.createChooser(sharingIntent, mActivity.getResources().getString(R.string.share_using)));
     }
 
     @SuppressLint("NewApi")
@@ -509,8 +508,8 @@ public class Utilz {
         List<String> sectionList = new ArrayList<>();
         sectionList.add("Select Section");
         sectionList.add("A");
-        //sectionList.add("B");
-        //sectionList.add("C");
+        sectionList.add("B");
+        sectionList.add("C");
         return sectionList;
     }
 
@@ -883,5 +882,63 @@ public class Utilz {
         return screenInches;
     }
 
+    public static void setMessage(final Context mContext, final String mStrPhoneNo, final String mStrMessage, boolean isCustomMessage) {
+        try {
+            final Dialog dialog = new Dialog(mContext);
+            dialog.requestWindowFeature(Window.FEATURE_NO_TITLE); //before
+            dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            dialog.setContentView(R.layout.send_message_dialog);
+            dialog.setTitle(null);
+            dialog.setCancelable(true);
+            dialog.setCanceledOnTouchOutside(false);
+            final EditText messageEditText = dialog.findViewById(R.id.messageEditText);
+            if (isCustomMessage) {
+                messageEditText.setText(mStrMessage.trim());
+            }
+            TextView textViewCancel = dialog.findViewById(R.id.textViewCancel);
+            TextView textViewSend = dialog.findViewById(R.id.textViewSend);
+            textViewSend.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    String mStrMessage = messageEditText.getText().toString().trim();
+                    if (!TextUtils.isEmpty(mStrMessage)) {
+                        try {
+                            SmsManager smsManager = SmsManager.getDefault();
+                            smsManager.sendTextMessage(mStrPhoneNo.trim(), null, mStrMessage, null, null);
+                            Toast.makeText(mContext.getApplicationContext(), mContext.getResources().getString(R.string.sms_sent_successfully), Toast.LENGTH_LONG).show();
+                        } catch (Exception e) {
+                            try {
+                                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("sms:" + mStrPhoneNo));
+                                intent.putExtra("sms_body", mStrMessage);
+                                mContext.startActivity(intent);
+                                Toast.makeText(mContext.getApplicationContext(), mContext.getResources().getString(R.string.sms_sent_successfully), Toast.LENGTH_LONG).show();
+                            } catch (Exception e1) {
+                                Toast.makeText(mContext.getApplicationContext(), mContext.getResources().getString(R.string.sms_failed_to_send), Toast.LENGTH_LONG).show();
+                            }
+                        }
+                    } else {
+                        Toast.makeText(mContext.getApplicationContext(), mContext.getResources().getString(R.string.enter_your_message_here), Toast.LENGTH_LONG).show();
+                    }
+                    dialog.dismiss();
+                }
+            });
+            textViewCancel.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    dialog.dismiss();
+                }
+            });
+
+            dialog.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static String getAbsentMessage(Context mContext, String mStrStudentName) {
+        String mStrMessage = String.format(mContext.getResources().getString(R.string.absent_message_with_name),
+                mStrStudentName, mContext.getResources().getString(R.string.app_name));
+        return mStrMessage;
+    }
 }
 

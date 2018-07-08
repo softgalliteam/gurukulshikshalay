@@ -66,9 +66,11 @@ public class TimeTableActivity extends AppCompatActivity {
     TextView tvSaturday;
     @BindView(R.id.rv_common)
     RecyclerView mTimeTableRecyclerView;
-    ArrayList<TimeTableDataModel> tableModels = new ArrayList<>();
+    ArrayList<TimeTableDataModel> timetableList = new ArrayList<>();
     @BindView(R.id.classSectionLl)
     LinearLayout classSectionLl;
+    @BindView(R.id.noRecordFoundTv)
+    TextView noRecordFoundTv;
     private TimeTableAdapter timeTableAdapter;
     private String mStrSelectedDay;
     private String mStrClass = "", mStrSection = "";
@@ -96,23 +98,29 @@ public class TimeTableActivity extends AppCompatActivity {
     }
 
     private void manageDefaultSelection() {
+        noRecordFoundTv.setText(mActivity.getResources().getString(R.string.timetable_not_uploaded_yet));
         String dayOfTheWeek = new SimpleDateFormat("EEEE").format(new Date());
         if (TextUtils.isEmpty(dayOfTheWeek))
             dayOfTheWeek = AppConstants.MONDAY;
-        if (dayOfTheWeek.equalsIgnoreCase(AppConstants.MONDAY))
+        if (dayOfTheWeek.contains(AppConstants.MONDAY))
             changeBackNText(tvMonday);
-        else if (dayOfTheWeek.equalsIgnoreCase(AppConstants.TUESDAY))
+        else if (dayOfTheWeek.contains(AppConstants.TUESDAY))
             changeBackNText(tvTuesday);
-        else if (dayOfTheWeek.equalsIgnoreCase(AppConstants.WEDNESDAY))
+        else if (dayOfTheWeek.contains(AppConstants.WEDNESDAY))
             changeBackNText(tvWednesday);
-        else if (dayOfTheWeek.equalsIgnoreCase(AppConstants.THURSDAY))
+        else if (dayOfTheWeek.contains(AppConstants.THURSDAY))
             changeBackNText(tvThursday);
-        else if (dayOfTheWeek.equalsIgnoreCase(AppConstants.FRIDAY))
+        else if (dayOfTheWeek.contains(AppConstants.FRIDAY))
             changeBackNText(tvFriday);
-        else if (dayOfTheWeek.equalsIgnoreCase(AppConstants.SATURDAY))
+        else if (dayOfTheWeek.contains(AppConstants.SATURDAY))
             changeBackNText(tvSaturday);
-        //Calling API to get timetable of selected date
-        callTimeTableApi(dayOfTheWeek);
+        if (!dayOfTheWeek.contains(AppConstants.SUNDAY)) {
+            //Calling API to get timetable of selected date
+            callTimeTableApi(dayOfTheWeek);
+        } else {
+            noRecordFoundTv.setVisibility(View.VISIBLE);
+            noRecordFoundTv.setText(mActivity.getResources().getString(R.string.today_is_sunday_msg));
+        }
     }
 
     private void manageSelectingClassAndSec() {
@@ -232,7 +240,7 @@ public class TimeTableActivity extends AppCompatActivity {
                 public void onSuccess(int statusCode, Header[] headers, String response) {
                     Utilz.closeDialog();
                     if (response != null && response.length() > 0) {
-                        tableModels.clear();
+                        timetableList.clear();
                         try {
                             JSONObject object = new JSONObject(response);
                             String className = "", sec = "", date = "";
@@ -272,7 +280,7 @@ public class TimeTableActivity extends AppCompatActivity {
                                                         to_time = oneClassJsonObj.optString("to_time");
                                                     if (oneClassJsonObj.has("subject"))
                                                         subject = oneClassJsonObj.optString("subject");
-                                                    tableModels.add(new TimeTableDataModel(id, schoolName, className, sec, date, from_time, to_time, subject, name));
+                                                    timetableList.add(new TimeTableDataModel(id, schoolName, className, sec, date, from_time, to_time, subject, name));
                                                 }
                                             }
                                         }
@@ -285,6 +293,12 @@ public class TimeTableActivity extends AppCompatActivity {
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
+                    }
+                    if (timetableList != null && timetableList.size() > 0) {
+                        noRecordFoundTv.setVisibility(View.GONE);
+                    } else {
+                        noRecordFoundTv.setVisibility(View.VISIBLE);
+                        noRecordFoundTv.setText(mActivity.getResources().getString(R.string.timetable_not_uploaded_yet));
                     }
                 }
 
@@ -299,7 +313,7 @@ public class TimeTableActivity extends AppCompatActivity {
 
     private void initWidgit() {
         mTimeTableRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        timeTableAdapter = new TimeTableAdapter(TimeTableActivity.this, tableModels, R.layout.timetable_row, new OnClickListener() {
+        timeTableAdapter = new TimeTableAdapter(TimeTableActivity.this, timetableList, R.layout.timetable_row, new OnClickListener() {
             @Override
             public void onClick(int pos) {
 

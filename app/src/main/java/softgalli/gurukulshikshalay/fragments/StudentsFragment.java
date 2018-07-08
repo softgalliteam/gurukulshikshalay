@@ -5,7 +5,6 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
@@ -119,10 +118,12 @@ public class StudentsFragment extends Fragment {
         this.mClassName = mClassName;
         manageVisibility();
         Log.i(TAG, "callStudentListFromServer method is called : " + tabTitle + ", " + mClassName);
-        if (Utilz.isOnline(mActivity) && !isCallingApi) {
-            getStudentListFromServer();
-        } else {
-            Utilz.showNoInternetConnectionDialog(mActivity);
+        if (!isCallingApi) {
+            if (Utilz.isOnline(mActivity)) {
+                getStudentListFromServer();
+            } else {
+                Utilz.showNoInternetConnectionDialog(mActivity);
+            }
         }
     }
 

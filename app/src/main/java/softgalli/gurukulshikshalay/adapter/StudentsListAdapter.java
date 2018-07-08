@@ -44,11 +44,20 @@ public class StudentsListAdapter extends RecyclerView.Adapter<StudentsListAdapte
     public void onBindViewHolder(final ViewHolder viewHolder, int position) {
         if (mStudentsList != null && mStudentsList.size() > 0) {
             viewHolder.tvName.setText(mStudentsList.get(position).getStudentName());
-            viewHolder.tvEmailId.setText("Student Id : " + mStudentsList.get(position).getStudentId());
+            if (mStudentsList.get(position).getRollNo() > 0 && !TextUtils.isEmpty(mStudentsList.get(position).getSec())) {
+                viewHolder.tvEmailId.setText(String.format(mActivity.getResources().getString(R.string.roll_no_with_value),
+                        mStudentsList.get(position).getRollNo() + " (Sec - " + mStudentsList.get(position).getSec() + ")"));
+            } else if (!TextUtils.isEmpty(mStudentsList.get(position).getStudentId())) {
+                viewHolder.tvEmailId.setText(String.format(mActivity.getResources().getString(R.string.student_id_with_value), mStudentsList.get(position).getStudentId()));
+            } else if (!TextUtils.isEmpty(mStudentsList.get(position).getStudent_id())) {
+                viewHolder.tvEmailId.setText(String.format(mActivity.getResources().getString(R.string.student_id_with_value), mStudentsList.get(position).getStudent_id()));
+            } else {
+                viewHolder.tvEmailId.setText(String.format(mActivity.getResources().getString(R.string.roll_no_with_value), AppConstants.NA));
+            }
             if (!TextUtils.isEmpty(mStudentsList.get(position).getPermanent_address()))
                 viewHolder.tvAddress.setText(mStudentsList.get(position).getPermanent_address());
-            if (!TextUtils.isEmpty(mStudentsList.get(position).getResidential_address()))
-                viewHolder.tvAddress.setText(mStudentsList.get(position).getResidential_address());
+            if (!TextUtils.isEmpty(mStudentsList.get(position).getResidential_address().trim()))
+                viewHolder.tvAddress.setText(mStudentsList.get(position).getResidential_address().trim());
             else
                 viewHolder.tvAddress.setText("Address : N/A");
             viewHolder.mainView.setTag(mStudentsList.get(position));

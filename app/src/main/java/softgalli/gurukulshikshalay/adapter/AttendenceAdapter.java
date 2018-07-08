@@ -12,6 +12,7 @@ import java.util.List;
 
 import softgalli.gurukulshikshalay.R;
 import softgalli.gurukulshikshalay.activity.TakeAttendenceActivity;
+import softgalli.gurukulshikshalay.common.Utilz;
 import softgalli.gurukulshikshalay.model.StudentListDataModel;
 
 public class AttendenceAdapter extends RecyclerView.Adapter<AttendenceAdapter.ViewHolder> {
@@ -49,7 +50,12 @@ public class AttendenceAdapter extends RecyclerView.Adapter<AttendenceAdapter.Vi
         final int pos = position;
         if (mStudentsList != null && mStudentsList.size() > 0) {
             viewHolder.tvName.setText(mStudentsList.get(position).getStudentName());
-            viewHolder.tvEmailId.setText(mStudentsList.get(position).getStudentId());
+            if (mStudentsList.get(position).getRollNo() > 0) {
+                viewHolder.tvEmailId.setText(String.format(mActivity.getResources().getString(R.string.roll_no_with_value),
+                        mStudentsList.get(position).getRollNo() + ""));
+            } else {
+                viewHolder.tvEmailId.setText(String.format(mActivity.getResources().getString(R.string.roll_no_with_value), "N/A"));
+            }
             viewHolder.presentButton.setTag(mStudentsList.get(position));
             viewHolder.absentButton.setTag(mStudentsList.get(position));
 
@@ -84,6 +90,25 @@ public class AttendenceAdapter extends RecyclerView.Adapter<AttendenceAdapter.Vi
                         contact.setSelected(false);
                     }
                     mStudentsList.get(pos).setSelected(false);
+                }
+            });
+
+            viewHolder.absentButton.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    managePresentAbsent(viewHolder.presentButton, viewHolder.absentButton, false);
+                    if (v != null && v instanceof TextView) {
+                        TextView cb = (TextView) v;
+                        StudentListDataModel contact = (StudentListDataModel) cb.getTag();
+                        if (contact != null) {
+                            Utilz.showMessageDialog(mActivity, "This feature is coming soon...");
+                            //for phone messaging
+                            //((TakeAttendenceActivity) mActivity).sendSMSMessage(contact.getStudentName(), contact.getMobile());
+                            //for using sms gateway to send sms
+                            //Utilz.setMessage(mActivity, mStrPhoneNo, mStrMessage, true);
+                        }
+                    }
+                    return false;
                 }
             });
 

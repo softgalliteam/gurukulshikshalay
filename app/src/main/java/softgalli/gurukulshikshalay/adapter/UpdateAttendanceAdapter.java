@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import softgalli.gurukulshikshalay.R;
 import softgalli.gurukulshikshalay.activity.UpdateAttendanceActivity;
 import softgalli.gurukulshikshalay.common.AppConstants;
+import softgalli.gurukulshikshalay.common.Utilz;
 import softgalli.gurukulshikshalay.model.StudentListDataModel;
 
 public class UpdateAttendanceAdapter extends RecyclerView.Adapter<UpdateAttendanceAdapter.ViewHolder> {
@@ -85,6 +86,24 @@ public class UpdateAttendanceAdapter extends RecyclerView.Adapter<UpdateAttendan
                         contact.setSelected(false);
                     }
                     mStudentsList.get(pos).setSelected(false);
+                }
+            });
+            viewHolder.absentButton.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    managePresentAbsent(viewHolder.presentButton, viewHolder.absentButton, false);
+                    if (v != null && v instanceof TextView) {
+                        TextView cb = (TextView) v;
+                        StudentListDataModel contact = (StudentListDataModel) cb.getTag();
+                        if (contact != null) {
+                            Utilz.showMessageDialog(mActivity, "This feature is coming soon...");
+                            //for phone messaging
+                            //((UpdateAttendanceActivity) mActivity).sendSMSMessage(contact.getStudentName(), contact.getMobile());
+                            //for using sms gateway to send sms
+                            //Utilz.setMessage(mActivity, mStrPhoneNo, mStrMessage, true);
+                        }
+                    }
+                    return false;
                 }
             });
 

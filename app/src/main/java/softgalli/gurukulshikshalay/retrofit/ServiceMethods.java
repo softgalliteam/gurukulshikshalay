@@ -3,6 +3,7 @@ package softgalli.gurukulshikshalay.retrofit;
 
 import softgalli.gurukulshikshalay.model.AlumniModel;
 import softgalli.gurukulshikshalay.model.CommonResponse;
+import softgalli.gurukulshikshalay.model.EventsAndNoticeLisrModel;
 import softgalli.gurukulshikshalay.model.FeedBackModel;
 import softgalli.gurukulshikshalay.model.GalleryModel;
 import softgalli.gurukulshikshalay.model.InsertAttendanceModel;
@@ -19,7 +20,6 @@ import softgalli.gurukulshikshalay.model.UserDetailsModel;
  */
 
 public interface ServiceMethods {
-    void notification(String school_id, DownlodableCallback<NotificationModel> callback);
 
     void addteacher(String teacher_id, String name, String qualification, String mobile_number, String alternate_number, String email_id,
                     String classteacher_for, String joining_date, String address, DownlodableCallback<StuTeaModel> callback);
@@ -48,8 +48,6 @@ public interface ServiceMethods {
 
     void updateTeacher(String teacher_id, String name, String mobile_number, String alternate_number, String email_id, String address, String qualification, DownlodableCallback<CommonResponse> callback);
 
-    void updateStudent(String user_id, String name, String email, String mobile, String residential_address, DownlodableCallback<CommonResponse> callback);
-
     void alumniList(DownlodableCallback<AlumniModel> callback);
 
     void getStudentsAttendance(String className, String sec, String studentId, String date, DownlodableCallback<StudentListByClassModel> callback);
@@ -59,4 +57,6 @@ public interface ServiceMethods {
     void deleteStudent(String studentRegId, DownlodableCallback<CommonResponse> callback);
 
     void deleteTeacher(String teacherRegId, DownlodableCallback<CommonResponse> callback);
+
+    void getEventsOrNoticeList(boolean isToGetEventsList, DownlodableCallback<EventsAndNoticeLisrModel> callback);
 }

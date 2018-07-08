@@ -1,6 +1,7 @@
 package softgalli.gurukulshikshalay;
 
 import android.app.Application;
+import android.support.multidex.MultiDex;
 
 import com.firebase.client.Firebase;
 
@@ -8,6 +9,7 @@ import org.joda.time.LocalDateTime;
 
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
+import softgalli.gurukulshikshalay.common.FontsOverride;
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 
 
@@ -24,6 +26,10 @@ public class AppController extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        FontsOverride.setDefaultFont(this, "SERIF",
+                "fonts/Roboto-Regular.ttf");
+        MultiDex.install(this);
+
         //Fabric.with(this, new Crashlytics());
         mInstance = this;
         Firebase.setAndroidContext(this);

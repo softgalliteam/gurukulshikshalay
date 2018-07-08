@@ -170,7 +170,23 @@
                         android:textStyle="bold" />
                 </LinearLayout>
 
-                <include layout="@layout/common_recyclerview" />
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <include layout="@layout/common_recyclerview" />
+                    <!--For absent present count -->
+                    <TextView
+                        android:id="@+id/noRecordFoundTv"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_centerInParent="true"
+                        android:layout_margin="10dp"
+                        android:background="@color/colorTextWhite"
+                        android:gravity="center"
+                        android:padding="@dimen/padding_10dp"
+                        android:text="@string/no_record_found" />
+                </RelativeLayout>
             </LinearLayout>
         </android.support.v7.widget.CardView>
     </LinearLayout>

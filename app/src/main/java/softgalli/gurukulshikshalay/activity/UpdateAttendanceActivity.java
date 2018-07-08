@@ -1,8 +1,12 @@
 package softgalli.gurukulshikshalay.activity;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.DatePickerDialog;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
@@ -317,4 +321,32 @@ public class UpdateAttendanceActivity extends AppCompatActivity {
         return insertAttendanceModel;
     }
 
+    /*public void sendSMSMessage(String mStrStudentName, String mStrPhoneNo) {
+        this.mStrMessage = Utilz.getAbsentMessage(mActivity, mStrStudentName);
+        this.mStrPhoneNo = mStrPhoneNo;
+        if (ContextCompat.checkSelfPermission(mActivity,
+                Manifest.permission.SEND_SMS) != PackageManager.PERMISSION_GRANTED) {
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.SEND_SMS)) {
+            } else {
+                ActivityCompat.requestPermissions(mActivity,
+                        new String[]{Manifest.permission.SEND_SMS}, AppConstants.MY_PERMISSIONS_REQUEST_SEND_SMS);
+            }
+        }
+    }
+
+    private String mStrMessage, mStrPhoneNo;
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case AppConstants.MY_PERMISSIONS_REQUEST_SEND_SMS: {
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    Utilz.setMessage(mActivity, mStrPhoneNo, mStrMessage, true);
+                } else {
+                    Toast.makeText(getApplicationContext(), R.string.sms_failed_to_send, Toast.LENGTH_LONG).show();
+                    return;
+                }
+            }
+        }
+    }*/
 }

@@ -1,20 +1,50 @@
 package softgalli.gurukulshikshalay.model;
 
-public class UpcomingActivityModel {
-    String upcomingActivityTitle;
-    String upcomingActivityDate;
+import com.google.gson.annotations.SerializedName;
 
-    public String getUpcomingActivityTitle() {
-        return upcomingActivityTitle;
+import java.io.Serializable;
+
+public class UpcomingActivityModel implements Serializable {
+    @SerializedName("title")
+    String upcomingEvetTitle;
+    @SerializedName("message")
+    String upcomingEvetDescription;
+    @SerializedName("date")
+    String upcomingEventDate;
+
+    public void setIsDescShown(boolean isDescShown) {
+        this.isDescShown = isDescShown;
     }
 
-    public UpcomingActivityModel(String upcomingActivityTitle, String upcomingActivityDate) {
-        this.upcomingActivityTitle = upcomingActivityTitle;
-        this.upcomingActivityDate = upcomingActivityDate;
+    @SerializedName("posted_by")
+
+    String upcomingEventPostedBy;
+    @SerializedName("status")
+    String upcomingEventStatus;
+
+    public String getUpcomingEvetTitle() {
+        return upcomingEvetTitle;
     }
 
-    public String getUpcomingActivityDate() {
-        return upcomingActivityDate;
+    public String getUpcomingEvetDescription() {
+        return upcomingEvetDescription;
     }
 
+    public String getUpcomingEventDate() {
+        return upcomingEventDate;
+    }
+
+    public String getUpcomingEventPostedBy() {
+        return upcomingEventPostedBy;
+    }
+
+    public String getUpcomingEventStatus() {
+        return upcomingEventStatus;
+    }
+
+    public boolean isDescShown() {
+        return isDescShown;
+    }
+
+    boolean isDescShown;
 }

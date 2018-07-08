@@ -22,6 +22,7 @@ import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -46,11 +47,15 @@ import softgalli.gurukulshikshalay.adapter.HomeCategoryAdapter;
 import softgalli.gurukulshikshalay.chatting.ChattingActivity;
 import softgalli.gurukulshikshalay.common.AppConstants;
 import softgalli.gurukulshikshalay.common.ClsGeneral;
+import softgalli.gurukulshikshalay.common.PreferenceName;
 import softgalli.gurukulshikshalay.common.Utilz;
 import softgalli.gurukulshikshalay.intrface.OnClickListener;
+import softgalli.gurukulshikshalay.model.EventsAndNoticeLisrModel;
 import softgalli.gurukulshikshalay.model.UpcomingActivityModel;
 import softgalli.gurukulshikshalay.preference.MyPreference;
 import softgalli.gurukulshikshalay.retrofit.ApiUrl;
+import softgalli.gurukulshikshalay.retrofit.DownlodableCallback;
+import softgalli.gurukulshikshalay.retrofit.RetrofitDataProvider;
 
 public class HomeScreenActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -66,10 +71,10 @@ public class HomeScreenActivity extends AppCompatActivity
     RelativeLayout aboutUsRl;
     @BindView(R.id.contactUsRl)
     RelativeLayout contactUsRl;
-    private boolean isBackPressed;
+    private boolean isBackPressed, isApiCalling = false;
     private Activity mActivity;
     private DrawerLayout drawer;
-    private Toolbar toolbar;
+    private RetrofitDataProvider retrofitDataProvider;
 
     @SuppressLint("NewApi")
     @Override
@@ -77,6 +82,7 @@ public class HomeScreenActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         mActivity = this;
+        retrofitDataProvider = new RetrofitDataProvider(this);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         ButterKnife.bind(this);
@@ -95,28 +101,107 @@ public class HomeScreenActivity extends AppCompatActivity
         //Setting Profile
         manageNavHeaderView();
 
-        //Upcoming Activity Handling
-        upcomingActivityHandling();
-        if (Utilz.isOnline(mActivity)) {
-            //Showing update your app popup
-            Utilz.genericAPI(mActivity);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (Utilz.isOnline(mActivity) && !isFinishing() && !isApiCalling) {
+            //Upcoming Activity Handling
+            upcomingEventsHandling();
         }
     }
 
-    private void upcomingActivityHandling() {
-        //TODO call api and get upcoming activities details from server and remove this hardcoded list.
-        ArrayList<UpcomingActivityModel> upcomingActivityModelArrayList = new ArrayList<>();
-        upcomingActivityModelArrayList.add(new UpcomingActivityModel("Swachh Bharat Swasth Bharat Abhiyan", "20 July 2018"));
-        upcomingActivityModelArrayList.add(new UpcomingActivityModel("Independence Day(15 August) Celebration", "15 August 2018"));
-        upcomingActivityModelArrayList.add(new UpcomingActivityModel("Rakshabandhan Celebration", "26 August 2018"));
+    private void upcomingEventsHandling() {
+        isApiCalling = true;
+        retrofitDataProvider.getEventsOrNoticeList(true, new DownlodableCallback<EventsAndNoticeLisrModel>() {
+            @Override
+            public void onSuccess(final EventsAndNoticeLisrModel result) {
+                isApiCalling = false;
+                if (result.getStatus().contains(PreferenceName.TRUE)) {
+                    ArrayList<UpcomingActivityModel> upcomingEventsArrayList = result.getData();
+                    if (!upcomingEventsArrayList.isEmpty())
+                        populateUpcomingEvents(upcomingEventsArrayList);
+                }
+            }
 
-        for (UpcomingActivityModel eachUpcmgActvty : upcomingActivityModelArrayList) {
+            @Override
+            public void onFailure(String error) {
+                isApiCalling = false;
+                Toast.makeText(mActivity, mActivity.getResources().getString(R.string.something_went_wrong_error_message), Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onUnauthorized(int errorNumber) {
+                isApiCalling = false;
+                Toast.makeText(mActivity, mActivity.getResources().getString(R.string.something_went_wrong_error_message), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void populateUpcomingEvents(ArrayList<UpcomingActivityModel> upcomingEventsArrayList) {
+        for (final UpcomingActivityModel eachUpcmgActvty : upcomingEventsArrayList) {
             View child = getLayoutInflater().inflate(R.layout.upcoming_activity_row, null);
             upcomingActContainerLl.addView(child);
-            TextView titleTv = child.findViewById(R.id.upcomingActTitleTv);
-            titleTv.setText(eachUpcmgActvty.getUpcomingActivityTitle());
-            TextView dateTimeTv = child.findViewById(R.id.upcomingActDateTv);
-            dateTimeTv.setText(eachUpcmgActvty.getUpcomingActivityDate());
+            final TextView titleTv = child.findViewById(R.id.titleTv);
+            final TextView shortDescriptionTv = child.findViewById(R.id.shortDescriptionTv);
+            final TextView longDescriptionTv = child.findViewById(R.id.longDescriptionTv);
+            final ImageView shareNoticeIv = child.findViewById(R.id.shareNoticeIv);
+            TextView dateTv = child.findViewById(R.id.dateTv);
+            TextView postedByTv = child.findViewById(R.id.postedByTv);
+
+            if (eachUpcmgActvty != null) {
+
+                if (!TextUtils.isEmpty(eachUpcmgActvty.getUpcomingEvetTitle()))
+                    titleTv.setText(eachUpcmgActvty.getUpcomingEvetTitle());
+                else
+                    titleTv.setText("N/A");
+
+                if (!TextUtils.isEmpty(eachUpcmgActvty.getUpcomingEvetDescription().trim())) {
+                    shortDescriptionTv.setText(eachUpcmgActvty.getUpcomingEvetDescription().trim());
+                    longDescriptionTv.setText(eachUpcmgActvty.getUpcomingEvetDescription().trim());
+                } else {
+                    shortDescriptionTv.setText("N/A");
+                    longDescriptionTv.setText("N/A");
+                }
+
+                if (!TextUtils.isEmpty(eachUpcmgActvty.getUpcomingEventDate().trim()))
+                    dateTv.setText(eachUpcmgActvty.getUpcomingEventDate().trim());
+                else
+                    dateTv.setText("N/A");
+
+                if (!TextUtils.isEmpty(eachUpcmgActvty.getUpcomingEventPostedBy().trim()))
+                    postedByTv.setText("Posted By : " + eachUpcmgActvty.getUpcomingEventPostedBy().trim());
+                else
+                    postedByTv.setText("N/A");
+                child.setOnClickListener(new View.OnClickListener() {
+                    @SuppressLint("NewApi")
+                    @Override
+                    public void onClick(View view) {
+                        if (!eachUpcmgActvty.isDescShown()) {
+                            eachUpcmgActvty.setIsDescShown(true);
+                            shortDescriptionTv.setVisibility(View.GONE);
+                            shareNoticeIv.setVisibility(View.VISIBLE);
+                            longDescriptionTv.setVisibility(View.VISIBLE);
+                            titleTv.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, R.drawable.arrow_down, 0);
+                        } else {
+                            eachUpcmgActvty.setIsDescShown(false);
+                            shortDescriptionTv.setVisibility(View.VISIBLE);
+                            longDescriptionTv.setVisibility(View.GONE);
+                            shareNoticeIv.setVisibility(View.GONE);
+                            titleTv.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, R.drawable.arrow_up, 0);
+                        }
+                    }
+                });
+                shareNoticeIv.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        String message = eachUpcmgActvty.getUpcomingEvetDescription() + "\n\nBy : " +
+                                eachUpcmgActvty.getUpcomingEventPostedBy();
+                        Utilz.shareContent(mActivity, eachUpcmgActvty.getUpcomingEvetTitle(), message);
+                    }
+                });
+            }
         }
     }
 
@@ -125,11 +210,6 @@ public class HomeScreenActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
-        /*if (id == R.id.about_us) {
-            startActivity(new Intent(mActivity, AboutUsActivity.class));
-        } else if (id == R.id.contact_us) {
-            startActivity(new Intent(mActivity, ContactUsActivity.class));
-        } else*/
         if (id == R.id.principal_zone) {
             if (MyPreference.isLogined()) {
                 if (AppConstants.PRINCIPAL.equalsIgnoreCase(MyPreference.getLoginedAs()) ||
@@ -201,7 +281,7 @@ public class HomeScreenActivity extends AppCompatActivity
                 } else if (position == 1) {
                     startActivity(new Intent(HomeScreenActivity.this, TopperListActivity.class));
                 } else if (position == 2) {
-                    startActivity(new Intent(HomeScreenActivity.this, NotificationActivity.class));
+                    startActivity(new Intent(HomeScreenActivity.this, NoticeBoardActivity.class));
                 } else if (position == 3) {
                     if (MyPreference.isLogined()) {
                         if (AppConstants.STUDENT.equalsIgnoreCase(ClsGeneral.getStrPreferences(AppConstants.LOGIN_AS))) {

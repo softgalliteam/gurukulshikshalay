@@ -5,7 +5,7 @@ import softgalli.gurukulshikshalay.BuildConfig;
 public class ApiUrl {
 
     /*#################################### FOR GURUKUL ######################################*/
-    public static final String BASE_URL = "http://apextechies.com/gurukul/index.php/";
+   /* public static final String BASE_URL = "http://apextechies.com/gurukul/index.php/";
     public static final String IMAGE_BASE_URL = "http://www.gurukulshikshalay.com/";
 
     public static String PLAYSTORE_LINK = "https://play.google.com/store/apps/details?id=" + BuildConfig.APPLICATION_ID;
@@ -14,11 +14,11 @@ public class ApiUrl {
     public static String ADMISSION_API = "takeAdmission.php";
     public static String GENERIC_API = "app_version";
     // TODO: change this to your own Firebase URL
-    public static final String FIREBASE_URL = "https://gurukul-shikshalay.firebaseio.com/";
+    public static final String FIREBASE_URL = "https://gurukul-shikshalay.firebaseio.com/";*/
 
 
     /*#################################### FOR SPS NAWALSHAHI ##############################*/
-   /* public static final String BASE_URL = "http://apextechies.com/sps/index.php/";
+    public static final String BASE_URL = "http://apextechies.com/sps/index.php/";
     public static final String IMAGE_BASE_URL = "http://spsnawalshahi.com/";
 
     public static String PLAYSTORE_LINK = "https://play.google.com/store/apps/details?id=" + BuildConfig.APPLICATION_ID;
@@ -27,7 +27,7 @@ public class ApiUrl {
     public static String ADMISSION_API = "takeAdmission.php";
     public static String GENERIC_API = "app_version";
     // TODO: change this to your own Firebase URL
-    public static final String FIREBASE_URL = "https://sps-nawalshahi.firebaseio.com/";*/
+    public static final String FIREBASE_URL = "https://sps-nawalshahi.firebaseio.com/";
 
 
     /*#################################### COMMON LINKS ##############################*/
@@ -53,7 +53,9 @@ public class ApiUrl {
     public static final String DELETE_STUDENT = "delete_student";
     public static final String DELETE_TEACHER = "delete_teacher";
     public static final String CHANGE_PASSWORD = "change_user_password";
-    public static final String UPLOAD_ATTENDANCE = "uploadAttendance";
-    public static final String GET_RESULT = "getResult";
+    public static final String ADD_EVENT = "upcoming_events";
+    public static final String GET_EVENT_LIST = "events_list";
+    public static final String PUBLISH_NOTICE = "notice_board";
+    public static final String GET_NOTICE_LIST = "get_notice_board";
     public static final String ADD_RESULT = "addResult";
 }

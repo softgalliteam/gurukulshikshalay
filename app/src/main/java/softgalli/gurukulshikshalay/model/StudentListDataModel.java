@@ -17,8 +17,22 @@ public class StudentListDataModel extends RealmObject implements Serializable {
     private boolean isSelected;
     @SerializedName("age")
     private int age;
+
+    public int getRollNo() {
+        return roll_no;
+    }
+
+    @SerializedName("roll_no")
+    private int roll_no;
     @SerializedName("id")
     private String id;
+
+    public String getPassword() {
+        return password;
+    }
+
+    @SerializedName("password")
+    private String password;
     @SerializedName("user_id")
     private String user_id;
     @SerializedName("parents_id")
@@ -34,17 +48,26 @@ public class StudentListDataModel extends RealmObject implements Serializable {
     @SerializedName("admission_date")
     private String admission_date;
 
-    public String getStudent_id() {
-        return student_id;
-    }
-    public String getTeacher_id() {
-        return teacher_id;
-    }
-
     @SerializedName("student_id")
     private String student_id;
     @SerializedName("teacher_id")
     private String teacher_id;
+
+    @SerializedName("residential_address")
+    private String residential_address;
+    @SerializedName("permanent_address")
+    private String permanent_address;
+    @SerializedName("profile_pic")
+    private String profile_pic;
+
+
+    public String getStudent_id() {
+        return student_id;
+    }
+
+    public String getTeacher_id() {
+        return teacher_id;
+    }
 
     public String getId() {
         return id;
@@ -90,10 +113,6 @@ public class StudentListDataModel extends RealmObject implements Serializable {
         return status;
     }
 
-    private String residential_address;
-    private String permanent_address;
-    private String profile_pic;
-
     public void setStatus(String status) {
         this.status = status;
     }
@@ -117,24 +136,12 @@ public class StudentListDataModel extends RealmObject implements Serializable {
         return fatherName;
     }
 
-    public void setFatherName(String fatherName) {
-        this.fatherName = fatherName;
-    }
-
     public String getGender() {
         return gender;
     }
 
-    public void setGender(String gender) {
-        this.gender = gender;
-    }
-
     public int getAge() {
         return age;
-    }
-
-    public void setAge(int age) {
-        this.age = age;
     }
 
     public String getStudentName() {
@@ -147,10 +154,6 @@ public class StudentListDataModel extends RealmObject implements Serializable {
 
     public String getStudentId() {
         return user_id;
-    }
-
-    public void setStudentId(String studentId) {
-        this.user_id = studentId;
     }
 
     public boolean isSelected() {

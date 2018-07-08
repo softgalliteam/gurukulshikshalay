@@ -7,19 +7,13 @@ import android.content.Intent;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.support.v4.app.NotificationCompat;
-import android.support.v4.content.LocalBroadcastManager;
-import android.text.TextUtils;
 import android.util.Log;
 
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import softgalli.gurukulshikshalay.R;
-import softgalli.gurukulshikshalay.activity.HomeScreenActivity;
-import softgalli.gurukulshikshalay.activity.NotificationActivity;
+import softgalli.gurukulshikshalay.activity.NoticeBoardActivity;
 
 public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
@@ -38,8 +32,8 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         // here in onMessageReceived whether the app is in the foreground or background. Data messages are the type
         // traditionally used with GCM. Notification messages are only received here in onMessageReceived when the app
         // is in the foreground. When the app is in the background an automatically generated notification is displayed.
-        // When the user taps on the notification they are returned to the app. Messages containing both notification
-        // and data payloads are treated as notification messages. The Firebase console always sends notification
+        // When the user taps on the notice_board_activity they are returned to the app. Messages containing both notice_board_activity
+        // and data payloads are treated as notice_board_activity messages. The Firebase console always sends notice_board_activity
         // messages. For more see: https://firebase.google.com/docs/cloud-messaging/concept-options
         // [END_EXCLUDE]
 
@@ -76,7 +70,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
      * @param name
      */
     private void sendNotification(String messageBody, String shopID, String title) {
-        Intent intent = new Intent(this, NotificationActivity.class);
+        Intent intent = new Intent(this, NoticeBoardActivity.class);
         intent.putExtra("id", shopID);
         intent.putExtra("name", "");
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);

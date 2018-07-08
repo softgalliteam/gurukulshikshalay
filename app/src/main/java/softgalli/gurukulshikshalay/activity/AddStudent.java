@@ -1,9 +1,14 @@
 package softgalli.gurukulshikshalay.activity;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.DatePickerDialog;
+import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
@@ -26,6 +31,7 @@ import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import softgalli.gurukulshikshalay.R;
 import softgalli.gurukulshikshalay.common.AppConstants;
 import softgalli.gurukulshikshalay.common.PreferenceName;
@@ -70,6 +76,7 @@ public class AddStudent extends AppCompatActivity {
     Spinner sectionNameSpinner;
     @BindView(R.id.buttonLl)
     RelativeLayout buttonLl;
+    private String mStrClassName, mStrSectionName, mStrMessage, mStrPhoneNo;
     private boolean isForUpdate;
     private Activity mActivity;
     private RetrofitDataProvider retrofitDataProvider;
@@ -145,21 +152,20 @@ public class AddStudent extends AppCompatActivity {
     private void fillAllStudentsDetailsIntoFields(StudentListDataModel studentListDataModel) {
         if (studentListDataModel != null) {
             if (!TextUtils.isEmpty(studentListDataModel.getStudent_id())) {
-                studentRegIdTv.setText(studentListDataModel.getStudent_id());
+                studentRegIdTv.setText("Id : " + studentListDataModel.getStudent_id() + " & Password : " + studentListDataModel.getPassword());
                 studentRegIdTv.setVisibility(View.VISIBLE);
             } else if (!TextUtils.isEmpty(studentListDataModel.getStudentId())) {
-                studentRegIdTv.setText(studentListDataModel.getStudentId());
+                studentRegIdTv.setText("Id : " + studentListDataModel.getStudentId() + " & Password : " + studentListDataModel.getPassword());
                 studentRegIdTv.setVisibility(View.VISIBLE);
             } else {
                 studentRegIdTv.setVisibility(View.GONE);
             }
+
             if (!TextUtils.isEmpty(studentListDataModel.getStudentName()))
                 input_name.setText(studentListDataModel.getStudentName());
 
-            if (!TextUtils.isEmpty(studentListDataModel.getStudent_id()))
-                input_rollnumber.setText(studentListDataModel.getStudent_id());
-            else if (!TextUtils.isEmpty(studentListDataModel.getStudentId()))
-                input_rollnumber.setText(studentListDataModel.getStudentId());
+            if (studentListDataModel.getRollNo() > 0)
+                input_rollnumber.setText(studentListDataModel.getRollNo() + "");
 
             if (!TextUtils.isEmpty(studentListDataModel.getEmail()))
                 input_email.setText(studentListDataModel.getEmail());
@@ -191,6 +197,9 @@ public class AddStudent extends AppCompatActivity {
                     classNameSpinner.setSelection(12);
                 else if (studentListDataModel.getClassName().equalsIgnoreCase("NURSERY"))
                     classNameSpinner.setSelection(13);
+
+                if (!studentListDataModel.getClassName().equalsIgnoreCase("Select Class"))
+                    mStrClassName = studentListDataModel.getClassName();
             }
             if (!TextUtils.isEmpty(studentListDataModel.getAdmissionDate()))
                 input_admission.setText(studentListDataModel.getAdmissionDate());
@@ -204,10 +213,14 @@ public class AddStudent extends AppCompatActivity {
                     sectionNameSpinner.setSelection(3);
                 else if (studentListDataModel.getSec().equalsIgnoreCase("D"))
                     sectionNameSpinner.setSelection(4);
-            }
-            if (!TextUtils.isEmpty(studentListDataModel.getMobile()))
-                input_mobile.setText(studentListDataModel.getMobile());
 
+                if (!studentListDataModel.getSec().equalsIgnoreCase("Select Section"))
+                    mStrSectionName = studentListDataModel.getSec();
+            }
+            if (!TextUtils.isEmpty(studentListDataModel.getMobile())) {
+                input_mobile.setText(studentListDataModel.getMobile());
+                mStrPhoneNo = studentListDataModel.getMobile();
+            }
             if (!TextUtils.isEmpty(studentListDataModel.getPermanent_address()))
                 input_address.setText(studentListDataModel.getResidential_address());
             else if (!TextUtils.isEmpty(studentListDataModel.getPermanent_address()))
@@ -380,4 +393,54 @@ public class AddStudent extends AppCompatActivity {
             }
         });
     }
+
+    @OnClick({R.id.seeAttendanceButton, R.id.sendMessageButton})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.seeAttendanceButton:
+                seeAttendance();
+                break;
+            case R.id.sendMessageButton:
+                Utilz.showMessageDialog(mActivity, "This feature is coming soon...");
+                //for phone messaging
+                //sendSMSMessage();
+                //for using sms gateway to send sms
+                //Utilz.setMessage(mActivity, mStrPhoneNo, mStrMessage, true);
+                break;
+        }
+    }
+
+    private void seeAttendance() {
+        if (!TextUtils.isEmpty(mStrClassName) && !TextUtils.isEmpty(mStrSectionName)) {
+            Intent mIntent = new Intent(mActivity, SeeAttendenceActivity.class);
+            mIntent.putExtra(AppConstants.CLASS_NAME, mStrClassName);
+            mIntent.putExtra(AppConstants.SECTION_NAME, mStrSectionName);
+            startActivity(mIntent);
+        } else {
+            Toast.makeText(mActivity, R.string.class_or_section_is_missing_msg, Toast.LENGTH_SHORT).show();
+        }
+    }
+
+   /* private void sendSMSMessage() {
+        if (ContextCompat.checkSelfPermission(mActivity, Manifest.permission.SEND_SMS) != PackageManager.PERMISSION_GRANTED) {
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.SEND_SMS)) {
+            } else {
+                ActivityCompat.requestPermissions(mActivity, new String[]{Manifest.permission.SEND_SMS}, AppConstants.MY_PERMISSIONS_REQUEST_SEND_SMS);
+            }
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case AppConstants.MY_PERMISSIONS_REQUEST_SEND_SMS: {
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                 Utilz.setMessage(mActivity, mStrPhoneNo, mStrMessage, true);
+                } else {
+                    Toast.makeText(getApplicationContext(), R.string.sms_failed_to_send, Toast.LENGTH_LONG).show();
+                    return;
+                }
+            }
+        }
+    }*/
 }
