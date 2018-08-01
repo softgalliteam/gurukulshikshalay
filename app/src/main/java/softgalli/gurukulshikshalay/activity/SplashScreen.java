@@ -4,18 +4,17 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.LinearLayout;
 
+import softgalli.gurukulshikshalay.AppController;
 import softgalli.gurukulshikshalay.R;
 import softgalli.gurukulshikshalay.common.Utilz;
 
-public class SplasScreen extends Activity implements Animation.AnimationListener {
+public class SplashScreen extends Activity implements Animation.AnimationListener {
     Animation animFadeIn;
     LinearLayout linearLayout;
 
@@ -48,7 +47,7 @@ public class SplasScreen extends Activity implements Animation.AnimationListener
 
         if (Utilz.isOnline(this)) {
             //Showing update your app popup
-            Utilz.genericAPI(this);
+            Utilz.genericAPI(AppController.getInstance());
         }
     }
 
@@ -65,7 +64,7 @@ public class SplasScreen extends Activity implements Animation.AnimationListener
 
     public void onAnimationEnd(Animation animation) {
         // Start Main Screen
-        Intent i = new Intent(SplasScreen.this, WelcomeActivity.class);
+        Intent i = new Intent(SplashScreen.this, WelcomeActivity.class);
         startActivity(i);
         this.finish();
     }

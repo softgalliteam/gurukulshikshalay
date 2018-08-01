@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/margin_5dp"
+    android:background="@drawable/ss_hollow_rect_green"
+    android:orientation="vertical"
+    android:padding="@dimen/padding_10dp">
+
+    <Button
+        android:id="@+id/editButton"
+        android:layout_width="200dp"
+        android:layout_height="@dimen/button_height"
+        android:background="@drawable/present_button_bg"
+        android:drawableRight="@drawable/edit"
+        android:paddingRight="@dimen/padding_10dp"
+        android:text="@string/edit"
+        android:textAllCaps="false"
+        android:textColor="@color/colorTextWhite"
+        android:textSize="@dimen/text_size" />
+
+    <Button
+        android:id="@+id/deleteButton"
+        android:layout_width="200dp"
+        android:layout_height="@dimen/button_height"
+        android:layout_marginBottom="@dimen/margin_10dp"
+        android:layout_marginTop="@dimen/margin_10dp"
+        android:background="@drawable/absent_button_bg"
+        android:drawableRight="@drawable/delete"
+        android:paddingRight="@dimen/padding_10dp"
+        android:text="@string/delete"
+        android:textAllCaps="false"
+        android:textColor="@color/colorTextWhite"
+        android:textSize="@dimen/text_size" />
+
+    <Button
+        android:id="@+id/shareButton"
+        android:layout_width="200dp"
+        android:layout_height="@dimen/button_height"
+        android:background="@drawable/button_background"
+        android:drawableRight="@drawable/share_white_icon_small"
+        android:paddingRight="@dimen/padding_10dp"
+        android:text="@string/share"
+        android:textAllCaps="false"
+        android:textColor="@color/colorTextWhite"
+        android:textSize="@dimen/text_size" />
+</LinearLayout>
