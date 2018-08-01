@@ -20,7 +20,7 @@
         android:drawablePadding="@dimen/margin_10dp"
         android:drawableRight="@drawable/send"
         android:clickable="false"
-        android:text="Send"
+        android:text="@string/send"
         android:textColor="@color/colorTextWhite"
         android:textSize="@dimen/text_16.7" />
 

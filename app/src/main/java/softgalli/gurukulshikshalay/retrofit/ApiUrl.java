@@ -18,7 +18,7 @@ public class ApiUrl {
 
 
     /*#################################### FOR SPS NAWALSHAHI ##############################*/
-  /*  public static final String BASE_URL = "http://apextechies.com/sps/index.php/";
+   /* public static final String BASE_URL = "http://apextechies.com/sps/index.php/";
     public static final String IMAGE_BASE_URL = "http://spsnawalshahi.com/";
 
     public static String PLAYSTORE_LINK = "https://play.google.com/store/apps/details?id=" + BuildConfig.APPLICATION_ID;
@@ -57,5 +57,6 @@ public class ApiUrl {
     public static final String GET_EVENT_LIST = "events_list";
     public static final String PUBLISH_NOTICE = "notice_board";
     public static final String GET_NOTICE_LIST = "get_notice_board";
-    public static final String ADD_RESULT = "addResult";
+    public static final String EDIT_DELETE_NOTICE = "update_notice";
+    public static final String EDIT_DELETE_EVENT = "update_events";
 }

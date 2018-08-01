@@ -12,6 +12,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.Point;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.ConnectivityManager;
@@ -24,12 +25,17 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.Display;
+import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -60,12 +66,18 @@ import softgalli.gurukulshikshalay.BuildConfig;
 import softgalli.gurukulshikshalay.R;
 import softgalli.gurukulshikshalay.activity.ApplyLeaveActivity;
 import softgalli.gurukulshikshalay.activity.LoginScreenActivity;
+import softgalli.gurukulshikshalay.activity.PrincipalZoneActivity;
 import softgalli.gurukulshikshalay.activity.SeeAttendenceActivity;
 import softgalli.gurukulshikshalay.activity.SeeLeaveListActivity;
 import softgalli.gurukulshikshalay.activity.TakeAttendenceActivity;
 import softgalli.gurukulshikshalay.activity.UpdateAttendanceActivity;
+import softgalli.gurukulshikshalay.activity.UpdateNoticeAndNewsActivity;
+import softgalli.gurukulshikshalay.model.CommonResponse;
+import softgalli.gurukulshikshalay.model.UpcomingActivityModel;
 import softgalli.gurukulshikshalay.preference.MyPreference;
 import softgalli.gurukulshikshalay.retrofit.ApiUrl;
+import softgalli.gurukulshikshalay.retrofit.DownlodableCallback;
+import softgalli.gurukulshikshalay.retrofit.RetrofitDataProvider;
 
 
 public class Utilz {
@@ -763,15 +775,15 @@ public class Utilz {
             return "Sunday";
     }
 
-    public static String getRandomUserIdFromName(String userNameStr) {
-        String finalUserIdStr = "";
+    public static String getRandomUserIdFromName(Context mContext) {
+        String userNameStr = mContext.getResources().getString(R.string.app_name);
         Random rand = new Random();
         int randomNo = rand.nextInt(90000) + 10000;
         if (!TextUtils.isEmpty(userNameStr) && userNameStr.length() > 3) {
-            userNameStr = userNameStr.substring(0, 3).toUpperCase();
+            userNameStr = userNameStr.substring(0, 3).toUpperCase().trim();
         }
-        finalUserIdStr = userNameStr + "-" + randomNo;
-        return finalUserIdStr;
+        userNameStr = userNameStr + "-" + randomNo;
+        return userNameStr;
     }
 
     /**
@@ -939,6 +951,127 @@ public class Utilz {
         String mStrMessage = String.format(mContext.getResources().getString(R.string.absent_message_with_name),
                 mStrStudentName, mContext.getResources().getString(R.string.app_name));
         return mStrMessage;
+    }
+
+
+    public static void hideKeyBoard(Activity mContext) {
+        // Check if no view has focus:
+        View view = mContext.getCurrentFocus();
+        if (view != null) {
+            InputMethodManager imm = (InputMethodManager) mContext.getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
+    }
+
+    public static void openMoreOptionPopupWindow(final View mView, final Activity mActivity, final UpcomingActivityModel mModel,
+                                                 final String mTitle, final String mMessage, final boolean isForNoticeBoard) {
+
+        final String mApiUrl;
+        if (isForNoticeBoard) {
+            mApiUrl = ApiUrl.EDIT_DELETE_NOTICE;
+        } else {
+            mApiUrl = ApiUrl.EDIT_DELETE_EVENT;
+        }
+        //instantiate the popup.xml layout file
+        LayoutInflater layoutInflater = (LayoutInflater) mActivity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View customView = layoutInflater.inflate(R.layout.more_option_popup_dialog, null);
+
+        Button editButton = customView.findViewById(R.id.editButton);
+        Button deleteButton = customView.findViewById(R.id.deleteButton);
+        Button shareButton = customView.findViewById(R.id.shareButton);
+
+        //instantiate popup window
+        final PopupWindow popupWindow = new PopupWindow(customView, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        popupWindow.setBackgroundDrawable(new BitmapDrawable());
+        popupWindow.setOutsideTouchable(true);
+        //display the popup window
+        popupWindow.showAsDropDown(mView);
+        if (mView != null && mView.getRootView() != null) {
+            mView.getRootView().setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    popupWindow.dismiss();
+                }
+            });
+        }
+        deleteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (MyPreference.isLogined()) {
+                    if (AppConstants.PRINCIPAL.equalsIgnoreCase(MyPreference.getLoginedAs()) ||
+                            AppConstants.VICE_PRINCIPAL.equalsIgnoreCase(MyPreference.getLoginedAs()) ||
+                            AppConstants.TEACHER.equalsIgnoreCase(MyPreference.getLoginedAs())) {
+                        Utilz.callUpdateDeleteApi(mActivity, mModel, mApiUrl, false);
+                        popupWindow.dismiss();
+                    } else {
+                        Toast.makeText(mActivity, "Sorry, This feature is not for students.", Toast.LENGTH_SHORT).show();
+                    }
+                } else {
+                    Utilz.showLoginFirstDialog(mActivity);
+                }
+            }
+        });
+        editButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (MyPreference.isLogined()) {
+                    if (AppConstants.PRINCIPAL.equalsIgnoreCase(MyPreference.getLoginedAs()) ||
+                            AppConstants.VICE_PRINCIPAL.equalsIgnoreCase(MyPreference.getLoginedAs()) ||
+                            AppConstants.TEACHER.equalsIgnoreCase(MyPreference.getLoginedAs())) {
+                        ArrayList<UpcomingActivityModel> arrayList = new ArrayList<>();
+                        arrayList.add(mModel);
+                        Intent mIntent = new Intent(mActivity, UpdateNoticeAndNewsActivity.class);
+                        mIntent.putExtra(AppConstants.ARRAYLIST, arrayList);
+                        mIntent.putExtra(AppConstants.IS_FOR_NOTICE, isForNoticeBoard);
+                        mActivity.startActivity(mIntent);
+                        popupWindow.dismiss();
+                    } else {
+                        Toast.makeText(mActivity, "Sorry, This feature is not for students.", Toast.LENGTH_SHORT).show();
+                    }
+                } else {
+                    Utilz.showLoginFirstDialog(mActivity);
+                }
+            }
+        });
+        shareButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Utilz.shareContent(mActivity, mTitle, mMessage);
+                popupWindow.dismiss();
+            }
+        });
+    }
+
+    public static void callUpdateDeleteApi(final Activity mActivity, final UpcomingActivityModel mModel, final String mApiUrl, final boolean isToUpdate) {
+        String mTitle = mModel.getUpcomingEvetTitle();
+        String mDesc = mModel.getUpcomingEvetDescription();
+        String mDate = mModel.getUpcomingEventDate();
+        String mNoticeEventId = mModel.getId();
+        String mStatus = "1";
+        String mPostedBy = mModel.getUpcomingEventPostedBy();
+        Utilz.showDailog(mActivity, mActivity.getResources().getString(R.string.pleasewait));
+        new RetrofitDataProvider(mActivity).callUpdateDeleteNoticeAndEvents(mTitle, mDesc, mDate, mPostedBy, mStatus, mApiUrl, mNoticeEventId, isToUpdate, new DownlodableCallback<CommonResponse>() {
+            @Override
+            public void onSuccess(final CommonResponse result) {
+                Utilz.closeDialog();
+                if (isToUpdate)
+                    Utilz.showMessageOnDialog(mActivity, mActivity.getString(R.string.success), mActivity.getString(R.string.updated_successfully), "", AppConstants.OK);
+                else
+                    Utilz.showMessageOnDialog(mActivity, mActivity.getString(R.string.success), mActivity.getString(R.string.deleted_successfully), AppConstants.OK, "");
+            }
+
+            @Override
+            public void onFailure(String error) {
+                Utilz.closeDialog();
+                Toast.makeText(mActivity, R.string.something_went_wrong_error_message, Toast.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onUnauthorized(int errorNumber) {
+                Utilz.closeDialog();
+                Toast.makeText(mActivity, R.string.something_went_wrong_error_message, Toast.LENGTH_LONG).show();
+            }
+        });
     }
 }
 

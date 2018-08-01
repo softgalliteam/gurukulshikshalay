@@ -73,7 +73,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="right"
-                    android:textSize="8sp"
+                    android:textSize="10sp"
                     android:textStyle="bold"
                     tools:ignore="MissingPrefix" />
 
@@ -83,20 +83,21 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="right"
-                    android:textSize="8sp"
+                    android:textSize="10sp"
                     android:textStyle="bold"
                     tools:ignore="MissingPrefix" />
             </LinearLayout>
         </LinearLayout>
 
         <ImageView
-            android:id="@+id/shareNoticeIv"
+            android:id="@+id/moreOptionIv"
             android:layout_width="35dp"
             android:layout_height="35dp"
             android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
+            android:layout_marginRight="-8dp"
+            android:layout_marginTop="@dimen/padding_20dp"
             android:padding="@dimen/margin_5dp"
-            android:src="@drawable/image_share"
+            android:src="@drawable/more_option_icon"
             android:visibility="gone" />
 
         <View

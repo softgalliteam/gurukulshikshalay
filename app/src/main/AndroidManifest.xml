@@ -33,7 +33,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".activity.SplasScreen"
+            android:name=".activity.SplashScreen"
             android:theme="@style/MyThemeFullScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -125,6 +125,9 @@
             android:label="@string/app_name" />
         <activity
             android:name=".activity.ViewStudentsProfileActivity"
+            android:label="@string/app_name" />
+        <activity
+            android:name=".activity.UpdateNoticeAndNewsActivity"
             android:label="@string/app_name" />
         <activity
             android:name=".activity.SyllabusActivity"

@@ -51,6 +51,12 @@ public class NoticeBoardActivity extends AppCompatActivity {
         notification_list = new ArrayList<>();
 
         initWidgit();
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
         if (Utilz.isOnline(mActivity)) {
             getNotificationList();
         } else {

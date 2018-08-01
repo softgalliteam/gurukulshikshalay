@@ -1,14 +1,10 @@
 package softgalli.gurukulshikshalay.activity;
 
-import android.Manifest;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
@@ -76,7 +72,7 @@ public class AddStudent extends AppCompatActivity {
     Spinner sectionNameSpinner;
     @BindView(R.id.buttonLl)
     RelativeLayout buttonLl;
-    private String mStrClassName, mStrSectionName, mStrMessage, mStrPhoneNo;
+    private String mStrClassName = "", mStrSectionName = "", mStrUserId = "", mStrPhoneNo = "";
     private boolean isForUpdate;
     private Activity mActivity;
     private RetrofitDataProvider retrofitDataProvider;
@@ -154,9 +150,11 @@ public class AddStudent extends AppCompatActivity {
             if (!TextUtils.isEmpty(studentListDataModel.getStudent_id())) {
                 studentRegIdTv.setText("Id : " + studentListDataModel.getStudent_id() + " & Password : " + studentListDataModel.getPassword());
                 studentRegIdTv.setVisibility(View.VISIBLE);
+                mStrUserId = studentListDataModel.getStudent_id().trim();
             } else if (!TextUtils.isEmpty(studentListDataModel.getStudentId())) {
                 studentRegIdTv.setText("Id : " + studentListDataModel.getStudentId() + " & Password : " + studentListDataModel.getPassword());
                 studentRegIdTv.setVisibility(View.VISIBLE);
+                mStrUserId = studentListDataModel.getStudentId().trim();
             } else {
                 studentRegIdTv.setVisibility(View.GONE);
             }
@@ -232,7 +230,7 @@ public class AddStudent extends AppCompatActivity {
         submitButtonLl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String userId = Utilz.getRandomUserIdFromName(input_name.getText().toString().trim());
+                String userId = Utilz.getRandomUserIdFromName(mActivity);
                 studentRegIdTv.setText(userId);
                 addUpdateStudentsDetail();
             }
@@ -279,7 +277,7 @@ public class AddStudent extends AppCompatActivity {
     }
 
     private void deleteStudentFromSchool() {
-        if (TextUtils.isEmpty(studentRegIdTv.getText().toString().trim())) {
+        if (TextUtils.isEmpty(mStrUserId)) {
             Toast.makeText(mActivity, "Invalid student registration id", Toast.LENGTH_SHORT).show();
             return;
         } else {
@@ -329,9 +327,8 @@ public class AddStudent extends AppCompatActivity {
 
     private void addNewStudentInDb() {
         Utilz.showDailog(AddStudent.this, mActivity.getResources().getString(R.string.pleasewait));
-        String userId = studentRegIdTv.getText().toString().trim();
-        if (TextUtils.isEmpty(userId)) {
-            userId = Utilz.getRandomUserIdFromName(input_name.getText().toString().trim());
+        if (TextUtils.isEmpty(mStrUserId)) {
+            mStrUserId = Utilz.getRandomUserIdFromName(mActivity);
         }
         String rollNumber = input_rollnumber.getText().toString().trim();
         String name = input_name.getText().toString().trim();
@@ -341,7 +338,7 @@ public class AddStudent extends AppCompatActivity {
         String sec = sectionNameSpinner.getSelectedItem().toString().trim();
         String admission = input_admission.getText().toString().trim();
         String address = input_address.getText().toString().trim();
-        retrofitDataProvider.addstudent(userId, rollNumber, name, email, mobile, clas, sec, admission, address, new DownlodableCallback<StuTeaModel>() {
+        retrofitDataProvider.addstudent(mStrUserId, rollNumber, name, email, mobile, clas, sec, admission, address, new DownlodableCallback<StuTeaModel>() {
             @Override
             public void onSuccess(final StuTeaModel result) {
                 //  closeDialog();
@@ -369,11 +366,10 @@ public class AddStudent extends AppCompatActivity {
     }
 
     private void deleteStudentFromDb() {
-        String studentUserIdStr = studentRegIdTv.getText().toString().trim();
-        if (TextUtils.isEmpty(studentUserIdStr)) {
+        if (TextUtils.isEmpty(mStrUserId)) {
             return;
         }
-        retrofitDataProvider.deleteStudent(studentUserIdStr, new DownlodableCallback<CommonResponse>() {
+        retrofitDataProvider.deleteStudent(mStrUserId, new DownlodableCallback<CommonResponse>() {
             @Override
             public void onSuccess(final CommonResponse result) {
                 Utilz.closeDialog();

@@ -64,6 +64,7 @@ public class UpdateStudentDetailActivity extends AppCompatActivity {
     @BindView(R.id.updateButtonLl)
     LinearLayout updateButtonLl;
     private Activity mActivity;
+    private String mStrUserId = "";
     private RetrofitDataProvider retrofitDataProvider;
     Calendar myCalendar = Calendar.getInstance();
 
@@ -119,6 +120,7 @@ public class UpdateStudentDetailActivity extends AppCompatActivity {
         if (!TextUtils.isEmpty(ClsGeneral.getStrPreferences(AppConstants.USER_ID))) {
             studentRegIdTv.setText(ClsGeneral.getStrPreferences(AppConstants.USER_ID));
             studentRegIdTv.setVisibility(View.VISIBLE);
+            mStrUserId = ClsGeneral.getStrPreferences(AppConstants.USER_ID);
         } else if (!TextUtils.isEmpty(MyPreference.getUserId())) {
             studentRegIdTv.setText(MyPreference.getUserId());
             studentRegIdTv.setVisibility(View.VISIBLE);
@@ -190,8 +192,7 @@ public class UpdateStudentDetailActivity extends AppCompatActivity {
         submitButtonLl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String userId = Utilz.getRandomUserIdFromName(input_name.getText().toString().trim());
-                studentRegIdTv.setText(userId);
+                studentRegIdTv.setText(mStrUserId);
                 addUpdateStudentsDetail();
             }
         });
@@ -259,9 +260,8 @@ public class UpdateStudentDetailActivity extends AppCompatActivity {
 
     private void addNewStudentInDb() {
         Utilz.showDailog(mActivity, mActivity.getResources().getString(R.string.pleasewait));
-        String userId = studentRegIdTv.getText().toString().trim();
-        if (TextUtils.isEmpty(userId)) {
-            userId = Utilz.getRandomUserIdFromName(input_name.getText().toString().trim());
+        if (TextUtils.isEmpty(mStrUserId)) {
+            mStrUserId = Utilz.getRandomUserIdFromName(mActivity);
         }
         final String rollNumber = input_rollnumber.getText().toString().trim();
         final String name = input_name.getText().toString().trim();
@@ -271,7 +271,7 @@ public class UpdateStudentDetailActivity extends AppCompatActivity {
         final String sec = sectionNameSpinner.getSelectedItem().toString().trim();
         final String admission = input_admission.getText().toString().trim();
         final String address = input_address.getText().toString().trim();
-        retrofitDataProvider.addstudent(userId, rollNumber, name, email, mobile, clas, sec, admission, address, new DownlodableCallback<StuTeaModel>() {
+        retrofitDataProvider.addstudent(mStrUserId, rollNumber, name, email, mobile, clas, sec, admission, address, new DownlodableCallback<StuTeaModel>() {
             @Override
             public void onSuccess(final StuTeaModel result) {
                 //  closeDialog();

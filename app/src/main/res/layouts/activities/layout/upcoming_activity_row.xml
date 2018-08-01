@@ -92,13 +92,14 @@
 
 
         <ImageView
-            android:id="@+id/shareNoticeIv"
+            android:id="@+id/moreOptionIv"
             android:layout_width="35dp"
             android:layout_height="35dp"
             android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
+            android:layout_marginRight="-8dp"
+            android:layout_marginTop="@dimen/padding_20dp"
             android:padding="@dimen/margin_5dp"
-            android:src="@drawable/image_share"
+            android:src="@drawable/more_option_icon"
             android:visibility="gone" />
 
         <View

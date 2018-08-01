@@ -120,4 +120,13 @@ public interface ApiRetrofitService {
 
     @GET(ApiUrl.GET_NOTICE_LIST)
     Call<EventsAndNoticeLisrModel> getNoticeBoardList();
+
+    @FormUrlEncoded
+    @POST(ApiUrl.EDIT_DELETE_EVENT)
+    Call<CommonResponse> callUpdateDeleteEvents(@Field("title") String title, @Field("message") String message, @Field("date") String date, @Field("posted_by") String posted_by,
+                                                         @Field("status") String status, @Field("id") String id, @Field("isToUpdate") String isToUpdate);
+    @FormUrlEncoded
+    @POST(ApiUrl.EDIT_DELETE_NOTICE)
+    Call<CommonResponse> callUpdateDeleteNoticeBoard(@Field("title") String title, @Field("message") String message, @Field("date") String date, @Field("posted_by") String posted_by,
+                                                         @Field("status") String status, @Field("id") String id, @Field("isToUpdate") String isToUpdate);
 }

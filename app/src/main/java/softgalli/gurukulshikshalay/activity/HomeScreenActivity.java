@@ -149,7 +149,7 @@ public class HomeScreenActivity extends AppCompatActivity
             final TextView titleTv = child.findViewById(R.id.titleTv);
             final TextView shortDescriptionTv = child.findViewById(R.id.shortDescriptionTv);
             final TextView longDescriptionTv = child.findViewById(R.id.longDescriptionTv);
-            final ImageView shareNoticeIv = child.findViewById(R.id.shareNoticeIv);
+            final ImageView moreOptionIv = child.findViewById(R.id.moreOptionIv);
             TextView dateTv = child.findViewById(R.id.dateTv);
             TextView postedByTv = child.findViewById(R.id.postedByTv);
 
@@ -184,24 +184,25 @@ public class HomeScreenActivity extends AppCompatActivity
                         if (!eachUpcmgActvty.isDescShown()) {
                             eachUpcmgActvty.setIsDescShown(true);
                             shortDescriptionTv.setVisibility(View.GONE);
-                            shareNoticeIv.setVisibility(View.VISIBLE);
+                            moreOptionIv.setVisibility(View.VISIBLE);
                             longDescriptionTv.setVisibility(View.VISIBLE);
                             titleTv.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, R.drawable.arrow_down, 0);
                         } else {
                             eachUpcmgActvty.setIsDescShown(false);
                             shortDescriptionTv.setVisibility(View.VISIBLE);
                             longDescriptionTv.setVisibility(View.GONE);
-                            shareNoticeIv.setVisibility(View.GONE);
+                            moreOptionIv.setVisibility(View.GONE);
                             titleTv.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, R.drawable.arrow_up, 0);
                         }
                     }
                 });
-                shareNoticeIv.setOnClickListener(new View.OnClickListener() {
+                moreOptionIv.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        String message = eachUpcmgActvty.getUpcomingEvetDescription() + "\n\nBy : " +
+                        String shareMessageStr = eachUpcmgActvty.getUpcomingEvetDescription() + "\n\nBy : " +
                                 eachUpcmgActvty.getUpcomingEventPostedBy();
-                        Utilz.shareContent(mActivity, eachUpcmgActvty.getUpcomingEvetTitle(), message);
+
+                        Utilz.openMoreOptionPopupWindow(moreOptionIv, mActivity, eachUpcmgActvty, eachUpcmgActvty.getUpcomingEvetTitle(), shareMessageStr, false);
                     }
                 });
             }

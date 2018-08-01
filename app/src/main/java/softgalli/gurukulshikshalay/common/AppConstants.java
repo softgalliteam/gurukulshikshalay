@@ -70,4 +70,10 @@ public class AppConstants {
 
     public static final String HTTP = "http://";
     public static final String WWW = "www";
+    public static final String NOTICE = "Notice";
+    public static final String EVENT = "Event";
+    public static final String IS_FOR_NOTICE = "isForNoticeBiard";
+    public static final String ARRAYLIST = "array_list";
+    public static final String UPDATE = "update";
+    public static final String DELETE = "delete";
 }

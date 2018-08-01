@@ -16,6 +16,7 @@ import java.util.List;
 import softgalli.gurukulshikshalay.R;
 import softgalli.gurukulshikshalay.common.Utilz;
 import softgalli.gurukulshikshalay.model.UpcomingActivityModel;
+import softgalli.gurukulshikshalay.retrofit.ApiUrl;
 
 public class NoticeBoardAdapter extends RecyclerView.Adapter<NoticeBoardAdapter.ViewHolder> {
 
@@ -76,23 +77,23 @@ public class NoticeBoardAdapter extends RecyclerView.Adapter<NoticeBoardAdapter.
                             model.setIsDescShown(true);
                             viewHolder.shortDescriptionTv.setVisibility(View.GONE);
                             viewHolder.longDescriptionTv.setVisibility(View.VISIBLE);
-                            viewHolder.shareNoticeIv.setVisibility(View.VISIBLE);
+                            viewHolder.moreOptionIv.setVisibility(View.VISIBLE);
                             viewHolder.titleTv.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, R.drawable.arrow_down, 0);
                         } else {
                             model.setIsDescShown(false);
                             viewHolder.shortDescriptionTv.setVisibility(View.VISIBLE);
                             viewHolder.longDescriptionTv.setVisibility(View.GONE);
-                            viewHolder.shareNoticeIv.setVisibility(View.GONE);
+                            viewHolder.moreOptionIv.setVisibility(View.GONE);
                             viewHolder.titleTv.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, R.drawable.arrow_up, 0);
                         }
                     }
                 });
 
-                viewHolder.shareNoticeIv.setOnClickListener(new View.OnClickListener() {
+                viewHolder.moreOptionIv.setOnClickListener(new View.OnClickListener() {
                     public void onClick(View v) {
-                        String message = model.getUpcomingEvetDescription() + "\n\nBy : " +
+                        String shareMessageStr = model.getUpcomingEvetDescription() + "\n\nBy : " +
                                 model.getUpcomingEventPostedBy();
-                        Utilz.shareContent(mActivity, model.getUpcomingEvetTitle(), message);
+                        Utilz.openMoreOptionPopupWindow(viewHolder.moreOptionIv, mActivity, model, model.getUpcomingEvetTitle(), shareMessageStr, true);
                     }
                 });
             }
@@ -113,7 +114,7 @@ public class NoticeBoardAdapter extends RecyclerView.Adapter<NoticeBoardAdapter.
         public TextView dateTv;
         public TextView postedByTv;
         public LinearLayout mainLL;
-        public ImageView shareNoticeIv;
+        public ImageView moreOptionIv;
 
         public ViewHolder(View itemLayoutView) {
             super(itemLayoutView);
@@ -123,7 +124,7 @@ public class NoticeBoardAdapter extends RecyclerView.Adapter<NoticeBoardAdapter.
             dateTv = itemLayoutView.findViewById(R.id.dateTv);
             postedByTv = itemLayoutView.findViewById(R.id.postedByTv);
             mainLL = itemLayoutView.findViewById(R.id.mainLL);
-            shareNoticeIv = itemLayoutView.findViewById(R.id.shareNoticeIv);
+            moreOptionIv = itemLayoutView.findViewById(R.id.moreOptionIv);
         }
 
     }

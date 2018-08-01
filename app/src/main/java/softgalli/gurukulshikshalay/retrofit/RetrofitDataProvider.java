@@ -3,6 +3,7 @@ package softgalli.gurukulshikshalay.retrofit;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -16,6 +17,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import softgalli.gurukulshikshalay.R;
+import softgalli.gurukulshikshalay.common.AppConstants;
 import softgalli.gurukulshikshalay.common.Utilz;
 import softgalli.gurukulshikshalay.model.AlumniModel;
 import softgalli.gurukulshikshalay.model.CommonResponse;
@@ -628,6 +630,40 @@ public class RetrofitDataProvider extends AppCompatActivity implements ServiceMe
         );
     }
 
+    public void callUpdateDeleteNoticeAndEvents(String title, String message, String date, String posted_by, String status, String mApiUrl, String mNoticeEnetId, boolean isToUpdate, final DownlodableCallback<CommonResponse> callback) {
+        String isToUpdateStr;
+        if (isToUpdate)
+            isToUpdateStr = AppConstants.UPDATE;
+        else
+            isToUpdateStr = AppConstants.DELETE;
+        Callback callback1 = new Callback<CommonResponse>() {
+            @Override
+            public void onResponse(@NonNull Call<CommonResponse> call, @NonNull final Response<CommonResponse> response) {
+                if (response.isSuccessful()) {
+                    CommonResponse teacherListDataModelPojo = response.body();
+                    callback.onSuccess(teacherListDataModelPojo);
+                } else {
+                    if (response.code() == 401) {
+                        callback.onUnauthorized(response.code());
+                    } else {
+                        Utilz.closeDialog();
+                        Toast.makeText(context, context.getResources().getString(R.string.something_went_wrong_error_message), Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<CommonResponse> call, @NonNull Throwable t) {
+                Log.d("Result", "t" + t.getMessage());
+                callback.onFailure(t.getMessage());
+            }
+        };
+        if (!TextUtils.isEmpty(mApiUrl) && mApiUrl.equalsIgnoreCase(ApiUrl.EDIT_DELETE_NOTICE))
+            createRetrofitService().callUpdateDeleteNoticeBoard(title, message, date, posted_by, status, mNoticeEnetId, isToUpdateStr).enqueue(callback1);
+        else
+            createRetrofitService().callUpdateDeleteEvents(title, message, date, posted_by, status, mNoticeEnetId, isToUpdateStr).enqueue(callback1);
+    }
+
     @Override
     public void getEventsOrNoticeList(final boolean isToGetEventsList, final DownlodableCallback<EventsAndNoticeLisrModel> callback) {
         Callback callback1 = new Callback<EventsAndNoticeLisrModel>() {
@@ -650,7 +686,6 @@ public class RetrofitDataProvider extends AppCompatActivity implements ServiceMe
             public void onFailure(@NonNull Call<EventsAndNoticeLisrModel> call, @NonNull Throwable t) {
                 Log.d("Result", "t" + t.getMessage());
                 callback.onFailure(t.getMessage());
-
             }
         };
 
